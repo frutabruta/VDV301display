@@ -8,7 +8,7 @@ void on_actionstahnoutXML_triggered();
 
 #include <QMainWindow>
 #include "xmlparser.h"
-#include "httpserver2/myhttpserver.h"
+//#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
 
 class QByteArray;

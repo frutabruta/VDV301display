@@ -32,7 +32,7 @@ DEFINES+= QZEROCONF_STATIC
 include(VDV301subscriber/qtzeroconf/qtzeroconf.pri)
 
 SOURCES += \
-    ../newhttpserver.cpp \
+    VDV301subscriber/newhttpserver.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -40,7 +40,7 @@ SOURCES += \
     VDV301struktury/seznamzastavek.cpp
 
 HEADERS += \
-    ../newhttpserver.h \
+    VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
         mainwindow.h \
     xmlparser.h \

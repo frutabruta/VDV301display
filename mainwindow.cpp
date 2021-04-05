@@ -236,6 +236,7 @@ void MainWindow::on_refreshTlac_clicked()
 {
     qDebug()<<"MainWindow::on_refreshTlac_clicked";
     qInfo()<<"\n on_refreshTlac_clicked";
+    CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
     //xmlDoPromenne(1);
 
 }
@@ -288,6 +289,9 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     //NetworkCleanup();
 
 }
+
+
+
 
 
 /*
