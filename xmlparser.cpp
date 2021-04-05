@@ -1,5 +1,5 @@
 #include "xmlparser.h"
-#include "seznamzastavek.h"
+#include "VDV301struktury/seznamzastavek.h"
 #include <QDebug>
 #include <QMainWindow>
 

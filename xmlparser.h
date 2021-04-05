@@ -5,7 +5,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QtXml>
-#include "seznamzastavek.h"
+#include "VDV301struktury/seznamzastavek.h"
 class XmlParser
 {
 public:

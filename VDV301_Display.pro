@@ -36,7 +36,7 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     xmlparser.cpp \
-    seznamzastavek.cpp
+    VDV301struktury/seznamzastavek.cpp
 
 HEADERS += \
     ../newhttpserver.h \
@@ -44,7 +44,7 @@ HEADERS += \
     ibisipsubscriber.h \
         mainwindow.h \
     xmlparser.h \
-    seznamzastavek.h
+    VDV301struktury/seznamzastavek.h
 
 FORMS += \
         mainwindow.ui
