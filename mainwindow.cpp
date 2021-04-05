@@ -265,7 +265,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
 
     QByteArray pozadavek=hlavicka+telo;
     argumentXMLserveru.append(pozadavek);
-    instanceHttpServeru.zapisDoPromenne(argumentXMLserveru);
+    //instanceHttpServeru.zapisDoPromenne(argumentXMLserveru);
     qInfo()<<argumentXMLserveru;
     /* konec obracena archtitektura*/
     instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
@@ -279,7 +279,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     VykresleniPrijatychDat();
     FormatZobrazeni();
     qInfo()<<"CIl:"<<nazevCile;
-    instanceHttpServeru.prijatoZeServeruTelo="";
+    //instanceHttpServeru.prijatoZeServeruTelo="";
     }
     else
     {

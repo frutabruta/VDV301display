@@ -9,7 +9,7 @@ void on_actionstahnoutXML_triggered();
 #include <QMainWindow>
 #include "xmlparser.h"
 #include "httpserver2/myhttpserver.h"
-#include "ibisipsubscriber.h"
+#include "VDV301subscriber/ibisipsubscriber.h"
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -29,7 +29,7 @@ public:
     QVector <SeznamZastavek> globalniSeznamZastavek;
     QString nazevLinky = "";
     QString nazevCile="";
-    myHTTPserver instanceHttpServeru;
+    //myHTTPserver instanceHttpServeru;
     int indexZastavky=0;
     int pocetZastavek=0;
     int VykresleniPrijatychDat();

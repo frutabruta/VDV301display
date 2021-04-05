@@ -31,8 +31,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     ../newhttpserver.cpp \
-    httpserver2/myhttpserver.cpp \
-    ibisipsubscriber.cpp \
+    VDV301subscriber/ibisipsubscriber.cpp \
         main.cpp \
         mainwindow.cpp \
     xmlparser.cpp \
@@ -40,8 +39,7 @@ SOURCES += \
 
 HEADERS += \
     ../newhttpserver.h \
-    httpserver2/myhttpserver.h \
-    ibisipsubscriber.h \
+    VDV301subscriber/ibisipsubscriber.h \
         mainwindow.h \
     xmlparser.h \
     VDV301struktury/seznamzastavek.h

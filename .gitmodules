@@ -1,3 +1,9 @@
 [submodule "VDV301struktury"]
 	path = VDV301struktury
 	url = https://github.com/frutabruta/VDV301struktury.git
+[submodule "subscriber"]
+	path = subscriber
+	url = https://github.com/frutabruta/subscriber.git
+[submodule "VDV301subscriber"]
+	path = VDV301subscriber
+	url = https://github.com/frutabruta/VDV301subscriber.git
