@@ -1,0 +1,17 @@
+debug/bonjour.o
+debug/dnssd_clientlib.o
+debug/dnssd_clientstub.o
+debug/dnssd_ipc.o
+debug/qzeroconfservice.o
+debug/newhttpserver.o
+debug/ibisipsubscriber.o
+debug/main.o
+debug/mainwindow.o
+debug/xmlparser.o
+debug/seznamzastavek.o
+debug/moc_qzeroconf.o
+debug/moc_bonjour_p.o
+debug/moc_qzeroconfservice.o
+debug/moc_newhttpserver.o
+debug/moc_ibisipsubscriber.o
+debug/moc_mainwindow.o

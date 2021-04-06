@@ -1,0 +1,17 @@
+release/bonjour.o
+release/dnssd_clientlib.o
+release/dnssd_clientstub.o
+release/dnssd_ipc.o
+release/qzeroconfservice.o
+release/newhttpserver.o
+release/ibisipsubscriber.o
+release/main.o
+release/mainwindow.o
+release/xmlparser.o
+release/seznamzastavek.o
+release/moc_qzeroconf.o
+release/moc_bonjour_p.o
+release/moc_qzeroconfservice.o
+release/moc_newhttpserver.o
+release/moc_ibisipsubscriber.o
+release/moc_mainwindow.o

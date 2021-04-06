@@ -14,8 +14,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
   , mNetMan(new QNetworkAccessManager(this))
   , mNetReply(nullptr)
-  , mDataBuffer(new QByteArray)
-  , CustomerInformationService("CustomerInformationService","_ibisip_http._tcp",48479)
+ // , mDataBuffer(new QByteArray)
+  , CustomerInformationService("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
     ui->setupUi(this);
     FormatZobrazeni();
@@ -24,6 +24,9 @@ MainWindow::MainWindow(QWidget *parent) :
     //QMainWindow::setWindowState(Qt::WindowFullScreen);
     //QObject::connect(&instanceHttpServeru, &myHTTPserver::dataNahrana  ,this, &MainWindow::refreshujZobrazeni);
     QObject::connect(&CustomerInformationService, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+
+    CustomerInformationService.odebirano=false ;
+    CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
 }
 
 
@@ -122,7 +125,7 @@ int MainWindow::FormatZobrazeni()
 MainWindow::~MainWindow()
 {
     qDebug()<<"MainWindow::~MainWindow";
-    delete mDataBuffer;
+    //delete mDataBuffer;
     delete ui;
 }
 
@@ -159,25 +162,6 @@ nejsem autorem
 
 
 
-
-
-
-
-
-/*
-void MainWindow::ReadStory()
-{
-    qInfo()<<"ReadStory";
-
-    const QString STR = QString("https://hacker-news.firebaseio.com/v0/item/%1.json");
-    const QUrl STORY_URL(STR);
-
-    mNetReply = mNetMan->get(QNetworkRequest(STORY_URL));
-
-    connect(mNetReply, &QIODevice::readyRead, this, &MainWindow::OnDataReadyToRead);
-    connect(mNetReply, &QNetworkReply::finished, this, &MainWindow::OnStoryReadFinished);
-}*/
-
 void MainWindow::NetworkCleanup()
 {
     qDebug()<<"MainWindow::NetworkCleanup";
@@ -185,7 +169,7 @@ void MainWindow::NetworkCleanup()
     mNetReply->deleteLater();
     mNetReply = nullptr;
 
-    mDataBuffer->clear();
+    //mDataBuffer->clear();
 }
 
 // == PRIVATE SLOTS ==
@@ -199,43 +183,22 @@ void MainWindow::OnDataReadyToRead()
 {
     qDebug()<<"MainWindow::OnDataReadyToRead";
     qInfo()<<"\n OnDataReadyToRead";
-    mDataBuffer->append(mNetReply->readAll());
+    //mDataBuffer->append(mNetReply->readAll());
 }
 
 void MainWindow::OnListReadFinished()
 {
     qDebug()<<"MainWindow::OnListReadFinished";
-    /*
-    qInfo()<<"\n OnListReadFinished";
-    QByteArray retezec = *mDataBuffer;
-    QString vysledek = retezec;
-    QString vysledek2=QString::fromUtf8(retezec);
-    vysledek2=vysledek2.replace("\\","a");
-   retezec+=HHserver.prijatoZeServeru;
-   qInfo()<<retezec;
-    instanceXMLparser.nactiXML(retezec);
-    NetworkCleanup();
-    */
+
 
 }
-/*
-void MainWindow::OnStoryReadFinished()
-{
-    qInfo()<<"\n OnStoryReadFinished";
-    QJsonDocument doc = QJsonDocument::fromJson(*mDataBuffer);
-    NetworkCleanup();
-}*/
-/*
-void MainWindow::on_actionstahnoutXML_triggered()
-{
-    qInfo()<<"\n on_actionstahnoutXML_triggered";
-}
-*/
+
 
 void MainWindow::on_refreshTlac_clicked()
 {
     qDebug()<<"MainWindow::on_refreshTlac_clicked";
     qInfo()<<"\n on_refreshTlac_clicked";
+    CustomerInformationService.odebirano=false ;
     CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
     //xmlDoPromenne(1);
 
