@@ -14,12 +14,16 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -35,10 +39,20 @@ public:
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_4;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_5;
+    QVBoxLayout *verticalLayout_4;
+    QPushButton *tlacitkoSeznamSluzeb;
+    QPushButton *tlacitkoHlavni;
+    QPushButton *tlacitkoCasovac;
+    QPushButton *pushButton_4;
+    QPushButton *refreshTlac;
+    QStackedWidget *prepinadloStran;
+    QWidget *page;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
     QLabel *Llinka;
     QLabel *Lcil;
-    QFrame *line;
     QHBoxLayout *horizontalLayout_3;
     QLabel *sipka;
     QVBoxLayout *verticalLayout_2;
@@ -48,7 +62,17 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *Lnacestna1;
     QLabel *label_6;
-    QPushButton *refreshTlac;
+    QWidget *page_2;
+    QTableWidget *tabulkaSubscriberu;
+    QWidget *page_3;
+    QLabel *label;
+    QLabel *labelZbyvajiciVteriny;
+    QWidget *verticalLayoutWidget_3;
+    QVBoxLayout *verticalLayout_5;
+    QLabel *label_3;
+    QLineEdit *lineEdit;
+    QPushButton *tlacitkoNastavVteriny;
+    QFrame *line;
     QMenuBar *menuBar;
     QMenu *menunacti;
     QMenu *menukonec;
@@ -83,10 +107,65 @@ public:
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setSizeConstraint(QLayout::SetMaximumSize);
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(6);
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        verticalLayout_4 = new QVBoxLayout();
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        tlacitkoSeznamSluzeb = new QPushButton(centralWidget);
+        tlacitkoSeznamSluzeb->setObjectName(QString::fromUtf8("tlacitkoSeznamSluzeb"));
+        tlacitkoSeznamSluzeb->setCheckable(true);
+        tlacitkoSeznamSluzeb->setAutoExclusive(true);
+
+        verticalLayout_4->addWidget(tlacitkoSeznamSluzeb);
+
+        tlacitkoHlavni = new QPushButton(centralWidget);
+        tlacitkoHlavni->setObjectName(QString::fromUtf8("tlacitkoHlavni"));
+        tlacitkoHlavni->setCheckable(true);
+        tlacitkoHlavni->setChecked(true);
+        tlacitkoHlavni->setAutoExclusive(true);
+
+        verticalLayout_4->addWidget(tlacitkoHlavni);
+
+        tlacitkoCasovac = new QPushButton(centralWidget);
+        tlacitkoCasovac->setObjectName(QString::fromUtf8("tlacitkoCasovac"));
+        tlacitkoCasovac->setCheckable(true);
+        tlacitkoCasovac->setAutoExclusive(true);
+
+        verticalLayout_4->addWidget(tlacitkoCasovac);
+
+        pushButton_4 = new QPushButton(centralWidget);
+        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
+        pushButton_4->setCheckable(true);
+        pushButton_4->setAutoExclusive(true);
+
+        verticalLayout_4->addWidget(pushButton_4);
+
+        refreshTlac = new QPushButton(centralWidget);
+        refreshTlac->setObjectName(QString::fromUtf8("refreshTlac"));
+
+        verticalLayout_4->addWidget(refreshTlac);
+
+
+        horizontalLayout_5->addLayout(verticalLayout_4);
+
+        prepinadloStran = new QStackedWidget(centralWidget);
+        prepinadloStran->setObjectName(QString::fromUtf8("prepinadloStran"));
+        page = new QWidget();
+        page->setObjectName(QString::fromUtf8("page"));
+        verticalLayoutWidget = new QWidget(page);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(10, 10, 811, 371));
+        verticalLayout_3 = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout_3->setSpacing(0);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(0);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        Llinka = new QLabel(centralWidget);
+        Llinka = new QLabel(verticalLayoutWidget);
         Llinka->setObjectName(QString::fromUtf8("Llinka"));
         QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy1.setHorizontalStretch(0);
@@ -100,7 +179,7 @@ public:
 
         horizontalLayout->addWidget(Llinka);
 
-        Lcil = new QLabel(centralWidget);
+        Lcil = new QLabel(verticalLayoutWidget);
         Lcil->setObjectName(QString::fromUtf8("Lcil"));
         QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Maximum);
         sizePolicy2.setHorizontalStretch(0);
@@ -113,19 +192,12 @@ public:
         horizontalLayout->addWidget(Lcil);
 
 
-        verticalLayout->addLayout(horizontalLayout);
-
-        line = new QFrame(centralWidget);
-        line->setObjectName(QString::fromUtf8("line"));
-        line->setFrameShape(QFrame::HLine);
-        line->setFrameShadow(QFrame::Sunken);
-
-        verticalLayout->addWidget(line);
+        verticalLayout_3->addLayout(horizontalLayout);
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(0);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        sipka = new QLabel(centralWidget);
+        sipka = new QLabel(verticalLayoutWidget);
         sipka->setObjectName(QString::fromUtf8("sipka"));
         QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Preferred);
         sizePolicy3.setHorizontalStretch(0);
@@ -143,7 +215,7 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        Lnacestna4 = new QLabel(centralWidget);
+        Lnacestna4 = new QLabel(verticalLayoutWidget);
         Lnacestna4->setObjectName(QString::fromUtf8("Lnacestna4"));
         sizePolicy.setHeightForWidth(Lnacestna4->sizePolicy().hasHeightForWidth());
         Lnacestna4->setSizePolicy(sizePolicy);
@@ -153,7 +225,7 @@ public:
 
         verticalLayout_2->addWidget(Lnacestna4);
 
-        Lnacestna3 = new QLabel(centralWidget);
+        Lnacestna3 = new QLabel(verticalLayoutWidget);
         Lnacestna3->setObjectName(QString::fromUtf8("Lnacestna3"));
         sizePolicy.setHeightForWidth(Lnacestna3->sizePolicy().hasHeightForWidth());
         Lnacestna3->setSizePolicy(sizePolicy);
@@ -161,7 +233,7 @@ public:
 
         verticalLayout_2->addWidget(Lnacestna3);
 
-        Lnacestna2 = new QLabel(centralWidget);
+        Lnacestna2 = new QLabel(verticalLayoutWidget);
         Lnacestna2->setObjectName(QString::fromUtf8("Lnacestna2"));
         sizePolicy.setHeightForWidth(Lnacestna2->sizePolicy().hasHeightForWidth());
         Lnacestna2->setSizePolicy(sizePolicy);
@@ -173,12 +245,12 @@ public:
         horizontalLayout_3->addLayout(verticalLayout_2);
 
 
-        verticalLayout->addLayout(horizontalLayout_3);
+        verticalLayout_3->addLayout(horizontalLayout_3);
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setSpacing(0);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        Lnacestna1 = new QLabel(centralWidget);
+        Lnacestna1 = new QLabel(verticalLayoutWidget);
         Lnacestna1->setObjectName(QString::fromUtf8("Lnacestna1"));
         QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Maximum);
         sizePolicy4.setHorizontalStretch(0);
@@ -190,7 +262,7 @@ public:
 
         horizontalLayout_2->addWidget(Lnacestna1);
 
-        label_6 = new QLabel(centralWidget);
+        label_6 = new QLabel(verticalLayoutWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
         QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Maximum);
         sizePolicy5.setHorizontalStretch(0);
@@ -201,12 +273,72 @@ public:
         horizontalLayout_2->addWidget(label_6);
 
 
-        verticalLayout->addLayout(horizontalLayout_2);
+        verticalLayout_3->addLayout(horizontalLayout_2);
 
-        refreshTlac = new QPushButton(centralWidget);
-        refreshTlac->setObjectName(QString::fromUtf8("refreshTlac"));
+        prepinadloStran->addWidget(page);
+        page_2 = new QWidget();
+        page_2->setObjectName(QString::fromUtf8("page_2"));
+        tabulkaSubscriberu = new QTableWidget(page_2);
+        if (tabulkaSubscriberu->columnCount() < 4)
+            tabulkaSubscriberu->setColumnCount(4);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        tabulkaSubscriberu->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        tabulkaSubscriberu->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        tabulkaSubscriberu->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        tabulkaSubscriberu->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        tabulkaSubscriberu->setObjectName(QString::fromUtf8("tabulkaSubscriberu"));
+        tabulkaSubscriberu->setGeometry(QRect(20, 10, 671, 331));
+        prepinadloStran->addWidget(page_2);
+        page_3 = new QWidget();
+        page_3->setObjectName(QString::fromUtf8("page_3"));
+        label = new QLabel(page_3);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(420, 80, 151, 41));
+        labelZbyvajiciVteriny = new QLabel(page_3);
+        labelZbyvajiciVteriny->setObjectName(QString::fromUtf8("labelZbyvajiciVteriny"));
+        labelZbyvajiciVteriny->setGeometry(QRect(420, 140, 231, 121));
+        QFont font3;
+        font3.setPointSize(60);
+        labelZbyvajiciVteriny->setFont(font3);
+        verticalLayoutWidget_3 = new QWidget(page_3);
+        verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
+        verticalLayoutWidget_3->setGeometry(QRect(60, 110, 160, 80));
+        verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget_3);
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
+        label_3 = new QLabel(verticalLayoutWidget_3);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
 
-        verticalLayout->addWidget(refreshTlac);
+        verticalLayout_5->addWidget(label_3);
+
+        lineEdit = new QLineEdit(verticalLayoutWidget_3);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+
+        verticalLayout_5->addWidget(lineEdit);
+
+        tlacitkoNastavVteriny = new QPushButton(verticalLayoutWidget_3);
+        tlacitkoNastavVteriny->setObjectName(QString::fromUtf8("tlacitkoNastavVteriny"));
+
+        verticalLayout_5->addWidget(tlacitkoNastavVteriny);
+
+        prepinadloStran->addWidget(page_3);
+
+        horizontalLayout_5->addWidget(prepinadloStran);
+
+
+        verticalLayout->addLayout(horizontalLayout_5);
+
+        line = new QFrame(centralWidget);
+        line->setObjectName(QString::fromUtf8("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line);
 
 
         horizontalLayout_4->addLayout(verticalLayout);
@@ -215,7 +347,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 834, 22));
+        menuBar->setGeometry(QRect(0, 0, 834, 26));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -247,6 +379,9 @@ public:
 
         retranslateUi(MainWindow);
 
+        prepinadloStran->setCurrentIndex(1);
+
+
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
@@ -256,6 +391,12 @@ public:
         actiontestPolozka->setText(QCoreApplication::translate("MainWindow", "testPolozka", nullptr));
         actionstahnoutXML->setText(QCoreApplication::translate("MainWindow", "stahnoutXML", nullptr));
         action->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
+        tlacitkoSeznamSluzeb->setText(QCoreApplication::translate("MainWindow", "Seznam \n"
+" slu\305\276eb", nullptr));
+        tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "Hlavn\303\255 obrazovka", nullptr));
+        tlacitkoCasovac->setText(QCoreApplication::translate("MainWindow", "\304\214asova\304\215", nullptr));
+        pushButton_4->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
+        refreshTlac->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));
         Lcil->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#3465a4;\">Sportovni hala</span></p></body></html>", nullptr));
         sipka->setText(QCoreApplication::translate("MainWindow", "\342\206\221", nullptr));
@@ -264,7 +405,18 @@ public:
         Lnacestna2->setText(QCoreApplication::translate("MainWindow", "Dalsi 1", nullptr));
         Lnacestna1->setText(QCoreApplication::translate("MainWindow", "PristiZastavka", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
-        refreshTlac->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = tabulkaSubscriberu->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "N\303\241zev slu\305\276by", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = tabulkaSubscriberu->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Verze", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = tabulkaSubscriberu->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "IP Adresa", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = tabulkaSubscriberu->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "port", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));
+        labelZbyvajiciVteriny->setText(QCoreApplication::translate("MainWindow", "xx s", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "Pole pro zad\303\241n\303\255 intervalu", nullptr));
+        tlacitkoNastavVteriny->setText(QCoreApplication::translate("MainWindow", "Nastav interval", nullptr));
         menunacti->setTitle(QCoreApplication::translate("MainWindow", "nacti", nullptr));
         menukonec->setTitle(QCoreApplication::translate("MainWindow", "konec", nullptr));
     } // retranslateUi

@@ -12,9 +12,9 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
-  , mNetMan(new QNetworkAccessManager(this))
-  , mNetReply(nullptr)
- // , mDataBuffer(new QByteArray)
+  //, mNetMan(new QNetworkAccessManager(this))
+  //, mNetReply(nullptr)
+  // , mDataBuffer(new QByteArray)
   , CustomerInformationService("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
     ui->setupUi(this);
@@ -24,13 +24,46 @@ MainWindow::MainWindow(QWidget *parent) :
     //QMainWindow::setWindowState(Qt::WindowFullScreen);
     //QObject::connect(&instanceHttpServeru, &myHTTPserver::dataNahrana  ,this, &MainWindow::refreshujZobrazeni);
     QObject::connect(&CustomerInformationService, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+    QObject::connect(&CustomerInformationService,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
+
+    connect(timer, &QTimer::timeout, this, &MainWindow::kazdouVterinu);
+    connect(CustomerInformationService.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    timer->start(1000);
 
     CustomerInformationService.odebirano=false ;
     CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
+
+
+   // ui->tabulkaSubscriberu->setColumnCount(4);
+
+
+
+
 }
 
+int MainWindow::kazdouVterinu()
+{
+    ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationService.timer->remainingTime()/1000) );
+    return 1;
+}
 
+void MainWindow::vyprselCasovacSluzby()
+{
+    qDebug()<<"MainWindow::vyprselCasovacSluzby()";
+    vymazObrazovku();
+}
 
+void MainWindow::vymazObrazovku()
+{
+    qDebug()<<"MainWindow::vymazObrazovku()";
+    ui->Lcil->setText("");
+    ui->Llinka->setText("");
+    ui->Lnacestna1->setText("");
+    ui->Lnacestna2->setText("");
+    ui->Lnacestna3->setText("");
+    ui->Lnacestna4->setText("");
+
+}
 /*
  *MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,8 +112,10 @@ int MainWindow::VykresleniPrijatychDat()
     }
     else
     {
-         qDebug()<<"indexZastavky je"<<QString::number(indexZastavky)<<" velikost globSezZast="<<QString::number(globalniSeznamZastavek.size());
+        qDebug()<<"indexZastavky je"<<QString::number(indexZastavky)<<" velikost globSezZast="<<QString::number(globalniSeznamZastavek.size());
     }
+
+    if()
 
 
     return 1;
@@ -162,15 +197,7 @@ nejsem autorem
 
 
 
-void MainWindow::NetworkCleanup()
-{
-    qDebug()<<"MainWindow::NetworkCleanup";
-    qInfo()<<"NetworkCleanup";
-    mNetReply->deleteLater();
-    mNetReply = nullptr;
 
-    //mDataBuffer->clear();
-}
 
 // == PRIVATE SLOTS ==
 void MainWindow::OnRefreshClicked()
@@ -200,8 +227,61 @@ void MainWindow::on_refreshTlac_clicked()
     qInfo()<<"\n on_refreshTlac_clicked";
     CustomerInformationService.odebirano=false ;
     CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
+    this->vymazObrazovku();
+    ui->tabulkaSubscriberu->setRowCount(0);
     //xmlDoPromenne(1);
 
+}
+
+
+void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
+{
+    qint32 row;
+    QTableWidgetItem *cell;
+    // qDebug() << "Added service: " << zcs;
+    QString nazev=zcs->name();
+    QString ipadresa=zcs->ip().toString();
+    QString verze=zcs.data()->txt().value("ver");
+    int port=zcs->port();
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+    // tableWidget->setRowCount(10);
+
+    row = ui->tabulkaSubscriberu->rowCount();
+    ui->tabulkaSubscriberu->insertRow(row);
+    cell = new QTableWidgetItem(zcs->name());
+    ui->tabulkaSubscriberu->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(verze);
+    ui->tabulkaSubscriberu->setItem(row, 1, cell);
+    ui->tabulkaSubscriberu->resizeColumnsToContents();
+
+    cell = new QTableWidgetItem(zcs->ip().toString());
+    ui->tabulkaSubscriberu->setItem(row, 2, cell);
+    ui->tabulkaSubscriberu->resizeColumnsToContents();
+
+    cell = new QTableWidgetItem(QString::number(port));
+    ui->tabulkaSubscriberu->setItem(row, 3, cell);
+    ui->tabulkaSubscriberu->resizeColumnsToContents();
+
+#if !(defined(Q_OS_IOS) || defined(Q_OS_ANDROID))
+    //setFixedSize(ui->tabulkaSubscriberu->horizontalHeader()->length() + 60, ui->tabulkaSubscriberu->verticalHeader()->length() + 100);
+#endif
+
+    //QString strukturaKodberu="/CustomerInformationService/SubscribeAllData";
+    /*
+   QString adresaZaLomitkem="/"+nazevSluzbyInterni+"/Subscribe"+strukturaInterni;
+    QString adresaCileString="http://"+zcs->ip().toString()+":"+QString::number(zcs->port())+adresaZaLomitkem;
+    qDebug()<<"adresaCile string "<<adresaCileString;
+    QUrl adresaKamPostovatSubscirbe=QUrl(adresaCileString);
+
+    if (najdiSluzbu(nazevSluzbyInterni,verzeInterni,zcs)&&(this->odebirano==false))
+    {
+        PostSubscribe(adresaKamPostovatSubscirbe,this->vytvorSubscribeRequest(projedAdresy(),cisloPortuInterni));
+        qDebug()<<"odesilam subscribe na "<<ipadresa<<":"<<QString::number(port)<<" sluzba "<<nazev;
+    }*/
 }
 
 void MainWindow::xmlDoPromenne(QString vstupniXml)
@@ -239,11 +319,11 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     qInfo()<<"CIl:"<<nazevCile;
     if( globalniSeznamZastavek.size()>0)
     {
-    DoplneniPromennych();
-    VykresleniPrijatychDat();
-    FormatZobrazeni();
-    qInfo()<<"CIl:"<<nazevCile;
-    //instanceHttpServeru.prijatoZeServeruTelo="";
+        DoplneniPromennych();
+        VykresleniPrijatychDat();
+        FormatZobrazeni();
+        qInfo()<<"CIl:"<<nazevCile;
+        //instanceHttpServeru.prijatoZeServeruTelo="";
     }
     else
     {
@@ -263,3 +343,18 @@ void MainWindow::on_prepinaciOkno_currentChanged()
 
 }
 */
+
+void MainWindow::on_tlacitkoSeznamSluzeb_clicked()
+{
+    ui->prepinadloStran->setCurrentIndex(1);
+}
+
+void MainWindow::on_tlacitkoHlavni_clicked()
+{
+    ui->prepinadloStran->setCurrentIndex(0);
+}
+
+void MainWindow::on_tlacitkoCasovac_clicked()
+{
+    ui->prepinadloStran->setCurrentIndex(2);
+}

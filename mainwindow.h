@@ -25,11 +25,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     XmlParser instanceXMLparser;
-    //SeznamZastavek* globalniSeznamZastavek = new SeznamZastavek[MAX_ZAST];
     QVector <SeznamZastavek> globalniSeznamZastavek;
     QString nazevLinky = "";
     QString nazevCile="";
-    //myHTTPserver instanceHttpServeru;
     int indexZastavky=0;
     int pocetZastavek=0;
     int VykresleniPrijatychDat();
@@ -43,24 +41,26 @@ private slots:
     void OnRefreshClicked();
     void OnDataReadyToRead();
     void OnListReadFinished();
-    //void OnStoryReadFinished();
-    //void on_actionstahnoutXML_triggered();
+
     void on_refreshTlac_clicked();
-    //void on_prepinaciOkno_currentChanged();
-   // void on_prepinaciOkno_currentChanged();
+
+    void on_tlacitkoSeznamSluzeb_clicked();
+
+    void on_tlacitkoHlavni_clicked();
+
+    int kazdouVterinu();
+    void on_tlacitkoCasovac_clicked();
 
 public slots:
     void xmlDoPromenne(QString vstupniXml);
+    void sluzbyDoTabulky(QZeroConfService zcs);
 private:
     Ui::MainWindow *ui;
-    //void BuildWindow();
-    //void ReadStory();
-    void NetworkCleanup();
-   // QWidget * mPanelStories;
-    QNetworkAccessManager * mNetMan;
-    QNetworkReply * mNetReply;
-    QByteArray * mDataBuffer;
-    int mCurrStory;
+    QTimer *timer = new QTimer(this);
+
+
+    void vyprselCasovacSluzby();
+    void vymazObrazovku();
 };
 
 #endif // MAINWINDOW_H

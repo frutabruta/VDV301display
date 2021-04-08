@@ -38,6 +38,7 @@ SOURCES += \
         mainwindow.cpp \
     xmlparser.cpp \
     VDV301struktury/seznamzastavek.cpp
+    VDV301struktury/
 
 HEADERS += \
     VDV301subscriber/newhttpserver.h \

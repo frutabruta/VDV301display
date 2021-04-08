@@ -52,6 +52,7 @@ int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, i
         qDebug()<<"zastavkyNebylyNacteny";
         return 0;
     }
+
     return 1;
 }
 
