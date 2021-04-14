@@ -1,5 +1,6 @@
 #include "xmlparser.h"
 #include "VDV301struktury/seznamzastavek.h"
+#include "VDV301struktury/cestaudaje.h"
 #include <QDebug>
 #include <QMainWindow>
 
@@ -21,7 +22,7 @@ void XmlParser::nactiXML(QString vstup)
 
 }
 
-int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, int *docasnyIndexZastavky, int *docasnyPocetZastavek)
+int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
 {
     docasnySeznamZst.clear();
     qDebug()<<"XmlParser::VytvorSeznamZastavek";
@@ -34,8 +35,8 @@ int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, i
     }
     QDomNodeList nodes = root.elementsByTagName("StopPoint");
 
-    *docasnyPocetZastavek= nodes.count();
-    *docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt();
+    docasnyPocetZastavek= nodes.count();
+    docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt();
     for (int i=0; i<nodes.count();i++)
     {
         SeznamZastavek docasnaZastavka;
@@ -56,7 +57,20 @@ int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, i
     return 1;
 }
 
+int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
+{
+    qDebug()<<"XmlParser::nactiVehicleGroup";
+    QDomElement root = xmlko.firstChildElement();
+    qDebug()<<"root name "<<root.nodeName();
+    QDomElement allData=root.firstChildElement("AllData");
+    qDebug()<<"alldata name "<<allData.nodeName();
+    stav.indexAktZastavky=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt();
+    stav.VehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+    stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
+    qDebug()<<"stopIndex "<<QString::number(stav.indexAktZastavky)<<"stopRequested "<<stav.VehicleStopRequested<<" locState "<<stav.locationState;
 
+return 1;
+}
 
 
 void XmlParser::Test()

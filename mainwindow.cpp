@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
 
 
-   // ui->tabulkaSubscriberu->setColumnCount(4);
+    // ui->tabulkaSubscriberu->setColumnCount(4);
 
 
 
@@ -115,7 +115,9 @@ int MainWindow::VykresleniPrijatychDat()
         qDebug()<<"indexZastavky je"<<QString::number(indexZastavky)<<" velikost globSezZast="<<QString::number(globalniSeznamZastavek.size());
     }
 
-    if()
+
+
+
 
 
     return 1;
@@ -147,12 +149,20 @@ int MainWindow::FormatZobrazeni()
     QString barva2 ="#ffffff"; //bila
     ui->Llinka->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
     ui->Lcil->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->Lnacestna1->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
+    //ui->Lnacestna1->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
     ui->Lnacestna2->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->Lnacestna3->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->Lnacestna4->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->sipka->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     //ui->prepinaciOkno->setStyleSheet("QStackedWidget {margin: 0;}");
+    if (stavSystemu.locationState=="AtStop" )
+    {
+        obarviPozadiPristi(barva1,barva2 );
+    }
+    else
+    {
+        obarviPozadiPristi(barva2,barva1);
+    }
     return 1;
 
 }
@@ -171,7 +181,8 @@ void MainWindow::on_actiontestPolozka_triggered()
     qDebug()<<"MainWindow::on_actiontestPolozka_triggered";
     qInfo()<<"\n on_actiontestPolozka_triggered";
 
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
+    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, stavSystemu.indexAktZastavky, pocetZastavek);
+    instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
     //qInfo()<<globalniSeznamZastavek[4].StopName;
     qInfo()<<indexZastavky;
     qInfo()<<"CIl:"<<nazevCile;
@@ -247,7 +258,6 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
     qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
  */
-    // tableWidget->setRowCount(10);
 
     row = ui->tabulkaSubscriberu->rowCount();
     ui->tabulkaSubscriberu->insertRow(row);
@@ -270,18 +280,8 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
     //setFixedSize(ui->tabulkaSubscriberu->horizontalHeader()->length() + 60, ui->tabulkaSubscriberu->verticalHeader()->length() + 100);
 #endif
 
-    //QString strukturaKodberu="/CustomerInformationService/SubscribeAllData";
-    /*
-   QString adresaZaLomitkem="/"+nazevSluzbyInterni+"/Subscribe"+strukturaInterni;
-    QString adresaCileString="http://"+zcs->ip().toString()+":"+QString::number(zcs->port())+adresaZaLomitkem;
-    qDebug()<<"adresaCile string "<<adresaCileString;
-    QUrl adresaKamPostovatSubscirbe=QUrl(adresaCileString);
 
-    if (najdiSluzbu(nazevSluzbyInterni,verzeInterni,zcs)&&(this->odebirano==false))
-    {
-        PostSubscribe(adresaKamPostovatSubscirbe,this->vytvorSubscribeRequest(projedAdresy(),cisloPortuInterni));
-        qDebug()<<"odesilam subscribe na "<<ipadresa<<":"<<QString::number(port)<<" sluzba "<<nazev;
-    }*/
+
 }
 
 void MainWindow::xmlDoPromenne(QString vstupniXml)
@@ -312,7 +312,9 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     //instanceHttpServeru.zapisDoPromenne(argumentXMLserveru);
     qInfo()<<argumentXMLserveru;
     /* konec obracena archtitektura*/
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
+
+    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, indexZastavky, pocetZastavek);
+    instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
     //instanceXMLparser.nactiXML(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
     //qInfo()<<globalniSeznamZastavek[4].StopName;
     qInfo()<<indexZastavky;
@@ -358,3 +360,15 @@ void MainWindow::on_tlacitkoCasovac_clicked()
 {
     ui->prepinadloStran->setCurrentIndex(2);
 }
+
+void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
+{
+    qDebug()<<"MainWindow::obarviPozadiPristi";
+    //
+    //ui->Lnacestna1->setAutoFillBackground(true);
+
+        ui->Lnacestna1->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+
+    //ui->Lnacestna1->repaint();
+}
+

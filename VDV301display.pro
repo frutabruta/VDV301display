@@ -37,15 +37,17 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     xmlparser.cpp \
-    VDV301struktury/seznamzastavek.cpp
-    VDV301struktury/
+    VDV301struktury/seznamzastavek.cpp\
+    VDV301struktury/cestaudaje.cpp
 
 HEADERS += \
     VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
         mainwindow.h \
     xmlparser.h \
-    VDV301struktury/seznamzastavek.h
+    VDV301struktury/seznamzastavek.h\
+    VDV301struktury/cestaudaje.h
+
 
 FORMS += \
         mainwindow.ui

@@ -10,7 +10,7 @@ void on_actionstahnoutXML_triggered();
 #include "xmlparser.h"
 //#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
-
+#include "VDV301struktury/cestaudaje.h"
 class QByteArray;
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -57,10 +57,11 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QTimer *timer = new QTimer(this);
-
+    CestaUdaje stavSystemu;
 
     void vyprselCasovacSluzby();
     void vymazObrazovku();
+    void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 };
 
 #endif // MAINWINDOW_H

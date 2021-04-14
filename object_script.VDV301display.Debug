@@ -9,6 +9,7 @@ debug/main.o
 debug/mainwindow.o
 debug/xmlparser.o
 debug/seznamzastavek.o
+debug/cestaudaje.o
 debug/moc_qzeroconf.o
 debug/moc_bonjour_p.o
 debug/moc_qzeroconfservice.o
