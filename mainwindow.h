@@ -35,7 +35,7 @@ public:
     int FormatZobrazeni();
     ~MainWindow();
 
-    IbisIpSubscriber CustomerInformationService;
+    IbisIpSubscriber CustomerInformationServiceSubscriber;
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -50,6 +50,8 @@ private slots:
 
     int kazdouVterinu();
     void on_tlacitkoCasovac_clicked();
+
+    void on_quitTlacitko_clicked();
 
 public slots:
     void xmlDoPromenne(QString vstupniXml);

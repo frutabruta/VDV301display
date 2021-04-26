@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
   //, mNetMan(new QNetworkAccessManager(this))
   //, mNetReply(nullptr)
   // , mDataBuffer(new QByteArray)
-  , CustomerInformationService("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
+  , CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
     ui->setupUi(this);
     FormatZobrazeni();
@@ -23,15 +23,15 @@ MainWindow::MainWindow(QWidget *parent) :
     //ui->prepinaciOkno->setCurrentIndex(0);
     //QMainWindow::setWindowState(Qt::WindowFullScreen);
     //QObject::connect(&instanceHttpServeru, &myHTTPserver::dataNahrana  ,this, &MainWindow::refreshujZobrazeni);
-    QObject::connect(&CustomerInformationService, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
-    QObject::connect(&CustomerInformationService,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
+    QObject::connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+    QObject::connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::kazdouVterinu);
-    connect(CustomerInformationService.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
     timer->start(1000);
 
-    CustomerInformationService.odebirano=false ;
-    CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
+    CustomerInformationServiceSubscriber.odebirano=false ;
+    CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
 
 
     // ui->tabulkaSubscriberu->setColumnCount(4);
@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 int MainWindow::kazdouVterinu()
 {
-    ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationService.timer->remainingTime()/1000) );
+    ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
     return 1;
 }
 
@@ -236,8 +236,8 @@ void MainWindow::on_refreshTlac_clicked()
 {
     qDebug()<<"MainWindow::on_refreshTlac_clicked";
     qInfo()<<"\n on_refreshTlac_clicked";
-    CustomerInformationService.odebirano=false ;
-    CustomerInformationService.hledejSluzby("_ibisip_http._tcp.",1);
+    CustomerInformationServiceSubscriber.odebirano=false ;
+    CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     this->vymazObrazovku();
     ui->tabulkaSubscriberu->setRowCount(0);
     //xmlDoPromenne(1);
@@ -372,3 +372,9 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
     //ui->Lnacestna1->repaint();
 }
 
+
+void MainWindow::on_quitTlacitko_clicked()
+{
+    qDebug()<<"\n on_quitTlacitko_clicked \n";
+    MainWindow::close();
+}

@@ -1112,6 +1112,13 @@ debug/moc_ibisipsubscriber.cpp: VDV301subscriber/ibisipsubscriber.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qevent.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qvector2d.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qtouchdevice.h \
+		VDV301subscriber/QtZeroConf/qzeroconf.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMap \
+		VDV301subscriber/QtZeroConf/qzeroconfglobal.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QtGlobal \
+		VDV301subscriber/QtZeroConf/qzeroconfservice.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMutexLocker \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QSharedPointer \
 		debug/moc_predefs.h \
 		C:/Qt/5.15.1/mingw81_32/bin/moc.exe
 	C:\Qt\5.15.1\mingw81_32\bin\moc.exe $(DEFINES) --include C:/Users/adam/Documents/GitHub/VDV301display/debug/moc_predefs.h -IC:/Qt/5.15.1/mingw81_32/mkspecs/win32-g++ -IC:/Users/adam/Documents/GitHub/VDV301display -IC:/Qt/5.15.1/mingw81_32/include -IC:/Qt/5.15.1/mingw81_32/include/QtWidgets -IC:/Qt/5.15.1/mingw81_32/include/QtGui -IC:/Qt/5.15.1/mingw81_32/include/QtANGLE -IC:/Qt/5.15.1/mingw81_32/include/QtXml -IC:/Qt/5.15.1/mingw81_32/include/QtHttpServer -IC:/Qt/5.15.1/mingw81_32/include/QtWebSockets -IC:/Qt/5.15.1/mingw81_32/include/QtSslServer -IC:/Qt/5.15.1/mingw81_32/include/QtNetwork -IC:/Qt/5.15.1/mingw81_32/include/QtConcurrent -IC:/Qt/5.15.1/mingw81_32/include/QtCore -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32 -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_32/i686-w64-mingw32/include VDV301subscriber\ibisipsubscriber.h -o debug\moc_ibisipsubscriber.cpp
@@ -1481,6 +1488,13 @@ debug/moc_mainwindow.cpp: mainwindow.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qhttpserverfutureresponse.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qthttpserverversion.h \
 		VDV301subscriber/newhttpserver.h \
+		VDV301subscriber/QtZeroConf/qzeroconf.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMap \
+		VDV301subscriber/QtZeroConf/qzeroconfglobal.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QtGlobal \
+		VDV301subscriber/QtZeroConf/qzeroconfservice.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMutexLocker \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QSharedPointer \
 		debug/moc_predefs.h \
 		C:/Qt/5.15.1/mingw81_32/bin/moc.exe
 	C:\Qt\5.15.1\mingw81_32\bin\moc.exe $(DEFINES) --include C:/Users/adam/Documents/GitHub/VDV301display/debug/moc_predefs.h -IC:/Qt/5.15.1/mingw81_32/mkspecs/win32-g++ -IC:/Users/adam/Documents/GitHub/VDV301display -IC:/Qt/5.15.1/mingw81_32/include -IC:/Qt/5.15.1/mingw81_32/include/QtWidgets -IC:/Qt/5.15.1/mingw81_32/include/QtGui -IC:/Qt/5.15.1/mingw81_32/include/QtANGLE -IC:/Qt/5.15.1/mingw81_32/include/QtXml -IC:/Qt/5.15.1/mingw81_32/include/QtHttpServer -IC:/Qt/5.15.1/mingw81_32/include/QtWebSockets -IC:/Qt/5.15.1/mingw81_32/include/QtSslServer -IC:/Qt/5.15.1/mingw81_32/include/QtNetwork -IC:/Qt/5.15.1/mingw81_32/include/QtConcurrent -IC:/Qt/5.15.1/mingw81_32/include/QtCore -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32 -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_32/i686-w64-mingw32/include mainwindow.h -o debug\moc_mainwindow.cpp
@@ -2387,7 +2401,14 @@ debug/ibisipsubscriber.o: VDV301subscriber/ibisipsubscriber.cpp VDV301subscriber
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qkeysequence.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qevent.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtGui/qvector2d.h \
-		C:/Qt/5.15.1/mingw81_32/include/QtGui/qtouchdevice.h
+		C:/Qt/5.15.1/mingw81_32/include/QtGui/qtouchdevice.h \
+		VDV301subscriber/QtZeroConf/qzeroconf.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMap \
+		VDV301subscriber/QtZeroConf/qzeroconfglobal.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QtGlobal \
+		VDV301subscriber/QtZeroConf/qzeroconfservice.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMutexLocker \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QSharedPointer
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\ibisipsubscriber.o VDV301subscriber\ibisipsubscriber.cpp
 
 debug/main.o: main.cpp mainwindow.h \
@@ -2755,6 +2776,13 @@ debug/main.o: main.cpp mainwindow.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qhttpserverfutureresponse.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qthttpserverversion.h \
 		VDV301subscriber/newhttpserver.h \
+		VDV301subscriber/QtZeroConf/qzeroconf.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMap \
+		VDV301subscriber/QtZeroConf/qzeroconfglobal.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QtGlobal \
+		VDV301subscriber/QtZeroConf/qzeroconfservice.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMutexLocker \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QSharedPointer \
 		C:/Qt/5.15.1/mingw81_32/include/QtWidgets/QApplication \
 		C:/Qt/5.15.1/mingw81_32/include/QtWidgets/qapplication.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtWidgets/qdesktopwidget.h \
@@ -3127,6 +3155,13 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qhttpserverfutureresponse.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtHttpServer/qthttpserverversion.h \
 		VDV301subscriber/newhttpserver.h \
+		VDV301subscriber/QtZeroConf/qzeroconf.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMap \
+		VDV301subscriber/QtZeroConf/qzeroconfglobal.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QtGlobal \
+		VDV301subscriber/QtZeroConf/qzeroconfservice.h \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QMutexLocker \
+		C:/Qt/5.15.1/mingw81_32/include/QtCore/QSharedPointer \
 		ui_mainwindow.h \
 		C:/Qt/5.15.1/mingw81_32/include/QtWidgets/QAction \
 		C:/Qt/5.15.1/mingw81_32/include/QtWidgets/qaction.h \

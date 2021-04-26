@@ -44,7 +44,7 @@ public:
     QPushButton *tlacitkoSeznamSluzeb;
     QPushButton *tlacitkoHlavni;
     QPushButton *tlacitkoCasovac;
-    QPushButton *pushButton_4;
+    QPushButton *quitTlacitko;
     QPushButton *refreshTlac;
     QStackedWidget *prepinadloStran;
     QWidget *page;
@@ -135,12 +135,12 @@ public:
 
         verticalLayout_4->addWidget(tlacitkoCasovac);
 
-        pushButton_4 = new QPushButton(centralWidget);
-        pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
-        pushButton_4->setCheckable(true);
-        pushButton_4->setAutoExclusive(true);
+        quitTlacitko = new QPushButton(centralWidget);
+        quitTlacitko->setObjectName(QString::fromUtf8("quitTlacitko"));
+        quitTlacitko->setCheckable(true);
+        quitTlacitko->setAutoExclusive(true);
 
-        verticalLayout_4->addWidget(pushButton_4);
+        verticalLayout_4->addWidget(quitTlacitko);
 
         refreshTlac = new QPushButton(centralWidget);
         refreshTlac->setObjectName(QString::fromUtf8("refreshTlac"));
@@ -347,7 +347,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 834, 26));
+        menuBar->setGeometry(QRect(0, 0, 834, 21));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -395,7 +395,7 @@ public:
 " slu\305\276eb", nullptr));
         tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "Hlavn\303\255 obrazovka", nullptr));
         tlacitkoCasovac->setText(QCoreApplication::translate("MainWindow", "\304\214asova\304\215", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "PushButton", nullptr));
+        quitTlacitko->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
         refreshTlac->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));
         Lcil->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" color:#3465a4;\">Sportovni hala</span></p></body></html>", nullptr));
