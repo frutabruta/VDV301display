@@ -30,6 +30,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 DEFINES+= QZEROCONF_STATIC
 include(VDV301subscriber/QtZeroConf/qtzeroconf.pri)
+target.path=/home/pi
+target.files=VDV301displayNew
+INSTALLS+=target
 
 SOURCES += \
     VDV301subscriber/newhttpserver.cpp \
