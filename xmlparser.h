@@ -22,6 +22,8 @@ public:
 
     void nactiXML(QString vstup);
     int nactiVehicleGroup(CestaUdaje &stav, QDomDocument xmlko);
+private:
+    QVector<SeznamZastavek> vyparsujNacestneZastavky(QDomElement zastavka);
 };
 
 

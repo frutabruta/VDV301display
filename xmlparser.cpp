@@ -40,10 +40,13 @@ int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, i
     for (int i=0; i<nodes.count();i++)
     {
         SeznamZastavek docasnaZastavka;
-        int poradiZastavky=root.elementsByTagName("StopPoint").at(i).toElement().elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        docasnaZastavka.StopName=root.elementsByTagName("StopPoint").at(i).toElement().elementsByTagName("StopName").at(0).firstChildElement().text();
+        QDomElement aktZastavkaDOM=root.elementsByTagName("StopPoint").at(i).toElement();
+        int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
+        docasnaZastavka.StopName=aktZastavkaDOM.elementsByTagName("StopName").at(0).firstChildElement().text();
         docasnaZastavka.LineName=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
         docasnaZastavka.StopIndex=i;
+        //docasnaZastavka.nacestne=vyparsujNacestneZastavky(aktZastavkaDOM);
+        //docasnaZastavka.nacestna=jeZastavkaNacestna(root.elementsByTagName("StopPoint").at(i).toElement());
         docasnaZastavka.DestinationName=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
         qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.StopName;
         docasnySeznamZst.push_back(docasnaZastavka);
@@ -56,7 +59,17 @@ int XmlParser::VytvorSeznamZastavek(QVector<SeznamZastavek> &docasnySeznamZst, i
 
     return 1;
 }
+QVector<SeznamZastavek> XmlParser::vyparsujNacestneZastavky(QDomElement zastavka)
+{
+/*
+    for()
+    {
 
+    }
+*/
+    QVector<SeznamZastavek> vystup;
+    return vystup;
+}
 int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
 {
     qDebug()<<"XmlParser::nactiVehicleGroup";
@@ -69,7 +82,7 @@ int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
     stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
     qDebug()<<"stopIndex "<<QString::number(stav.indexAktZastavky)<<"stopRequested "<<stav.VehicleStopRequested<<" locState "<<stav.locationState;
 
-return 1;
+    return 1;
 }
 
 

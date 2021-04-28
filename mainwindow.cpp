@@ -327,6 +327,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
         DoplneniPromennych();
         VykresleniPrijatychDat();
         FormatZobrazeni();
+        this->svgVykresleni();
         qInfo()<<"CIl:"<<nazevCile;
         //instanceHttpServeru.prijatoZeServeruTelo="";
     }
@@ -395,14 +396,7 @@ void MainWindow::on_svgTlacitko_clicked()
 
     //QSvgRenderer *m_renderer = new QSvgRenderer(QLatin1String("./Verlauf.svg"));
 
-
-    if (globalniSeznamZastavek.length()>0)
-    {
-    svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
-    }
-    int vysledek=svgOpenFile("./vystup.txt");
-    qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
-
+this->svgVykresleni();
     /*
     ui->graphicsView->setScene(&novaScena);
     ui->graphicsView->update();
@@ -413,6 +407,24 @@ void MainWindow::on_svgTlacitko_clicked()
 
 
 //zkpirovano z svgviewer demo
+
+bool MainWindow::svgVykresleni()
+{
+
+    if (globalniSeznamZastavek.length()>0)
+    {
+    //svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
+   svgVykreslovac.aktualizujVse(globalniSeznamZastavek,stavSystemu);
+    }
+    else
+    {
+        qDebug()<<"seznam zastavek je prazdny";
+    }
+    int vysledek=svgOpenFile("./vystup.txt");
+    qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
+
+    return true;
+}
 
 
 bool MainWindow::svgOpenFile(const QString &fileName)
