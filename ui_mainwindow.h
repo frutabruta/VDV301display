@@ -13,6 +13,8 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QFrame>
+#include <QtWidgets/QGraphicsView>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -44,6 +46,7 @@ public:
     QPushButton *tlacitkoSeznamSluzeb;
     QPushButton *tlacitkoHlavni;
     QPushButton *tlacitkoCasovac;
+    QPushButton *svgTlacitko;
     QPushButton *quitTlacitko;
     QPushButton *refreshTlac;
     QStackedWidget *prepinadloStran;
@@ -72,6 +75,10 @@ public:
     QLabel *label_3;
     QLineEdit *lineEdit;
     QPushButton *tlacitkoNastavVteriny;
+    QWidget *page_4;
+    QGridLayout *gridLayout;
+    QVBoxLayout *verticalLayout_6;
+    QGraphicsView *graphicsView;
     QFrame *line;
     QMenuBar *menuBar;
     QMenu *menunacti;
@@ -135,6 +142,11 @@ public:
 
         verticalLayout_4->addWidget(tlacitkoCasovac);
 
+        svgTlacitko = new QPushButton(centralWidget);
+        svgTlacitko->setObjectName(QString::fromUtf8("svgTlacitko"));
+
+        verticalLayout_4->addWidget(svgTlacitko);
+
         quitTlacitko = new QPushButton(centralWidget);
         quitTlacitko->setObjectName(QString::fromUtf8("quitTlacitko"));
         quitTlacitko->setCheckable(true);
@@ -152,6 +164,11 @@ public:
 
         prepinadloStran = new QStackedWidget(centralWidget);
         prepinadloStran->setObjectName(QString::fromUtf8("prepinadloStran"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(prepinadloStran->sizePolicy().hasHeightForWidth());
+        prepinadloStran->setSizePolicy(sizePolicy1);
         page = new QWidget();
         page->setObjectName(QString::fromUtf8("page"));
         verticalLayoutWidget = new QWidget(page);
@@ -167,11 +184,11 @@ public:
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         Llinka = new QLabel(verticalLayoutWidget);
         Llinka->setObjectName(QString::fromUtf8("Llinka"));
-        QSizePolicy sizePolicy1(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(Llinka->sizePolicy().hasHeightForWidth());
-        Llinka->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy2(QSizePolicy::Maximum, QSizePolicy::Maximum);
+        sizePolicy2.setHorizontalStretch(0);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(Llinka->sizePolicy().hasHeightForWidth());
+        Llinka->setSizePolicy(sizePolicy2);
         QFont font;
         font.setPointSize(30);
         Llinka->setFont(font);
@@ -181,11 +198,11 @@ public:
 
         Lcil = new QLabel(verticalLayoutWidget);
         Lcil->setObjectName(QString::fromUtf8("Lcil"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Maximum);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(Lcil->sizePolicy().hasHeightForWidth());
-        Lcil->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Maximum);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(Lcil->sizePolicy().hasHeightForWidth());
+        Lcil->setSizePolicy(sizePolicy3);
         Lcil->setFont(font);
         Lcil->setAutoFillBackground(false);
 
@@ -199,11 +216,11 @@ public:
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         sipka = new QLabel(verticalLayoutWidget);
         sipka->setObjectName(QString::fromUtf8("sipka"));
-        QSizePolicy sizePolicy3(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(sipka->sizePolicy().hasHeightForWidth());
-        sipka->setSizePolicy(sizePolicy3);
+        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Preferred);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(sipka->sizePolicy().hasHeightForWidth());
+        sipka->setSizePolicy(sizePolicy4);
         sipka->setMaximumSize(QSize(50, 16777215));
         QFont font1;
         font1.setPointSize(70);
@@ -252,11 +269,11 @@ public:
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         Lnacestna1 = new QLabel(verticalLayoutWidget);
         Lnacestna1->setObjectName(QString::fromUtf8("Lnacestna1"));
-        QSizePolicy sizePolicy4(QSizePolicy::Minimum, QSizePolicy::Maximum);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(Lnacestna1->sizePolicy().hasHeightForWidth());
-        Lnacestna1->setSizePolicy(sizePolicy4);
+        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Maximum);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(Lnacestna1->sizePolicy().hasHeightForWidth());
+        Lnacestna1->setSizePolicy(sizePolicy5);
         Lnacestna1->setFont(font);
         Lnacestna1->setScaledContents(false);
 
@@ -264,11 +281,11 @@ public:
 
         label_6 = new QLabel(verticalLayoutWidget);
         label_6->setObjectName(QString::fromUtf8("label_6"));
-        QSizePolicy sizePolicy5(QSizePolicy::Fixed, QSizePolicy::Maximum);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy6(QSizePolicy::Fixed, QSizePolicy::Maximum);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy6);
 
         horizontalLayout_2->addWidget(label_6);
 
@@ -327,6 +344,26 @@ public:
         verticalLayout_5->addWidget(tlacitkoNastavVteriny);
 
         prepinadloStran->addWidget(page_3);
+        page_4 = new QWidget();
+        page_4->setObjectName(QString::fromUtf8("page_4"));
+        gridLayout = new QGridLayout(page_4);
+        gridLayout->setSpacing(6);
+        gridLayout->setContentsMargins(11, 11, 11, 11);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        verticalLayout_6 = new QVBoxLayout();
+        verticalLayout_6->setSpacing(0);
+        verticalLayout_6->setObjectName(QString::fromUtf8("verticalLayout_6"));
+        graphicsView = new QGraphicsView(page_4);
+        graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
+        sizePolicy1.setHeightForWidth(graphicsView->sizePolicy().hasHeightForWidth());
+        graphicsView->setSizePolicy(sizePolicy1);
+
+        verticalLayout_6->addWidget(graphicsView);
+
+
+        gridLayout->addLayout(verticalLayout_6, 0, 0, 1, 1);
+
+        prepinadloStran->addWidget(page_4);
 
         horizontalLayout_5->addWidget(prepinadloStran);
 
@@ -357,11 +394,11 @@ public:
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         mainToolBar->setEnabled(true);
-        QSizePolicy sizePolicy6(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
-        mainToolBar->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy7(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
+        mainToolBar->setSizePolicy(sizePolicy7);
         mainToolBar->setMovable(false);
         mainToolBar->setFloatable(false);
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
@@ -379,7 +416,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        prepinadloStran->setCurrentIndex(0);
+        prepinadloStran->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -395,6 +432,7 @@ public:
 " slu\305\276eb", nullptr));
         tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "Hlavn\303\255 obrazovka", nullptr));
         tlacitkoCasovac->setText(QCoreApplication::translate("MainWindow", "\304\214asova\304\215", nullptr));
+        svgTlacitko->setText(QCoreApplication::translate("MainWindow", "SVG", nullptr));
         quitTlacitko->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
         refreshTlac->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));

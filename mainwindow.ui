@@ -95,6 +95,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="svgTlacitko">
+            <property name="text">
+             <string>SVG</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="quitTlacitko">
             <property name="text">
              <string>QUIT</string>
@@ -118,8 +125,14 @@
         </item>
         <item>
          <widget class="QStackedWidget" name="prepinadloStran">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QWidget" name="verticalLayoutWidget">
@@ -416,6 +429,27 @@
              </item>
             </layout>
            </widget>
+          </widget>
+          <widget class="QWidget" name="page_4">
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="0" column="0">
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QGraphicsView" name="graphicsView">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
           </widget>
          </widget>
         </item>

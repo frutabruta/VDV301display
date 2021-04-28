@@ -8,6 +8,9 @@
 #include <QNetworkRequest>
 #include <QUrl>
 #include <QWidget>
+#include <QGraphicsSvgItem>
+#include <QSvgRenderer>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -367,7 +370,7 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
     //
     //ui->Lnacestna1->setAutoFillBackground(true);
 
-        ui->Lnacestna1->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+    ui->Lnacestna1->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
 
     //ui->Lnacestna1->repaint();
 }
@@ -377,4 +380,85 @@ void MainWindow::on_quitTlacitko_clicked()
 {
     qDebug()<<"\n on_quitTlacitko_clicked \n";
     MainWindow::close();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+
+}
+
+void MainWindow::on_svgTlacitko_clicked()
+{
+
+    ui->prepinadloStran->setCurrentIndex(3);
+
+
+    //QSvgRenderer *m_renderer = new QSvgRenderer(QLatin1String("./Verlauf.svg"));
+
+
+    if (globalniSeznamZastavek.length()>0)
+    {
+    svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
+    }
+    int vysledek=svgOpenFile("./vystup.txt");
+    qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
+
+    /*
+    ui->graphicsView->setScene(&novaScena);
+    ui->graphicsView->update();
+    ui->graphicsView->show();
+    */
+
+}
+
+
+//zkpirovano z svgviewer demo
+
+
+bool MainWindow::svgOpenFile(const QString &fileName)
+{
+    qDebug()<<"MainWindow::openFile";
+    QGraphicsScene *s = &scene;
+
+    // const bool drawBackground = (m_backgroundItem ? m_backgroundItem->isVisible() : false);
+    // const bool drawOutline = (m_outlineItem ? m_outlineItem->isVisible() : true);
+    QFile soubor;
+
+    QScopedPointer<QGraphicsSvgItem> svgItem(new QGraphicsSvgItem(fileName));
+    //QScopedPointer<QGraphicsSvgItem> svgItem(new QGraphicsSvgItem(soubor));
+    if (!svgItem->renderer()->isValid())
+        return false;
+
+    s->clear();
+    // resetTransform();
+
+    m_svgItem = svgItem.take();
+    m_svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
+    m_svgItem->setCacheMode(QGraphicsItem::NoCache);
+    m_svgItem->setZValue(0);
+
+    /*m_backgroundItem = new QGraphicsRectItem(m_svgItem->boundingRect());
+    m_backgroundItem->setBrush(Qt::white);
+    m_backgroundItem->setPen(Qt::NoPen);
+    m_backgroundItem->setVisible(drawBackground);
+    m_backgroundItem->setZValue(-1);
+    */
+
+
+    m_outlineItem = new QGraphicsRectItem(m_svgItem->boundingRect());
+    QPen outline(Qt::black, 2, Qt::DashLine);
+    outline.setCosmetic(true);
+    m_outlineItem->setPen(outline);
+    m_outlineItem->setBrush(Qt::NoBrush);
+    //m_outlineItem->setVisible(drawOutline);
+    m_outlineItem->setZValue(1);
+
+
+    //s->addItem(m_backgroundItem);
+    s->addItem(m_svgItem);
+    //s->addItem(m_outlineItem);
+
+    s->setSceneRect(m_outlineItem->boundingRect().adjusted(-10, -10, 10, 10));
+    ui->graphicsView->setScene(s);
+    return true;
 }

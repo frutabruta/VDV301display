@@ -8,6 +8,8 @@ QT       += core gui
 QT += xml
 QT       += core gui network
 QT+= httpserver
+QT += svg
+
 
 #QT += svg
 #QT += webenginewidgets
@@ -39,6 +41,7 @@ SOURCES += \
     VDV301subscriber/ibisipsubscriber.cpp \
         main.cpp \
         mainwindow.cpp \
+    svgvykreslovani.cpp \
     xmlparser.cpp \
     VDV301struktury/seznamzastavek.cpp\
     VDV301struktury/cestaudaje.cpp
@@ -47,6 +50,7 @@ HEADERS += \
     VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
         mainwindow.h \
+    svgvykreslovani.h \
     xmlparser.h \
     VDV301struktury/seznamzastavek.h\
     VDV301struktury/cestaudaje.h

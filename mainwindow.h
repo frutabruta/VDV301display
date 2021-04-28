@@ -11,6 +11,12 @@ void on_actionstahnoutXML_triggered();
 //#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
 #include "VDV301struktury/cestaudaje.h"
+#include "svgvykreslovani.h"
+
+#include <QGraphicsSvgItem>
+#include <QGraphicsScene>
+#include <QSvgRenderer>
+
 class QByteArray;
 class QNetworkAccessManager;
 class QNetworkReply;
@@ -36,6 +42,11 @@ public:
     ~MainWindow();
 
     IbisIpSubscriber CustomerInformationServiceSubscriber;
+    bool svgOpenFile(const QString &fileName);
+    SvgVykreslovani svgVykreslovac;
+
+
+
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -53,6 +64,10 @@ private slots:
 
     void on_quitTlacitko_clicked();
 
+    void on_pushButton_clicked();
+
+    void on_svgTlacitko_clicked();
+
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
@@ -64,6 +79,13 @@ private:
     void vyprselCasovacSluzby();
     void vymazObrazovku();
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
+
+    QGraphicsScene scene;
+    QGraphicsSvgItem *m_svgItem;
+    QGraphicsRectItem *m_outlineItem;
+    bool svgReplaceName();
+    bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
+    bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
 };
 
 #endif // MAINWINDOW_H
