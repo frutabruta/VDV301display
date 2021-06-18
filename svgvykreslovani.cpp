@@ -101,7 +101,7 @@ bool SvgVykreslovani::individualniNahrazeni(QDomDocument &xmlDocument, QString h
         QString idAktElementu=texty.at(i).toElement().attribute("id");
         QString obsah=   texty.at(i).firstChild().firstChild().nodeValue() ;
         //firstChildElement().nodeValue()
-        qDebug()<<"nalezeny element "<<idAktElementu<<"nodeValue "<<obsah;
+      //  qDebug()<<"nalezeny element "<<idAktElementu<<"nodeValue "<<obsah;
         if (idAktElementu==hledaneId)
         {
             qDebug()<<"menim obsah";

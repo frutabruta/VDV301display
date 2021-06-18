@@ -40,25 +40,26 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
     docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt();
     for (int i=0; i<nodes.count();i++)
     {
+
         ZastavkaCil docasnaZastavka;
         QDomElement aktZastavkaDOM=root.elementsByTagName("StopPoint").at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
         docasnaZastavka.zastavka.StopName=aktZastavkaDOM.elementsByTagName("StopName").at(0).firstChildElement().text();
-        docasnaZastavka.linka.LineName=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
+        docasnaZastavka.linka.LineName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.StopIndex=i;
         docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky(aktZastavkaDOM);
         //docasnaZastavka.nacestna=jeZastavkaNacestna(root.elementsByTagName("StopPoint").at(i).toElement());
-        docasnaZastavka.cil.StopName=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameFront=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameSide=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameRear=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameInner=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameLcd=root.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.StopName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameFront=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameSide=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameRear=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameInner=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameLcd=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
 
 
 
 
-        qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName;
+        qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName ;
         docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
     }
