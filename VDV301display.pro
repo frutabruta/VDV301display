@@ -43,8 +43,11 @@ SOURCES += \
         mainwindow.cpp \
     svgvykreslovani.cpp \
     xmlparser.cpp \
-    VDV301struktury/seznamzastavek.cpp\
-    VDV301struktury/cestaudaje.cpp
+    VDV301struktury/zastavka.cpp\
+    VDV301struktury/zastavkacil.cpp\
+    VDV301struktury/cestaudaje.cpp\
+    VDV301struktury/linka.cpp\
+    VDV301struktury/pasmo.cpp
 
 HEADERS += \
     VDV301subscriber/newhttpserver.h \
@@ -52,7 +55,10 @@ HEADERS += \
         mainwindow.h \
     svgvykreslovani.h \
     xmlparser.h \
-    VDV301struktury/seznamzastavek.h\
+    VDV301struktury/zastavka.h\
+    VDV301struktury/zastavkacil.h\
+    VDV301struktury/pasmo.h\
+    VDV301struktury/linka.h\
     VDV301struktury/cestaudaje.h
 
 

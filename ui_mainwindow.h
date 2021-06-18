@@ -322,7 +322,7 @@ public:
         labelZbyvajiciVteriny->setFont(font3);
         verticalLayoutWidget_3 = new QWidget(page_3);
         verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
-        verticalLayoutWidget_3->setGeometry(QRect(60, 110, 160, 80));
+        verticalLayoutWidget_3->setGeometry(QRect(60, 110, 160, 84));
         verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget_3);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -384,7 +384,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 834, 21));
+        menuBar->setGeometry(QRect(0, 0, 834, 26));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -416,7 +416,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        prepinadloStran->setCurrentIndex(3);
+        prepinadloStran->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

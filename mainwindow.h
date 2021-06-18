@@ -11,6 +11,7 @@ void on_actionstahnoutXML_triggered();
 //#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
 #include "VDV301struktury/cestaudaje.h"
+#include "VDV301struktury/zastavkacil.h"
 #include "svgvykreslovani.h"
 
 #include <QGraphicsSvgItem>
@@ -31,7 +32,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     XmlParser instanceXMLparser;
-    QVector <SeznamZastavek> globalniSeznamZastavek;
+    QVector <ZastavkaCil> globalniSeznamZastavek;
     QString nazevLinky = "";
     QString nazevCile="";
     int indexZastavky=0;

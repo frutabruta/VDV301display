@@ -766,20 +766,9 @@
    style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:61.76px;line-height:0%;font-family:Roboto;-inkscape-font-specification:Roboto;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1"
    x="335.15363"
    y="536.46814">Roblín,Kuchařík
-    <animate
-   attributeType="XML"
-   attributeName="x"
-   values="335.15363;325.15363"
-   dur="1.5s"
-   repeatCount="none"
-   fill="freeze" />
-    <animate
-   attributeType="XML"
-   attributeName="y"
-   values="536.46814;633.91156"
-   dur="1.5s"
-   repeatCount="none"
-   fill="freeze" /></tspan>
+   <animateTransform attributeName="transform" type="translate" additive="sum"
+        values="335.15363,536.46814; 325.15363,633.91156" begin="1s" dur="4s" fill="freeze" repeatCount="indefinite" />
+    </tspan>
   </text>
     <text
        id="next_stop_1"

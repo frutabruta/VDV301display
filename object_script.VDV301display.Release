@@ -9,8 +9,11 @@ release/main.o
 release/mainwindow.o
 release/svgvykreslovani.o
 release/xmlparser.o
-release/seznamzastavek.o
+release/zastavka.o
+release/zastavkacil.o
 release/cestaudaje.o
+release/linka.o
+release/pasmo.o
 release/moc_qzeroconf.o
 release/moc_bonjour_p.o
 release/moc_qzeroconfservice.o

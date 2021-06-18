@@ -3,7 +3,7 @@
 #include <QDebug>
 #include <QDomDocument>
 #include <QFile>
-#include <VDV301struktury/seznamzastavek.h>
+#include <VDV301struktury/zastavka.h>
 #include "VDV301struktury/cestaudaje.h"
 
 SvgVykreslovani::SvgVykreslovani()
@@ -106,15 +106,16 @@ bool SvgVykreslovani::individualniNahrazeni(QDomDocument &xmlDocument, QString h
         {
             qDebug()<<"menim obsah";
             texty.at(i).firstChild().firstChild().setNodeValue(novaHodnota);
+            return 1;
         }
     }
-    return 1;
+    return 0;
 }
 
-QVector<SeznamZastavek> SvgVykreslovani::vytvorNasledujiciZastavky(QVector<SeznamZastavek> vsechnyZastavky,int index, int limit)
+QVector<ZastavkaCil> SvgVykreslovani::vytvorNasledujiciZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index, int limit)
 {
     qDebug()<<"SvgVykreslovani::vytvorNasledujiciZastavky";
-    QVector<SeznamZastavek> vyslednySeznam;
+    QVector<ZastavkaCil> vyslednySeznam;
 
 
     for (int i=index; i<vsechnyZastavky.size();i++)
@@ -125,11 +126,11 @@ QVector<SeznamZastavek> SvgVykreslovani::vytvorNasledujiciZastavky(QVector<Sezna
 
     return vyslednySeznam;
 }
-QVector<SeznamZastavek> SvgVykreslovani::vytvorNacestneZastavky(QVector<SeznamZastavek> vsechnyZastavky,int index)
+QVector<ZastavkaCil> SvgVykreslovani::vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index)
 {
     qDebug()<<"SvgVykreslovani::vytvorNacestneZastavky";
-    QVector<SeznamZastavek> vyslednySeznam;
-
+    QVector<ZastavkaCil> vyslednySeznam;
+    /*
 
     for (int i=index; i<vsechnyZastavky.size();i++)
     {
@@ -139,7 +140,7 @@ QVector<SeznamZastavek> SvgVykreslovani::vytvorNacestneZastavky(QVector<SeznamZa
         }
     }
 
-
+*/
     return vyslednySeznam;
 }
 
@@ -152,21 +153,22 @@ QDomDocument SvgVykreslovani::vymazZastavky(QDomDocument xmlDocument)
 
     for (int i=0;i<5;i++)
     {
-        this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i)," ");
+        //this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i)," ");
         this->individualniNahrazeni(xmlDocument,"next_stop_"+QString::number(i)," ");
+        this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i)," ");
     }
 
     //cil
     this->individualniNahrazeni(xmlDocument,"terminal_station"," ");
     //nacsty
-    this->individualniNahrazeni(xmlDocument,"text6433"," ");
+    this->individualniNahrazeni(xmlDocument,"viaStops"," ");
     //linka
     this->individualniNahrazeni(xmlDocument,"line_number"," ");
 
     return xmlDocument;
 }
 
-QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector<SeznamZastavek> nasledujiciZastavky)
+QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector<ZastavkaCil> nasledujiciZastavky)
 {
     qDebug()<<"SvgVykreslovani::vykresliZastavky";
 
@@ -174,9 +176,10 @@ QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector
     {
         if (i<nasledujiciZastavky.count())
         {
-            SeznamZastavek aktZastavka=nasledujiciZastavky.at(i);
-            this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i),pasmaDoStringu(aktZastavka.seznamPasem ) );
-            this->individualniNahrazeni(xmlDocument,"next_stop_"+QString::number(i),aktZastavka.StopName);
+            ZastavkaCil aktZastavka=nasledujiciZastavky.at(i);
+            this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i),pasmaDoStringu(aktZastavka.zastavka.seznamPasem ) );
+            qDebug()<<"zobrazuji pasmo "<<pasmaDoStringu(aktZastavka.zastavka.seznamPasem);
+            this->individualniNahrazeni(xmlDocument,"next_stop_"+QString::number(i),aktZastavka.zastavka.StopName);
         }
         else
         {
@@ -193,7 +196,7 @@ QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector
 
 
 
-QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<SeznamZastavek> nacestneZastavky)
+QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<Zastavka> nacestneZastavky)
 {
     qDebug()<<"SvgVykreslovani::vykresliNacestneZastavky";
     if (nacestneZastavky.count()==0)
@@ -205,22 +208,23 @@ QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument,
     nacestyString+=nacestneZastavky.at(0).NameLcd;
     for (int i=1;i<nacestneZastavky.count();i++)
     {
-        nacestyString+="-"+nacestneZastavky.at(i).NameLcd;
+        nacestyString+=" – "+nacestneZastavky.at(i).NameLcd;
     }
-    this->individualniNahrazeni(xmlDocument,"text6433",nacestyString);
+    qDebug()<<"vypis radku nacestnych zastavek"<<nacestyString;
+    this->individualniNahrazeni(xmlDocument,"viaStops",nacestyString);
 
     //this->individualniNahrazeni(xmlDocument,"terminal_station",nasledujiciZastavky.at(0).DestinationName);
 
     return xmlDocument;
 }
 
-QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<SeznamZastavek> globalniZastavky, CestaUdaje stav)
+QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav)
 {
     qDebug()<<"SvgVykreslovani::vykresliCil";
 
     if (stav.indexAktZastavky<globalniZastavky.count())
     {
-        this->individualniNahrazeni(xmlDocument,"terminal_station",globalniZastavky.at(stav.indexAktZastavky).DestinationName);
+        this->individualniNahrazeni(xmlDocument,"terminal_station",globalniZastavky.at(stav.indexAktZastavky).cil.NameLcd);
     }
     else
     {
@@ -229,13 +233,13 @@ QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<Sezn
     return xmlDocument;
 }
 
-QDomDocument SvgVykreslovani::vykresliLinku(QDomDocument xmlDocument, QVector<SeznamZastavek> globalniZastavky, CestaUdaje stav)
+QDomDocument SvgVykreslovani::vykresliLinku(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav)
 {
     qDebug()<<"SvgVykreslovani::vykresliLinku";
 
     if (stav.indexAktZastavky<globalniZastavky.count())
     {
-        this->individualniNahrazeni(xmlDocument,"line_number",globalniZastavky.at(stav.indexAktZastavky).LineName);
+        this->individualniNahrazeni(xmlDocument,"line_number",globalniZastavky.at(stav.indexAktZastavky).linka.LineName);
     }
     else
     {
@@ -260,20 +264,21 @@ QString SvgVykreslovani::pasmaDoStringu(QVector<Pasmo> seznamPasem)
     return vysledek;
 }
 
-int SvgVykreslovani::aktualizujVse(QVector<SeznamZastavek> zastavky, CestaUdaje stav)
+int SvgVykreslovani::aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav)
 {
     QDomDocument xmlko = this->souborDoQDomDocument("Verlauf2.svg");
     if (xmlko.isNull())
     {
         qDebug()<<"soubor SVG se nenacetl";
     }
-    QVector<SeznamZastavek> nasledujiciZastavky=this->vytvorNasledujiciZastavky(zastavky,stav.indexAktZastavky,4);
+    QVector<ZastavkaCil> nasledujiciZastavky=this->vytvorNasledujiciZastavky(zastavky,stav.indexAktZastavky,4);
     xmlko=vymazZastavky(xmlko);
     xmlko=vykresliZastavky(xmlko,nasledujiciZastavky);
     xmlko=vykresliCil(xmlko,zastavky,stav);
     xmlko=vykresliLinku(xmlko,zastavky,stav);
-    xmlko=vykresliNacestneZastavky(xmlko,vytvorNacestneZastavky(zastavky,stav.indexAktZastavky));
+    xmlko=vykresliNacestneZastavky(xmlko,zastavky.at(stav.indexAktZastavky).nacestneZastavky);
+    //xmlko=vykresliNacestneZastavky(xmlko,vytvorNacestneZastavky(zastavky,stav.indexAktZastavky));
 
-    qDomDocumentDoSouboru("vystup.txt",xmlko);
+    qDomDocumentDoSouboru("vystup.svg",xmlko);
     return 1;
 }

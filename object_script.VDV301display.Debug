@@ -9,8 +9,11 @@ debug/main.o
 debug/mainwindow.o
 debug/svgvykreslovani.o
 debug/xmlparser.o
-debug/seznamzastavek.o
+debug/zastavka.o
+debug/zastavkacil.o
 debug/cestaudaje.o
+debug/linka.o
+debug/pasmo.o
 debug/moc_qzeroconf.o
 debug/moc_bonjour_p.o
 debug/moc_qzeroconfservice.o

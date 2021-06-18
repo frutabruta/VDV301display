@@ -10,6 +10,7 @@
 #include <QWidget>
 #include <QGraphicsSvgItem>
 #include <QSvgRenderer>
+#include <QSvgWidget>
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -41,6 +42,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
+    /*
+    auto    sw1 = new QSvgWidget(QString("vystupanim.svg"), this);
+    ui->verticalLayout_3->addWidget(sw1);
+    sw1->setGeometry(50, 50, rect().width(), rect().height());
+    */
 
 }
 
@@ -85,10 +91,10 @@ int MainWindow::VykresleniPrijatychDat()
     if(indexZastavky<globalniSeznamZastavek.size())
     {
 
-        ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].StopName);
+        ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].zastavka.StopName);
         if ((indexZastavky+1)<pocetZastavek)
         {
-            ui->Lnacestna2->setText(globalniSeznamZastavek[indexZastavky+1].StopName);
+            ui->Lnacestna2->setText(globalniSeznamZastavek[indexZastavky+1].zastavka.StopName);
         }
         else
         {
@@ -96,7 +102,7 @@ int MainWindow::VykresleniPrijatychDat()
         }
         if ((indexZastavky+2)<pocetZastavek)
         {
-            ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].StopName);
+            ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].zastavka.StopName);
         }
         else
         {
@@ -104,7 +110,7 @@ int MainWindow::VykresleniPrijatychDat()
         }
         if ((indexZastavky+3)<pocetZastavek)
         {
-            ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].StopName);
+            ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].zastavka.StopName);
         }
         else
         {
@@ -132,8 +138,8 @@ int MainWindow::DoplneniPromennych()
     qInfo()<<"\n DoplneniPromennych";
     if (globalniSeznamZastavek.size()>indexZastavky)
     {
-        nazevCile=globalniSeznamZastavek.at(indexZastavky).DestinationName;
-        nazevLinky=globalniSeznamZastavek.at(indexZastavky).LineName;
+        nazevCile=globalniSeznamZastavek.at(indexZastavky).cil.NameLcd;
+        nazevLinky=globalniSeznamZastavek.at(indexZastavky).linka.LineName;
     }
     else
     {
@@ -420,7 +426,8 @@ bool MainWindow::svgVykresleni()
     {
         qDebug()<<"seznam zastavek je prazdny";
     }
-    int vysledek=svgOpenFile("./vystup.txt");
+    //int vysledek=svgOpenFile("./bubbles.svg");
+    int vysledek=svgOpenFile("./vystup.svg");
     qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
 
     return true;
@@ -437,6 +444,7 @@ bool MainWindow::svgOpenFile(const QString &fileName)
     QFile soubor;
 
     QScopedPointer<QGraphicsSvgItem> svgItem(new QGraphicsSvgItem(fileName));
+    svgItem->renderer()->setFramesPerSecond(20);
     //QScopedPointer<QGraphicsSvgItem> svgItem(new QGraphicsSvgItem(soubor));
     if (!svgItem->renderer()->isValid())
         return false;
@@ -472,5 +480,12 @@ bool MainWindow::svgOpenFile(const QString &fileName)
 
     s->setSceneRect(m_outlineItem->boundingRect().adjusted(-10, -10, 10, 10));
     ui->graphicsView->setScene(s);
+
+
+
+
+
+
+
     return true;
 }

@@ -2,7 +2,8 @@
 #define SVGVYKRESLOVANI_H
 #include <QWidget>
 #include <QDomDocument>
-#include <VDV301struktury/seznamzastavek.h>
+#include <VDV301struktury/zastavka.h>
+#include <VDV301struktury/zastavkacil.h>
 #include "VDV301struktury/cestaudaje.h"
 
 class SvgVykreslovani
@@ -11,18 +12,19 @@ public:
     SvgVykreslovani();
     bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
     bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
-    QVector<SeznamZastavek> vytvorNasledujiciZastavky(QVector<SeznamZastavek> vsechnyZastavky, int index, int limit);
+    QVector<ZastavkaCil> vytvorNasledujiciZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index, int limit);
     QDomDocument vymazZastavky(QDomDocument xmlDocument);
-    QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<SeznamZastavek> nasledujiciZastavky);
-    int aktualizujVse(QVector<SeznamZastavek> zastavky, CestaUdaje stav);
+    QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<ZastavkaCil> nasledujiciZastavky);
+    int aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
+    QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
 private:
     QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
     QDomDocument souborDoQDomDocument(QString cesta);
-    QDomDocument vykresliCil(QDomDocument xmlDocument, QVector<SeznamZastavek> globalniZastavky, CestaUdaje stav);
-    QDomDocument vykresliLinku(QDomDocument xmlDocument, QVector<SeznamZastavek> globalniZastavky, CestaUdaje stav);
-    QDomDocument vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<SeznamZastavek> nacestneZastavky);
-    QVector<SeznamZastavek> vytvorNacestneZastavky(QVector<SeznamZastavek> vsechnyZastavky, int index);
+    QDomDocument vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);
+    QDomDocument vykresliLinku(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);
+    QDomDocument vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<Zastavka> nacestneZastavky);
+
 };
 
 #endif // SVGVYKRESLOVANI_H
