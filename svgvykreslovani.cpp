@@ -266,7 +266,7 @@ QString SvgVykreslovani::pasmaDoStringu(QVector<Pasmo> seznamPasem)
 
 int SvgVykreslovani::aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav)
 {
-    QDomDocument xmlko = this->souborDoQDomDocument("Verlauf2.svg");
+    QDomDocument xmlko = this->souborDoQDomDocument("hlavni.svg");
     if (xmlko.isNull())
     {
         qDebug()<<"soubor SVG se nenacetl";

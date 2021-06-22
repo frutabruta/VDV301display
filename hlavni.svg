@@ -836,7 +836,7 @@
    fill="freeze" /></tspan></text>
     <text
        id="next_stop_0new"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:74.6667px;line-height:0%;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:1;stroke:none;"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:74.6667px;line-height:0%;font-family:Roboto;-inkscape-font-specification:'Roboto Bold';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#ffffff;fill-opacity:0;stroke:none;"
        x="297.94531"
        y="792.64917"
        inkscape:label="#text5276-2-9-2"><tspan
@@ -1023,7 +1023,7 @@
        xml:space="preserve" />
     <text
        id="pasmo0new"
-       style="font-variant:normal;font-weight:bold;font-stretch:normal;font-size:77.2068px;font-family:Roboto;-inkscape-font-specification:Roboto-Bold;text-align:end;writing-mode:lr-tb;text-anchor:end;display:inline;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.74327;"
+       style="font-variant:normal;font-weight:bold;font-stretch:normal;font-size:77.2068px;font-family:Roboto;-inkscape-font-specification:Roboto-Bold;text-align:end;writing-mode:lr-tb;text-anchor:end;display:inline;fill:#ffffff;fill-opacity:0;fill-rule:nonzero;stroke:none;stroke-width:2.74327;"
        y="794.61462"
        x="207.81256"><tspan
          id="tspan6081-3-1-8"
