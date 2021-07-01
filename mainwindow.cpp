@@ -21,6 +21,16 @@ MainWindow::MainWindow(QWidget *parent) :
   // , mDataBuffer(new QByteArray)
   , CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
+
+
+
+    font8.setFamily("21-PID 8");
+    font8.setPointSize(65);
+
+    font10.setFamily("21-PID 10");
+    font10.setPointSize(65);
+
+
     ui->setupUi(this);
     FormatZobrazeni();
     instanceXMLparser.Test();
@@ -31,17 +41,36 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::kazdouVterinu);
+
+
+    connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::iterujVsechnyPanely);
+
+
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
     timer->start(1000);
+    timerBocniPanel->start(2000);
 
     CustomerInformationServiceSubscriber.odebirano=false ;
     CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
 
+    this->inicializujVirtualniLedPanely();
 
     // ui->tabulkaSubscriberu->setColumnCount(4);
 
 
-
+    bool dvaradky=true;
+    if(dvaradky==true)
+    {
+        ui->labelFrontSingle->setVisible(false);
+        ui->labelFrontBottomRow->setVisible(true);
+        ui->labelFrontTopRow->setVisible(true);
+    }
+    else
+    {
+        ui->labelFrontSingle->setVisible(true);
+        ui->labelFrontBottomRow->setVisible(false);
+        ui->labelFrontTopRow->setVisible(false);
+    }
     /*
     auto    sw1 = new QSvgWidget(QString("vystupanim.svg"), this);
     ui->verticalLayout_3->addWidget(sw1);
@@ -91,10 +120,10 @@ int MainWindow::VykresleniPrijatychDat()
     if(indexZastavky<globalniSeznamZastavek.size())
     {
 
-        ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].zastavka.StopName);
+        ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].zastavka.NameLcd);
         if ((indexZastavky+1)<pocetZastavek)
         {
-            ui->Lnacestna2->setText(globalniSeznamZastavek[indexZastavky+1].zastavka.StopName);
+            ui->Lnacestna2->setText(globalniSeznamZastavek[indexZastavky+1].zastavka.NameLcd);
         }
         else
         {
@@ -102,7 +131,7 @@ int MainWindow::VykresleniPrijatychDat()
         }
         if ((indexZastavky+2)<pocetZastavek)
         {
-            ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].zastavka.StopName);
+            ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].zastavka.NameLcd);
         }
         else
         {
@@ -110,7 +139,7 @@ int MainWindow::VykresleniPrijatychDat()
         }
         if ((indexZastavky+3)<pocetZastavek)
         {
-            ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].zastavka.StopName);
+            ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].zastavka.NameLcd);
         }
         else
         {
@@ -333,6 +362,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
         DoplneniPromennych();
         VykresleniPrijatychDat();
         FormatZobrazeni();
+        this->aktualizujZobrazeniVirtualnichLedPanelu(globalniSeznamZastavek,stavSystemu);
         this->svgVykresleni();
         qInfo()<<"CIl:"<<nazevCile;
         //instanceHttpServeru.prijatoZeServeruTelo="";
@@ -402,7 +432,7 @@ void MainWindow::on_svgTlacitko_clicked()
 
     //QSvgRenderer *m_renderer = new QSvgRenderer(QLatin1String("./Verlauf.svg"));
 
-this->svgVykresleni();
+    this->svgVykresleni();
     /*
     ui->graphicsView->setScene(&novaScena);
     ui->graphicsView->update();
@@ -419,8 +449,8 @@ bool MainWindow::svgVykresleni()
 
     if (globalniSeznamZastavek.length()>0)
     {
-    //svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
-   svgVykreslovac.aktualizujVse(globalniSeznamZastavek,stavSystemu);
+        //svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
+        svgVykreslovac.aktualizujVse(globalniSeznamZastavek,stavSystemu);
     }
     else
     {
@@ -488,4 +518,149 @@ bool MainWindow::svgOpenFile(const QString &fileName)
 
 
     return true;
+}
+
+void MainWindow::on_tlacitkoLed_clicked()
+{
+    ui->prepinadloStran->setCurrentIndex(4);
+    ui->labelFrontBottomRow->setText("");
+}
+
+
+void MainWindow::naplnLedObsah(QVector<QString> zobrazit)
+{
+    qDebug()<<"MainWindow::naplnLedObsah";
+}
+
+
+void MainWindow::naplnLedFront(QString linka,QString horniRadek,QString dolniRadek)
+{
+    qDebug()<<"MainWindow::naplnLedFront";
+
+
+
+
+
+
+    if (dolniRadek!="")
+    {
+        ui->labelFrontSingle->setVisible(false);
+        ui->labelFrontBottomRow->setVisible(true);
+        ui->labelFrontTopRow->setVisible(true);
+    }
+    else
+    {
+        ui->labelFrontSingle->setVisible(true);
+        ui->labelFrontBottomRow->setVisible(false);
+        ui->labelFrontTopRow->setVisible(false);
+    }
+
+
+
+
+    ui->labelFrontLine->setText(linka);
+    ui->labelFrontTopRow->setText(horniRadek);
+    ui->labelFrontBottomRow->setText(dolniRadek);
+    ui->labelFrontSingle->setText(horniRadek);
+
+
+
+    if (linka.contains("X"))
+    {
+
+        ui->labelFrontLine->setFont(font10);
+    }
+    else
+    {
+            ui->labelFrontLine->setFont(font8);
+    }
+}
+
+void MainWindow::naplnLedSide(QString linka,QString horniRadek,QString dolniRadek)
+{
+    qDebug()<<"MainWindow::naplnLedSide";
+    ui->labelSideLine->setText(linka);
+    ui->labelSideTopRow->setText(horniRadek);
+    ui->labelSideBottomRow->setText(dolniRadek);
+}
+
+void MainWindow::naplnLedRear(QString linka)
+{
+    qDebug()<<"MainWindow::naplnLedRear";
+    ui->labelRearLine->setText(linka);
+
+}
+
+void MainWindow::naplnLedInner(QString linka,QString horniRadek,QString dolniRadek)
+{
+    qDebug()<<"MainWindow::naplnLedInner";
+    ui->labelInnerLine->setText(linka);
+    ui->labelInnerTopRow->setText(horniRadek);
+    ui->labelInnerBottomRow->setText(dolniRadek);
+}
+
+
+void MainWindow::inicializujVirtualniLedPanely()
+{
+
+    qDebug()<<"MainWindow::inicializujVirtualniLedPanely";
+    naplnLedFront("123","čelní horní","čelní dolní");
+    naplnLedSide("456","Boční cíl","Boční nácestné");
+    naplnLedRear("789");
+    naplnLedInner("123","vnitřní cíl", "vnitřní nácesty");
+}
+
+void MainWindow::aktualizujZobrazeniVirtualnichLedPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav )
+{
+    qDebug()<<"MainWindow::aktualizujZobrazeniVirtualnichLedPanelu";
+    ZastavkaCil aktZast=zastavky.at(stav.indexAktZastavky);
+
+    naplnLedFront(aktZast.linka.LineName,aktZast.cil.NameFront,aktZast.cil.NameFront2);
+    naplnLedSide(aktZast.linka.LineName,aktZast.cil.NameSide,aktZast.zastavka.NameSide );
+    naplnLedRear(aktZast.linka.LineName);
+    naplnLedInner(aktZast.linka.LineName,aktZast.cil.NameInner, aktZast.zastavka.NameInner);
+
+    textyBocniPanelkIteraci=naplnNacestyBocniPanel(aktZast);
+
+}
+
+QVector<QString> MainWindow::naplnNacestyBocniPanel(ZastavkaCil aktualniZastavka)
+{
+    qDebug()<<"MainWindow::naplnNacestyBocniPanel";
+    Zastavka nacesta;
+    QVector<QString> textyNaBocniPanel;
+    textyNaBocniPanel.append("přes:");
+    foreach (nacesta,aktualniZastavka.nacestneZastavky)
+    {
+    textyNaBocniPanel.append(nacesta.NameSide);
+    qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
+    }
+    return textyNaBocniPanel;
+
+}
+
+
+void MainWindow::iterujVsechnyPanely()
+{
+    qDebug()<<"MainWindow::iterujVsechnyPanely()";
+    iterujBocniPanel(textyBocniPanelkIteraci,cyklovaniIndex);
+}
+
+void MainWindow::iterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
+{
+    qDebug()<<"MainWindow::iterujBocniPanel";
+
+    if(iteracniIndex<texty.length())
+    {
+  ui->labelInnerBottomRow->setText(texty.at(iteracniIndex));
+
+  ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
+
+  iteracniIndex++;
+
+    }
+    else
+    {
+        iteracniIndex=0;
+    }
 }

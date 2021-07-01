@@ -45,16 +45,36 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         QDomElement aktZastavkaDOM=root.elementsByTagName("StopPoint").at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
         docasnaZastavka.zastavka.StopName=aktZastavkaDOM.elementsByTagName("StopName").at(0).firstChildElement().text();
+        docasnaZastavka.zastavka.NameFront=aktZastavkaDOM.elementsByTagName("StopFrontName").at(0).firstChildElement().text();
+        docasnaZastavka.zastavka.NameSide=aktZastavkaDOM.elementsByTagName("StopSideName").at(0).firstChildElement().text();
+        docasnaZastavka.zastavka.NameRear=aktZastavkaDOM.elementsByTagName("StopRearName").at(0).firstChildElement().text();
+        docasnaZastavka.zastavka.NameInner=aktZastavkaDOM.elementsByTagName("StopInnerName").at(0).firstChildElement().text();
+        docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.elementsByTagName("StopLcdName").at(0).firstChildElement().text();
         docasnaZastavka.linka.LineName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.StopIndex=i;
         docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky(aktZastavkaDOM);
         //docasnaZastavka.nacestna=jeZastavkaNacestna(root.elementsByTagName("StopPoint").at(i).toElement());
-        docasnaZastavka.cil.StopName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameFront=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameSide=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameRear=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameInner=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
-        docasnaZastavka.cil.NameLcd=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
+
+        QDomElement displayContent=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement();
+        docasnaZastavka.cil.StopName=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameFront=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName").at(0).firstChildElement().text();
+
+
+        QDomNodeList nazvyCelniPanel=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName");
+        if (nazvyCelniPanel.length()>0)
+        {
+            docasnaZastavka.cil.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
+        }
+        if (nazvyCelniPanel.length()>1)
+        {
+         docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
+        }
+
+
+        docasnaZastavka.cil.NameSide=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameRear=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameInner=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
+        docasnaZastavka.cil.NameLcd=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
 
 
 
@@ -81,7 +101,9 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky(QDomElement zastavka)
         Zastavka nacesta;
         QDomNodeList priznaky=nacesty.at(i).toElement().elementsByTagName("ViaPointProperty");
         QDomElement aktNacesta=nacesty.at(i).toElement();
-        nacesta.NameLcd=aktNacesta.firstChildElement("PlaceName").firstChildElement("Value").firstChild().nodeValue();
+        nacesta.NameLcd=aktNacesta.firstChildElement("PlaceLcdName").firstChildElement("Value").firstChild().nodeValue();
+        nacesta.NameInner=aktNacesta.firstChildElement("PlaceInnerName").firstChildElement("Value").firstChild().nodeValue();
+        nacesta.NameSide=aktNacesta.firstChildElement("PlaceSideName").firstChildElement("Value").firstChild().nodeValue();
         nacesta.StopName=nacesta.NameLcd;
                 //firstChildElement("Value").nodeValue();
        // qDebug()<<"nazev nacesty "<<nacesta.NameLcd;

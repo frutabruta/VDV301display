@@ -179,7 +179,7 @@ QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector
             ZastavkaCil aktZastavka=nasledujiciZastavky.at(i);
             this->individualniNahrazeni(xmlDocument,"pasmo"+QString::number(i),pasmaDoStringu(aktZastavka.zastavka.seznamPasem ) );
             qDebug()<<"zobrazuji pasmo "<<pasmaDoStringu(aktZastavka.zastavka.seznamPasem);
-            this->individualniNahrazeni(xmlDocument,"next_stop_"+QString::number(i),aktZastavka.zastavka.StopName);
+            this->individualniNahrazeni(xmlDocument,"next_stop_"+QString::number(i),aktZastavka.zastavka.NameLcd);
         }
         else
         {

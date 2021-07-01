@@ -7,6 +7,9 @@
 void on_actionstahnoutXML_triggered();
 
 #include <QMainWindow>
+#include <QWidget>
+
+
 #include "xmlparser.h"
 //#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
@@ -17,6 +20,8 @@ void on_actionstahnoutXML_triggered();
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
+
+
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -48,6 +53,19 @@ public:
 
 
 
+    void naplnLedFront(QString linka, QString horniRadek, QString dolniRadek);
+    void naplnLedInner(QString linka, QString horniRadek, QString dolniRadek);
+    void iterujBocniPanel(QVector<QString> texty, int &iteracniIndex);
+    QVector<QString> naplnNacestyBocniPanel(ZastavkaCil aktualniZastavka);
+    void iterujVsechnyPanely();
+
+
+    QFont font8;
+    QFont font10;
+
+
+
+
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -69,6 +87,8 @@ private slots:
 
     void on_svgTlacitko_clicked();
 
+    void on_tlacitkoLed_clicked();
+
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
@@ -81,6 +101,9 @@ private:
     void vymazObrazovku();
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
+
+
+
     QGraphicsScene scene;
     QGraphicsSvgItem *m_svgItem;
     QGraphicsRectItem *m_outlineItem;
@@ -88,6 +111,17 @@ private:
     bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
     bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
     bool svgVykresleni();
+    void naplnLedObsah(QVector<QString> zobrazit);
+    void naplnLedSide(QString linka, QString horniRadek, QString dolniRadek);
+    void naplnLedRear(QString linka);
+    void inicializujVirtualniLedPanely();
+    void aktualizujZobrazeniVirtualnichLedPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
+    QVector<QString> textyBocniPanelkIteraci;
+    int cyklovaniIndex=0;
+    QTimer *timerBocniPanel = new QTimer(this);
+
+
+
 };
 
 #endif // MAINWINDOW_H
