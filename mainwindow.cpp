@@ -22,7 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
   , CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
 
-
+    // fonty
+    fdb.addApplicationFont("fonty/21-pid-1.ttf");
+    fdb.addApplicationFont("fonty/21-pid-3.ttf");
+    fdb.addApplicationFont("fonty/21-pid-5.ttf");
+    fdb.addApplicationFont("fonty/21-pid-8.ttf");
+    fdb.addApplicationFont("fonty/21-pid-10.ttf");
 
     font8.setFamily("21-PID 8");
     font8.setPointSize(65);
@@ -565,7 +570,7 @@ void MainWindow::naplnLedFront(QString linka,QString horniRadek,QString dolniRad
 
 
 
-    if (linka.contains("X"))
+    if (linka.length()>3)
     {
 
         ui->labelFrontLine->setFont(font10);
@@ -582,12 +587,32 @@ void MainWindow::naplnLedSide(QString linka,QString horniRadek,QString dolniRade
     ui->labelSideLine->setText(linka);
     ui->labelSideTopRow->setText(horniRadek);
     ui->labelSideBottomRow->setText(dolniRadek);
+
+    if (linka.length()>3)
+    {
+
+        ui->labelSideLine->setFont(font10);
+    }
+    else
+    {
+            ui->labelSideLine->setFont(font8);
+    }
 }
 
 void MainWindow::naplnLedRear(QString linka)
 {
     qDebug()<<"MainWindow::naplnLedRear";
     ui->labelRearLine->setText(linka);
+
+    if (linka.length()>3)
+    {
+
+        ui->labelRearLine->setFont(font10);
+    }
+    else
+    {
+            ui->labelRearLine->setFont(font8);
+    }
 
 }
 

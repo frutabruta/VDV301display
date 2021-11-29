@@ -20,7 +20,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>VDV301Display</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -53,6 +53,11 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QPushButton" name="tlacitkoSeznamSluzeb">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Seznam 
  služeb</string>
@@ -67,8 +72,14 @@
           </item>
           <item>
            <widget class="QPushButton" name="tlacitkoHlavni">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
-             <string>Hlavní obrazovka</string>
+             <string>Hlavní 
+ obrazovka</string>
             </property>
             <property name="checkable">
              <bool>true</bool>
@@ -83,6 +94,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="tlacitkoCasovac">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>Časovač</string>
             </property>
@@ -96,6 +112,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="tlacitkoLed">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>LED</string>
             </property>
@@ -103,6 +124,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="svgTlacitko">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>SVG</string>
             </property>
@@ -110,6 +136,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="quitTlacitko">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>QUIT</string>
             </property>
@@ -123,6 +154,11 @@
           </item>
           <item>
            <widget class="QPushButton" name="refreshTlac">
+            <property name="font">
+             <font>
+              <pointsize>20</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string>refresh</string>
             </property>
@@ -826,8 +862,8 @@
            <widget class="QWidget" name="verticalLayoutWidget_9">
             <property name="geometry">
              <rect>
-              <x>590</x>
-              <y>210</y>
+              <x>550</x>
+              <y>190</y>
               <width>119</width>
               <height>95</height>
              </rect>
@@ -894,19 +930,6 @@
               </layout>
              </item>
             </layout>
-           </widget>
-           <widget class="QLabel" name="label_2">
-            <property name="geometry">
-             <rect>
-              <x>9</x>
-              <y>318</y>
-              <width>39</width>
-              <height>16</height>
-             </rect>
-            </property>
-            <property name="text">
-             <string>TextLabel</string>
-            </property>
            </widget>
            <widget class="QLabel" name="predniLabel">
             <property name="geometry">
@@ -1169,7 +1192,7 @@
      <x>0</x>
      <y>0</y>
      <width>834</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

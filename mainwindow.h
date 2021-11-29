@@ -20,6 +20,7 @@ void on_actionstahnoutXML_triggered();
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
+#include <QFontDatabase>
 
 
 
@@ -59,6 +60,7 @@ public:
     QVector<QString> naplnNacestyBocniPanel(ZastavkaCil aktualniZastavka);
     void iterujVsechnyPanely();
 
+    QFontDatabase fdb;
 
     QFont font8;
     QFont font10;

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.1
+** Created by: Qt User Interface Compiler version 5.15.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -104,7 +104,6 @@ public:
     QLabel *predniLabel_4;
     QHBoxLayout *horizontalLayout_8;
     QLabel *labelRearLine;
-    QLabel *label_2;
     QLabel *predniLabel;
     QFrame *frame;
     QWidget *layoutWidget;
@@ -159,6 +158,9 @@ public:
         verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         tlacitkoSeznamSluzeb = new QPushButton(centralWidget);
         tlacitkoSeznamSluzeb->setObjectName(QString::fromUtf8("tlacitkoSeznamSluzeb"));
+        QFont font;
+        font.setPointSize(20);
+        tlacitkoSeznamSluzeb->setFont(font);
         tlacitkoSeznamSluzeb->setCheckable(true);
         tlacitkoSeznamSluzeb->setAutoExclusive(true);
 
@@ -166,6 +168,7 @@ public:
 
         tlacitkoHlavni = new QPushButton(centralWidget);
         tlacitkoHlavni->setObjectName(QString::fromUtf8("tlacitkoHlavni"));
+        tlacitkoHlavni->setFont(font);
         tlacitkoHlavni->setCheckable(true);
         tlacitkoHlavni->setChecked(true);
         tlacitkoHlavni->setAutoExclusive(true);
@@ -174,6 +177,7 @@ public:
 
         tlacitkoCasovac = new QPushButton(centralWidget);
         tlacitkoCasovac->setObjectName(QString::fromUtf8("tlacitkoCasovac"));
+        tlacitkoCasovac->setFont(font);
         tlacitkoCasovac->setCheckable(true);
         tlacitkoCasovac->setAutoExclusive(true);
 
@@ -181,16 +185,19 @@ public:
 
         tlacitkoLed = new QPushButton(centralWidget);
         tlacitkoLed->setObjectName(QString::fromUtf8("tlacitkoLed"));
+        tlacitkoLed->setFont(font);
 
         verticalLayout_4->addWidget(tlacitkoLed);
 
         svgTlacitko = new QPushButton(centralWidget);
         svgTlacitko->setObjectName(QString::fromUtf8("svgTlacitko"));
+        svgTlacitko->setFont(font);
 
         verticalLayout_4->addWidget(svgTlacitko);
 
         quitTlacitko = new QPushButton(centralWidget);
         quitTlacitko->setObjectName(QString::fromUtf8("quitTlacitko"));
+        quitTlacitko->setFont(font);
         quitTlacitko->setCheckable(true);
         quitTlacitko->setAutoExclusive(true);
 
@@ -198,6 +205,7 @@ public:
 
         refreshTlac = new QPushButton(centralWidget);
         refreshTlac->setObjectName(QString::fromUtf8("refreshTlac"));
+        refreshTlac->setFont(font);
 
         verticalLayout_4->addWidget(refreshTlac);
 
@@ -231,9 +239,9 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(Llinka->sizePolicy().hasHeightForWidth());
         Llinka->setSizePolicy(sizePolicy2);
-        QFont font;
-        font.setPointSize(30);
-        Llinka->setFont(font);
+        QFont font1;
+        font1.setPointSize(30);
+        Llinka->setFont(font1);
         Llinka->setAutoFillBackground(false);
 
         horizontalLayout->addWidget(Llinka);
@@ -245,7 +253,7 @@ public:
         sizePolicy3.setVerticalStretch(0);
         sizePolicy3.setHeightForWidth(Lcil->sizePolicy().hasHeightForWidth());
         Lcil->setSizePolicy(sizePolicy3);
-        Lcil->setFont(font);
+        Lcil->setFont(font1);
         Lcil->setAutoFillBackground(false);
 
         horizontalLayout->addWidget(Lcil);
@@ -264,9 +272,9 @@ public:
         sizePolicy4.setHeightForWidth(sipka->sizePolicy().hasHeightForWidth());
         sipka->setSizePolicy(sizePolicy4);
         sipka->setMaximumSize(QSize(50, 16777215));
-        QFont font1;
-        font1.setPointSize(70);
-        sipka->setFont(font1);
+        QFont font2;
+        font2.setPointSize(70);
+        sipka->setFont(font2);
         sipka->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_3->addWidget(sipka);
@@ -278,9 +286,7 @@ public:
         Lnacestna4->setObjectName(QString::fromUtf8("Lnacestna4"));
         sizePolicy.setHeightForWidth(Lnacestna4->sizePolicy().hasHeightForWidth());
         Lnacestna4->setSizePolicy(sizePolicy);
-        QFont font2;
-        font2.setPointSize(20);
-        Lnacestna4->setFont(font2);
+        Lnacestna4->setFont(font);
 
         verticalLayout_2->addWidget(Lnacestna4);
 
@@ -288,7 +294,7 @@ public:
         Lnacestna3->setObjectName(QString::fromUtf8("Lnacestna3"));
         sizePolicy.setHeightForWidth(Lnacestna3->sizePolicy().hasHeightForWidth());
         Lnacestna3->setSizePolicy(sizePolicy);
-        Lnacestna3->setFont(font2);
+        Lnacestna3->setFont(font);
 
         verticalLayout_2->addWidget(Lnacestna3);
 
@@ -296,7 +302,7 @@ public:
         Lnacestna2->setObjectName(QString::fromUtf8("Lnacestna2"));
         sizePolicy.setHeightForWidth(Lnacestna2->sizePolicy().hasHeightForWidth());
         Lnacestna2->setSizePolicy(sizePolicy);
-        Lnacestna2->setFont(font2);
+        Lnacestna2->setFont(font);
 
         verticalLayout_2->addWidget(Lnacestna2);
 
@@ -316,7 +322,7 @@ public:
         sizePolicy5.setVerticalStretch(0);
         sizePolicy5.setHeightForWidth(Lnacestna1->sizePolicy().hasHeightForWidth());
         Lnacestna1->setSizePolicy(sizePolicy5);
-        Lnacestna1->setFont(font);
+        Lnacestna1->setFont(font1);
         Lnacestna1->setScaledContents(false);
 
         horizontalLayout_2->addWidget(Lnacestna1);
@@ -570,7 +576,7 @@ public:
 
         verticalLayoutWidget_9 = new QWidget(page_5);
         verticalLayoutWidget_9->setObjectName(QString::fromUtf8("verticalLayoutWidget_9"));
-        verticalLayoutWidget_9->setGeometry(QRect(590, 210, 119, 95));
+        verticalLayoutWidget_9->setGeometry(QRect(550, 190, 119, 95));
         zadniTabloWrapper = new QVBoxLayout(verticalLayoutWidget_9);
         zadniTabloWrapper->setSpacing(0);
         zadniTabloWrapper->setContentsMargins(11, 11, 11, 11);
@@ -607,9 +613,6 @@ public:
 
         zadniTabloWrapper->addLayout(horizontalLayout_8);
 
-        label_2 = new QLabel(page_5);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(9, 318, 39, 16));
         predniLabel = new QLabel(page_5);
         predniLabel->setObjectName(QString::fromUtf8("predniLabel"));
         predniLabel->setGeometry(QRect(10, 10, 49, 16));
@@ -724,7 +727,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 834, 21));
+        menuBar->setGeometry(QRect(0, 0, 834, 20));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -761,13 +764,14 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "VDV301Display", nullptr));
         actiontestPolozka->setText(QCoreApplication::translate("MainWindow", "testPolozka", nullptr));
         actionstahnoutXML->setText(QCoreApplication::translate("MainWindow", "stahnoutXML", nullptr));
         action->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
         tlacitkoSeznamSluzeb->setText(QCoreApplication::translate("MainWindow", "Seznam \n"
 " slu\305\276eb", nullptr));
-        tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "Hlavn\303\255 obrazovka", nullptr));
+        tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "Hlavn\303\255 \n"
+" obrazovka", nullptr));
         tlacitkoCasovac->setText(QCoreApplication::translate("MainWindow", "\304\214asova\304\215", nullptr));
         tlacitkoLed->setText(QCoreApplication::translate("MainWindow", "LED", nullptr));
         svgTlacitko->setText(QCoreApplication::translate("MainWindow", "SVG", nullptr));
@@ -803,7 +807,6 @@ public:
         labelInnerBottomRow->setText(QCoreApplication::translate("MainWindow", "StopSideName", nullptr));
         predniLabel_4->setText(QCoreApplication::translate("MainWindow", "Zadn\303\255 tablo", nullptr));
         labelRearLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         predniLabel->setText(QCoreApplication::translate("MainWindow", "P\305\231edn\303\255 tablo", nullptr));
         labelFrontLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
         labelFrontTopRow->setText(QCoreApplication::translate("MainWindow", "Dest.FrontNameTop", nullptr));
