@@ -67,6 +67,8 @@ public:
     QHBoxLayout *horizontalLayout_2;
     QLabel *Lnacestna1;
     QLabel *label_6;
+    QLabel *label_zmena;
+    QLabel *label_announcement;
     QWidget *page_2;
     QTableWidget *tabulkaSubscriberu;
     QWidget *page_3;
@@ -339,6 +341,16 @@ public:
 
 
         verticalLayout_3->addLayout(horizontalLayout_2);
+
+        label_zmena = new QLabel(verticalLayoutWidget);
+        label_zmena->setObjectName(QString::fromUtf8("label_zmena"));
+
+        verticalLayout_3->addWidget(label_zmena);
+
+        label_announcement = new QLabel(verticalLayoutWidget);
+        label_announcement->setObjectName(QString::fromUtf8("label_announcement"));
+
+        verticalLayout_3->addWidget(label_announcement);
 
         prepinadloStran->addWidget(page);
         page_2 = new QWidget();
@@ -727,7 +739,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 834, 20));
+        menuBar->setGeometry(QRect(0, 0, 834, 21));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -756,7 +768,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        prepinadloStran->setCurrentIndex(4);
+        prepinadloStran->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -785,6 +797,8 @@ public:
         Lnacestna2->setText(QCoreApplication::translate("MainWindow", "Dalsi 1", nullptr));
         Lnacestna1->setText(QCoreApplication::translate("MainWindow", "PristiZastavka", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
+        label_zmena->setText(QCoreApplication::translate("MainWindow", "zmena", nullptr));
+        label_announcement->setText(QCoreApplication::translate("MainWindow", "announcement", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tabulkaSubscriberu->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "N\303\241zev slu\305\276by", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tabulkaSubscriberu->horizontalHeaderItem(1);

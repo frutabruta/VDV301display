@@ -18,8 +18,9 @@ public:
     int aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
     QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
+    static QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
 private:
-    QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
+
     QDomDocument souborDoQDomDocument(QString cesta);
     QDomDocument vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);
     QDomDocument vykresliLinku(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);

@@ -122,6 +122,19 @@ int MainWindow::VykresleniPrijatychDat()
     //nazevCile=QString( nazevCile.fromUtf8(test1));
     ui->Lcil->setText(nazevCile);
     ui->Llinka->setText(nazevLinky);
+    naplnAnouncementLabel(additionalTextMessage);
+
+
+    if(zmenaPasma==true)
+    {
+        zobrazZmenuPasma(pasmaZ,pasmaDo);
+    }
+    else
+    {
+        skryjZmenuPasma();
+    }
+
+
     if(indexZastavky<globalniSeznamZastavek.size())
     {
 
@@ -192,12 +205,10 @@ int MainWindow::FormatZobrazeni()
     QString barva2 ="#ffffff"; //bila
     ui->Llinka->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
     ui->Lcil->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    //ui->Lnacestna1->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
     ui->Lnacestna2->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->Lnacestna3->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->Lnacestna4->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
     ui->sipka->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    //ui->prepinaciOkno->setStyleSheet("QStackedWidget {margin: 0;}");
     if (stavSystemu.locationState=="AtStop" )
     {
         obarviPozadiPristi(barva1,barva2 );
@@ -213,7 +224,6 @@ int MainWindow::FormatZobrazeni()
 MainWindow::~MainWindow()
 {
     qDebug()<<"MainWindow::~MainWindow";
-    //delete mDataBuffer;
     delete ui;
 }
 
@@ -226,7 +236,6 @@ void MainWindow::on_actiontestPolozka_triggered()
 
     instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, stavSystemu.indexAktZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
-    //qInfo()<<globalniSeznamZastavek[4].StopName;
     qInfo()<<indexZastavky;
     qInfo()<<"CIl:"<<nazevCile;
     DoplneniPromennych();
@@ -358,6 +367,15 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
 
     instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, indexZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
+
+    //additional text message
+    instanceXMLparser.nactiAdditionalTextMessage(instanceXMLparser.dokument, additionalTextMessage);
+
+    //zmena tarifniho pasma
+
+    zmenaPasma= instanceXMLparser.nactiFareZoneChange(instanceXMLparser.dokument,pasmaZ,pasmaDo);
+
+
     //instanceXMLparser.nactiXML(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
     //qInfo()<<globalniSeznamZastavek[4].StopName;
     qInfo()<<indexZastavky;
@@ -542,11 +560,6 @@ void MainWindow::naplnLedFront(QString linka,QString horniRadek,QString dolniRad
 {
     qDebug()<<"MainWindow::naplnLedFront";
 
-
-
-
-
-
     if (dolniRadek!="")
     {
         ui->labelFrontSingle->setVisible(false);
@@ -560,24 +573,18 @@ void MainWindow::naplnLedFront(QString linka,QString horniRadek,QString dolniRad
         ui->labelFrontTopRow->setVisible(false);
     }
 
-
-
-
     ui->labelFrontLine->setText(linka);
     ui->labelFrontTopRow->setText(horniRadek);
     ui->labelFrontBottomRow->setText(dolniRadek);
     ui->labelFrontSingle->setText(horniRadek);
 
-
-
     if (linka.length()>3)
     {
-
         ui->labelFrontLine->setFont(font10);
     }
     else
     {
-            ui->labelFrontLine->setFont(font8);
+        ui->labelFrontLine->setFont(font8);
     }
 }
 
@@ -595,7 +602,7 @@ void MainWindow::naplnLedSide(QString linka,QString horniRadek,QString dolniRade
     }
     else
     {
-            ui->labelSideLine->setFont(font8);
+        ui->labelSideLine->setFont(font8);
     }
 }
 
@@ -611,7 +618,7 @@ void MainWindow::naplnLedRear(QString linka)
     }
     else
     {
-            ui->labelRearLine->setFont(font8);
+        ui->labelRearLine->setFont(font8);
     }
 
 }
@@ -657,8 +664,8 @@ QVector<QString> MainWindow::naplnNacestyBocniPanel(ZastavkaCil aktualniZastavka
     textyNaBocniPanel.append("přes:");
     foreach (nacesta,aktualniZastavka.nacestneZastavky)
     {
-    textyNaBocniPanel.append(nacesta.NameSide);
-    qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
+        textyNaBocniPanel.append(nacesta.NameSide);
+        qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
     }
     return textyNaBocniPanel;
 
@@ -677,15 +684,53 @@ void MainWindow::iterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
 
     if(iteracniIndex<texty.length())
     {
-  ui->labelInnerBottomRow->setText(texty.at(iteracniIndex));
+        ui->labelInnerBottomRow->setText(texty.at(iteracniIndex));
 
-  ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
+        ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
 
-  iteracniIndex++;
+        iteracniIndex++;
 
     }
     else
     {
         iteracniIndex=0;
     }
+}
+
+
+void MainWindow::naplnZmenaLabel(QString vstup)
+{
+    qDebug()<<"MainWindow::naplnZmenaLabel";
+    ui->label_zmena->setText(vstup);
+}
+
+void MainWindow::naplnAnouncementLabel(QString vstup)
+{
+    qDebug()<<"MainWindow::naplnAnouncementLabel";
+    ui->label_announcement->setText(vstup);
+}
+
+void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
+{
+    qDebug()<<"MainWindow::zobrazZmenuPasma";
+
+    naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
+
+
+}
+
+void MainWindow::skryjZmenuPasma()
+{
+    qDebug()<<"MainWindow::skryjZmenuPasma";
+    naplnZmenaLabel("");
+}
+
+QString MainWindow::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
+{
+    qDebug()<<"MainWindow::vyrobTextZmenyPasma";
+    QString vysledek="";
+    vysledek+="prosím pozor! Změna tarifního pásma: "+SvgVykreslovani::pasmaDoStringu(zPasem)+"->"+SvgVykreslovani::pasmaDoStringu(naPasma);
+
+
+    return vysledek;
 }

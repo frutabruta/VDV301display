@@ -41,6 +41,12 @@ public:
     QVector <ZastavkaCil> globalniSeznamZastavek;
     QString nazevLinky = "";
     QString nazevCile="";
+
+    QString additionalTextMessage="";
+    QVector<Pasmo> pasmaZ;
+    QVector<Pasmo> pasmaDo;
+    bool zmenaPasma=false;
+
     int indexZastavky=0;
     int pocetZastavek=0;
     int VykresleniPrijatychDat();
@@ -68,6 +74,12 @@ public:
 
 
 
+    void naplnZmenaLabel(QString vstup);
+    void naplnAnouncementLabel(QString vstup);
+    void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+    QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+
+    void skryjZmenuPasma();
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();

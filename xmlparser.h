@@ -24,6 +24,9 @@ public:
     void nactiXML(QString vstup);
     int nactiVehicleGroup(CestaUdaje &stav, QDomDocument xmlko);
     int VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int &docasnyIndexZastavky, int &docasnyPocetZastavek);
+    int nactiFareZoneChange(QDomDocument xmlko, QVector<Pasmo> &pasmaZ, QVector<Pasmo> &pasmaNa);
+    int nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup);
+    int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<Pasmo> &pasma);
 private:
     QVector<Zastavka> vyparsujNacestneZastavky(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);

@@ -175,7 +175,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>4</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QWidget" name="verticalLayoutWidget">
@@ -375,6 +375,20 @@
                 </widget>
                </item>
               </layout>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_zmena">
+               <property name="text">
+                <string>zmena</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_announcement">
+               <property name="text">
+                <string>announcement</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </widget>
@@ -1192,7 +1206,7 @@
      <x>0</x>
      <y>0</y>
      <width>834</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
