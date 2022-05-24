@@ -13,6 +13,8 @@ debug/zastavka.o
 debug/zastavkacil.o
 debug/cestaudaje.o
 debug/linka.o
+debug/obeh.o
+debug/spoj.o
 debug/pasmo.o
 debug/moc_qzeroconf.o
 debug/moc_bonjour_p.o

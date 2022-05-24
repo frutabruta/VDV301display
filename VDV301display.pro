@@ -47,6 +47,8 @@ SOURCES += \
     VDV301struktury/zastavkacil.cpp\
     VDV301struktury/cestaudaje.cpp\
     VDV301struktury/linka.cpp\
+    VDV301struktury/obeh.cpp\
+    VDV301struktury/spoj.cpp\
     VDV301struktury/pasmo.cpp
 
 HEADERS += \
@@ -59,6 +61,8 @@ HEADERS += \
     VDV301struktury/zastavkacil.h\
     VDV301struktury/pasmo.h\
     VDV301struktury/linka.h\
+    VDV301struktury/obeh.h\
+    VDV301struktury/spoj.h\
     VDV301struktury/cestaudaje.h
 
 
