@@ -136,6 +136,11 @@ private:
 
 
 
+    void skryjAnnouncement();
+    void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
+    void zobrazKonecnou();
+    void navratJizda();
+    int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
 };
 
 #endif // MAINWINDOW_H

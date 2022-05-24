@@ -19,6 +19,8 @@ public:
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
     QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
     static QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
+
+
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);

@@ -37,6 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ui->setupUi(this);
+    ui->prepinadloStran->setCurrentIndex(0);
+    ui->stackedWidget_prostredek->setCurrentIndex(0);
+    ui->stackedWidget_prostredek->setCurrentIndex(0);
+
+
     FormatZobrazeni();
     instanceXMLparser.Test();
     //ui->prepinaciOkno->setCurrentIndex(0);
@@ -122,7 +127,18 @@ int MainWindow::VykresleniPrijatychDat()
     //nazevCile=QString( nazevCile.fromUtf8(test1));
     ui->Lcil->setText(nazevCile);
     ui->Llinka->setText(nazevLinky);
-    naplnAnouncementLabel(additionalTextMessage);
+
+    ui->label_locationState->setText(stavSystemu.locationState);
+    ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky));
+
+    if(additionalTextMessage!="")
+    {
+    zobrazAnnoucement("","",additionalTextMessage,"");
+    }
+    else
+    {
+        naplnAnouncementLabel("");
+    }
 
 
     if(zmenaPasma==true)
@@ -132,6 +148,17 @@ int MainWindow::VykresleniPrijatychDat()
     else
     {
         skryjZmenuPasma();
+    }
+
+
+
+    if(jeVozidloNaKonecne(stavSystemu,globalniSeznamZastavek))
+    {
+        zobrazKonecnou();
+    }
+    else
+    {
+        navratJizda();
     }
 
 
@@ -313,14 +340,14 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
 
     row = ui->tabulkaSubscriberu->rowCount();
     ui->tabulkaSubscriberu->insertRow(row);
-    cell = new QTableWidgetItem(zcs->name());
+    cell = new QTableWidgetItem(nazev);
     ui->tabulkaSubscriberu->setItem(row, 0, cell);
 
     cell = new QTableWidgetItem(verze);
     ui->tabulkaSubscriberu->setItem(row, 1, cell);
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
-    cell = new QTableWidgetItem(zcs->ip().toString());
+    cell = new QTableWidgetItem(ipadresa);
     ui->tabulkaSubscriberu->setItem(row, 2, cell);
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
@@ -713,17 +740,65 @@ void MainWindow::naplnAnouncementLabel(QString vstup)
 void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
     qDebug()<<"MainWindow::zobrazZmenuPasma";
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
+
+    ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(zPasem));
+    ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(naPasma));
 
     naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
 
 
 }
 
+
+void MainWindow::zobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
+{
+    qDebug()<<"MainWindow::zobrazAnnoucement";
+    naplnAnouncementLabel(textCz);
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
+
+    ui->label_oznTitle->setText(title);
+    ui->label_oznType->setText(type);
+    ui->label_oznTextCs->setText(textCz);
+    ui->label_oznTextEn->setText(textEn);
+
+
+
+
+
+
+  //  ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(zPasem));
+  //  ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(naPasma));
+
+   // naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
+
+
+}
+
+
+void MainWindow::skryjAnnouncement()
+{
+    qDebug()<<"MainWindow::skryjZmenuPasma";
+   navratJizda();
+}
+
 void MainWindow::skryjZmenuPasma()
 {
     qDebug()<<"MainWindow::skryjZmenuPasma";
+   navratJizda();
+}
+
+void MainWindow::navratJizda()
+{
+    qDebug()<<"MainWindow::navratJizda";
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     naplnZmenaLabel("");
 }
+
+
 
 QString MainWindow::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
@@ -733,4 +808,23 @@ QString MainWindow::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> na
 
 
     return vysledek;
+}
+
+void MainWindow::zobrazKonecnou()
+{
+    qDebug()<<"MainWindow::zobrazKonecnou()";
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
+
+}
+
+
+int MainWindow::jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky)
+{
+    qDebug()<<"MainWindow::jeVozidloNaKonecne";
+    if((stav.indexAktZastavky==(zastavky.count()-1))&&(stav.locationState=="AtStop"))
+    {
+        return true;
+    }
+    return false;
 }
