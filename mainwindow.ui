@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>834</width>
-    <height>484</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -21,8 +21,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>834</width>
-    <height>484</height>
+    <width>1920</width>
+    <height>1080</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -185,6 +185,61 @@
           </property>
           <widget class="QWidget" name="page_hlavniObrazovka">
            <layout class="QGridLayout" name="gridLayout_4">
+            <item row="2" column="0">
+             <widget class="QLabel" name="label_zmena">
+              <property name="text">
+               <string>zmena</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QLabel" name="label_4">
+              <property name="text">
+               <string>LocationState</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_currentStopIndex">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_announcement">
+              <property name="text">
+               <string>announcement</string>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLabel" name="label_locationState">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>CurrentStopIndex</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="label_6">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>STOP</string>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0" colspan="2">
              <widget class="QStackedWidget" name="stackedWidget_obrazovka">
               <property name="sizePolicy">
@@ -192,6 +247,10 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*{background-color: #191919}
+QLabel{color:#FFFFFF}</string>
               </property>
               <property name="currentIndex">
                <number>0</number>
@@ -203,436 +262,887 @@
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
-               <widget class="QWidget" name="verticalLayoutWidget">
-                <property name="geometry">
-                 <rect>
-                  <x>10</x>
-                  <y>10</y>
-                  <width>621</width>
-                  <height>273</height>
-                 </rect>
+               <layout class="QGridLayout" name="gridLayout_7">
+                <property name="leftMargin">
+                 <number>0</number>
                 </property>
-                <layout class="QVBoxLayout" name="verticalLayout_3">
-                 <property name="spacing">
-                  <number>0</number>
-                 </property>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout">
-                   <property name="spacing">
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item row="1" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_25"/>
+                </item>
+                <item row="0" column="0">
+                 <widget class="QFrame" name="frame_2">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="autoFillBackground">
+                   <bool>false</bool>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">*{background-color:rgb(25,25,25); color: rgb(255,255,255)}</string>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::StyledPanel</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Raised</enum>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_9">
+                   <property name="leftMargin">
                     <number>0</number>
                    </property>
-                   <item>
-                    <widget class="QLabel" name="Llinka">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>30</pointsize>
-                      </font>
-                     </property>
-                     <property name="autoFillBackground">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>741</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="Lcil">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <pointsize>30</pointsize>
-                      </font>
-                     </property>
-                     <property name="autoFillBackground">
-                      <bool>false</bool>
-                     </property>
-                     <property name="text">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#3465a4;&quot;&gt;Sportovni hala&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_2">
-                   <property name="spacing">
+                   <property name="topMargin">
                     <number>0</number>
                    </property>
-                   <item>
-                    <widget class="QLabel" name="label_6">
-                     <property name="sizePolicy">
-                      <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-                       <horstretch>0</horstretch>
-                       <verstretch>0</verstretch>
-                      </sizepolicy>
-                     </property>
-                     <property name="text">
-                      <string>STOP</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <widget class="QStackedWidget" name="stackedWidget_prostredek">
-                   <property name="currentIndex">
-                    <number>1</number>
+                   <property name="rightMargin">
+                    <number>0</number>
                    </property>
-                   <widget class="QWidget" name="page_hlavni_2">
-                    <layout class="QGridLayout" name="gridLayout_2">
-                     <item row="0" column="0">
-                      <layout class="QHBoxLayout" name="horizontalLayout_3">
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="horizontalSpacing">
+                    <number>0</number>
+                   </property>
+                   <item row="0" column="0">
+                    <layout class="QVBoxLayout" name="verticalLayout_3">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout">
                        <property name="spacing">
                         <number>0</number>
                        </property>
                        <item>
-                        <widget class="QLabel" name="sipka">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>50</width>
-                           <height>16777215</height>
-                          </size>
-                         </property>
-                         <property name="font">
-                          <font>
-                           <pointsize>70</pointsize>
-                          </font>
-                         </property>
-                         <property name="text">
-                          <string>↑</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_2">
+                        <layout class="QGridLayout" name="gridLayout_hlavicka">
                          <property name="spacing">
                           <number>0</number>
                          </property>
-                         <item>
-                          <widget class="QLabel" name="Lnacestna4">
+                         <item row="0" column="0">
+                          <widget class="QLabel" name="Llinka">
                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
                            </property>
                            <property name="font">
                             <font>
-                             <pointsize>20</pointsize>
+                             <pointsize>30</pointsize>
+                             <weight>75</weight>
+                             <bold>true</bold>
                             </font>
                            </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">*{background-color:#FFFFFF; color:#000000;font-weight: bold;}</string>
+                           </property>
                            <property name="text">
-                            <string>Dalsi 3</string>
+                            <string>741</string>
                            </property>
                           </widget>
                          </item>
-                         <item>
-                          <widget class="QLabel" name="Lnacestna3">
+                         <item row="2" column="0">
+                          <layout class="QHBoxLayout" name="horizontalLayout_18">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QLabel" name="label_23">
+                             <property name="styleSheet">
+                              <string notr="true">*{background-color: rgb(100,100,100)}</string>
+                             </property>
+                             <property name="text">
+                              <string>16:14</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <layout class="QVBoxLayout" name="verticalLayout_2">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QLabel" name="label_24">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">*{background-color: rgb(100,100,100)}</string>
+                               </property>
+                               <property name="text">
+                                <string>via:</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_25">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">*{background-color: rgb(100,100,100)}</string>
+                               </property>
+                               <property name="text">
+                                <string>Přes:</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </item>
+                          </layout>
+                         </item>
+                         <item row="0" column="1">
+                          <widget class="QLabel" name="Lcil">
                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
                            </property>
                            <property name="font">
                             <font>
-                             <pointsize>20</pointsize>
+                             <pointsize>30</pointsize>
+                             <weight>75</weight>
+                             <bold>true</bold>
                             </font>
                            </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">*{color:#FFFFFF;font-weight: bold;}</string>
+                           </property>
                            <property name="text">
-                            <string>Dalsi 2</string>
+                            <string>textCile</string>
                            </property>
                           </widget>
                          </item>
-                         <item>
-                          <widget class="QLabel" name="Lnacestna2">
+                         <item row="2" column="1">
+                          <widget class="QScrollArea" name="scrollArea">
                            <property name="sizePolicy">
-                            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                              <horstretch>0</horstretch>
                              <verstretch>0</verstretch>
                             </sizepolicy>
                            </property>
-                           <property name="font">
-                            <font>
-                             <pointsize>20</pointsize>
-                            </font>
+                           <property name="styleSheet">
+                            <string notr="true">*{background-color: rgb(50,50,50)}</string>
                            </property>
-                           <property name="text">
-                            <string>Dalsi 1</string>
+                           <property name="frameShape">
+                            <enum>QFrame::NoFrame</enum>
                            </property>
+                           <property name="frameShadow">
+                            <enum>QFrame::Plain</enum>
+                           </property>
+                           <property name="lineWidth">
+                            <number>0</number>
+                           </property>
+                           <property name="verticalScrollBarPolicy">
+                            <enum>Qt::ScrollBarAlwaysOff</enum>
+                           </property>
+                           <property name="horizontalScrollBarPolicy">
+                            <enum>Qt::ScrollBarAlwaysOff</enum>
+                           </property>
+                           <property name="widgetResizable">
+                            <bool>true</bool>
+                           </property>
+                           <widget class="QWidget" name="scrollAreaWidgetContents">
+                            <property name="geometry">
+                             <rect>
+                              <x>0</x>
+                              <y>0</y>
+                              <width>722</width>
+                              <height>69</height>
+                             </rect>
+                            </property>
+                            <layout class="QHBoxLayout" name="horizontalLayout_11">
+                             <item>
+                              <widget class="QLabel" name="label_nacestne">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">*{background-color: rgb(50,50,50)}</string>
+                               </property>
+                               <property name="text">
+                                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;nacestne aaaaaa bbbbbbb cccccc ddddd eeeeee fffffff gggg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                               </property>
+                               <property name="textFormat">
+                                <enum>Qt::AutoText</enum>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
                           </widget>
                          </item>
                         </layout>
                        </item>
                       </layout>
                      </item>
-                    </layout>
-                   </widget>
-                   <widget class="QWidget" name="page_oznameni">
-                    <widget class="QWidget" name="horizontalLayoutWidget_5">
-                     <property name="geometry">
-                      <rect>
-                       <x>110</x>
-                       <y>20</y>
-                       <width>311</width>
-                       <height>80</height>
-                      </rect>
-                     </property>
-                     <layout class="QHBoxLayout" name="horizontalLayout_17">
-                      <item>
-                       <widget class="QLabel" name="label_oznType">
-                        <property name="text">
-                         <string>obrazek</string>
-                        </property>
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_2">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                      </layout>
+                     </item>
+                     <item>
+                      <widget class="QStackedWidget" name="stackedWidget_prostredek">
+                       <property name="currentIndex">
+                        <number>0</number>
+                       </property>
+                       <widget class="QWidget" name="page_hlavni_2">
+                        <layout class="QGridLayout" name="gridLayout_2">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <item row="0" column="0">
+                          <layout class="QHBoxLayout" name="horizontalLayout_3">
+                           <property name="spacing">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QLabel" name="sipka">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="maximumSize">
+                              <size>
+                               <width>50</width>
+                               <height>16777215</height>
+                              </size>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>70</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>↑</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <layout class="QGridLayout" name="gridLayout_5">
+                             <property name="horizontalSpacing">
+                              <number>0</number>
+                             </property>
+                             <property name="verticalSpacing">
+                              <number>10</number>
+                             </property>
+                             <item row="1" column="1">
+                              <widget class="QLabel" name="Lnacestna4">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Dalsi 3</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item row="1" column="0">
+                              <layout class="QVBoxLayout" name="verticalLayout_16">
+                               <item>
+                                <widget class="QLabel" name="label_pasmo4_2">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P2</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_pasmo4_1">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P1</string>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                             <item row="0" column="1">
+                              <widget class="QLabel" name="Lnacestna5">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Dalsi 4</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item row="2" column="0">
+                              <layout class="QVBoxLayout" name="verticalLayout_17">
+                               <item>
+                                <widget class="QLabel" name="label_pasmo3_2">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P2</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_pasmo3_1">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P1</string>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                             <item row="2" column="1">
+                              <widget class="QLabel" name="Lnacestna3">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Dalsi 2</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item row="0" column="0">
+                              <layout class="QVBoxLayout" name="verticalLayout_15">
+                               <item>
+                                <widget class="QLabel" name="label_pasmo5_2">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P2</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_pasmo5_1">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P1</string>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                             <item row="3" column="1">
+                              <widget class="QLabel" name="Lnacestna2">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Dalsi 1</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item row="3" column="0">
+                              <layout class="QVBoxLayout" name="verticalLayout_18">
+                               <item>
+                                <widget class="QLabel" name="label_pasmo2_2">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P2</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item>
+                                <widget class="QLabel" name="label_pasmo2_1">
+                                 <property name="sizePolicy">
+                                  <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                   <horstretch>0</horstretch>
+                                   <verstretch>0</verstretch>
+                                  </sizepolicy>
+                                 </property>
+                                 <property name="text">
+                                  <string>P1</string>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </item>
+                            </layout>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
                        </widget>
-                      </item>
-                      <item>
-                       <layout class="QVBoxLayout" name="verticalLayout_11">
-                        <item>
-                         <widget class="QLabel" name="label_oznTitle">
-                          <property name="text">
-                           <string>Nadpis</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="label_oznTextCs">
-                          <property name="text">
-                           <string>TextCZ</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="label_oznTextEn">
-                          <property name="text">
-                           <string>TextEN</string>
-                          </property>
-                         </widget>
+                       <widget class="QWidget" name="page_oznameni">
+                        <layout class="QGridLayout" name="gridLayout_6">
+                         <item row="0" column="0">
+                          <layout class="QHBoxLayout" name="horizontalLayout_17">
+                           <item>
+                            <widget class="QLabel" name="label_oznType">
+                             <property name="text">
+                              <string>obrazek</string>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <layout class="QVBoxLayout" name="verticalLayout_11">
+                             <item>
+                              <widget class="QLabel" name="label_oznTitle">
+                               <property name="text">
+                                <string>Nadpis</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_oznTextCs">
+                               <property name="text">
+                                <string>TextCZ</string>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_oznTextEn">
+                               <property name="text">
+                                <string>TextEN</string>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
+                       <widget class="QWidget" name="page_zmenaPasma">
+                        <layout class="QGridLayout" name="gridLayout_3">
+                         <item row="0" column="0">
+                          <layout class="QVBoxLayout" name="verticalLayout_10">
+                           <item>
+                            <widget class="QLabel" name="label_18">
+                             <property name="sizePolicy">
+                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                               <horstretch>0</horstretch>
+                               <verstretch>0</verstretch>
+                              </sizepolicy>
+                             </property>
+                             <property name="font">
+                              <font>
+                               <pointsize>20</pointsize>
+                               <weight>75</weight>
+                               <bold>true</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Prosím pozor! Změna tarifního pásma.</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_19">
+                             <property name="font">
+                              <font>
+                               <pointsize>20</pointsize>
+                               <weight>50</weight>
+                               <bold>false</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Attention please! Change of fare zone.</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <layout class="QHBoxLayout" name="horizontalLayout_16">
+                             <item>
+                              <widget class="QLabel" name="label_pasmo1">
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Pasmo1</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_21">
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>-&gt;</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_pasmo2">
+                               <property name="font">
+                                <font>
+                                 <pointsize>20</pointsize>
+                                 <weight>75</weight>
+                                 <bold>true</bold>
+                                </font>
+                               </property>
+                               <property name="text">
+                                <string>Pasmo2</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
+                       <widget class="QWidget" name="page_konecna">
+                        <layout class="QGridLayout" name="gridLayout_8">
+                         <item row="0" column="0">
+                          <layout class="QVBoxLayout" name="verticalLayout_12">
+                           <item>
+                            <widget class="QLabel" name="label_20">
+                             <property name="font">
+                              <font>
+                               <pointsize>20</pointsize>
+                               <weight>75</weight>
+                               <bold>true</bold>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Konečná zastávka, prosíme, vystupte.</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QLabel" name="label_22">
+                             <property name="font">
+                              <font>
+                               <pointsize>20</pointsize>
+                              </font>
+                             </property>
+                             <property name="text">
+                              <string>Final stop, please leave the bus.</string>
+                             </property>
+                             <property name="alignment">
+                              <set>Qt::AlignCenter</set>
+                             </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="frame_spodniRadek">
+                       <property name="sizePolicy">
+                        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                         <horstretch>0</horstretch>
+                         <verstretch>0</verstretch>
+                        </sizepolicy>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">*{background-color: rgb(50,50,50)}</string>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QGridLayout" name="gridLayout_11">
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <item row="0" column="0">
+                         <layout class="QHBoxLayout" name="horizontalLayout_7">
+                          <item>
+                           <layout class="QVBoxLayout" name="verticalLayout_20">
+                            <item>
+                             <widget class="QLabel" name="label_pasmo1_2">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <pointsize>12</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>P2</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="label_pasmo1_1">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="font">
+                               <font>
+                                <pointsize>12</pointsize>
+                               </font>
+                              </property>
+                              <property name="text">
+                               <string>P1</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="Lnacestna1">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>30</pointsize>
+                              <weight>75</weight>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true"/>
+                            </property>
+                            <property name="text">
+                             <string>PristiZastavka</string>
+                            </property>
+                            <property name="scaledContents">
+                             <bool>false</bool>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
                         </item>
                        </layout>
-                      </item>
-                     </layout>
-                    </widget>
-                   </widget>
-                   <widget class="QWidget" name="page_zmenaPasma">
-                    <layout class="QGridLayout" name="gridLayout_3">
-                     <item row="0" column="0">
-                      <layout class="QVBoxLayout" name="verticalLayout_10">
-                       <item>
-                        <widget class="QLabel" name="label_18">
-                         <property name="sizePolicy">
-                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                           <horstretch>0</horstretch>
-                           <verstretch>0</verstretch>
-                          </sizepolicy>
-                         </property>
-                         <property name="text">
-                          <string>Prosím pozor! Změna tarifního pásma.</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLabel" name="label_19">
-                         <property name="text">
-                          <string>Attention please! Change of fare zone.</string>
-                         </property>
-                         <property name="alignment">
-                          <set>Qt::AlignCenter</set>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_16">
-                         <item>
-                          <widget class="QLabel" name="label_pasmo1">
-                           <property name="text">
-                            <string>Pasmo1</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignCenter</set>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_21">
-                           <property name="text">
-                            <string>-&gt;</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignCenter</set>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QLabel" name="label_pasmo2">
-                           <property name="text">
-                            <string>Pasmo2</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignCenter</set>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </item>
-                      </layout>
+                      </widget>
                      </item>
                     </layout>
-                   </widget>
-                   <widget class="QWidget" name="page_konecna">
-                    <widget class="QWidget" name="">
-                     <property name="geometry">
-                      <rect>
-                       <x>210</x>
-                       <y>30</y>
-                       <width>187</width>
-                       <height>91</height>
-                      </rect>
-                     </property>
-                     <layout class="QVBoxLayout" name="verticalLayout_12">
-                      <item>
-                       <widget class="QLabel" name="label_20">
-                        <property name="text">
-                         <string>Konečná zastávka, prosíme, vystupte.</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QLabel" name="label_22">
-                        <property name="text">
-                         <string>Final stop, please leave the bus.</string>
-                        </property>
-                        <property name="alignment">
-                         <set>Qt::AlignCenter</set>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </widget>
-                   </widget>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="Lnacestna1">
-                   <property name="sizePolicy">
-                    <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-                     <horstretch>0</horstretch>
-                     <verstretch>0</verstretch>
-                    </sizepolicy>
-                   </property>
-                   <property name="font">
-                    <font>
-                     <pointsize>30</pointsize>
-                    </font>
-                   </property>
-                   <property name="text">
-                    <string>PristiZastavka</string>
-                   </property>
-                   <property name="scaledContents">
-                    <bool>false</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_zmena">
-                   <property name="text">
-                    <string>zmena</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_announcement">
-                   <property name="text">
-                    <string>announcement</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="page_verze">
-               <widget class="QWidget" name="verticalLayoutWidget_2">
-                <property name="geometry">
-                 <rect>
-                  <x>220</x>
-                  <y>120</y>
-                  <width>160</width>
-                  <height>80</height>
-                 </rect>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout_8">
-                 <item>
-                  <widget class="QLabel" name="label_5">
-                   <property name="text">
-                    <string>PID</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_9">
-                   <item>
-                    <widget class="QLabel" name="label_7">
-                     <property name="text">
-                      <string>FW version:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_8">
-                     <property name="text">
-                      <string>XX.YYZZ</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                 <item>
-                  <layout class="QHBoxLayout" name="horizontalLayout_14">
-                   <item>
-                    <widget class="QLabel" name="label_11">
-                     <property name="text">
-                      <string>SW version:</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="label_12">
-                     <property name="text">
-                      <string>XX.YYZZ</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </item>
-                </layout>
-               </widget>
+               <layout class="QGridLayout" name="gridLayout_12">
+                <item row="0" column="0">
+                 <layout class="QVBoxLayout" name="verticalLayout_8">
+                  <item>
+                   <widget class="QLabel" name="label_5">
+                    <property name="font">
+                     <font>
+                      <pointsize>30</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>PID</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_9">
+                    <item>
+                     <widget class="QLabel" name="label_7">
+                      <property name="font">
+                       <font>
+                        <pointsize>30</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>FW version:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_8">
+                      <property name="font">
+                       <font>
+                        <pointsize>30</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>XX.YYZZ</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QHBoxLayout" name="horizontalLayout_14">
+                    <item>
+                     <widget class="QLabel" name="label_11">
+                      <property name="font">
+                       <font>
+                        <pointsize>30</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>SW version:</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_12">
+                      <property name="font">
+                       <font>
+                        <pointsize>30</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>XX.YYZZ</string>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
               <widget class="QWidget" name="page_zmenaLinky">
                <widget class="QWidget" name="verticalLayoutWidget_5">
@@ -640,7 +1150,7 @@
                  <rect>
                   <x>110</x>
                   <y>60</y>
-                  <width>391</width>
+                  <width>459</width>
                   <height>221</height>
                  </rect>
                 </property>
@@ -653,6 +1163,13 @@
                      <verstretch>0</verstretch>
                     </sizepolicy>
                    </property>
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                     <weight>75</weight>
+                     <bold>true</bold>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Prosím pozor! Změna čísla linky.</string>
                    </property>
@@ -663,6 +1180,11 @@
                  </item>
                  <item>
                   <widget class="QLabel" name="label_14">
+                   <property name="font">
+                    <font>
+                     <pointsize>20</pointsize>
+                    </font>
+                   </property>
                    <property name="text">
                     <string>Attention please! Line number change.</string>
                    </property>
@@ -675,6 +1197,13 @@
                   <layout class="QHBoxLayout" name="horizontalLayout_15">
                    <item>
                     <widget class="QLabel" name="label_15">
+                     <property name="font">
+                      <font>
+                       <pointsize>20</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
                      <property name="text">
                       <string>Linka1</string>
                      </property>
@@ -685,6 +1214,11 @@
                    </item>
                    <item>
                     <widget class="QLabel" name="label_17">
+                     <property name="font">
+                      <font>
+                       <pointsize>20</pointsize>
+                      </font>
+                     </property>
                      <property name="text">
                       <string>-&gt;</string>
                      </property>
@@ -695,6 +1229,13 @@
                    </item>
                    <item>
                     <widget class="QLabel" name="label_16">
+                     <property name="font">
+                      <font>
+                       <pointsize>20</pointsize>
+                       <weight>75</weight>
+                       <bold>true</bold>
+                      </font>
+                     </property>
                      <property name="text">
                       <string>Linka2</string>
                      </property>
@@ -711,66 +1252,58 @@
              </widget>
             </item>
             <item row="1" column="1">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>LocationState</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>CurrentStopIndex</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_currentStopIndex">
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QLabel" name="label_locationState">
-              <property name="text">
-               <string>TextLabel</string>
-              </property>
-             </widget>
+             <layout class="QHBoxLayout" name="horizontalLayout_12">
+              <item>
+               <widget class="QLabel" name="label_10">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>verze:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_build">
+                <property name="text">
+                 <string>verze</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </item>
            </layout>
           </widget>
           <widget class="QWidget" name="page_seznamSluzeb">
-           <widget class="QTableWidget" name="tabulkaSubscriberu">
-            <property name="geometry">
-             <rect>
-              <x>20</x>
-              <y>10</y>
-              <width>671</width>
-              <height>331</height>
-             </rect>
-            </property>
-            <column>
-             <property name="text">
-              <string>Název služby</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Verze</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>IP Adresa</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>port</string>
-             </property>
-            </column>
-           </widget>
+           <layout class="QGridLayout" name="gridLayout_10">
+            <item row="0" column="0">
+             <widget class="QTableWidget" name="tabulkaSubscriberu">
+              <column>
+               <property name="text">
+                <string>Název služby</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Verze</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>IP Adresa</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>port</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
           </widget>
           <widget class="QWidget" name="page_casovac">
            <widget class="QLabel" name="label">

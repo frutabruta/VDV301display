@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
   , CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
 
+
     // fonty
     fdb.addApplicationFont("fonty/21-pid-1.ttf");
     fdb.addApplicationFont("fonty/21-pid-3.ttf");
@@ -54,11 +55,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::iterujVsechnyPanely);
+    connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
 
 
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
     timer->start(1000);
     timerBocniPanel->start(2000);
+    timerNacestneZastavky->start(20);
 
     CustomerInformationServiceSubscriber.odebirano=false ;
     CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -87,12 +90,51 @@ MainWindow::MainWindow(QWidget *parent) :
     sw1->setGeometry(50, 50, rect().width(), rect().height());
     */
 
+    QString compilationTime = QString(__DATE__);
+    compilationTime+="T";
+    compilationTime+=QString(__TIME__);
+    ui->label_build->setText(compilationTime);
+
+
 }
 
 int MainWindow::kazdouVterinu()
 {
     ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
+
+
+
+
     return 1;
+}
+
+void MainWindow::slotPosunNacestnych()
+{
+    int delkaTextu=ui->label_nacestne->width();
+    int krok=1;
+
+    if(delkaTextu<ui->scrollArea->width() )
+    {
+        return;
+    }
+   // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
+
+     posunRotovani-=krok;
+
+    if (abs(posunRotovani)>delkaTextu)
+    {
+        posunRotovani=0;
+        vykresliNacestne();
+
+    }
+
+    else
+
+    {
+        //ui->label_nacestne->scroll(-10,0);
+        ui->scrollAreaWidgetContents->scroll(-krok,0);
+    }
+    //ui->label_nacestne->scroll(posunRotovani,0);
 }
 
 void MainWindow::vyprselCasovacSluzby()
@@ -123,7 +165,7 @@ void MainWindow::vymazObrazovku()
 int MainWindow::VykresleniPrijatychDat()
 {
     qDebug()<<"MainWindow::VykresleniPrijatychDat";
-    qInfo()<<"\n VykresleniPrijatychDat";
+    // qInfo()<<"\n VykresleniPrijatychDat";
     //nazevCile=QString( nazevCile.fromUtf8(test1));
     ui->Lcil->setText(nazevCile);
     ui->Llinka->setText(nazevLinky);
@@ -131,25 +173,16 @@ int MainWindow::VykresleniPrijatychDat()
     ui->label_locationState->setText(stavSystemu.locationState);
     ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky));
 
+    vykresliNacestne();
+
     if(additionalTextMessage!="")
     {
-    zobrazAnnoucement("","",additionalTextMessage,"");
+        zobrazAnnoucement("","",additionalTextMessage,"");
     }
     else
     {
         naplnAnouncementLabel("");
     }
-
-
-    if(zmenaPasma==true)
-    {
-        zobrazZmenuPasma(pasmaZ,pasmaDo);
-    }
-    else
-    {
-        skryjZmenuPasma();
-    }
-
 
 
     if(jeVozidloNaKonecne(stavSystemu,globalniSeznamZastavek))
@@ -158,7 +191,16 @@ int MainWindow::VykresleniPrijatychDat()
     }
     else
     {
-        navratJizda();
+        if(zmenaPasma==true)
+        {
+            zobrazZmenuPasma(pasmaZ,pasmaDo);
+        }
+        else
+        {
+            navratJizda();
+            // skryjZmenuPasma();
+        }
+
     }
 
 
@@ -174,6 +216,7 @@ int MainWindow::VykresleniPrijatychDat()
         {
             ui->Lnacestna2->setText(" ");
         }
+
         if ((indexZastavky+2)<pocetZastavek)
         {
             ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].zastavka.NameLcd);
@@ -182,6 +225,7 @@ int MainWindow::VykresleniPrijatychDat()
         {
             ui->Lnacestna3->setText(" ");
         }
+
         if ((indexZastavky+3)<pocetZastavek)
         {
             ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].zastavka.NameLcd);
@@ -189,6 +233,16 @@ int MainWindow::VykresleniPrijatychDat()
         else
         {
             ui->Lnacestna4->setText(" ");
+
+        }
+
+        if ((indexZastavky+4)<pocetZastavek)
+        {
+            ui->Lnacestna5->setText(globalniSeznamZastavek[indexZastavky+4].zastavka.NameLcd);
+        }
+        else
+        {
+            ui->Lnacestna5->setText(" ");
 
         }
 
@@ -206,10 +260,17 @@ int MainWindow::VykresleniPrijatychDat()
     return 1;
 }
 
+void MainWindow::vykresliNacestne()
+{
+    ui->label_nacestne->setText(" ");
+    ui->label_nacestne->setText( svgVykreslovac.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky));
+
+}
+
 int MainWindow::DoplneniPromennych()
 {
     qDebug()<<"MainWindow::DoplneniPromennych";
-    qInfo()<<"\n DoplneniPromennych";
+    // qInfo()<<"\n DoplneniPromennych";
     if (globalniSeznamZastavek.size()>indexZastavky)
     {
         nazevCile=globalniSeznamZastavek.at(indexZastavky).cil.NameLcd;
@@ -228,21 +289,33 @@ int MainWindow::FormatZobrazeni()
     qDebug()<<"MainWindow::FormatZobrazeni";
     qInfo()<<"\n FormatZobrazeni";
 
-    QString barva1 ="#1a1a70"; //tmave modra
-    QString barva2 ="#ffffff"; //bila
+    QString tmave_seda ="rgb(50,50,50)"; //tmave seda
+    QString bila ="#ffffff"; //bila
+
+    QString svetle_seda ="rgb(180,180,180)"; //svetle seda
+    QString barva4 ="#000000"; //cerna
+
+
+    //  QString formatNaslednychZastavek="QLabel { background-color :"+barva1+" ; color : "+barva2+"; }";
+
+    /*
     ui->Llinka->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
     ui->Lcil->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->Lnacestna2->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->Lnacestna3->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->Lnacestna4->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->sipka->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
+    ui->Lnacestna2->setStyleSheet(formatNaslednychZastavek);
+    ui->Lnacestna3->setStyleSheet(formatNaslednychZastavek);
+    ui->Lnacestna4->setStyleSheet(formatNaslednychZastavek);
+    ui->Lnacestna5->setStyleSheet(formatNaslednychZastavek);
+
+    ui->sipka->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");*/
+
+
     if (stavSystemu.locationState=="AtStop" )
     {
-        obarviPozadiPristi(barva1,barva2 );
+        obarviPozadiPristi(tmave_seda,svetle_seda );
     }
     else
     {
-        obarviPozadiPristi(barva2,barva1);
+        obarviPozadiPristi(bila,tmave_seda);
     }
     return 1;
 
@@ -457,7 +530,10 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
     //
     //ui->Lnacestna1->setAutoFillBackground(true);
 
-    ui->Lnacestna1->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+    //ui->Lnacestna1->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+
+    ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+
 
     //ui->Lnacestna1->repaint();
 }
@@ -747,8 +823,6 @@ void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
     ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(naPasma));
 
     naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
-
-
 }
 
 
@@ -765,14 +839,10 @@ void MainWindow::zobrazAnnoucement(QString title,QString type,QString textCz, QS
     ui->label_oznTextEn->setText(textEn);
 
 
+    //  ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(zPasem));
+    //  ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(naPasma));
 
-
-
-
-  //  ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(zPasem));
-  //  ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(naPasma));
-
-   // naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
+    // naplnZmenaLabel(vyrobTextZmenyPasma(zPasem,naPasma));
 
 
 }
@@ -781,13 +851,13 @@ void MainWindow::zobrazAnnoucement(QString title,QString type,QString textCz, QS
 void MainWindow::skryjAnnouncement()
 {
     qDebug()<<"MainWindow::skryjZmenuPasma";
-   navratJizda();
+    navratJizda();
 }
 
 void MainWindow::skryjZmenuPasma()
 {
     qDebug()<<"MainWindow::skryjZmenuPasma";
-   navratJizda();
+    navratJizda();
 }
 
 void MainWindow::navratJizda()

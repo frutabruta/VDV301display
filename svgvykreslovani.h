@@ -17,10 +17,11 @@ public:
     QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<ZastavkaCil> nasledujiciZastavky);
     int aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
-    QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
+   // QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
     static QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
 
 
+    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);

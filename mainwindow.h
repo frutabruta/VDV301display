@@ -21,6 +21,7 @@ void on_actionstahnoutXML_triggered();
 #include <QGraphicsScene>
 #include <QSvgRenderer>
 #include <QFontDatabase>
+#include <QtDebug>
 
 
 
@@ -71,9 +72,6 @@ public:
     QFont font8;
     QFont font10;
 
-
-
-
     void naplnZmenaLabel(QString vstup);
     void naplnAnouncementLabel(QString vstup);
     void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
@@ -103,6 +101,7 @@ private slots:
 
     void on_tlacitkoLed_clicked();
 
+    void slotPosunNacestnych();
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
@@ -116,6 +115,7 @@ private:
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
 
+    int posunRotovani=0;
 
 
     QGraphicsScene scene;
@@ -132,7 +132,9 @@ private:
     void aktualizujZobrazeniVirtualnichLedPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
     QVector<QString> textyBocniPanelkIteraci;
     int cyklovaniIndex=0;
+
     QTimer *timerBocniPanel = new QTimer(this);
+    QTimer *timerNacestneZastavky = new QTimer(this);
 
 
 
@@ -141,6 +143,7 @@ private:
     void zobrazKonecnou();
     void navratJizda();
     int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
+    void vykresliNacestne();
 };
 
 #endif // MAINWINDOW_H

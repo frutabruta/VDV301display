@@ -126,23 +126,6 @@ QVector<ZastavkaCil> SvgVykreslovani::vytvorNasledujiciZastavky(QVector<Zastavka
 
     return vyslednySeznam;
 }
-QVector<ZastavkaCil> SvgVykreslovani::vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index)
-{
-    qDebug()<<"SvgVykreslovani::vytvorNacestneZastavky";
-    QVector<ZastavkaCil> vyslednySeznam;
-    /*
-
-    for (int i=index; i<vsechnyZastavky.size();i++)
-    {
-        if (vsechnyZastavky.at(i).nacestna==true)
-        {
-            vyslednySeznam.append(vsechnyZastavky.at(i));
-        }
-    }
-
-*/
-    return vyslednySeznam;
-}
 
 
 
@@ -217,6 +200,25 @@ QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument,
 
     return xmlDocument;
 }
+
+QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestneZastavky)
+{
+    qDebug()<<"SvgVykreslovani::vykresliNacestneZastavkyText";
+    if (nacestneZastavky.count()==0)
+    {
+        return "";
+    }
+
+    QString nacestyString="";
+    nacestyString+=nacestneZastavky.at(0).NameLcd;
+    for (int i=1;i<nacestneZastavky.count();i++)
+    {
+        nacestyString+=" – "+nacestneZastavky.at(i).NameLcd;
+    }
+    qDebug()<<"vypis radku nacestnych zastavek"<<nacestyString;
+    return nacestyString;
+}
+
 
 QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav)
 {

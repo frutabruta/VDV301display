@@ -1538,6 +1538,7 @@ release/moc_mainwindow.cpp: mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/qsvgrenderer.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/QFontDatabase \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfontdatabase.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QtDebug \
 		release/moc_predefs.h \
 		../../../../Qt/5.15.2/mingw81_32/bin/moc.exe
 	C:\Qt\5.15.2\mingw81_32\bin\moc.exe $(DEFINES) --include C:/Users/Eichler536/github/VDV301display/release/moc_predefs.h -IC:/Qt/5.15.2/mingw81_32/mkspecs/win32-g++ -IC:/Users/Eichler536/github/VDV301display -IC:/Qt/5.15.2/mingw81_32/include -IC:/Qt/5.15.2/mingw81_32/include/QtSvg -IC:/Qt/5.15.2/mingw81_32/include/QtWidgets -IC:/Qt/5.15.2/mingw81_32/include/QtGui -IC:/Qt/5.15.2/mingw81_32/include/QtANGLE -IC:/Qt/5.15.2/mingw81_32/include/QtXml -IC:/Qt/5.15.2/mingw81_32/include/QtHttpServer -IC:/Qt/5.15.2/mingw81_32/include/QtWebSockets -IC:/Qt/5.15.2/mingw81_32/include/QtSslServer -IC:/Qt/5.15.2/mingw81_32/include/QtNetwork -IC:/Qt/5.15.2/mingw81_32/include/QtConcurrent -IC:/Qt/5.15.2/mingw81_32/include/QtCore -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++ -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/i686-w64-mingw32 -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include/c++/backward -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include -IC:/Qt/Tools/mingw810_32/lib/gcc/i686-w64-mingw32/8.1.0/include-fixed -IC:/Qt/Tools/mingw810_32/i686-w64-mingw32/include mainwindow.h -o release\moc_mainwindow.cpp
@@ -2845,6 +2846,7 @@ release/main.o: main.cpp mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/qsvgrenderer.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/QFontDatabase \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfontdatabase.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QtDebug \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QApplication \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
@@ -3243,65 +3245,8 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/qsvgrenderer.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/QFontDatabase \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfontdatabase.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QtDebug \
 		ui_mainwindow.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QAction \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qaction.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qactiongroup.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QApplication \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QFrame \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qframe.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGraphicsView \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgraphicsview.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qpainter.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextoption.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qscrollarea.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHeaderView \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qheaderview.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractitemview.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractitemdelegate.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstyleoption.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractspinbox.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qvalidator.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qslider.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractslider.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstyle.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabbar.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qrubberband.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QLabel \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlabel.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QLineEdit \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlineedit.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextcursor.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextformat.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QMenu \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmenu.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QMenuBar \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmenubar.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QPushButton \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QSpacerItem \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QStackedWidget \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstackedwidget.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QStatusBar \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstatusbar.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QTableWidget \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtablewidget.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtableview.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QToolBar \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtoolbar.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout \
 		../../../../Qt/5.15.2/mingw81_32/include/QtNetwork/QNetworkReply \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/QSvgWidget \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/qsvgwidget.h
