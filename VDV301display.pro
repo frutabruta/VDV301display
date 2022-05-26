@@ -41,6 +41,7 @@ SOURCES += \
     VDV301subscriber/ibisipsubscriber.cpp \
         main.cpp \
         mainwindow.cpp \
+    pasmovedvojicelcd.cpp \
     svgvykreslovani.cpp \
     xmlparser.cpp \
     VDV301struktury/zastavka.cpp\
@@ -55,6 +56,7 @@ HEADERS += \
     VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
         mainwindow.h \
+    pasmovedvojicelcd.h \
     svgvykreslovani.h \
     xmlparser.h \
     VDV301struktury/zastavka.h\

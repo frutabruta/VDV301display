@@ -15,6 +15,7 @@ void on_actionstahnoutXML_triggered();
 #include "VDV301subscriber/ibisipsubscriber.h"
 #include "VDV301struktury/cestaudaje.h"
 #include "VDV301struktury/zastavkacil.h"
+#include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
 
 #include <QGraphicsSvgItem>
@@ -22,6 +23,8 @@ void on_actionstahnoutXML_triggered();
 #include <QSvgRenderer>
 #include <QFontDatabase>
 #include <QtDebug>
+
+#include <QLabel>
 
 
 
@@ -78,6 +81,7 @@ public:
     QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
 
     void skryjZmenuPasma();
+
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -115,7 +119,10 @@ private:
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
 
+
+
     int posunRotovani=0;
+    int pocetVykreslovanychZastavek=5;
 
 
     QGraphicsScene scene;
@@ -144,6 +151,15 @@ private:
     void navratJizda();
     int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
     void vykresliNacestne();
+    void vykresliNacestneForce();
+
+
+    void naplnPoleLabelu();
+    QVector<QLabel*> seznamNazvuZastavek;
+    QVector<QLabel*> seznamPasem1;
+    QVector<QLabel*> seznamPasem2;
+    void vymazPoleLabelu(QVector<QLabel*> vstup);
+    int minimum(int cislo1, int cislo2);
 };
 
 #endif // MAINWINDOW_H

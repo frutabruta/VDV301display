@@ -262,7 +262,7 @@ QString SvgVykreslovani::pasmaDoStringu(QVector<Pasmo> seznamPasem)
             vysledek+=","+seznamPasem.at(i).nazev;
         }
     }
-
+    qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
     return vysledek;
 }
 
