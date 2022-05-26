@@ -57,7 +57,7 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         QDomElement displayContent=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement();
         docasnaZastavka.cil.StopName=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameFront=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName").at(0).firstChildElement().text();
-
+        docasnaZastavka.cil.seznamPiktogramu=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
 
         QDomNodeList nazvyCelniPanel=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationFrontName");
         if (nazvyCelniPanel.length()>0)
@@ -66,8 +66,9 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         }
         if (nazvyCelniPanel.length()>1)
         {
-         docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
+            docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
         }
+       docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 
 
         docasnaZastavka.cil.NameSide=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
@@ -90,6 +91,25 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
 
     return 1;
 }
+
+QVector<QString> XmlParser::naplnVektorPriznaku(QDomNode vstup,QString nazevElementu)
+{
+    qDebug()<<"XmlParser::naplnVektorPriznaku";
+    QVector<QString> vystup;
+
+    Zastavka nacesta;
+    QDomNodeList priznaky=vstup.toElement().elementsByTagName(nazevElementu+"Property");
+    qDebug()<<"naplnVektor Zastavka ma tolik priznaku:"<<priznaky.count();
+
+    for (int j=0;j<priznaky.count();j++)
+    {
+        QString hodnotaPriznaku=priznaky.at(j).firstChild().nodeValue();
+        qDebug()<<"priznak "<<hodnotaPriznaku;
+        vystup.push_back(hodnotaPriznaku);
+    }
+    return vystup;
+}
+
 QVector<Zastavka> XmlParser::vyparsujNacestneZastavky(QDomElement zastavka)
 {
     qDebug()<<"XmlParser::vyparsujNacestneZastavky";
@@ -104,6 +124,9 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky(QDomElement zastavka)
         nacesta.NameInner=aktNacesta.firstChildElement("PlaceInnerName").firstChildElement("Value").firstChild().nodeValue();
         nacesta.NameSide=aktNacesta.firstChildElement("PlaceSideName").firstChildElement("Value").firstChild().nodeValue();
         nacesta.StopName=nacesta.NameLcd;
+
+
+        nacesta.seznamPiktogramu= naplnVektorPriznaku(aktNacesta,"ViaPoint");
         for (int j=0;j<priznaky.count();j++)
         {
             QString hodnotaPriznaku=priznaky.at(j).firstChild().nodeValue();
@@ -190,7 +213,7 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup )
     vystup=value.firstChild().nodeValue();
     qDebug()<<"additional text je "<<vystup;
 
-   /*
+    /*
     QDomElement root = xmlko.firstChildElement();
     qDebug()<<"root name "<<root.nodeName();
     QDomElement allData=root.firstChildElement("AllData");
@@ -206,7 +229,7 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup )
 
 int XmlParser::nactiFareZoneChange(QDomDocument xmlko, QVector<Pasmo> &pasmaZ, QVector<Pasmo> &pasmaNa )
 {
-        //rozepsano
+    //rozepsano
     qDebug()<<"XmlParser::nactiFareZoneChange";
 
 

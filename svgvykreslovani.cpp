@@ -210,7 +210,10 @@ QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestn
     }
 
     QString nacestyString="";
-    nacestyString+=nacestneZastavky.at(0).NameLcd;
+
+
+
+    nacestyString+=  nacestneZastavky.at(0).NameLcd;
     for (int i=1;i<nacestneZastavky.count();i++)
     {
         nacestyString+=" – "+nacestneZastavky.at(i).NameLcd;
@@ -218,6 +221,10 @@ QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestn
     qDebug()<<"vypis radku nacestnych zastavek"<<nacestyString;
     return nacestyString;
 }
+
+
+
+
 
 
 QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav)

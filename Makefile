@@ -263,7 +263,8 @@ Makefile: VDV301display.pro ../../../../Qt/5.15.2/mingw81_32/mkspecs/win32-g++/q
 		../../../../Qt/5.15.2/mingw81_32/lib/Qt5Concurrent.prl \
 		../../../../Qt/5.15.2/mingw81_32/lib/Qt5Core.prl \
 		../../../../Qt/5.15.2/mingw81_32/lib/qtmain.prl \
-		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/build_pass.prf
+		../../../../Qt/5.15.2/mingw81_32/mkspecs/features/build_pass.prf \
+		resources.qrc
 	$(QMAKE) -o Makefile VDV301display.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/spec_pre.prf:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/qdevice.pri:
@@ -459,6 +460,7 @@ VDV301display.pro:
 ../../../../Qt/5.15.2/mingw81_32/lib/Qt5Core.prl:
 ../../../../Qt/5.15.2/mingw81_32/lib/qtmain.prl:
 ../../../../Qt/5.15.2/mingw81_32/mkspecs/features/build_pass.prf:
+resources.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile VDV301display.pro -spec win32-g++ "CONFIG+=qtquickcompiler"
 

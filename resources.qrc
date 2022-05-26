@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="Tram">resources/LCD-piktogramy_verze-LCD-5_1.svg</file>
+        <file alias="UndergroundA">resources/LCD-piktogramy_verze-LCD-5-01.svg</file>
+        <file alias="UndergroundB">resources/LCD-piktogramy_verze-LCD-5-02.svg</file>
+        <file alias="UndergroundC">resources/LCD-piktogramy_verze-LCD-5-03.svg</file>
+        <file alias="UndergroundD">resources/LCD-piktogramy_verze-LCD-5-04.svg</file>
+        <file alias="Bus">resources/LCD-piktogramy_verze-LCD-5-06.svg</file>
+        <file alias="Train">resources/LCD-piktogramy_verze-LCD-5-07.svg</file>
+        <file alias="Funicular">resources/LCD-piktogramy_verze-LCD-5-08.svg</file>
+        <file alias="Ferry">resources/LCD-piktogramy_verze-LCD-5-09.svg</file>
+        <file alias="Night">resources/LCD-piktogramy_verze-LCD-5-10.svg</file>
+        <file alias="NightInv">resources/LCD-piktogramy_verze-LCD-5-11.svg</file>
+        <file alias="Air">resources/LCD-piktogramy_verze-LCD-5-12.svg</file>
+        <file alias="RequestStop">resources/LCD-piktogramy_verze-LCD-5-13.svg</file>
+        <file alias="ReplacementService">resources/LCD-piktogramy_verze-LCD-5-14.svg</file>
+        <file alias="ReplacementStop">resources/LCD-piktogramy_verze-LCD-5-15.svg</file>
+        <file alias="WheelchairLine">resources/LCD-piktogramy_verze-LCD-5-16.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-17.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-18.svg</file>
+        <file alias="Pid">resources/LCD-piktogramy_verze-LCD-5-19.svg</file>
+        <file alias="RequestStopInv">resources/LCD-piktogramy_verze-LCD-5-20.svg</file>
+        <file alias="Accessible">resources/LCD-piktogramy_verze-LCD-5-21.svg</file>
+        <file alias="Pram">resources/LCD-piktogramy_verze-LCD-5-22.svg</file>
+        <file alias="WheelChair ">resources/LCD-piktogramy_verze-LCD-5-23.svg</file>
+        <file alias="GoFurther">resources/LCD-piktogramy_verze-LCD-5-24.svg</file>
+        <file alias="Luggage">resources/LCD-piktogramy_verze-LCD-5-25.svg</file>
+        <file alias="NoFoodInv">resources/LCD-piktogramy_verze-LCD-5-26.svg</file>
+        <file alias="Congestion">resources/LCD-piktogramy_verze-LCD-5-27.svg</file>
+        <file alias="Info">resources/LCD-piktogramy_verze-LCD-5-28.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-29.svg</file>
+        <file alias="Train">resources/LCD-piktogramy_verze-LCD-5-30.svg</file>
+        <file alias="Trolleybus">resources/LCD-piktogramy_verze-LCD-5-31.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-32.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-33.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-34.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-35.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-36.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-37.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-38.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-39.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-40.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-41.svg</file>
+        <file>resources/LCD-piktogramy_verze-LCD-5-42.svg</file>
+    </qresource>
+</RCC>

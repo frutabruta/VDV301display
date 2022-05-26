@@ -15,11 +15,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
-  //, mNetMan(new QNetworkAccessManager(this))
-  //, mNetReply(nullptr)
-  // , mDataBuffer(new QByteArray)
-  , CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
+    ui(new Ui::MainWindow),
+    CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479)
 {
 
     // fonty
@@ -37,8 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
-    naplnPoleLabelu();
+    vsechnyConnecty();
 
+
+    naplnPoleLabelu();
 
     ui->prepinadloStran->setCurrentIndex(0);
     ui->stackedWidget_prostredek->setCurrentIndex(0);
@@ -46,17 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     FormatZobrazeni();
     instanceXMLparser.Test();
-    QObject::connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
-    QObject::connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
-
-    connect(timer, &QTimer::timeout, this, &MainWindow::kazdouVterinu);
-
-    connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::iterujVsechnyPanely);
-    connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
-
-
-    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
-    timer->start(1000);
+     timer->start(1000);
     timerBocniPanel->start(2000);
     timerNacestneZastavky->start(20);
 
@@ -95,6 +84,21 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::vsechnyConnecty()
+{
+    QObject::connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+    QObject::connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
+
+    connect(timer, &QTimer::timeout, this, &MainWindow::kazdouVterinu);
+
+    connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::iterujVsechnyPanely);
+    connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
+
+
+    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+
+}
+
 int MainWindow::kazdouVterinu()
 {
     ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
@@ -123,10 +127,9 @@ void MainWindow::slotPosunNacestnych()
     else
 
     {
-        //ui->label_nacestne->scroll(-10,0);
         ui->scrollAreaWidgetContents->scroll(-krok,0);
     }
-    //ui->label_nacestne->scroll(posunRotovani,0);
+
 }
 
 void MainWindow::vyprselCasovacSluzby()
@@ -174,23 +177,13 @@ void MainWindow::vymazObrazovku()
     qDebug()<<"MainWindow::vymazObrazovku()";
     ui->Lcil->setText("");
     ui->Llinka->setText("");
-    /*
-    ui->Lnacestna1->setText("");
-    ui->Lnacestna2->setText("");
-    ui->Lnacestna3->setText("");
-    ui->Lnacestna4->setText("");
-    ui->Lnacestna5->setText("");
-    */
 
     vymazPoleLabelu(seznamNazvuZastavek);
     vymazPoleLabelu(seznamPasem1);
     vymazPoleLabelu(seznamPasem2);
 
-
-
-
-
     const QObjectList localChildren = ui->centralWidget->children();
+
     foreach (QObject *obj, localChildren)
     {
         QLabel *label = qobject_cast<QLabel *>(obj);
@@ -206,69 +199,35 @@ void MainWindow::vymazObrazovku()
 int MainWindow::VykresleniPrijatychDat()
 {
     qDebug()<<"MainWindow::VykresleniPrijatychDat";
-    // qInfo()<<"\n VykresleniPrijatychDat";
-    //nazevCile=QString( nazevCile.fromUtf8(test1));
+
     ui->Lcil->setText(nazevCile);
     ui->Llinka->setText(nazevLinky);
 
+
+    QPixmap m_logo_pic;
+    QLabel *m_pic_label;
+    m_pic_label=new QLabel();
+
+        m_logo_pic.load(":/image/bank.png");
+        m_pic_label->setPixmap(m_logo_pic);
+
+
     ui->label_locationState->setText(stavSystemu.locationState);
     ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky));
-
 
     int pocetZastavekVykreslit=0;
 
     pocetZastavekVykreslit=minimum(globalniSeznamZastavek.length()-stavSystemu.indexAktZastavky,pocetVykreslovanychZastavek);
 
-
     vymazPoleLabelu(seznamPasem1);
     vymazPoleLabelu(seznamPasem2);
+    vymazPoleLabelu(seznamNazvuZastavek);
 
-    for(int i=0;i<pocetZastavekVykreslit ; i++)
-    {
+    hlavniVykreslZastavkyiPasma(pocetZastavekVykreslit);
 
-        int pomocnyIndex=indexZastavky+i;
+    hlavniVykresliNacestne();
 
-
-         PasmoveDvojiceLcd pasmoveDvojiceLcd;
-         pasmoveDvojiceLcd.roztridPasma(globalniSeznamZastavek.at(pomocnyIndex).zastavka.seznamPasem);
-
-
-         if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
-         {
-             seznamPasem1.at(i)->setText("");
-         }
-         else
-         {
-             QString pasmaString1=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
-             QString zkratkaSystemuDvojtecka="";
-             if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
-             {
-                 zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
-             }
-             seznamPasem1.at(i)->setText(zkratkaSystemuDvojtecka+pasmaString1);
-         }
-
-         if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
-         {
-             seznamPasem2.at(i)->hide();
-         }
-         else
-         {
-             QString pasmaString2=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
-             seznamPasem2.at(i)->show();
-             seznamPasem2.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
-         }
-
-
-      //  qDebug()<<"label pasma "<<i<<" "<<stavSystemu.indexAktZastavky<<" p1:"<<pasmaString1<<" p2:"<<pasmaString2<<" "<<"pomocnyIndex";
-
-    }
-
-
-
-
-
-    vykresliNacestne();
+    //additional text message
 
     if(additionalTextMessage!="")
     {
@@ -279,6 +238,7 @@ int MainWindow::VykresleniPrijatychDat()
         naplnAnouncementLabel("");
     }
 
+    //konecna
 
     if(jeVozidloNaKonecne(stavSystemu,globalniSeznamZastavek))
     {
@@ -297,10 +257,24 @@ int MainWindow::VykresleniPrijatychDat()
         }
 
     }
+    //   hlavniVykresliNasledne();
 
 
+
+
+    return 1;
+}
+
+/*
+void MainWindow::hlavniVykresliNasledne()
+{
+    qDebug()<<"MainWindow::hlavniVykresliNasledne()";
     if(indexZastavky<globalniSeznamZastavek.size())
     {
+
+
+
+
 
         ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].zastavka.NameLcd);
         if ((indexZastavky+1)<pocetZastavek)
@@ -346,13 +320,137 @@ int MainWindow::VykresleniPrijatychDat()
     {
         qDebug()<<"indexZastavky je"<<QString::number(indexZastavky)<<" velikost globSezZast="<<QString::number(globalniSeznamZastavek.size());
     }
+}
+*/
+
+
+void MainWindow::hlavniVykreslZastavkyiPasma(int pocetZastavekVykreslit )
+{
+    qDebug()<<"";
+
+    for(int i=0;i<pocetZastavekVykreslit ; i++)
+    {
+
+        int pomocnyIndex=indexZastavky+i;
+        Zastavka aktualniZastavka=globalniSeznamZastavek.at(pomocnyIndex).zastavka;
+
+        PasmoveDvojiceLcd pasmoveDvojiceLcd;
+        pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.seznamPasem);
+
+        seznamNazvuZastavek.at(i)->setText(doplnPiktogramy(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu));
+
+
+        // ui->Lnacestna5->setText(globalniSeznamZastavek[indexZastavky+4].zastavka.NameLcd);
+
+        if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
+        {
+            seznamPasem1.at(i)->setText("");
+        }
+        else
+        {
+            QString pasmaString1=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
+            QString zkratkaSystemuDvojtecka="";
+            if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
+            {
+                zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
+            }
+            seznamPasem1.at(i)->setText(zkratkaSystemuDvojtecka+pasmaString1);
+        }
+
+        if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
+        {
+            seznamPasem2.at(i)->hide();
+        }
+        else
+        {
+            QString pasmaString2=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
+            seznamPasem2.at(i)->show();
+            seznamPasem2.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+        }
+
+
+        //  qDebug()<<"label pasma "<<i<<" "<<stavSystemu.indexAktZastavky<<" p1:"<<pasmaString1<<" p2:"<<pasmaString2<<" "<<"pomocnyIndex";
+
+    }
+
+}
+
+
+QString MainWindow::doplnPiktogramy(QString nazevZastavky,QVector<QString> seznamPiktogramu)
+{
+    QString vystup="";
+    int vyskaObrazku=40;
+
+    // <html><head/><body><p>Dalsi 2<span style=" color:#ffffff; background-color:#ff00ff;">M</span><img src=":/images/UndergroundB"/><img src=":/images/Trolleybus"/></p></body></html>
+
+
+    QString htmlZacatek="<html><head/><body><p>";
+                     //   "Dalsi 2<span style=" color:#ffffff; background-color:#ff00ff;">M</span>"
+
+    QString htmlObrazky="";
+    foreach(QString nazevPiktogramu,seznamPiktogramu)
+    {           //height=\""+QString::number(vyskaObrazku)+" \"
+        htmlObrazky+="<img  src=\":/images/"+nazevPiktogramu+"\" height=\""+QString::number(vyskaObrazku)+"\"  >";
+    }
+
+
+     QString htmlKonec="</p></body></html>";
+
+
+     vystup=htmlZacatek+nazevZastavky+htmlObrazky+htmlKonec;
+    return vystup;
+
+}
+
+QString MainWindow::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky,QVector<QString> seznamPiktogramu)
+{
+    QString vystup="";
+    int vyskaObrazku=40;
+
+    // <html><head/><body><p>Dalsi 2<span style=" color:#ffffff; background-color:#ff00ff;">M</span><img src=":/images/UndergroundB"/><img src=":/images/Trolleybus"/></p></body></html>
 
 
 
+                     //   "Dalsi 2<span style=" color:#ffffff; background-color:#ff00ff;">M</span>"
+
+    QString htmlObrazky="";
+    foreach(QString nazevPiktogramu,seznamPiktogramu)
+    {           //height=\""+QString::number(vyskaObrazku)+" \"
+htmlObrazky+="<img  src=\":/images/"+nazevPiktogramu+"\" height=\""+QString::number(vyskaObrazku)+"\"  >";
+    }
 
 
 
-    return 1;
+     vystup=nazevZastavky+htmlObrazky;
+    return vystup;
+
+}
+
+QString MainWindow::vykresliNacestneZastavkyText( QVector<Zastavka> nacestneZastavky)
+{
+    qDebug()<<"MainWindow::vykresliNacestneZastavkyText";
+    if (nacestneZastavky.count()==0)
+    {
+        return "";
+    }
+
+    QString nacestyString="";
+
+
+
+    nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu);
+    for (int i=1;i<nacestneZastavky.count();i++)
+    {
+        nacestyString+=" – "+doplnPiktogramyBezZacatkuKonce( nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).seznamPiktogramu);
+    }
+
+
+    QString htmlZacatek="<html><head/><body><p>";
+     QString htmlKonec="</p></body></html>";
+
+     QString vysledek=htmlZacatek+nacestyString+htmlKonec;
+qDebug()<<"vypis radku nacestnych zastavek text html"<<vysledek;
+    return vysledek;
 }
 
 int MainWindow::minimum(int cislo1, int cislo2)
@@ -364,7 +462,7 @@ int MainWindow::minimum(int cislo1, int cislo2)
     return cislo2;
 }
 
-void MainWindow::vykresliNacestne()
+void MainWindow::hlavniVykresliNacestne()
 {
     qDebug()<<"MainWindow::vykresliNacestne()";
     //ui->label_nacestne->setText(" ");
@@ -375,7 +473,7 @@ void MainWindow::vykresliNacestne()
         return;
     }
 
-    QString novyVstup=svgVykreslovac.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky);
+    QString novyVstup=this->vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky);
     if(ui->label_nacestne->text()!=novyVstup)
     {
         ui->label_nacestne->setText( novyVstup);
@@ -406,8 +504,9 @@ int MainWindow::DoplneniPromennych()
     // qInfo()<<"\n DoplneniPromennych";
     if (globalniSeznamZastavek.size()>indexZastavky)
     {
-        nazevCile=globalniSeznamZastavek.at(indexZastavky).cil.NameLcd;
-        nazevLinky=globalniSeznamZastavek.at(indexZastavky).linka.LineName;
+        ZastavkaCil aktualniZastavka=globalniSeznamZastavek.at(indexZastavky);
+        nazevCile=doplnPiktogramy(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu);
+        nazevLinky=aktualniZastavka.linka.LineName;
     }
     else
     {
@@ -422,33 +521,18 @@ int MainWindow::FormatZobrazeni()
     qDebug()<<"MainWindow::FormatZobrazeni";
     qInfo()<<"\n FormatZobrazeni";
 
-    QString tmave_seda ="rgb(50,50,50)"; //tmave seda
-    QString bila ="#ffffff"; //bila
-
-    QString svetle_seda ="rgb(180,180,180)"; //svetle seda
-    QString barva4 ="#000000"; //cerna
 
 
-    //  QString formatNaslednychZastavek="QLabel { background-color :"+barva1+" ; color : "+barva2+"; }";
 
-    /*
-    ui->Llinka->setStyleSheet("QLabel { background-color :"+barva2+" ; color : "+barva1+"; }");
-    ui->Lcil->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");
-    ui->Lnacestna2->setStyleSheet(formatNaslednychZastavek);
-    ui->Lnacestna3->setStyleSheet(formatNaslednychZastavek);
-    ui->Lnacestna4->setStyleSheet(formatNaslednychZastavek);
-    ui->Lnacestna5->setStyleSheet(formatNaslednychZastavek);
-
-    ui->sipka->setStyleSheet("QLabel { background-color :"+barva1+" ; color : "+barva2+"; }");*/
 
 
     if (stavSystemu.locationState=="AtStop" )
     {
-        obarviPozadiPristi(tmave_seda,svetle_seda );
+        obarviPozadiPristi(barva_PozadiB_50_50_50,barva_Zastavka_180_180_180 );
     }
     else
     {
-        obarviPozadiPristi(bila,tmave_seda);
+        obarviPozadiPristi(barva_bila_255_255_255,barva_PozadiB_50_50_50);
     }
     return 1;
 

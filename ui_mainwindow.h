@@ -656,6 +656,7 @@ public:
         sizePolicy.setHeightForWidth(Lnacestna3->sizePolicy().hasHeightForWidth());
         Lnacestna3->setSizePolicy(sizePolicy);
         Lnacestna3->setFont(font5);
+        Lnacestna3->setStyleSheet(QString::fromUtf8("#metro{color:#ff00ff;}"));
 
         gridLayout_5->addWidget(Lnacestna3, 2, 1, 1, 1);
 
@@ -1494,7 +1495,7 @@ public:
 
         prepinadloStran->setCurrentIndex(0);
         stackedWidget_obrazovka->setCurrentIndex(0);
-        stackedWidget_prostredek->setCurrentIndex(2);
+        stackedWidget_prostredek->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1535,7 +1536,7 @@ public:
         Lnacestna5->setText(QCoreApplication::translate("MainWindow", "Dalsi 4", nullptr));
         label_pasmo3_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo3_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
-        Lnacestna3->setText(QCoreApplication::translate("MainWindow", "Dalsi 2", nullptr));
+        Lnacestna3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Dalsi 2</p></body></html>", nullptr));
         label_pasmo5_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo5_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
         Lnacestna2->setText(QCoreApplication::translate("MainWindow", "Dalsi 1", nullptr));

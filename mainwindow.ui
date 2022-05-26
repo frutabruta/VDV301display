@@ -605,7 +605,7 @@ QLabel{color:#FFFFFF}</string>
                      <item>
                       <widget class="QStackedWidget" name="stackedWidget_prostredek">
                        <property name="currentIndex">
-                        <number>2</number>
+                        <number>0</number>
                        </property>
                        <widget class="QWidget" name="page_hlavni_2">
                         <layout class="QGridLayout" name="gridLayout_2">
@@ -829,8 +829,11 @@ QLabel{color:#FFFFFF}</string>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
+                               <property name="styleSheet">
+                                <string notr="true">#metro{color:#ff00ff;}</string>
+                               </property>
                                <property name="text">
-                                <string>Dalsi 2</string>
+                                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dalsi 2&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                </property>
                               </widget>
                              </item>

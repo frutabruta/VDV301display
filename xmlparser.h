@@ -27,6 +27,7 @@ public:
     int nactiFareZoneChange(QDomDocument xmlko, QVector<Pasmo> &pasmaZ, QVector<Pasmo> &pasmaNa);
     int nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup);
     int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<Pasmo> &pasma);
+    QVector<QString> naplnVektorPriznaku(QDomNode vstup, QString nazevElementu);
 private:
     QVector<Zastavka> vyparsujNacestneZastavky(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);

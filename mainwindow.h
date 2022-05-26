@@ -82,6 +82,7 @@ public:
 
     void skryjZmenuPasma();
 
+    //  void hlavniVykresliNasledne();
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -119,7 +120,43 @@ private:
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
 
+    QString barva_PozadiA_25_25_25 ="rgb(25,25,25)";
+    QString barva_PozadiB_50_50_50 ="rgb(50,50,50)"; //tmave seda
+    QString barva_PozadiC_100_100_100 ="rgb(100,100,100)";
+    QString barva_PozadiD_150_150_150 ="rgb(150,150,150)"; //Pozadí D
+    QString barva_Zastavka_180_180_180 ="rgb(180,180,180)"; //Zastávka
+    QString barva_bila_255_255_255 ="#ffffff"; //bila
 
+    QString barva_Vyluky_255_170_30 ="rgb(255,170,30)";
+    QString barva_Cervena_200_0_20 ="rgb(200,0,20)";
+    QString barva_CervenaTexty_220_40_40 ="rgb(220,40,40)";
+    QString barva_Zelena_210_215_15 ="rgb(210,215,15)";
+    /*
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+    QString barva____ ="rgb(,,)";
+
+*/
+
+
+
+
+
+
+
+
+
+
+    QString cerna ="#000000"; //cerna
 
     int posunRotovani=0;
     int pocetVykreslovanychZastavek=5;
@@ -150,7 +187,7 @@ private:
     void zobrazKonecnou();
     void navratJizda();
     int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
-    void vykresliNacestne();
+    void hlavniVykresliNacestne();
     void vykresliNacestneForce();
 
 
@@ -160,6 +197,14 @@ private:
     QVector<QLabel*> seznamPasem2;
     void vymazPoleLabelu(QVector<QLabel*> vstup);
     int minimum(int cislo1, int cislo2);
+    void hlavniVykreslZastavkyiPasma(int pocetZastavekVykreslit);
+    void vsechnyConnecty();
+
+
+
+    QString doplnPiktogramy(QString nazevZastavky, QVector<QString> seznamPiktogramu);
+    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
+    QString doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu);
 };
 
 #endif // MAINWINDOW_H
