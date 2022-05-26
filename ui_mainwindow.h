@@ -217,7 +217,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(1056, 823);
+        MainWindow->resize(1056, 874);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -277,12 +277,16 @@ public:
         tlacitkoLed = new QPushButton(centralWidget);
         tlacitkoLed->setObjectName(QString::fromUtf8("tlacitkoLed"));
         tlacitkoLed->setFont(font);
+        tlacitkoLed->setCheckable(true);
+        tlacitkoLed->setAutoExclusive(true);
 
         verticalLayout_4->addWidget(tlacitkoLed);
 
         svgTlacitko = new QPushButton(centralWidget);
         svgTlacitko->setObjectName(QString::fromUtf8("svgTlacitko"));
         svgTlacitko->setFont(font);
+        svgTlacitko->setCheckable(true);
+        svgTlacitko->setAutoExclusive(true);
 
         verticalLayout_4->addWidget(svgTlacitko);
 

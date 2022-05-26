@@ -222,6 +222,12 @@ QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestn
     return nacestyString;
 }
 
+void SvgVykreslovani::vymazObrazovku()
+{
+    qDebug()<<"SvgVykreslovani::vymazObrazovku()";
+
+}
+
 
 
 
@@ -290,4 +296,24 @@ int SvgVykreslovani::aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje sta
 
     qDomDocumentDoSouboru("vystup.svg",xmlko);
     return 1;
+}
+
+void SvgVykreslovani::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
+{
+    qDebug()<<"SvgVykreslovani::zobrazZmenuPasma";
+}
+
+
+void SvgVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
+{
+    qDebug()<<"SvgVykreslovani::obarviPozadiPristi";
+
+}
+
+
+void SvgVykreslovani::zobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
+{
+    qDebug()<<"SvgVykreslovani::hlavniZobrazAnnoucement";
+
+
 }

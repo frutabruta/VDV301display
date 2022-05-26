@@ -39,6 +39,7 @@ INSTALLS+=target
 SOURCES += \
     VDV301subscriber/newhttpserver.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
+    labelvykreslovani.cpp \
         main.cpp \
         mainwindow.cpp \
     pasmovedvojicelcd.cpp \
@@ -55,6 +56,7 @@ SOURCES += \
 HEADERS += \
     VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
+    labelvykreslovani.h \
         mainwindow.h \
     pasmovedvojicelcd.h \
     svgvykreslovani.h \

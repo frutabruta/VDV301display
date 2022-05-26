@@ -17,6 +17,7 @@ void on_actionstahnoutXML_triggered();
 #include "VDV301struktury/zastavkacil.h"
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
+#include "labelvykreslovani.h"
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
@@ -64,21 +65,22 @@ public:
 
 
 
-    void naplnLedFront(QString linka, QString horniRadek, QString dolniRadek);
-    void naplnLedInner(QString linka, QString horniRadek, QString dolniRadek);
-    void iterujBocniPanel(QVector<QString> texty, int &iteracniIndex);
-    QVector<QString> naplnNacestyBocniPanel(ZastavkaCil aktualniZastavka);
-    void iterujVsechnyPanely();
+    void ledNaplnFront(QString linka, QString horniRadek, QString dolniRadek);
+    void ledNaplnInner(QString linka, QString horniRadek, QString dolniRadek);
+    void ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex);
+    QVector<QString> ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZastavka);
+    void ledIiterujVsechnyPanely();
 
     QFontDatabase fdb;
 
     QFont font8;
     QFont font10;
 
-    void naplnZmenaLabel(QString vstup);
-    void naplnAnouncementLabel(QString vstup);
+    //void naplnZmenaLabel(QString vstup);
+  //  void naplnAnouncementLabel(QString vstup);
     void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
-    QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+
+    //QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
 
     void skryjZmenuPasma();
 
@@ -95,7 +97,7 @@ private slots:
 
     void on_tlacitkoHlavni_clicked();
 
-    int kazdouVterinu();
+    int slotKazdouVterinu();
     void on_tlacitkoCasovac_clicked();
 
     void on_quitTlacitko_clicked();
@@ -113,11 +115,76 @@ public slots:
 private:
     Ui::MainWindow *ui;
     QTimer *timer = new QTimer(this);
-    CestaUdaje stavSystemu;
+    void vsechnyConnecty();
 
+    //konstanty
+
+    int posunRotovani=0;
+    int pocetVykreslovanychZastavek=5;
+
+
+
+    //instance knihoven
+    CestaUdaje stavSystemu;
+    LabelVykreslovani labelVykreslovani;
+
+    //udalosti
+    void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
     void vyprselCasovacSluzby();
     void vymazObrazovku();
-    void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
+
+    //polozky potrebne pro vykresleni svg
+    QGraphicsScene scene;
+    QGraphicsSvgItem *m_svgItem;
+    QGraphicsRectItem *m_outlineItem;
+     bool svgVykresleni();
+
+     //virtuální LED panely
+
+    void ledNaplnSide(QString linka, QString horniRadek, QString dolniRadek);
+    void ledNaplnRear(QString linka);
+    void ledInicializujVirtualniPanely();
+    void ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
+
+    QVector<QString> textyBocniPanelkIteraci;
+    int cyklovaniIndex=0;
+
+    QTimer *timerBocniPanel = new QTimer(this);
+    QTimer *timerNacestneZastavky = new QTimer(this);
+
+
+    //hlavni
+    void hlavniNaplnPoleLabelu();
+    void hlavniVykresliNacestne();
+    void hlavniVykreslZastavkyiPasma(int pocetZastavekVykreslit);
+    void hlavniZobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
+    void hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+    void hlavniVymazObrazovku();
+
+    //obecne Udalosti
+    void skryjAnnouncement();
+    void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
+
+    void zobrazKonecnou();
+    void navratJizda();
+    int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
+
+   // void hlavniVykresliNacestneForce();
+
+
+    //vektory Labelu Hlavni
+    QVector<QLabel*> seznamNazvuZastavek;
+    QVector<QLabel*> seznamPasem1;
+    QVector<QLabel*> seznamPasem2;
+
+    void vymazPoleLabelu(QVector<QLabel*> vstup);
+    int minimum(int cislo1, int cislo2);
+
+
+
+
+
+
 
 
     QString barva_PozadiA_25_25_25 ="rgb(25,25,25)";
@@ -131,80 +198,25 @@ private:
     QString barva_Cervena_200_0_20 ="rgb(200,0,20)";
     QString barva_CervenaTexty_220_40_40 ="rgb(220,40,40)";
     QString barva_Zelena_210_215_15 ="rgb(210,215,15)";
+
+
     /*
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
-    QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
+     QString barva____ ="rgb(,,)";
 
-*/
-
-
+ */
 
 
-
-
-
-
-
-
-    QString cerna ="#000000"; //cerna
-
-    int posunRotovani=0;
-    int pocetVykreslovanychZastavek=5;
-
-
-    QGraphicsScene scene;
-    QGraphicsSvgItem *m_svgItem;
-    QGraphicsRectItem *m_outlineItem;
-    bool svgReplaceName();
-    bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
-    bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
-    bool svgVykresleni();
-    void naplnLedObsah(QVector<QString> zobrazit);
-    void naplnLedSide(QString linka, QString horniRadek, QString dolniRadek);
-    void naplnLedRear(QString linka);
-    void inicializujVirtualniLedPanely();
-    void aktualizujZobrazeniVirtualnichLedPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
-    QVector<QString> textyBocniPanelkIteraci;
-    int cyklovaniIndex=0;
-
-    QTimer *timerBocniPanel = new QTimer(this);
-    QTimer *timerNacestneZastavky = new QTimer(this);
-
-
-
-    void skryjAnnouncement();
-    void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
-    void zobrazKonecnou();
-    void navratJizda();
-    int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
-    void hlavniVykresliNacestne();
-    void vykresliNacestneForce();
-
-
-    void naplnPoleLabelu();
-    QVector<QLabel*> seznamNazvuZastavek;
-    QVector<QLabel*> seznamPasem1;
-    QVector<QLabel*> seznamPasem2;
-    void vymazPoleLabelu(QVector<QLabel*> vstup);
-    int minimum(int cislo1, int cislo2);
-    void hlavniVykreslZastavkyiPasma(int pocetZastavekVykreslit);
-    void vsechnyConnecty();
-
-
-
-    QString doplnPiktogramy(QString nazevZastavky, QVector<QString> seznamPiktogramu);
-    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
-    QString doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu);
 };
 
 #endif // MAINWINDOW_H

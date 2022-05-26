@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>823</height>
+    <height>874</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -126,6 +126,12 @@
             <property name="text">
              <string>LED</string>
             </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -137,6 +143,12 @@
             </property>
             <property name="text">
              <string>SVG</string>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>true</bool>
             </property>
            </widget>
           </item>

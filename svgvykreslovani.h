@@ -22,6 +22,10 @@ public:
 
 
     QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
+    void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+    void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
+    void vymazObrazovku();
+    void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);

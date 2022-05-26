@@ -5,6 +5,7 @@ release/dnssd_ipc.o
 release/qzeroconfservice.o
 release/newhttpserver.o
 release/ibisipsubscriber.o
+release/labelvykreslovani.o
 release/main.o
 release/mainwindow.o
 release/pasmovedvojicelcd.o
