@@ -29,6 +29,8 @@ public:
     int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<Pasmo> &pasma);
     QVector<QString> naplnVektorPriznaku(QDomNode vstup, QString nazevElementu);
     int tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
+    int udajeNavaznehoSpoje(QVector<ZastavkaCil> &docasnySeznamZst, QString &linka, QString &cil);
+    int existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek);
 private:
     QVector<Zastavka> vyparsujNacestneZastavky(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);

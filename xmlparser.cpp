@@ -41,12 +41,13 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst,QVect
     docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt()-1; //převod indexování od 1 (VDV301) na indexování od 0 ( C++ pole)
 
     QDomNodeList tripInformationList=root.elementsByTagName("TripInformation");
+    int pocetZastNavazSpoje=0;
 
     switch(tripInformationList.count())
     {
     case 0:
         qDebug()<<"seznam tripu je prazdny";
-
+        break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
         tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
@@ -56,6 +57,7 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst,QVect
         tripInformation=tripInformationList.at(0).toElement();
         tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
         tripInformation2=tripInformationList.at(1).toElement();
+        tripDoSeznamuZastavek(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
 
         break;
 
@@ -64,11 +66,27 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst,QVect
         tripInformation=tripInformationList.at(0).toElement();
         tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
         tripInformation2=tripInformationList.at(1).toElement();
+        tripDoSeznamuZastavek(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
 
         break;
 
     }
 
+
+
+    return 1;
+}
+
+
+
+int XmlParser::udajeNavaznehoSpoje(QVector<ZastavkaCil> &docasnySeznamZst, QString &linka, QString &cil)
+{
+    if (docasnySeznamZst.isEmpty())
+    {
+        return 0;
+    }
+    linka=docasnySeznamZst.first().linka.LineName;
+    cil=docasnySeznamZst.first().cil.NameLcd;
 
 
     return 1;
@@ -317,3 +335,15 @@ void XmlParser::Test()
     qInfo()<<"xmlParserTestPoint2";
 }
 
+
+
+int XmlParser::existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek)
+{
+    if (seznamZastavek.isEmpty())
+    {
+        return false;
+    }
+    return true;
+
+
+}

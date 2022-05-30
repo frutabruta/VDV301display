@@ -88,6 +88,8 @@ public:
 
     //  void hlavniVykresliNasledne();
 
+    void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
+    int hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny);
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -150,6 +152,7 @@ private:
     void ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
 
     QVector<QString> textyBocniPanelkIteraci;
+     QVector<QString> textyVnitrniPanelkIteraci;
     int cyklovaniIndex=0;
 
     QTimer *timerBocniPanel = new QTimer(this);
@@ -159,7 +162,7 @@ private:
     //hlavni
     void hlavniNaplnPoleLabelu();
     void hlavniVykresliNacestne();
-    void hlavniVykreslZastavkyiPasma(int pocetZastavekVykreslit);
+    void hlavniVykreslZastavkyiPasma(QVector<ZastavkaCil> aktZastavky, QVector<ZastavkaCil> navazZastavky);
     void hlavniZobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
     void hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
     void hlavniVymazObrazovku();
@@ -221,6 +224,7 @@ private:
 
 
     int jeVRozsahu(int index, int pocetHodnot);
+    QVector<QString> ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka);
 };
 
 #endif // MAINWINDOW_H
