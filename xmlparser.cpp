@@ -23,7 +23,7 @@ void XmlParser::nactiXML(QString vstup)
 
 }
 
-int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
+int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst,QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
 {
     docasnySeznamZst.clear();
     qDebug()<<"XmlParser::VytvorSeznamZastavek";
@@ -34,15 +34,60 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         qDebug()<<"vadné XML";
         return 0;
     }
-    QDomNodeList nodes = root.elementsByTagName("StopPoint");
+
+
+    QDomElement tripInformation;//=allData.firstChildElement("TripInformation");
+    QDomElement tripInformation2;
+    docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt()-1; //převod indexování od 1 (VDV301) na indexování od 0 ( C++ pole)
+
+    QDomNodeList tripInformationList=root.elementsByTagName("TripInformation");
+
+    switch(tripInformationList.count())
+    {
+    case 0:
+        qDebug()<<"seznam tripu je prazdny";
+
+    case 1:
+        tripInformation=tripInformationList.at(0).toElement();
+        tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        break ;
+    case 2:
+        qDebug()<<"existuje jeden navazny spoj";
+        tripInformation=tripInformationList.at(0).toElement();
+        tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripInformation2=tripInformationList.at(1).toElement();
+
+        break;
+
+    default:
+        qDebug()<<"moc navaznych spoju";
+        tripInformation=tripInformationList.at(0).toElement();
+        tripDoSeznamuZastavek(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripInformation2=tripInformationList.at(1).toElement();
+
+        break;
+
+    }
+
+
+
+    return 1;
+}
+
+
+int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek)
+{
+    qDebug()<<"XmlParser::tripDoSeznamuZastavek";
+
+
+    QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
 
     docasnyPocetZastavek= nodes.count();
-    docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt();
     for (int i=0; i<nodes.count();i++)
     {
 
         ZastavkaCil docasnaZastavka;
-        QDomElement aktZastavkaDOM=root.elementsByTagName("StopPoint").at(i).toElement();
+        QDomElement aktZastavkaDOM=nodes.at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
         docasnaZastavka.zastavka.StopName=aktZastavkaDOM.elementsByTagName("StopName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.NameFront=aktZastavkaDOM.elementsByTagName("StopFrontName").at(0).firstChildElement().text();
@@ -68,16 +113,13 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         {
             docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
         }
-       docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 
 
         docasnaZastavka.cil.NameSide=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationSideName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameRear=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameInner=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameLcd=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
-
-
-
 
         qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName ;
         docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
@@ -88,7 +130,6 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst, int 
         qDebug()<<"zastavkyNebylyNacteny";
         return 0;
     }
-
     return 1;
 }
 
@@ -170,7 +211,7 @@ int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
     qDebug()<<"root name "<<root.nodeName();
     QDomElement allData=root.firstChildElement("AllData");
     qDebug()<<"alldata name "<<allData.nodeName();
-    stav.indexAktZastavky=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt();
+    stav.indexAktZastavky=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1;
     stav.VehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
     stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
     qDebug()<<"stopIndex "<<QString::number(stav.indexAktZastavky)<<"stopRequested "<<stav.VehicleStopRequested<<" locState "<<stav.locationState;
@@ -207,6 +248,9 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup )
 
 
     QDomElement tripInformation=allData.firstChildElement("TripInformation");
+
+
+
     QDomElement additionalTextMessage=tripInformation.firstChildElement("AdditionalTextMessage");
     QDomElement additionalTextMessageText=additionalTextMessage.firstChildElement("AdditionalTextMessageText");
     QDomElement value=additionalTextMessageText.firstChildElement("Value");

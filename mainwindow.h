@@ -26,6 +26,7 @@ void on_actionstahnoutXML_triggered();
 #include <QtDebug>
 
 #include <QLabel>
+#include <QMessageBox>
 
 
 
@@ -44,6 +45,7 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     XmlParser instanceXMLparser;
     QVector <ZastavkaCil> globalniSeznamZastavek;
+    QVector <ZastavkaCil> globalniSeznamZastavekNavaznehoSpoje;
     QString nazevLinky = "";
     QString nazevCile="";
 
@@ -85,6 +87,7 @@ public:
     void skryjZmenuPasma();
 
     //  void hlavniVykresliNasledne();
+
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -199,7 +202,7 @@ private:
     QString barva_CervenaTexty_220_40_40 ="rgb(220,40,40)";
     QString barva_Zelena_210_215_15 ="rgb(210,215,15)";
 
-
+    void hlavniVykresliCisloLinky(QString alias);
     /*
      QString barva____ ="rgb(,,)";
      QString barva____ ="rgb(,,)";
@@ -217,6 +220,7 @@ private:
  */
 
 
+    int jeVRozsahu(int index, int pocetHodnot);
 };
 
 #endif // MAINWINDOW_H

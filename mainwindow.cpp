@@ -201,11 +201,18 @@ int MainWindow::VykresleniPrijatychDat()
     qDebug()<<"MainWindow::VykresleniPrijatychDat";
 
     ui->Lcil->setText(nazevCile);
-    ui->Llinka->setText(nazevLinky);
+
+
+
+
+
+   hlavniVykresliCisloLinky(nazevLinky);
+
+
 
 
     ui->label_locationState->setText(stavSystemu.locationState);
-    ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky));
+    ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky+1));
 
     int pocetZastavekVykreslit=0;
 
@@ -255,6 +262,14 @@ int MainWindow::VykresleniPrijatychDat()
 
 
     return 1;
+}
+
+
+void MainWindow::hlavniVykresliCisloLinky(QString alias)
+{
+    labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
+
+
 }
 
 /*
@@ -400,6 +415,7 @@ int MainWindow::DoplneniPromennych()
 {
     qDebug()<<"MainWindow::DoplneniPromennych";
     // qInfo()<<"\n DoplneniPromennych";
+
     if (globalniSeznamZastavek.size()>indexZastavky)
     {
         ZastavkaCil aktualniZastavka=globalniSeznamZastavek.at(indexZastavky);
@@ -449,7 +465,7 @@ void MainWindow::on_actiontestPolozka_triggered()
     qDebug()<<"MainWindow::on_actiontestPolozka_triggered";
     qInfo()<<"\n on_actiontestPolozka_triggered";
 
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, stavSystemu.indexAktZastavky, pocetZastavek);
+    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, stavSystemu.indexAktZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
     qInfo()<<indexZastavky;
     qInfo()<<"CIl:"<<nazevCile;
@@ -592,7 +608,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     qInfo()<<argumentXMLserveru;
     /* konec obracena archtitektura*/
 
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek, indexZastavky, pocetZastavek);
+    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
 
     //additional text message
@@ -990,4 +1006,24 @@ int MainWindow::jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavk
         return true;
     }
     return false;
+}
+
+
+int MainWindow::jeVRozsahu(int index, int pocetHodnot)
+{
+    if(index<pocetHodnot)
+    {
+
+        return 1;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("hodnota "+QString::number(index)+" je mimo rozsah "+ QString::number(pocetHodnot));
+        msgBox.exec();
+        qDebug()<<" hodnota mimo rozsah";
+
+       return 0;
+    }
+
 }

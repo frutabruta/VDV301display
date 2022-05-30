@@ -7,7 +7,7 @@
 #include <QLabel>
 #include "VDV301struktury/pasmo.h"
 #include "svgvykreslovani.h"
-
+#include <QFont>
 class LabelVykreslovani
 {
 
@@ -25,6 +25,7 @@ public:
 
     int minimum(int cislo1, int cislo2);
     void vykresliNacestneForce(QVector<ZastavkaCil> globalniSeznamZastavek, CestaUdaje stavSystemu, QLabel *label);
+    void naplnCisloLinkyLabel(QString vstup, QLabel *label);
 signals:
 
 };

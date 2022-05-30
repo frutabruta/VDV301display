@@ -25,6 +25,46 @@ QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pa
 }
 
 
+void LabelVykreslovani::naplnCisloLinkyLabel(QString vstup, QLabel* label)
+{
+    label->setText(vstup);
+
+    qDebug()<<"LabelVykreslovani::naplnCisloLinkyLabel";
+
+    /*
+    int vyskaLabelu=label->height();
+    int sirkaLabelu=label->width();
+
+    int vyskaFontu= label->fontMetrics().boundingRect(label->text()).height();
+    int sirkaFontu= label->fontMetrics().boundingRect(label->text()).width();
+
+
+
+
+
+
+    int velikostFontuDefault=80;
+
+    label->setFont(QFont("Roboto",velikostFontuDefault ));
+   label->update();
+
+
+    qDebug()<<"V labelu "<<vyskaLabelu<<" V Fontu "<< vyskaFontu <<" S labelu "<<sirkaLabelu<<" S fontu "<< sirkaFontu;
+
+    int pomer= int(sirkaFontu/sirkaLabelu);
+
+    label->setFont(QFont("Roboto",velikostFontuDefault*pomer ));
+   label->update();
+*/
+    /*
+    QFont font("times", 24);
+    QFontMetrics fm(font);
+    int pixelsWide = fm.horizontalAdvance("What's the width of this text?");
+    int pixelsHigh = fm.height();
+    */
+}
+
+
 void LabelVykreslovani::naplnAnouncementLabel(QString vstup, QLabel* label)
 {
     qDebug()<<"LabelVykreslovani::naplnAnouncementLabel";
