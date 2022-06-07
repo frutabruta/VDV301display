@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>874</height>
+    <height>924</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -196,6 +196,9 @@
            <number>0</number>
           </property>
           <widget class="QWidget" name="page_hlavniObrazovka">
+           <property name="styleSheet">
+            <string notr="true">font-family: roboto,sans;</string>
+           </property>
            <layout class="QGridLayout" name="gridLayout_4">
             <item row="2" column="0">
              <widget class="QLabel" name="label_zmena">
@@ -366,6 +369,7 @@ QLabel{color:#FFFFFF}</string>
                            </property>
                            <property name="font">
                             <font>
+                             <family>roboto</family>
                              <pointsize>80</pointsize>
                              <weight>75</weight>
                              <bold>true</bold>
@@ -422,7 +426,7 @@ QLabel{color:#FFFFFF}</string>
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>1262</width>
+                              <width>1285</width>
                               <height>58</height>
                              </rect>
                             </property>
@@ -452,6 +456,7 @@ QLabel{color:#FFFFFF}</string>
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
@@ -491,6 +496,7 @@ QLabel{color:#FFFFFF}</string>
                              </property>
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>40</pointsize>
                               </font>
                              </property>
@@ -529,6 +535,7 @@ QLabel{color:#FFFFFF}</string>
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>15</pointsize>
                                 </font>
                                </property>
@@ -559,6 +566,7 @@ QLabel{color:#FFFFFF}</string>
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>15</pointsize>
                                 </font>
                                </property>
@@ -598,6 +606,7 @@ QLabel{color:#FFFFFF}</string>
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>40</pointsize>
                                  <weight>75</weight>
                                  <bold>true</bold>
@@ -637,6 +646,7 @@ QLabel{color:#FFFFFF}</string>
                                   </property>
                                   <property name="font">
                                    <font>
+                                    <family>roboto</family>
                                     <pointsize>20</pointsize>
                                    </font>
                                   </property>
@@ -655,6 +665,7 @@ QLabel{color:#FFFFFF}</string>
                                   </property>
                                   <property name="font">
                                    <font>
+                                    <family>roboto</family>
                                     <pointsize>20</pointsize>
                                     <weight>75</weight>
                                     <bold>true</bold>
@@ -683,6 +694,7 @@ border-radius: 8px;
                                   </property>
                                   <property name="font">
                                    <font>
+                                    <family>roboto</family>
                                     <pointsize>20</pointsize>
                                    </font>
                                   </property>
@@ -695,6 +707,7 @@ border-radius: 8px;
                                  <widget class="QLabel" name="label_navaznyCil">
                                   <property name="font">
                                    <font>
+                                    <family>roboto</family>
                                     <pointsize>20</pointsize>
                                    </font>
                                   </property>
@@ -764,6 +777,7 @@ border-radius: 8px;
                              </property>
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>70</pointsize>
                               </font>
                              </property>
@@ -793,6 +807,7 @@ border-radius: 8px;
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
@@ -819,6 +834,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -827,6 +843,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -846,6 +865,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -854,6 +874,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -869,6 +892,7 @@ border-radius: 8px;
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
@@ -895,6 +919,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -903,6 +928,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -922,6 +950,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -930,6 +959,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -953,6 +985,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -961,6 +994,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -980,6 +1016,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -988,6 +1025,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -1011,6 +1051,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -1019,6 +1060,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -1038,6 +1082,7 @@ border-radius: 8px;
                                  </property>
                                  <property name="font">
                                   <font>
+                                   <family>roboto</family>
                                    <pointsize>24</pointsize>
                                   </font>
                                  </property>
@@ -1046,6 +1091,9 @@ border-radius: 8px;
                                  </property>
                                  <property name="alignment">
                                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 </property>
+                                 <property name="margin">
+                                  <number>10</number>
                                  </property>
                                 </widget>
                                </item>
@@ -1061,6 +1109,7 @@ border-radius: 8px;
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
@@ -1079,6 +1128,7 @@ border-radius: 8px;
                                </property>
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>36</pointsize>
                                 </font>
                                </property>
@@ -1102,6 +1152,12 @@ border-radius: 8px;
                           <layout class="QHBoxLayout" name="horizontalLayout_17">
                            <item>
                             <widget class="QLabel" name="label_oznType">
+                             <property name="font">
+                              <font>
+                               <family>roboto</family>
+                               <pointsize>30</pointsize>
+                              </font>
+                             </property>
                              <property name="text">
                               <string>obrazek</string>
                              </property>
@@ -1111,6 +1167,12 @@ border-radius: 8px;
                             <layout class="QVBoxLayout" name="verticalLayout_11">
                              <item>
                               <widget class="QLabel" name="label_oznTitle">
+                               <property name="font">
+                                <font>
+                                 <family>roboto</family>
+                                 <pointsize>30</pointsize>
+                                </font>
+                               </property>
                                <property name="text">
                                 <string>Nadpis</string>
                                </property>
@@ -1118,6 +1180,12 @@ border-radius: 8px;
                              </item>
                              <item>
                               <widget class="QLabel" name="label_oznTextCs">
+                               <property name="font">
+                                <font>
+                                 <family>roboto</family>
+                                 <pointsize>30</pointsize>
+                                </font>
+                               </property>
                                <property name="text">
                                 <string>TextCZ</string>
                                </property>
@@ -1125,6 +1193,12 @@ border-radius: 8px;
                              </item>
                              <item>
                               <widget class="QLabel" name="label_oznTextEn">
+                               <property name="font">
+                                <font>
+                                 <family>roboto</family>
+                                 <pointsize>30</pointsize>
+                                </font>
+                               </property>
                                <property name="text">
                                 <string>TextEN</string>
                                </property>
@@ -1150,6 +1224,7 @@ border-radius: 8px;
                              </property>
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>20</pointsize>
                                <weight>75</weight>
                                <bold>true</bold>
@@ -1167,6 +1242,7 @@ border-radius: 8px;
                             <widget class="QLabel" name="label_19">
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>20</pointsize>
                                <weight>50</weight>
                                <bold>false</bold>
@@ -1186,6 +1262,7 @@ border-radius: 8px;
                               <widget class="QLabel" name="label_pasmo1">
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>20</pointsize>
                                  <weight>75</weight>
                                  <bold>true</bold>
@@ -1211,6 +1288,7 @@ border-radius: 30px;
                               <widget class="QLabel" name="label_21">
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>20</pointsize>
                                 </font>
                                </property>
@@ -1226,6 +1304,7 @@ border-radius: 30px;
                               <widget class="QLabel" name="label_pasmo2">
                                <property name="font">
                                 <font>
+                                 <family>roboto</family>
                                  <pointsize>20</pointsize>
                                  <weight>75</weight>
                                  <bold>true</bold>
@@ -1261,6 +1340,7 @@ border-radius: 30px;
                             <widget class="QLabel" name="label_20">
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>20</pointsize>
                                <weight>75</weight>
                                <bold>true</bold>
@@ -1278,6 +1358,7 @@ border-radius: 30px;
                             <widget class="QLabel" name="label_22">
                              <property name="font">
                               <font>
+                               <family>roboto</family>
                                <pointsize>20</pointsize>
                               </font>
                              </property>
@@ -1287,6 +1368,1242 @@ border-radius: 30px;
                              <property name="alignment">
                               <set>Qt::AlignCenter</set>
                              </property>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                        </layout>
+                       </widget>
+                       <widget class="QWidget" name="page_prestupy">
+                        <layout class="QHBoxLayout" name="horizontalLayout_20" stretch="1,1">
+                         <item>
+                          <layout class="QVBoxLayout" name="verticalLayout_prestupy0">
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd0">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_22">
+                              <item>
+                               <widget class="QLabel" name="label_prestup0_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup0_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup0_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true"/>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup0_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup0_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd1">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_23">
+                              <item>
+                               <widget class="QLabel" name="label_prestup1_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup1_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup1_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup1_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup1_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd2">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_24">
+                              <item>
+                               <widget class="QLabel" name="label_prestup2_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup2_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup2_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup2_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup2_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd3">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_28">
+                              <item>
+                               <widget class="QLabel" name="label_prestup3_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup3_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup3_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup3_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup3_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd4">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_27">
+                              <item>
+                               <widget class="QLabel" name="label_prestup4_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup4_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup4_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup4_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup4_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd5">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_26">
+                              <item>
+                               <widget class="QLabel" name="label_prestup5_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup5_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup5_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup5_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup5_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                          </layout>
+                         </item>
+                         <item>
+                          <layout class="QVBoxLayout" name="verticalLayout_prestupy1">
+                           <property name="rightMargin">
+                            <number>0</number>
+                           </property>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd6">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_29">
+                              <item>
+                               <widget class="QLabel" name="label_prestup6_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup6_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup6_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup6_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup6_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd7">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_30">
+                              <item>
+                               <widget class="QLabel" name="label_prestup7_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup7_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup7_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup7_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup7_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd8">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_31">
+                              <item>
+                               <widget class="QLabel" name="label_prestup8_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup8_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup8_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup8_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup8_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd9">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_32">
+                              <item>
+                               <widget class="QLabel" name="label_prestup9_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup9_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup9_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup9_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup9_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd10">
+                             <property name="styleSheet">
+                              <string notr="true">background-color:rgb(50,50,50);</string>
+                             </property>
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_33">
+                              <item>
+                               <widget class="QLabel" name="label_prestup10_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup10_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup10_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup10_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup10_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
+                            </widget>
+                           </item>
+                           <item>
+                            <widget class="QFrame" name="frame_odjezd11">
+                             <property name="frameShape">
+                              <enum>QFrame::StyledPanel</enum>
+                             </property>
+                             <property name="frameShadow">
+                              <enum>QFrame::Raised</enum>
+                             </property>
+                             <layout class="QHBoxLayout" name="horizontalLayout_34">
+                              <item>
+                               <widget class="QLabel" name="label_prestup11_linka">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                  <weight>75</weight>
+                                  <bold>true</bold>
+                                 </font>
+                                </property>
+                                <property name="styleSheet">
+                                 <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
+                                </property>
+                                <property name="text">
+                                 <string>666</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup11_sipky">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="text">
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup11_cil">
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>TestCil</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup11_nastupiste">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>A</string>
+                                </property>
+                               </widget>
+                              </item>
+                              <item>
+                               <widget class="QLabel" name="label_prestup11_odjezd">
+                                <property name="sizePolicy">
+                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                                  <horstretch>0</horstretch>
+                                  <verstretch>0</verstretch>
+                                 </sizepolicy>
+                                </property>
+                                <property name="font">
+                                 <font>
+                                  <family>roboto</family>
+                                  <pointsize>20</pointsize>
+                                 </font>
+                                </property>
+                                <property name="text">
+                                 <string>5min</string>
+                                </property>
+                               </widget>
+                              </item>
+                             </layout>
                             </widget>
                            </item>
                           </layout>
@@ -1366,6 +2683,7 @@ border-radius: 30px;
                               </property>
                               <property name="font">
                                <font>
+                                <family>roboto</family>
                                 <pointsize>24</pointsize>
                                </font>
                               </property>
@@ -1393,6 +2711,7 @@ border-radius: 30px;
                               </property>
                               <property name="font">
                                <font>
+                                <family>roboto</family>
                                 <pointsize>24</pointsize>
                                </font>
                               </property>
@@ -1422,6 +2741,7 @@ border-radius: 30px;
                             </property>
                             <property name="font">
                              <font>
+                              <family>roboto</family>
                               <pointsize>36</pointsize>
                               <weight>75</weight>
                               <bold>true</bold>
@@ -1458,6 +2778,7 @@ border-radius: 30px;
                    <widget class="QLabel" name="label_5">
                     <property name="font">
                      <font>
+                      <family>roboto</family>
                       <pointsize>36</pointsize>
                      </font>
                     </property>
@@ -1472,6 +2793,7 @@ border-radius: 30px;
                      <widget class="QLabel" name="label_7">
                       <property name="font">
                        <font>
+                        <family>roboto</family>
                         <pointsize>36</pointsize>
                        </font>
                       </property>
@@ -1484,6 +2806,7 @@ border-radius: 30px;
                      <widget class="QLabel" name="label_8">
                       <property name="font">
                        <font>
+                        <family>roboto</family>
                         <pointsize>36</pointsize>
                        </font>
                       </property>
@@ -1500,6 +2823,7 @@ border-radius: 30px;
                      <widget class="QLabel" name="label_11">
                       <property name="font">
                        <font>
+                        <family>roboto</family>
                         <pointsize>36</pointsize>
                        </font>
                       </property>
@@ -1512,6 +2836,7 @@ border-radius: 30px;
                      <widget class="QLabel" name="label_12">
                       <property name="font">
                        <font>
+                        <family>roboto</family>
                         <pointsize>36</pointsize>
                        </font>
                       </property>
@@ -1532,7 +2857,7 @@ border-radius: 30px;
                  <rect>
                   <x>110</x>
                   <y>60</y>
-                  <width>459</width>
+                  <width>465</width>
                   <height>221</height>
                  </rect>
                 </property>
@@ -1547,6 +2872,7 @@ border-radius: 30px;
                    </property>
                    <property name="font">
                     <font>
+                     <family>roboto</family>
                      <pointsize>20</pointsize>
                      <weight>75</weight>
                      <bold>true</bold>
@@ -1564,6 +2890,7 @@ border-radius: 30px;
                   <widget class="QLabel" name="label_14">
                    <property name="font">
                     <font>
+                     <family>roboto</family>
                      <pointsize>20</pointsize>
                     </font>
                    </property>
@@ -1581,6 +2908,7 @@ border-radius: 30px;
                     <widget class="QLabel" name="label_15">
                      <property name="font">
                       <font>
+                       <family>roboto</family>
                        <pointsize>20</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>
@@ -1598,6 +2926,7 @@ border-radius: 30px;
                     <widget class="QLabel" name="label_17">
                      <property name="font">
                       <font>
+                       <family>roboto</family>
                        <pointsize>20</pointsize>
                       </font>
                      </property>
@@ -1613,6 +2942,7 @@ border-radius: 30px;
                     <widget class="QLabel" name="label_16">
                      <property name="font">
                       <font>
+                       <family>roboto</family>
                        <pointsize>20</pointsize>
                        <weight>75</weight>
                        <bold>true</bold>

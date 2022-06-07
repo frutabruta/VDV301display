@@ -14,6 +14,8 @@ void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel* stitek)
     stitek->setText(vstup);
 }
 
+
+
 QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
     qDebug()<<"LabelVykreslovani::vyrobTextZmenyPasma";
@@ -62,6 +64,12 @@ void LabelVykreslovani::naplnCisloLinkyLabel(QString vstup, QLabel* label)
     int pixelsWide = fm.horizontalAdvance("What's the width of this text?");
     int pixelsHigh = fm.height();
     */
+}
+
+void LabelVykreslovani::naplnNazevCileLabel(QString vstup, QLabel* label)
+{
+    qDebug()<<"LabelVykreslovani::naplnNazevCileLabel";
+    label->setText(vstup);
 }
 
 
@@ -151,7 +159,7 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<ZastavkaCil> globalniSezna
 {
     qDebug()<<"LabelVykreslovani::vykresliNacestneForce()";
 
-//label_nacestne
+    //label_nacestne
     if(globalniSeznamZastavek.isEmpty())
     {
         label->setText("");

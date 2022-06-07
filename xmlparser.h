@@ -8,6 +8,7 @@
 #include "VDV301struktury/zastavka.h"
 #include "VDV301struktury/zastavkacil.h"
 #include "VDV301struktury/cestaudaje.h"
+#include "VDV301struktury/prestup.h"
 class XmlParser
 {
 public:
@@ -31,6 +32,9 @@ public:
     int tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
     int udajeNavaznehoSpoje(QVector<ZastavkaCil> &docasnySeznamZst, QString &linka, QString &cil);
     int existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek);
+    QVector<Prestup> nactiPrestupy(QDomElement vstup);
+    Linka priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka);
+
 private:
     QVector<Zastavka> vyparsujNacestneZastavky(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);

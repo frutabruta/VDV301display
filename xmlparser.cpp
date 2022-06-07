@@ -116,6 +116,7 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         docasnaZastavka.linka.LineName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.StopIndex=i;
         docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky(aktZastavkaDOM);
+        docasnaZastavka.zastavka.seznamPrestupu=nactiPrestupy(aktZastavkaDOM);
 
         QDomElement displayContent=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement();
         docasnaZastavka.cil.StopName=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationName").at(0).firstChildElement().text();
@@ -347,3 +348,97 @@ int XmlParser::existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek)
 
 
 }
+
+
+
+
+
+QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
+{
+    //rozepsano
+    qDebug()<<"XmlParser::nactiFareZoneChange";
+    QVector<Prestup> vystup;
+
+    QDomNodeList elementyPrestupu=vstup.elementsByTagName("Connection") ;
+
+    for (int i=0;i<elementyPrestupu.count();i++)
+    {
+        Prestup aktualniPrestup;
+        QDomElement aktualniElement=elementyPrestupu.at(i).toElement();
+        aktualniPrestup.connectionProperty=aktualniElement.firstChildElement("ConnectionProperty").firstChild().nodeValue();
+
+        aktualniPrestup.connectionType=aktualniElement.firstChildElement("ConnectionType").firstChild().nodeValue();
+
+        QDomElement displayContent=aktualniElement.firstChildElement("DisplayContent");
+        QDomElement lineInformation=displayContent.firstChildElement("LineInformation");
+
+        aktualniPrestup.line.LineName=lineInformation.firstChildElement("LineName").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.line.LineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
+
+        aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.departureTime=aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue();
+
+
+        QDateTime timestamp = QDateTime::fromString(aktualniPrestup.departureTime,Qt::ISODate);
+       // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
+      //  timestamp = timestamp.toLocalTime(); // convert to local time
+
+        QString vysledek= QString::number(-timestamp.secsTo(QDateTime::currentDateTime())/60)+" min." ;
+        aktualniPrestup.departureTime=vysledek;
+
+       // aktualniPrestup.departureTime=timestamp.toString("hh:mm");
+
+
+        aktualniPrestup.platform=aktualniElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();
+
+        QDomElement connectionMode=aktualniElement.firstChildElement("ConnectionMode");
+        aktualniPrestup.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
+        aktualniPrestup.subMode=connectionMode.firstChildElement(aktualniPrestup.mainMode).firstChild().nodeValue();
+
+        QVector<QString> priznakyStringy;
+
+
+        QDomNodeList seznamPriznakuElements=aktualniElement.elementsByTagName("LineProperty");
+        for(int j=0; j<seznamPriznakuElements.count();j++)
+        {
+            QString priznak=seznamPriznakuElements.at(i).firstChild().nodeValue();
+            priznakyStringy.push_back(priznak);
+        }
+        aktualniPrestup.line=priznakyDoLinky(priznakyStringy,aktualniPrestup.line);
+
+        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.departureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform;
+
+
+
+        vystup.push_back(aktualniPrestup);
+
+    }
+
+
+
+
+
+    return vystup;
+}
+
+
+
+Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
+{
+    foreach(QString textPriznak,vstup)
+    {
+        if(textPriznak=="Night")
+        {
+            vstupniLinka.isNight="true";
+        }
+        if(textPriznak=="Day")
+        {
+            vstupniLinka.isNight="false";
+        }
+    }
+    return vstupniLinka;
+
+}
+
+
+

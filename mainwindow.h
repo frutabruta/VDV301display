@@ -15,6 +15,7 @@ void on_actionstahnoutXML_triggered();
 #include "VDV301subscriber/ibisipsubscriber.h"
 #include "VDV301struktury/cestaudaje.h"
 #include "VDV301struktury/zastavkacil.h"
+#include "VDV301struktury/prestup.h"
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
 #include "labelvykreslovani.h"
@@ -44,9 +45,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     XmlParser instanceXMLparser;
-    QVector <ZastavkaCil> globalniSeznamZastavek;
-    QVector <ZastavkaCil> globalniSeznamZastavekNavaznehoSpoje;
-    QString nazevLinky = "";
+    QVector<ZastavkaCil> globalniSeznamZastavek;
+    QVector<ZastavkaCil> globalniSeznamZastavekNavaznehoSpoje;
+    QVector<Prestup> prestupy;
+    QString nazevLinky="";
     QString nazevCile="";
 
     QString additionalTextMessage="";
@@ -75,11 +77,20 @@ public:
 
     QFontDatabase fdb;
 
+    //LED fonty
     QFont font8;
     QFont font10;
 
+    //LCD fonty
+
+    //set font
+    QFont fontPasmoVelke;
+    QFont fontPasmoMale;
+
+
+
     //void naplnZmenaLabel(QString vstup);
-  //  void naplnAnouncementLabel(QString vstup);
+    //  void naplnAnouncementLabel(QString vstup);
     void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
 
     //QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
@@ -90,6 +101,7 @@ public:
 
     void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
     int hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny);
+    void hlavniVykresliNazevCile(QString alias);
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -114,12 +126,18 @@ private slots:
     void on_tlacitkoLed_clicked();
 
     void slotPosunNacestnych();
+    void slotHlavniStridejStranky();
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
 private:
     Ui::MainWindow *ui;
     QTimer *timer = new QTimer(this);
+
+    QTimer *timerStridejStranky = new QTimer(this);
+    QVector<QWidget*> strankyKeStridani;
+    int indexAktualniStridaneStranky =0;
+
     void vsechnyConnecty();
 
     //konstanty
@@ -127,6 +145,8 @@ private:
     int posunRotovani=0;
     int pocetVykreslovanychZastavek=5;
 
+    QMap<QString, QString> barvaTextu;
+    QMap<QString, QString> barvaPozadi;
 
 
     //instance knihoven
@@ -142,9 +162,9 @@ private:
     QGraphicsScene scene;
     QGraphicsSvgItem *m_svgItem;
     QGraphicsRectItem *m_outlineItem;
-     bool svgVykresleni();
+    bool svgVykresleni();
 
-     //virtuální LED panely
+    //virtuální LED panely
 
     void ledNaplnSide(QString linka, QString horniRadek, QString dolniRadek);
     void ledNaplnRear(QString linka);
@@ -152,7 +172,7 @@ private:
     void ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
 
     QVector<QString> textyBocniPanelkIteraci;
-     QVector<QString> textyVnitrniPanelkIteraci;
+    QVector<QString> textyVnitrniPanelkIteraci;
     int cyklovaniIndex=0;
 
     QTimer *timerBocniPanel = new QTimer(this);
@@ -166,6 +186,8 @@ private:
     void hlavniZobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
     void hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
     void hlavniVymazObrazovku();
+    void hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu);
+
 
     //obecne Udalosti
     void skryjAnnouncement();
@@ -175,13 +197,19 @@ private:
     void navratJizda();
     int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
 
-   // void hlavniVykresliNacestneForce();
+    // void hlavniVykresliNacestneForce();
 
 
     //vektory Labelu Hlavni
-    QVector<QLabel*> seznamNazvuZastavek;
-    QVector<QLabel*> seznamPasem1;
-    QVector<QLabel*> seznamPasem2;
+    QVector<QLabel*> seznamLabelNazevZastavky;
+    QVector<QLabel*> seznamLabelPasmoDolni;
+    QVector<QLabel*> seznamLabelPasmoHorni;
+
+    QVector<QLabel*> seznamLabelPrestupLinka;
+    QVector<QLabel*> seznamLabelPrestupCil;
+    QVector<QLabel*> seznamLabelPrestupOdjezd;
+    QVector<QLabel*> seznamLabelPrestupNastupiste;
+    QVector<QFrame*> seznamFramePrestup;
 
     void vymazPoleLabelu(QVector<QLabel*> vstup);
     int minimum(int cislo1, int cislo2);
@@ -198,33 +226,37 @@ private:
     QString barva_PozadiC_100_100_100 ="rgb(100,100,100)";
     QString barva_PozadiD_150_150_150 ="rgb(150,150,150)"; //Pozadí D
     QString barva_Zastavka_180_180_180 ="rgb(180,180,180)"; //Zastávka
-    QString barva_bila_255_255_255 ="#ffffff"; //bila
+    QString barva_bila_255_255_255 ="rgb(255,255,255)"; //bila
+    QString barva_cerna_0_0_0 ="rgb(0,0,0);"; //bila
 
     QString barva_Vyluky_255_170_30 ="rgb(255,170,30)";
     QString barva_Cervena_200_0_20 ="rgb(200,0,20)";
     QString barva_CervenaTexty_220_40_40 ="rgb(220,40,40)";
     QString barva_Zelena_210_215_15 ="rgb(210,215,15)";
 
-    void hlavniVykresliCisloLinky(QString alias);
-    /*
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
-     QString barva____ ="rgb(,,)";
 
- */
+
+     QString barva_MetroA_0_165_98 ="rgb(0,165,98)";
+     QString barva_MetroB_248_179_34 ="rgb(248,179,34)";
+     QString barva_MetroC_207_0_61 ="rgb(207,0,61)";
+     QString barva_MetroD_0_140_190 ="rgb(0,140,190)";
+     QString barva_Tramvaj_120_2_0 ="rgb(120,2,0)";
+     QString barva_Trolejbus_128_22_111 ="rgb(128,22,111)";
+     QString barva_Autobus_0_120_160 ="rgb(0,120,160)";
+     QString barva_Vlak_15_30_65 ="rgb(15,30,65)";
+     QString barva_Lanovka_201_208_34 ="rgb(201,208,34)";
+     QString barva_Privoz_0_164_167 ="rgb(0,164,167)";
+     QString barva_Nocni_9_0_62 ="rgb(9,0,62)";
+     QString barva_Letiste_155_203_234 ="rgb(155,203,234)";
+
+
+
+     void hlavniVykresliCisloLinky(QString alias);
 
 
     int jeVRozsahu(int index, int pocetHodnot);
     QVector<QString> ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka);
+    void naplnMapBarev();
 };
 
 #endif // MAINWINDOW_H

@@ -16,7 +16,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
 
-    CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),
+    CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     ui(new Ui::MainWindow)
 {
 
@@ -33,13 +33,25 @@ MainWindow::MainWindow(QWidget *parent) :
     font10.setFamily("21-PID 10");
     font10.setPointSize(65);
 
+
+    //LCD fonty
+    fontPasmoVelke.setPointSize(36);
+    fontPasmoVelke.setBold(true);
+
+    fontPasmoMale.setPointSize(20);
+    fontPasmoMale.setBold(true);
+
+
+
+
+
     ui->setupUi(this);
 
     vsechnyConnecty();
 
 
     hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
-
+    naplnMapBarev();
 
 
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavni);
@@ -48,9 +60,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     FormatZobrazeni();
     instanceXMLparser.Test();
-     timer->start(1000); //refresh vterin
+    timer->start(1000); //refresh vterin
     timerBocniPanel->start(2000);
     timerNacestneZastavky->start(20);
+    timerStridejStranky->start(10000);
 
     CustomerInformationServiceSubscriber.odebirano=false ;
     CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -96,9 +109,10 @@ void MainWindow::vsechnyConnecty()
 
     connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::ledIiterujVsechnyPanely);
     connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
-
+    connect(timerStridejStranky, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
 
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+
 
 }
 
@@ -145,25 +159,133 @@ void MainWindow::vyprselCasovacSluzby()
 
 void MainWindow::hlavniNaplnPoleLabelu()
 {
-    seznamNazvuZastavek.push_back(ui->Lnacestna1);
-    seznamNazvuZastavek.push_back(ui->Lnacestna2);
-    seznamNazvuZastavek.push_back(ui->Lnacestna3);
-    seznamNazvuZastavek.push_back(ui->Lnacestna4);
-    seznamNazvuZastavek.push_back(ui->Lnacestna5);
+    seznamLabelNazevZastavky.push_back(ui->Lnacestna1);
+    seznamLabelNazevZastavky.push_back(ui->Lnacestna2);
+    seznamLabelNazevZastavky.push_back(ui->Lnacestna3);
+    seznamLabelNazevZastavky.push_back(ui->Lnacestna4);
+    seznamLabelNazevZastavky.push_back(ui->Lnacestna5);
 
-    seznamPasem1.push_back(ui->label_pasmo1_1);
-    seznamPasem1.push_back(ui->label_pasmo2_1);
-    seznamPasem1.push_back(ui->label_pasmo3_1);
-    seznamPasem1.push_back(ui->label_pasmo4_1);
-    seznamPasem1.push_back(ui->label_pasmo5_1);
+    seznamLabelPasmoDolni.push_back(ui->label_pasmo1_1);
+    seznamLabelPasmoDolni.push_back(ui->label_pasmo2_1);
+    seznamLabelPasmoDolni.push_back(ui->label_pasmo3_1);
+    seznamLabelPasmoDolni.push_back(ui->label_pasmo4_1);
+    seznamLabelPasmoDolni.push_back(ui->label_pasmo5_1);
 
-    seznamPasem2.push_back(ui->label_pasmo1_2);
-    seznamPasem2.push_back(ui->label_pasmo2_2);
-    seznamPasem2.push_back(ui->label_pasmo3_2);
-    seznamPasem2.push_back(ui->label_pasmo4_2);
-    seznamPasem2.push_back(ui->label_pasmo5_2);
+    seznamLabelPasmoHorni.push_back(ui->label_pasmo1_2);
+    seznamLabelPasmoHorni.push_back(ui->label_pasmo2_2);
+    seznamLabelPasmoHorni.push_back(ui->label_pasmo3_2);
+    seznamLabelPasmoHorni.push_back(ui->label_pasmo4_2);
+    seznamLabelPasmoHorni.push_back(ui->label_pasmo5_2);
+
+
+    seznamLabelPrestupCil.push_back(ui->label_prestup0_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup1_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup2_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup3_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup4_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup5_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup6_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup7_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup8_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup9_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup10_cil);
+    seznamLabelPrestupCil.push_back(ui->label_prestup11_cil);
+
+    seznamLabelPrestupLinka.push_back(ui->label_prestup0_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup1_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup2_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup3_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup4_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup5_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup6_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup7_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup8_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup9_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup10_linka);
+    seznamLabelPrestupLinka.push_back(ui->label_prestup11_linka);
+
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup0_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup1_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup2_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup3_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup4_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup5_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup6_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup7_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup8_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup9_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup10_odjezd);
+    seznamLabelPrestupOdjezd.push_back(ui->label_prestup11_odjezd);
+
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup0_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup1_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup2_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup3_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup4_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup5_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup6_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup7_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup8_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup9_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup10_nastupiste);
+    seznamLabelPrestupNastupiste.push_back(ui->label_prestup11_nastupiste);
+
+
+    seznamFramePrestup.push_back(ui->frame_odjezd0);
+    seznamFramePrestup.push_back(ui->frame_odjezd1);
+    seznamFramePrestup.push_back(ui->frame_odjezd2);
+    seznamFramePrestup.push_back(ui->frame_odjezd3);
+    seznamFramePrestup.push_back(ui->frame_odjezd4);
+    seznamFramePrestup.push_back(ui->frame_odjezd5);
+    seznamFramePrestup.push_back(ui->frame_odjezd6);
+    seznamFramePrestup.push_back(ui->frame_odjezd7);
+    seznamFramePrestup.push_back(ui->frame_odjezd8);
+    seznamFramePrestup.push_back(ui->frame_odjezd9);
+    seznamFramePrestup.push_back(ui->frame_odjezd10);
+    seznamFramePrestup.push_back(ui->frame_odjezd11);
+
+
 }
 
+void MainWindow::naplnMapBarev()
+{
+    barvaTextu["localBus"]=barva_Autobus_0_120_160;
+    barvaPozadi["localBus"]=barva_bila_255_255_255;
+
+    barvaTextu["metro"]=barva_cerna_0_0_0;
+    barvaPozadi["metro"]=barva_MetroB_248_179_34;
+
+    barvaTextu["regionalBus"]=barva_cerna_0_0_0;
+    barvaPozadi["regionalBus"]=barva_bila_255_255_255;
+    /*
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+
+    barvaTextu[""]=;
+    barvaPozadi[""]=;
+    */
+}
 
 void MainWindow::vymazPoleLabelu(QVector<QLabel*> vstup)
 {
@@ -191,9 +313,15 @@ void MainWindow::hlavniVymazObrazovku()
     ui->Llinka->setText("");
     ui->label_nacestne->setText("");
 
-    vymazPoleLabelu(seznamNazvuZastavek);
-    vymazPoleLabelu(seznamPasem1);
-    vymazPoleLabelu(seznamPasem2);
+    vymazPoleLabelu(seznamLabelNazevZastavky);
+    vymazPoleLabelu(seznamLabelPasmoDolni);
+    vymazPoleLabelu(seznamLabelPasmoHorni);
+
+
+
+    vymazPoleLabelu(seznamLabelPasmoDolni);
+    vymazPoleLabelu(seznamLabelPasmoHorni);
+    vymazPoleLabelu(seznamLabelNazevZastavky);
 }
 
 
@@ -201,55 +329,57 @@ int MainWindow::VykresleniPrijatychDat()
 {
     qDebug()<<"MainWindow::VykresleniPrijatychDat";
 
-    ui->Lcil->setText(nazevCile);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
-
-   hlavniVykresliCisloLinky(nazevLinky);
-
-   if(!instanceXMLparser.existujeNavaznySpoj(globalniSeznamZastavekNavaznehoSpoje))
-   {
-       qDebug()<<"navazny spoj neni";
-       ui->frame_navaznySpoj->hide();
-      // ui->horizontalLayout_navaznySpoj;
-
-   }
-   else
-   {
-      QString navaznyCil="";
-      QString navaznaLinka="";
-      if(instanceXMLparser.udajeNavaznehoSpoje(globalniSeznamZastavekNavaznehoSpoje,navaznaLinka,navaznyCil))
-      {
-          ui->label_navaznaLinka->setText(navaznaLinka);
-          ui->label_navaznyCil->setText(navaznyCil);
-          ui->frame_navaznySpoj->show();
-      }
-   }
-
-
-
-
-
+    hlavniVymazObrazovku();
     ui->label_locationState->setText(stavSystemu.locationState);
     ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky+1));
 
-
-
-
-    vymazPoleLabelu(seznamPasem1);
-    vymazPoleLabelu(seznamPasem2);
-    vymazPoleLabelu(seznamNazvuZastavek);
-
-
-
+    hlavniVykresliNazevCile(nazevCile);
+    hlavniVykresliCisloLinky(nazevLinky);
     hlavniVykreslZastavkyiPasma(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje);
-
     hlavniVykresliNacestne();
+
+    strankyKeStridani.clear();
+
+
+
+    //strankyKeStridani.push_back(ui->page_hlavni_2);
+
+
+
+    if(!instanceXMLparser.existujeNavaznySpoj(globalniSeznamZastavekNavaznehoSpoje))
+    {
+        qDebug()<<"navazny spoj neni";
+        ui->frame_navaznySpoj->hide();
+        // ui->horizontalLayout_navaznySpoj;
+
+    }
+    else
+    {
+        QString navaznyCil="";
+        QString navaznaLinka="";
+        if(instanceXMLparser.udajeNavaznehoSpoje(globalniSeznamZastavekNavaznehoSpoje,navaznaLinka,navaznyCil))
+        {
+            ui->label_navaznaLinka->setText(navaznaLinka);
+            ui->label_navaznyCil->setText(navaznyCil);
+            ui->frame_navaznySpoj->show();
+        }
+    }
+
+
+
+
+
+
+
 
     //additional text message
 
     if(additionalTextMessage!="")
     {
         zobrazAnnoucement("","",additionalTextMessage,"");
+        strankyKeStridani.push_back(ui->page_oznameni);
     }
     else
     {
@@ -260,7 +390,7 @@ int MainWindow::VykresleniPrijatychDat()
 
     if(jeVozidloNaKonecne(stavSystemu,globalniSeznamZastavek)&&(!instanceXMLparser.existujeNavaznySpoj(globalniSeznamZastavekNavaznehoSpoje)))
     {
-
+        strankyKeStridani.push_back(ui->page_konecna);
         zobrazKonecnou();
     }
     else
@@ -272,24 +402,42 @@ int MainWindow::VykresleniPrijatychDat()
         else
         {
             navratJizda();
+            strankyKeStridani.push_back(ui->page_hlavni_2);
             // skryjZmenuPasma();
         }
 
     }
+
+
+    if(!globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).zastavka.seznamPrestupu.isEmpty())
+    {
+         strankyKeStridani.push_back(ui->page_prestupy);
+        hlavniVykresliPrestupy(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).zastavka.seznamPrestupu);
+
+
+    }
+
+
     //   hlavniVykresliNasledne();
 
-
-
+    indexAktualniStridaneStranky=0;
+    timerStridejStranky->start();
 
     return 1;
 }
 
 
+
+
+
 void MainWindow::hlavniVykresliCisloLinky(QString alias)
 {
     labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
+}
 
-
+void MainWindow::hlavniVykresliNazevCile(QString nazev)
+{
+    labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
 }
 
 /*
@@ -395,31 +543,33 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         int pomocnyIndex=0;
         if(navazny==false)
         {
-        pomocnyIndex=indexZastavky+i;
+            pomocnyIndex=indexZastavky+i;
         }
         else
         {
             pomocnyIndex=i;
         }
 
-            qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
+        qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
         Zastavka aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
 
         PasmoveDvojiceLcd pasmoveDvojiceLcd;
         pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.seznamPasem);
 
-        seznamNazvuZastavek.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu)));
-        if(navazny==true)
+        seznamLabelNazevZastavky.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu)));
+
+        //if(navazny==true)
+        if(stavSystemu.locationState=="AtStop")
         {
-            seznamNazvuZastavek.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
-          // seznamPasem1.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
-          // seznamPasem2.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
+        //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
+            // seznamPasem1.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
+            // seznamPasem2.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
         }
         else
         {
-            seznamNazvuZastavek.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
-         //   seznamPasem1.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
-           // seznamPasem2.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
+        //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
+            //   seznamPasem1.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
+            // seznamPasem2.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
         }
 
 
@@ -427,7 +577,8 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
         if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
         {
-            seznamPasem1.at(i)->setText("");
+            seznamLabelPasmoDolni.at(i)->setText("");
+
         }
         else
         {
@@ -435,20 +586,27 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
             QString zkratkaSystemuDvojtecka="";
             if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
             {
+
                 zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
             }
-            seznamPasem1.at(i)->setText(zkratkaSystemuDvojtecka+pasmaString1);
+            seznamLabelPasmoDolni.at(i)->setText(zkratkaSystemuDvojtecka+pasmaString1);
+            seznamLabelPasmoDolni.at(i)->setFont(fontPasmoVelke);
         }
 
         if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
         {
-            seznamPasem2.at(i)->hide();
+            seznamLabelPasmoHorni.at(i)->hide();
+            seznamLabelPasmoHorni.at(i)->setFont(fontPasmoVelke);
         }
         else
         {
             QString pasmaString2=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
-            seznamPasem2.at(i)->show();
-            seznamPasem2.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+            seznamLabelPasmoHorni.at(i)->show();
+
+            seznamLabelPasmoHorni.at(i)->setFont(fontPasmoMale );
+            seznamLabelPasmoDolni.at(i)->setFont(fontPasmoMale );
+
+            seznamLabelPasmoHorni.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
         }
 
 
@@ -741,7 +899,7 @@ void MainWindow::on_tlacitkoSeznamSluzeb_clicked()
 
 void MainWindow::on_tlacitkoHlavni_clicked()
 {
-   ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
 }
 
 void MainWindow::on_tlacitkoCasovac_clicked()
@@ -1005,12 +1163,12 @@ void MainWindow::ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
     {
         ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
 
-      //  iteracniIndex++;
+        //  iteracniIndex++;
 
     }
     else
     {
-     //   iteracniIndex=0;
+        //   iteracniIndex=0;
     }
 }
 
@@ -1050,7 +1208,7 @@ void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
     qDebug()<<"MainWindow::zobrazZmenuPasma";
     hlavniZobrazZmenuPasma(zPasem,naPasma);
     svgVykreslovac.zobrazZmenuPasma(zPasem,naPasma);
- }
+}
 
 void MainWindow::hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
@@ -1145,7 +1303,92 @@ int MainWindow::jeVRozsahu(int index, int pocetHodnot)
         msgBox.exec();
         qDebug()<<" hodnota mimo rozsah";
 
-       return 0;
+        return 0;
     }
+
+}
+
+
+void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
+{
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
+
+    foreach(QFrame* ramec,seznamFramePrestup)
+    {
+       // ramec->hide();
+    }
+    foreach(QFrame* label,seznamLabelPrestupCil)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,seznamLabelPrestupLinka)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,seznamLabelPrestupNastupiste)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,seznamLabelPrestupOdjezd)
+    {
+        label->hide();
+    }
+
+
+
+    for (int i=0;i<labelVykreslovani.minimum(seznamPrestupu.count(), seznamLabelPrestupCil.count()) ; i++)
+    {
+        Prestup aktualniPrestup=seznamPrestupu.at(i);
+        seznamLabelPrestupCil.at(i)->setText(aktualniPrestup.destinationName);
+        seznamLabelPrestupCil.at(i)->show();
+
+        seznamLabelPrestupLinka.at(i)->setText(aktualniPrestup.line.LineName);
+
+
+        QString linkaStyleSheet="border-radius:6px;padding: 5px; font-weight: bold;";
+        if(barvaPozadi.contains(aktualniPrestup.subMode))
+        {
+            linkaStyleSheet+="background-color:"+barvaPozadi[aktualniPrestup.subMode]+";";
+        }
+        if(barvaTextu.contains(aktualniPrestup.subMode))
+        {
+            linkaStyleSheet+="color:"+barvaTextu[aktualniPrestup.subMode]+";";
+        }
+
+        seznamLabelPrestupLinka.at(i)->setStyleSheet(linkaStyleSheet);
+        seznamLabelPrestupLinka.at(i)->show();
+
+        seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );
+        seznamLabelPrestupNastupiste.at(i)->show();
+
+        seznamLabelPrestupOdjezd.at(i)->setText(aktualniPrestup.departureTime );
+        seznamLabelPrestupOdjezd.at(i)->show();
+    }
+}
+
+void MainWindow::slotHlavniStridejStranky()
+{
+    qDebug()<<"MainWindow::slotHlavniStridejStranky"<<" counter ma hodnotu "<<indexAktualniStridaneStranky;
+
+    if(indexAktualniStridaneStranky==(strankyKeStridani.count()-1))
+    {
+        indexAktualniStridaneStranky=0;
+    }
+    else
+    {
+        indexAktualniStridaneStranky++;
+    }
+
+
+    if(indexAktualniStridaneStranky<strankyKeStridani.count())
+    {
+        ui->stackedWidget_prostredek->setCurrentWidget(strankyKeStridani.at(indexAktualniStridaneStranky));
+
+    }
+
+
 
 }

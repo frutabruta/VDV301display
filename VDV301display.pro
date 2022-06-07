@@ -51,7 +51,8 @@ SOURCES += \
     VDV301struktury/linka.cpp\
     VDV301struktury/obeh.cpp\
     VDV301struktury/spoj.cpp\
-    VDV301struktury/pasmo.cpp
+    VDV301struktury/pasmo.cpp\
+    VDV301struktury/prestup.cpp
 
 HEADERS += \
     VDV301subscriber/newhttpserver.h \
@@ -67,6 +68,7 @@ HEADERS += \
     VDV301struktury/linka.h\
     VDV301struktury/obeh.h\
     VDV301struktury/spoj.h\
+    VDV301struktury/prestup.h\
     VDV301struktury/cestaudaje.h
 
 
