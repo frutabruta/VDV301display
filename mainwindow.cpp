@@ -249,42 +249,84 @@ void MainWindow::hlavniNaplnPoleLabelu()
 
 void MainWindow::naplnMapBarev()
 {
+    //dd1 Metro, nahrazuje se piktogramem
+    barvaTextu["metro"]=barva_cerna_0_0_0;
+    barvaPozadi["metro"]=barva_bila_255_255_255;
+
+    //dd2 Denní tramvaj
+    barvaTextu["localTram"]=barva_Tramvaj_120_2_0;
+    barvaPozadi["localTram"]=barva_bila_255_255_255;
+
+    //dd3 Denní městská autobusová linka
     barvaTextu["localBus"]=barva_Autobus_0_120_160;
     barvaPozadi["localBus"]=barva_bila_255_255_255;
 
-    barvaTextu["metro"]=barva_cerna_0_0_0;
-    barvaPozadi["metro"]=barva_MetroB_248_179_34;
 
+    //dd4 Denní příměstská nebo regionální linka
     barvaTextu["regionalBus"]=barva_cerna_0_0_0;
     barvaPozadi["regionalBus"]=barva_bila_255_255_255;
-    /*
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+    //dd5 Noční městská autobusová linka
+    barvaTextu["localBusNight"]=barva_bila_255_255_255;
+    barvaPozadi["localBusNight"]=barva_Autobus_0_120_160;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+    //dd6 Noční tramvaj
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+    barvaTextu["localTramNight"]=barva_bila_255_255_255;
+    barvaPozadi["localTramNight"]=barva_Tramvaj_120_2_0;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+    //dd7 Linka náhradní dopravy, městský autobus
+    barvaTextu["localBusReplacement"]=barva_Vyluky_255_170_30;
+    barvaPozadi["localBusReplacement"]=barva_bila_255_255_255;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+    //dd8 Lanovka
+    barvaTextu["funicular"]=barva_Lanovka_201_208_34;
+    barvaPozadi["funicular"]=barva_bila_255_255_255;
+    //dd9 Školní linka
+    barvaTextu["schoolBus"]=barva_Autobus_0_120_160;
+    barvaPozadi["schoolBus"]=barva_bila_255_255_255;
+    //dd10 Invalidní
+    barvaTextu["specialNeedsBus"]=barva_Specialni_143_188_25;
+    barvaPozadi["specialNeedsBus"]=barva_bila_255_255_255;
+    //dd11 Smluvni
+   // barvaTextu[""]=barva;
+   // barvaPozadi[""]=barva_bila_255_255_255;
+    //dd12 Přívoz
+    barvaTextu["localPassengerFerry"]=barva_Privoz_0_164_167;
+    barvaPozadi["localPassengerFerry"]=barva_bila_255_255_255;
+    //dd13 Vlaky PID – linky S nebo R
+    barvaTextu["regionalRail"]=barva_bila_255_255_255;
+    barvaPozadi["regionalRail"]=barva_Vlak_15_30_65;
+    //dd14 Linka náhradní dopravy, NAD za vlak
+    barvaTextu["railReplacementBus"]=barva_Vyluky_255_170_30;
+    barvaPozadi["railReplacementBus"]=barva_bila_255_255_255;
+    //dd15 Linka náhradní dopravy, Tram
+    barvaTextu["localTramReplacement"]=barva_Vyluky_255_170_30;
+    barvaPozadi["localTramReplacement"]=barva_bila_255_255_255;
+    //dd16 Noční příměstská nebo regionální linka
+    barvaTextu["regionalBusNight"]=barva_bila_255_255_255;
+    barvaPozadi["regionalBusNight"]=barva_Nocni_9_0_62;
+    //dd17 Linka mimo systém PID (3 znaky)
+  //  barvaTextu[""]=barva_PozadiD_150_150_150;
+  //  barvaPozadi[""]=barva_bila_255_255_255;
+    barvaTextu["unknown"]=barva_PozadiD_150_150_150;
+    barvaPozadi["unknown"]=barva_bila_255_255_255;
+    barvaTextu["undefined"]=barva_PozadiD_150_150_150;
+    barvaPozadi["undefined"]=barva_bila_255_255_255;
+    //dd18 Denní trolejbusová linka
+    barvaTextu["localTrolleybus"]=barva_Trolejbus_128_22_111;
+    barvaPozadi["localTrolleybus"]=barva_bila_255_255_255;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
+/*
+    barvaTextu[""]=barva;
+    barvaPozadi[""]=barva;
 
-    barvaTextu[""]=;
-    barvaPozadi[""]=;
-    */
+    barvaTextu[""]=barva;
+    barvaPozadi[""]=barva;
+
+*/
+
 }
 
 void MainWindow::vymazPoleLabelu(QVector<QLabel*> vstup)
@@ -1345,20 +1387,37 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         seznamLabelPrestupCil.at(i)->setText(aktualniPrestup.destinationName);
         seznamLabelPrestupCil.at(i)->show();
 
-        seznamLabelPrestupLinka.at(i)->setText(aktualniPrestup.line.LineName);
 
 
-        QString linkaStyleSheet="border-radius:6px;padding: 5px; font-weight: bold;";
-        if(barvaPozadi.contains(aktualniPrestup.subMode))
+
+        QString linkaStyleSheetStandard="border-radius:6px;padding: 5px; font-weight: bold;";
+        QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
+
+
+
+        QString nahrazeno=labelVykreslovani.nahradMetro(aktualniPrestup.line.LineName, aktualniPrestup.subMode);
+
+        if(nahrazeno==aktualniPrestup.line.LineName)
         {
-            linkaStyleSheet+="background-color:"+barvaPozadi[aktualniPrestup.subMode]+";";
+            if(barvaPozadi.contains(aktualniPrestup.subMode))
+            {
+                linkaStyleSheetStandard+="background-color:"+barvaPozadi[aktualniPrestup.subMode]+";";
+            }
+            if(barvaTextu.contains(aktualniPrestup.subMode))
+            {
+                linkaStyleSheetStandard+="color:"+barvaTextu[aktualniPrestup.subMode]+";";
+            }
+           seznamLabelPrestupLinka.at(i)->setStyleSheet(linkaStyleSheetStandard);
+           seznamLabelPrestupLinka.at(i)->setText(aktualniPrestup.line.LineName);
         }
-        if(barvaTextu.contains(aktualniPrestup.subMode))
+        else
         {
-            linkaStyleSheet+="color:"+barvaTextu[aktualniPrestup.subMode]+";";
+            seznamLabelPrestupLinka.at(i)->setStyleSheet(linkaStyleSheetPiktogram);
+            seznamLabelPrestupLinka.at(i)->setText(nahrazeno);
+            qDebug()<<"nahrazeny retezec metra:"<<nahrazeno;
         }
 
-        seznamLabelPrestupLinka.at(i)->setStyleSheet(linkaStyleSheet);
+
         seznamLabelPrestupLinka.at(i)->show();
 
         seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );

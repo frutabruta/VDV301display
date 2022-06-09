@@ -315,7 +315,7 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(1056, 924);
+        MainWindow->resize(1056, 1026);
         QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
@@ -2313,7 +2313,7 @@ public:
 
         prepinadloStran->setCurrentIndex(0);
         stackedWidget_obrazovka->setCurrentIndex(0);
-        stackedWidget_prostredek->setCurrentIndex(0);
+        stackedWidget_prostredek->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -2381,7 +2381,8 @@ public:
         label_prestup0_cil->setText(QCoreApplication::translate("MainWindow", "TestCil", nullptr));
         label_prestup0_nastupiste->setText(QCoreApplication::translate("MainWindow", "A", nullptr));
         label_prestup0_odjezd->setText(QCoreApplication::translate("MainWindow", "5min", nullptr));
-        label_prestup1_linka->setText(QCoreApplication::translate("MainWindow", "666", nullptr));
+        label_prestup1_linka->setText(QCoreApplication::translate("MainWindow", "<html><head/><body style=\"padding: 0px\n"
+";\"><p><img src=\":/images/UndergroundA\" height=\"50\" /></p></body></html>", nullptr));
         label_prestup1_sipky->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><img src=\":/images/resources/LCD-piktogramy_verze-LCD-5-17.svg\" height=\"30\"/></p></body></html>", nullptr));
         label_prestup1_cil->setText(QCoreApplication::translate("MainWindow", "TestCil", nullptr));
         label_prestup1_nastupiste->setText(QCoreApplication::translate("MainWindow", "A", nullptr));

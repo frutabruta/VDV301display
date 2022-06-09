@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>924</height>
+    <height>1026</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -737,7 +737,7 @@ border-radius: 8px;
                      <item>
                       <widget class="QStackedWidget" name="stackedWidget_prostredek">
                        <property name="currentIndex">
-                        <number>0</number>
+                        <number>4</number>
                        </property>
                        <widget class="QWidget" name="page_hlavni_2">
                         <layout class="QGridLayout" name="gridLayout_2">
@@ -1513,7 +1513,8 @@ border-radius: 30px;
                                  <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
                                 </property>
                                 <property name="text">
-                                 <string>666</string>
+                                 <string>&lt;html&gt;&lt;head/&gt;&lt;body style=&quot;padding: 0px
+;&quot;&gt;&lt;p&gt;&lt;img src=&quot;:/images/UndergroundA&quot; height=&quot;50&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                                 </property>
                                </widget>
                               </item>

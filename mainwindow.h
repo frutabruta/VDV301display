@@ -248,6 +248,7 @@ private:
      QString barva_Privoz_0_164_167 ="rgb(0,164,167)";
      QString barva_Nocni_9_0_62 ="rgb(9,0,62)";
      QString barva_Letiste_155_203_234 ="rgb(155,203,234)";
+     QString barva_Specialni_143_188_25 ="rgb(143,188,25)";
 
 
 

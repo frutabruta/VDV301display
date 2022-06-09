@@ -93,6 +93,23 @@ void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozad
 }
 
 
+QString LabelVykreslovani::nahradMetro(QString linka, QString submode)
+{
+    QString vysledek=linka;
+
+    if(submode=="metro")
+    {
+        vysledek="<html><head/><body><p><img src=\":/images/Underground"+linka+"\" height=\"50\" /></p></body></html>";
+    }
+
+
+    //<html><head/><body><p><img src=":/images/UndergroundA" height="50" /></p></body></html>
+
+    return vysledek;
+
+}
+
+
 QString LabelVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestneZastavky)
 {
     qDebug()<<"MainWindow::vykresliNacestneZastavkyText";
