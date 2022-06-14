@@ -102,6 +102,7 @@ public:
     void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
     int hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny);
     void hlavniVykresliNazevCile(QString alias);
+    void naplnPoleLinky(QString subMode, Linka line, QLabel *label);
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -127,6 +128,10 @@ private slots:
 
     void slotPosunNacestnych();
     void slotHlavniStridejStranky();
+    void on_pushButton_fullscreen_clicked();
+
+    void on_Llinka_linkActivated(const QString &link);
+
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
@@ -152,6 +157,9 @@ private:
     //instance knihoven
     CestaUdaje stavSystemu;
     LabelVykreslovani labelVykreslovani;
+
+
+    //
 
     //udalosti
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
@@ -252,12 +260,13 @@ private:
 
 
 
-     void hlavniVykresliCisloLinky(QString alias);
+     void hlavniVykresliCisloLinky(ZastavkaCil aktZastavka, QString subMode);
 
 
     int jeVRozsahu(int index, int pocetHodnot);
     QVector<QString> ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka);
     void naplnMapBarev();
+    void toggleFullscreen();
 };
 
 #endif // MAINWINDOW_H
