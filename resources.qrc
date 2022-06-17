@@ -56,5 +56,7 @@
         <file>fonty/21-pid-30.ttf</file>
         <file>fonty/Roboto-Bold.ttf</file>
         <file>fonty/Roboto-Regular.ttf</file>
+        <file>fonty/Roboto-Black.ttf</file>
+        <file>fonty/Roboto-Light.ttf</file>
     </qresource>
 </RCC>

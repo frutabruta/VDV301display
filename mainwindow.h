@@ -8,6 +8,7 @@ void on_actionstahnoutXML_triggered();
 
 #include <QMainWindow>
 #include <QWidget>
+#include <QShortcut>
 
 
 #include "xmlparser.h"
@@ -125,7 +126,7 @@ private slots:
 
     void on_quitTlacitko_clicked();
 
-    void on_pushButton_clicked();
+ //   void on_pushButton_clicked();
 
     void on_svgTlacitko_clicked();
 
@@ -137,6 +138,8 @@ private slots:
 
     void on_Llinka_linkActivated(const QString &link);
 
+     void toggleFullscreen();
+
 public slots:
     void xmlDoPromenne(QString vstupniXml);
     void sluzbyDoTabulky(QZeroConfService zcs);
@@ -147,6 +150,16 @@ private:
     QTimer *timerStridejStranky = new QTimer(this);
     QVector<QWidget*> strankyKeStridani;
     int indexAktualniStridaneStranky =0;
+
+    QShortcut *keyCtrlF;  // Entity of Ctrl + D hotkeys
+    QShortcut  *keyF1;
+    QShortcut  *keyF2;
+    QShortcut  *keyF3;
+    QShortcut  *keyF4;
+    QShortcut  *keyF5;
+    QShortcut  *keyF6;
+    QShortcut  *keyF7;
+    QShortcut  *keyF8;
 
     void vsechnyConnecty();
 
@@ -271,7 +284,9 @@ private:
     int jeVRozsahu(int index, int pocetHodnot);
     QVector<QString> ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka);
     void naplnMapBarev();
-    void toggleFullscreen();
+
+    int existujeKonfigurak();
+    void fullscreenPoZapnuti();
 };
 
 #endif // MAINWINDOW_H

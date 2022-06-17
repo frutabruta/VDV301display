@@ -234,6 +234,7 @@ release/qrc_resources.cpp: resources.qrc \
 		fonty/21-pid-28.ttf \
 		fonty/Roboto-Regular.ttf \
 		fonty/21-pid-8.ttf \
+		fonty/Roboto-Light.ttf \
 		fonty/21-pid-10.ttf \
 		fonty/21-pid-23.ttf \
 		fonty/21-pid-3.ttf \
@@ -242,6 +243,7 @@ release/qrc_resources.cpp: resources.qrc \
 		fonty/21-pid-21.ttf \
 		fonty/21-pid-1.ttf \
 		fonty/21-pid-5.ttf \
+		fonty/Roboto-Black.ttf \
 		fonty/Roboto-Bold.ttf
 	C:\Qt\5.15.2\mingw81_32\bin\rcc.exe -name resources resources.qrc -o release\qrc_resources.cpp
 

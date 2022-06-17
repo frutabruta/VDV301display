@@ -9,7 +9,8 @@
 class SvgVykreslovani
 {
 public:
-    SvgVykreslovani();
+    SvgVykreslovani(QString cesta);
+    QString interniCestaSlozkaSvg="";
     bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
     bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
     QVector<ZastavkaCil> vytvorNasledujiciZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index, int limit);

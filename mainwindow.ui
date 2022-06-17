@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1105</width>
-    <height>1072</height>
+    <width>1285</width>
+    <height>1080</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -79,25 +79,6 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_13">
              <item>
-              <widget class="QPushButton" name="tlacitkoSeznamSluzeb">
-               <property name="font">
-                <font>
-                 <pointsize>20</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Seznam 
- služeb</string>
-               </property>
-               <property name="checkable">
-                <bool>true</bool>
-               </property>
-               <property name="autoExclusive">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
               <widget class="QPushButton" name="tlacitkoHlavni">
                <property name="font">
                 <font>
@@ -105,7 +86,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Hlavní 
+                <string>F1 Hlavní 
  obrazovka</string>
                </property>
                <property name="checkable">
@@ -120,14 +101,14 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="tlacitkoCasovac">
+              <widget class="QPushButton" name="svgTlacitko">
                <property name="font">
                 <font>
                  <pointsize>20</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>Časovač</string>
+                <string>F2 SVG</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -145,7 +126,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>LED</string>
+                <string>F3 LED</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -156,14 +137,33 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="svgTlacitko">
+              <widget class="QPushButton" name="tlacitkoSeznamSluzeb">
                <property name="font">
                 <font>
                  <pointsize>20</pointsize>
                 </font>
                </property>
                <property name="text">
-                <string>SVG</string>
+                <string>F4 Seznam 
+ služeb</string>
+               </property>
+               <property name="checkable">
+                <bool>true</bool>
+               </property>
+               <property name="autoExclusive">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="tlacitkoCasovac">
+               <property name="font">
+                <font>
+                 <pointsize>20</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>F5 Časovač</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -181,10 +181,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>Fullscreen</string>
-               </property>
-               <property name="shortcut">
-                <string>Ctrl+F</string>
+                <string>F6 Fullscreen</string>
                </property>
                <property name="default">
                 <bool>false</bool>
@@ -202,7 +199,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>refresh</string>
+                <string>F7 refresh</string>
                </property>
               </widget>
              </item>
@@ -214,7 +211,7 @@
                 </font>
                </property>
                <property name="text">
-                <string>QUIT</string>
+                <string>F8 QUIT</string>
                </property>
                <property name="checkable">
                 <bool>true</bool>
@@ -237,8 +234,11 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
-          <property name="currentIndex">
+          <property name="lineWidth">
            <number>0</number>
+          </property>
+          <property name="currentIndex">
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page_hlavniObrazovka">
            <property name="styleSheet">
@@ -365,13 +365,13 @@ QLabel{color:#FFFFFF}</string>
                            <property name="minimumSize">
                             <size>
                              <width>200</width>
-                             <height>100</height>
+                             <height>130</height>
                             </size>
                            </property>
                            <property name="maximumSize">
                             <size>
                              <width>200</width>
-                             <height>16777215</height>
+                             <height>130</height>
                             </size>
                            </property>
                            <property name="font">
@@ -436,7 +436,7 @@ QLabel{color:#FFFFFF}</string>
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>734</width>
+                              <width>914</width>
                               <height>60</height>
                              </rect>
                             </property>
@@ -747,7 +747,7 @@ border-radius: 8px;
                      <item>
                       <widget class="QStackedWidget" name="stackedWidget_prostredek">
                        <property name="currentIndex">
-                        <number>0</number>
+                        <number>1</number>
                        </property>
                        <widget class="QWidget" name="page_hlavni_2">
                         <layout class="QGridLayout" name="gridLayout_2">
@@ -1235,7 +1235,7 @@ border-radius: 8px;
                              <property name="font">
                               <font>
                                <family>roboto</family>
-                               <pointsize>20</pointsize>
+                               <pointsize>40</pointsize>
                                <weight>75</weight>
                                <bold>true</bold>
                               </font>
@@ -1253,7 +1253,7 @@ border-radius: 8px;
                              <property name="font">
                               <font>
                                <family>roboto</family>
-                               <pointsize>20</pointsize>
+                               <pointsize>30</pointsize>
                                <weight>50</weight>
                                <bold>false</bold>
                               </font>
@@ -1273,7 +1273,7 @@ border-radius: 8px;
                                <property name="font">
                                 <font>
                                  <family>roboto</family>
-                                 <pointsize>20</pointsize>
+                                 <pointsize>50</pointsize>
                                  <weight>75</weight>
                                  <bold>true</bold>
                                 </font>
@@ -1299,7 +1299,7 @@ border-radius: 30px;
                                <property name="font">
                                 <font>
                                  <family>roboto</family>
-                                 <pointsize>20</pointsize>
+                                 <pointsize>80</pointsize>
                                 </font>
                                </property>
                                <property name="text">
@@ -1315,7 +1315,7 @@ border-radius: 30px;
                                <property name="font">
                                 <font>
                                  <family>roboto</family>
-                                 <pointsize>20</pointsize>
+                                 <pointsize>50</pointsize>
                                  <weight>75</weight>
                                  <bold>true</bold>
                                 </font>
@@ -1351,7 +1351,7 @@ border-radius: 30px;
                              <property name="font">
                               <font>
                                <family>roboto</family>
-                               <pointsize>20</pointsize>
+                               <pointsize>80</pointsize>
                                <weight>75</weight>
                                <bold>true</bold>
                               </font>
@@ -1362,6 +1362,9 @@ border-radius: 30px;
                              <property name="alignment">
                               <set>Qt::AlignCenter</set>
                              </property>
+                             <property name="wordWrap">
+                              <bool>true</bool>
+                             </property>
                             </widget>
                            </item>
                            <item>
@@ -1369,7 +1372,7 @@ border-radius: 30px;
                              <property name="font">
                               <font>
                                <family>roboto</family>
-                               <pointsize>20</pointsize>
+                               <pointsize>80</pointsize>
                               </font>
                              </property>
                              <property name="text">
@@ -1377,6 +1380,9 @@ border-radius: 30px;
                              </property>
                              <property name="alignment">
                               <set>Qt::AlignCenter</set>
+                             </property>
+                             <property name="wordWrap">
+                              <bool>true</bool>
                              </property>
                             </widget>
                            </item>
@@ -1408,6 +1414,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1421,6 +1439,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -1511,6 +1532,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1525,6 +1558,9 @@ border-radius: 30px;
                                 <property name="text">
                                  <string>&lt;html&gt;&lt;head/&gt;&lt;body style=&quot;padding: 0px
 ;&quot;&gt;&lt;p&gt;&lt;img src=&quot;:/images/UndergroundA&quot; height=&quot;50&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -1615,6 +1651,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1628,6 +1676,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -1715,6 +1766,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1728,6 +1791,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -1818,6 +1884,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1831,6 +1909,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -1918,6 +1999,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -1931,6 +2024,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2028,6 +2124,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2041,6 +2149,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2128,6 +2239,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2141,6 +2264,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2231,6 +2357,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2244,6 +2382,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2331,6 +2472,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2344,6 +2497,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2434,6 +2590,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2447,6 +2615,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -2534,6 +2705,18 @@ border-radius: 30px;
                                   <verstretch>0</verstretch>
                                  </sizepolicy>
                                 </property>
+                                <property name="minimumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
+                                <property name="maximumSize">
+                                 <size>
+                                  <width>80</width>
+                                  <height>60</height>
+                                 </size>
+                                </property>
                                 <property name="font">
                                  <font>
                                   <family>roboto</family>
@@ -2547,6 +2730,9 @@ border-radius: 30px;
                                 </property>
                                 <property name="text">
                                  <string>666</string>
+                                </property>
+                                <property name="alignment">
+                                 <set>Qt::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -3155,6 +3341,21 @@ border-radius: 30px;
           </widget>
           <widget class="QWidget" name="page_svg">
            <layout class="QGridLayout" name="gridLayout">
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <property name="spacing">
@@ -3167,6 +3368,21 @@ border-radius: 30px;
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+                <property name="lineWidth">
+                 <number>0</number>
+                </property>
+                <property name="verticalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
+                </property>
+                <property name="horizontalScrollBarPolicy">
+                 <enum>Qt::ScrollBarAlwaysOff</enum>
                 </property>
                </widget>
               </item>
@@ -3895,7 +4111,7 @@ border-radius: 30px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1105</width>
+     <width>1285</width>
      <height>21</height>
     </rect>
    </property>
@@ -3921,6 +4137,9 @@ border-radius: 30px;
   <action name="actiontestPolozka">
    <property name="text">
     <string>testPolozka</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
   <action name="actionstahnoutXML">

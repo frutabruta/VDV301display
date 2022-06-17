@@ -11,12 +11,13 @@
 #include <QGraphicsSvgItem>
 #include <QSvgRenderer>
 #include <QSvgWidget>
+#include "QFile"
 
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-
     CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
+    svgVykreslovac(QCoreApplication::applicationDirPath()),
     ui(new Ui::MainWindow)
 {
 
@@ -29,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
 
     font8.setFamily("21-PID 8");
     font8.setPointSize(65);
@@ -45,11 +48,37 @@ MainWindow::MainWindow(QWidget *parent) :
     fontPasmoMale.setPointSize(20);
     fontPasmoMale.setBold(true);
 
-
-
-
-
     ui->setupUi(this);
+
+    //klávesové zkratky menu
+    keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
+    keyCtrlF->setKey(Qt::CTRL + Qt::Key_F); // Set the key code
+
+    keyF1 = new QShortcut(this);
+    keyF1->setKey(Qt::Key_F1);
+
+    keyF2 = new QShortcut(this);
+    keyF2->setKey(Qt::Key_F2);
+
+    keyF3 = new QShortcut(this);
+    keyF3->setKey(Qt::Key_F3);
+
+    keyF4 = new QShortcut(this);
+    keyF4->setKey(Qt::Key_F4);
+
+    keyF5 = new QShortcut(this);
+    keyF5->setKey(Qt::Key_F5);
+
+    keyF6 = new QShortcut(this);
+    keyF6->setKey(Qt::Key_F6);
+
+    keyF7 = new QShortcut(this);
+    keyF7->setKey(Qt::Key_F7);
+
+    keyF8 = new QShortcut(this);
+    keyF8->setKey(Qt::Key_F8);
+
+
 
     vsechnyConnecty();
 
@@ -58,7 +87,7 @@ MainWindow::MainWindow(QWidget *parent) :
     naplnMapBarev();
 
 
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavni);
+    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
 
@@ -102,7 +131,74 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_build->setText(compilationTime);
 
 
+    existujeKonfigurak();
+
+
+
+
+
+
 }
+
+
+int MainWindow::existujeKonfigurak()
+{
+    QString cestaSouboru=QCoreApplication::applicationDirPath()+"/fullscreen.txt";
+    QFile file(cestaSouboru);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+
+        qDebug()<<"fail1";
+        return 0;
+    }
+    else
+    {
+       QString obsah= file.readAll();
+       if (obsah=="1")
+       {
+           on_tlacitkoHlavni_clicked();
+       }
+       if (obsah=="2")
+       {
+           on_svgTlacitko_clicked();
+       }
+       if (obsah=="3")
+       {
+           on_tlacitkoLed_clicked();
+       }
+       if (obsah=="4")
+       {
+           on_tlacitkoSeznamSluzeb_clicked();
+       }
+
+
+
+
+       toggleFullscreen();
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+    file.close();
+    return 1;
+
+}
+
+void MainWindow::fullscreenPoZapnuti()
+        {
+
+
+        }
 
 void MainWindow::vsechnyConnecty()
 {
@@ -116,6 +212,18 @@ void MainWindow::vsechnyConnecty()
     connect(timerStridejStranky, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
 
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+
+    //klávesové zkratky
+    // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
+    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
+    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_tlacitkoHlavni_clicked );
+    connect(keyF2, &QShortcut::activated, this,&MainWindow::on_svgTlacitko_clicked );
+    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_tlacitkoLed_clicked );
+    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_tlacitkoSeznamSluzeb_clicked);
+    connect(keyF5, &QShortcut::activated, this,&MainWindow::on_tlacitkoCasovac_clicked );
+    connect(keyF6, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
+    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_refreshTlac_clicked);
+    connect(keyF8, &QShortcut::activated, this, &MainWindow::on_quitTlacitko_clicked);
 
 
 }
@@ -290,8 +398,8 @@ void MainWindow::naplnMapBarev()
     barvaTextu["specialNeedsBus"]=barva_Specialni_143_188_25;
     barvaPozadi["specialNeedsBus"]=barva_bila_255_255_255;
     //dd11 Smluvni
-   // barvaTextu[""]=barva;
-   // barvaPozadi[""]=barva_bila_255_255_255;
+    // barvaTextu[""]=barva;
+    // barvaPozadi[""]=barva_bila_255_255_255;
     //dd12 Přívoz
     barvaTextu["localPassengerFerry"]=barva_Privoz_0_164_167;
     barvaPozadi["localPassengerFerry"]=barva_bila_255_255_255;
@@ -308,8 +416,8 @@ void MainWindow::naplnMapBarev()
     barvaTextu["regionalBusNight"]=barva_bila_255_255_255;
     barvaPozadi["regionalBusNight"]=barva_Nocni_9_0_62;
     //dd17 Linka mimo systém PID (3 znaky)
-  //  barvaTextu[""]=barva_PozadiD_150_150_150;
-  //  barvaPozadi[""]=barva_bila_255_255_255;
+    //  barvaTextu[""]=barva_PozadiD_150_150_150;
+    //  barvaPozadi[""]=barva_bila_255_255_255;
     barvaTextu["unknown"]=barva_PozadiD_150_150_150;
     barvaPozadi["unknown"]=barva_bila_255_255_255;
     barvaTextu["undefined"]=barva_PozadiD_150_150_150;
@@ -319,7 +427,7 @@ void MainWindow::naplnMapBarev()
     barvaPozadi["localTrolleybus"]=barva_bila_255_255_255;
 
 
-/*
+    /*
     barvaTextu[""]=barva;
     barvaPozadi[""]=barva;
 
@@ -355,7 +463,7 @@ void MainWindow::hlavniVymazObrazovku()
 
     vymazPoleLabelu(seznamLabelNazevZastavky);
     vymazPoleLabelu(seznamLabelPasmoDolni);
-    vymazPoleLabelu(seznamLabelPasmoHorni);    
+    vymazPoleLabelu(seznamLabelPasmoHorni);
 }
 
 
@@ -438,7 +546,7 @@ int MainWindow::VykresleniPrijatychDat()
 
     if(!globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).zastavka.seznamPrestupu.isEmpty())
     {
-         strankyKeStridani.push_back(ui->page_prestupy);
+        strankyKeStridani.push_back(ui->page_prestupy);
         hlavniVykresliPrestupy(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).zastavka.seznamPrestupu);
 
 
@@ -460,10 +568,11 @@ int MainWindow::VykresleniPrijatychDat()
 
 void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMode)
 {
-  //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
+    //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
     qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
     naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka);
+    labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
 }
 
@@ -586,13 +695,13 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         //if(navazny==true)
         if(stavSystemu.locationState=="AtStop")
         {
-        //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
+            //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
             // seznamPasem1.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
             // seznamPasem2.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
         }
         else
         {
-        //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
+            //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
             //   seznamPasem1.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
             // seznamPasem2.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
         }
@@ -736,7 +845,7 @@ void MainWindow::on_actiontestPolozka_triggered()
 {
     qDebug()<<"MainWindow::on_actiontestPolozka_triggered";
     qInfo()<<"\n on_actiontestPolozka_triggered";
-
+    /*
     instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, stavSystemu.indexAktZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
     qInfo()<<indexZastavky;
@@ -745,6 +854,8 @@ void MainWindow::on_actiontestPolozka_triggered()
     VykresleniPrijatychDat();
     FormatZobrazeni();
     qInfo()<<"CIl:"<<nazevCile;
+    */
+    toggleFullscreen();
 }
 
 
@@ -839,7 +950,9 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
     ui->tabulkaSubscriberu->setItem(row, 2, cell);
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
-    cell = new QTableWidgetItem(QString::number(port));
+    // cell = new QTableWidgetItem(QString::number(port));
+    QString obsahHtml="<html><head/><body style=\"padding: 0px ;\"><p><img src=\":/images/UndergroundA\" height=\"50\" /></p></body></html>";
+    cell = new QTableWidgetItem(obsahHtml);
     ui->tabulkaSubscriberu->setItem(row, 3, cell);
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
@@ -959,10 +1072,7 @@ void MainWindow::on_quitTlacitko_clicked()
     MainWindow::close();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
 
-}
 
 void MainWindow::on_svgTlacitko_clicked()
 {
@@ -998,7 +1108,7 @@ bool MainWindow::svgVykresleni()
     }
 
     //int vysledek=svgOpenFile("./bubbles.svg");
-    int vysledek=svgOpenFile("./vystup.svg");
+    int vysledek=svgOpenFile(QCoreApplication::applicationDirPath()+"/vystup.svg");
     qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
 
     return true;
@@ -1351,7 +1461,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 
     foreach(QFrame* ramec,seznamFramePrestup)
     {
-       // ramec->hide();
+        // ramec->hide();
     }
     foreach(QFrame* label,seznamLabelPrestupCil)
     {
@@ -1426,8 +1536,8 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
             text="color:"+barvaTextu[subMode]+";";
         }
 
-       label->setStyleSheet(text+pozadi);
-       label->setText(line.LineName);
+        label->setStyleSheet(linkaStyleSheetStandard+text+pozadi);
+        label->setText(line.LineName);
     }
     else
     {
@@ -1437,7 +1547,7 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
     }
 
 
-   label->show();
+    label->show();
 }
 
 
@@ -1467,17 +1577,24 @@ void MainWindow::slotHlavniStridejStranky()
 
 void MainWindow::toggleFullscreen()
 {
+    // isFullScreen() ? showNormal() : showFullScreen();
+
+
+
     if (MainWindow::windowState()==Qt::WindowFullScreen )
     {
         MainWindow::setWindowState(Qt::WindowMaximized);
-        ui->verticalLayoutWidget_4->hide();
-
+        // ui->verticalLayoutWidget_4->show();
+        //    MainWindow::setWindowState(Qt::Window);
 
         ui->frame_menu->show();
         ui->menuBar->show();
         ui->statusBar->show();
         ui->mainToolBar->show();
         ui->frame_debug->show();
+
+
+      // this->setWindowFlags(flags|Qt::SplashScreen);
     }
     else
     {
@@ -1488,12 +1605,14 @@ void MainWindow::toggleFullscreen()
         ui->statusBar->hide();
         ui->mainToolBar->hide();
         ui->frame_debug->hide();
+
     }
+
 }
 
 void MainWindow::on_pushButton_fullscreen_clicked()
 {
-  toggleFullscreen();
+    toggleFullscreen();
 }
 
 

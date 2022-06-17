@@ -25,7 +25,7 @@ public:
 
     int minimum(int cislo1, int cislo2);
     void vykresliNacestneForce(QVector<ZastavkaCil> globalniSeznamZastavek, CestaUdaje stavSystemu, QLabel *label);
-    void naplnCisloLinkyLabel(QString vstup, QLabel *label);
+    void zmensiCisloLinkyLabel(QLabel *label);
     void naplnNazevCileLabel(QString vstup, QLabel *label);
     QString nahradMetro(QString linka, QString submode);
 signals:

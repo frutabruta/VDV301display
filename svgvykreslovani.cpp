@@ -6,9 +6,9 @@
 #include <VDV301struktury/zastavka.h>
 #include "VDV301struktury/cestaudaje.h"
 
-SvgVykreslovani::SvgVykreslovani()
+SvgVykreslovani::SvgVykreslovani(QString cesta)
 {
-
+interniCestaSlozkaSvg=cesta;
 }
 
 
@@ -40,6 +40,7 @@ int SvgVykreslovani::qDomDocumentDoSouboru(QString cestaVystupnihoSouboru,QDomDo
 
 
     QFile file(cestaVystupnihoSouboru);
+    qDebug()<<"zapisuju svg do "<<cestaVystupnihoSouboru;
     if(!file.open(QIODevice::WriteOnly))
     {
         qDebug("Error While Reading the File");
@@ -281,7 +282,9 @@ QString SvgVykreslovani::pasmaDoStringu(QVector<Pasmo> seznamPasem)
 
 int SvgVykreslovani::aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav)
 {
-    QDomDocument xmlko = this->souborDoQDomDocument("hlavni.svg");
+    QString celaCesta=interniCestaSlozkaSvg+"/hlavni.svg";
+    qDebug()<<"cesta k hlavnimu SVG: "<<celaCesta;
+    QDomDocument xmlko = this->souborDoQDomDocument(celaCesta);
     if (xmlko.isNull())
     {
         qDebug()<<"soubor SVG se nenacetl";
@@ -294,7 +297,7 @@ int SvgVykreslovani::aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje sta
     xmlko=vykresliNacestneZastavky(xmlko,zastavky.at(stav.indexAktZastavky).nacestneZastavky);
     //xmlko=vykresliNacestneZastavky(xmlko,vytvorNacestneZastavky(zastavky,stav.indexAktZastavky));
 
-    qDomDocumentDoSouboru("vystup.svg",xmlko);
+    qDomDocumentDoSouboru(interniCestaSlozkaSvg+"/vystup.svg",xmlko);
     return 1;
 }
 

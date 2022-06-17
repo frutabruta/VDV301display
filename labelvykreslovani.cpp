@@ -27,20 +27,39 @@ QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pa
 }
 
 
-void LabelVykreslovani::naplnCisloLinkyLabel(QString vstup, QLabel* label)
+void LabelVykreslovani::zmensiCisloLinkyLabel( QLabel* label)
 {
-    label->setText(vstup);
+
 
     qDebug()<<"LabelVykreslovani::naplnCisloLinkyLabel";
 
-    /*
+     QFont puvodniFont=label->font();
+     puvodniFont.setPixelSize(100);
+     label->setFont(puvodniFont);
+
     int vyskaLabelu=label->height();
     int sirkaLabelu=label->width();
 
     int vyskaFontu= label->fontMetrics().boundingRect(label->text()).height();
     int sirkaFontu= label->fontMetrics().boundingRect(label->text()).width();
 
+    qDebug()<<"V labelu "<<vyskaLabelu<<" V Fontu "<< vyskaFontu <<" S labelu "<<sirkaLabelu<<" S fontu "<< sirkaFontu;
 
+
+
+    while((sirkaFontu>sirkaLabelu) || (vyskaFontu>vyskaLabelu)  )
+    {
+        puvodniFont.setPixelSize(qRound( puvodniFont.pixelSize()*0.9));
+
+        vyskaFontu= label->fontMetrics().boundingRect(label->text()).height();
+        sirkaFontu= label->fontMetrics().boundingRect(label->text()).width();
+        label->setFont(puvodniFont);
+    }
+
+
+
+
+/*
 
 
 
@@ -51,7 +70,7 @@ void LabelVykreslovani::naplnCisloLinkyLabel(QString vstup, QLabel* label)
    label->update();
 
 
-    qDebug()<<"V labelu "<<vyskaLabelu<<" V Fontu "<< vyskaFontu <<" S labelu "<<sirkaLabelu<<" S fontu "<< sirkaFontu;
+
 
     int pomer= int(sirkaFontu/sirkaLabelu);
 
