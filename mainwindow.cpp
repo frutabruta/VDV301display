@@ -461,6 +461,7 @@ int MainWindow::VykresleniPrijatychDat()
 void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMode)
 {
   //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
+    qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
     naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka);
 
@@ -1401,6 +1402,8 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
 
     QString nahrazeno=labelVykreslovani.nahradMetro(line.LineName,subMode);
 
+    QString pozadi="";
+    QString text="";
     if(nahrazeno==line.LineName)
     {
         if(line.isNight==true)
@@ -1409,13 +1412,21 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
         }
         if(barvaPozadi.contains(subMode))
         {
-            linkaStyleSheetStandard+="background-color:"+barvaPozadi[subMode]+";";
+            pozadi="background-color:"+barvaPozadi[subMode]+";";
+
+
+        }
+        if(line.isDiversion)
+        {
+            pozadi="background-color:"+barva_Vyluky_255_170_30+";";
+            qDebug()<<"linka je vylukova";
         }
         if(barvaTextu.contains(subMode))
         {
-            linkaStyleSheetStandard+="color:"+barvaTextu[subMode]+";";
+            text="color:"+barvaTextu[subMode]+";";
         }
-       label->setStyleSheet(linkaStyleSheetStandard);
+
+       label->setStyleSheet(text+pozadi);
        label->setText(line.LineName);
     }
     else

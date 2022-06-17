@@ -407,7 +407,7 @@ QLabel{color:#FFFFFF}</string>
                            <property name="maximumSize">
                             <size>
                              <width>16777215</width>
-                             <height>50</height>
+                             <height>60</height>
                             </size>
                            </property>
                            <property name="styleSheet">
@@ -436,8 +436,8 @@ QLabel{color:#FFFFFF}</string>
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>1285</width>
-                              <height>58</height>
+                              <width>734</width>
+                              <height>60</height>
                              </rect>
                             </property>
                             <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -474,7 +474,7 @@ QLabel{color:#FFFFFF}</string>
                                 <string notr="true">*{background-color: rgb(50,50,50)}</string>
                                </property>
                                <property name="text">
-                                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;nacestne aaaaaa bbbbbbb cccccc ddddd eeeeee fffffff gggg&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                                <string>Šanghaj</string>
                                </property>
                                <property name="textFormat">
                                 <enum>Qt::AutoText</enum>
@@ -501,7 +501,7 @@ QLabel{color:#FFFFFF}</string>
                              <property name="maximumSize">
                               <size>
                                <width>150</width>
-                               <height>50</height>
+                               <height>60</height>
                               </size>
                              </property>
                              <property name="font">
@@ -540,7 +540,7 @@ QLabel{color:#FFFFFF}</string>
                                <property name="maximumSize">
                                 <size>
                                  <width>50</width>
-                                 <height>25</height>
+                                 <height>30</height>
                                 </size>
                                </property>
                                <property name="font">
@@ -571,7 +571,7 @@ QLabel{color:#FFFFFF}</string>
                                <property name="maximumSize">
                                 <size>
                                  <width>50</width>
-                                 <height>25</height>
+                                 <height>30</height>
                                 </size>
                                </property>
                                <property name="font">

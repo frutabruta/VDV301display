@@ -112,7 +112,7 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         docasnaZastavka.zastavka.NameRear=aktZastavkaDOM.elementsByTagName("StopRearName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.NameInner=aktZastavkaDOM.elementsByTagName("StopInnerName").at(0).firstChildElement().text();
         docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.elementsByTagName("StopLcdName").at(0).firstChildElement().text();
-        docasnaZastavka.linka.LineName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
+        docasnaZastavka.linka.LineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
         QVector<QString> priznakyStringy;
 
@@ -121,8 +121,9 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
 
         for(int j=0; j<seznamPriznakuElements.count();j++)
         {
-            QString priznak=seznamPriznakuElements.at(i).firstChild().nodeValue();
+            QString priznak=seznamPriznakuElements.at(j).firstChild().nodeValue();
             priznakyStringy.push_back(priznak);
+            qDebug()<<"parsuju priznaky:"<<priznak;
         }
         docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
 
@@ -413,6 +414,9 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 
 
         QDomNodeList seznamPriznakuElements=aktualniElement.elementsByTagName("LineProperty");
+
+
+
         for(int j=0; j<seznamPriznakuElements.count();j++)
         {
             QString priznak=seznamPriznakuElements.at(i).firstChild().nodeValue();
@@ -443,7 +447,7 @@ Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
    // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;
     foreach(QString textPriznak,vstup)
     {
-        qDebug()<<"";
+        qDebug()<<"priznakLinky: "<<textPriznak;
         if(textPriznak=="Night")
         {
             vstupniLinka.isNight=true;
@@ -453,6 +457,29 @@ Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
         {
             vstupniLinka.isNight=false;
         }
+        if(textPriznak=="Diversion")
+        {
+            vstupniLinka.isDiversion=true;
+        }
+        if(textPriznak=="Replacement")
+        {
+            vstupniLinka.isReplacement=true;
+        }
+        if(textPriznak=="Special")
+        {
+            vstupniLinka.isSpecial=true;
+        }
+        if(textPriznak=="WheelChair")
+        {
+            vstupniLinka.isWheelchair=true;
+        }
+        /*
+        if(textPriznak=="")
+        {
+            vstupniLinka.=true;
+        }
+        */
+
     }
    // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;
     return vstupniLinka;

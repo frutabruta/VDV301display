@@ -522,7 +522,7 @@ public:
         scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
         sizePolicy2.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
         scrollArea->setSizePolicy(sizePolicy2);
-        scrollArea->setMaximumSize(QSize(16777215, 50));
+        scrollArea->setMaximumSize(QSize(16777215, 60));
         scrollArea->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
         scrollArea->setFrameShape(QFrame::NoFrame);
         scrollArea->setFrameShadow(QFrame::Plain);
@@ -532,7 +532,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 1285, 58));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 734, 60));
         horizontalLayout_11 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_11->setSpacing(0);
         horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
@@ -565,7 +565,7 @@ public:
         sizePolicy5.setVerticalStretch(0);
         sizePolicy5.setHeightForWidth(label_hodiny->sizePolicy().hasHeightForWidth());
         label_hodiny->setSizePolicy(sizePolicy5);
-        label_hodiny->setMaximumSize(QSize(150, 50));
+        label_hodiny->setMaximumSize(QSize(150, 60));
         QFont font4;
         font4.setFamily(QString::fromUtf8("roboto"));
         font4.setPointSize(40);
@@ -586,7 +586,7 @@ public:
         sizePolicy6.setVerticalStretch(0);
         sizePolicy6.setHeightForWidth(label_25->sizePolicy().hasHeightForWidth());
         label_25->setSizePolicy(sizePolicy6);
-        label_25->setMaximumSize(QSize(50, 25));
+        label_25->setMaximumSize(QSize(50, 30));
         QFont font5;
         font5.setFamily(QString::fromUtf8("roboto"));
         font5.setPointSize(15);
@@ -600,7 +600,7 @@ public:
         label_24->setObjectName(QString::fromUtf8("label_24"));
         sizePolicy1.setHeightForWidth(label_24->sizePolicy().hasHeightForWidth());
         label_24->setSizePolicy(sizePolicy1);
-        label_24->setMaximumSize(QSize(50, 25));
+        label_24->setMaximumSize(QSize(50, 30));
         label_24->setFont(font5);
         label_24->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
         label_24->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
@@ -2367,7 +2367,7 @@ public:
         refreshTlac->setText(QCoreApplication::translate("MainWindow", "refresh", nullptr));
         quitTlacitko->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));
-        label_nacestne->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>nacestne aaaaaa bbbbbbb cccccc ddddd eeeeee fffffff gggg</p></body></html>", nullptr));
+        label_nacestne->setText(QCoreApplication::translate("MainWindow", "\305\240anghaj", nullptr));
         label_hodiny->setText(QCoreApplication::translate("MainWindow", "16:14", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "P\305\231es:", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Via:", nullptr));
