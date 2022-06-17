@@ -34,7 +34,7 @@ void LabelVykreslovani::zmensiCisloLinkyLabel( QLabel* label)
     qDebug()<<"LabelVykreslovani::naplnCisloLinkyLabel";
 
      QFont puvodniFont=label->font();
-     puvodniFont.setPixelSize(100);
+     puvodniFont.setPixelSize(label->height());
      label->setFont(puvodniFont);
 
     int vyskaLabelu=label->height();

@@ -12,7 +12,6 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
@@ -43,9 +42,6 @@ public:
     QAction *action;
     QWidget *centralWidget;
     QHBoxLayout *horizontalLayout_4;
-    QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_5;
-    QVBoxLayout *verticalLayout_4;
     QFrame *frame_menu;
     QVBoxLayout *verticalLayout_13;
     QPushButton *tlacitkoHlavni;
@@ -59,25 +55,33 @@ public:
     QStackedWidget *prepinadloStran;
     QWidget *page_hlavniObrazovka;
     QGridLayout *gridLayout_4;
+    QFrame *frame_debug;
+    QGridLayout *gridLayout_13;
+    QLabel *label_4;
+    QLabel *label_locationState;
+    QLabel *label_10;
+    QLabel *label_currentStopIndex;
+    QLabel *label_build;
+    QLabel *label_announcement;
+    QLabel *label_zmena;
+    QLabel *label_2;
+    QLabel *label_6;
     QStackedWidget *stackedWidget_obrazovka;
     QWidget *page_hlavni;
     QGridLayout *gridLayout_7;
-    QHBoxLayout *horizontalLayout_25;
-    QFrame *frame_2;
-    QGridLayout *gridLayout_9;
+    QFrame *frame_hlavni;
     QVBoxLayout *verticalLayout_3;
-    QHBoxLayout *horizontalLayout;
     QGridLayout *gridLayout_hlavicka;
     QLabel *Llinka;
-    QScrollArea *scrollArea;
-    QWidget *scrollAreaWidgetContents;
-    QHBoxLayout *horizontalLayout_11;
-    QLabel *label_nacestne;
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_hodiny;
     QVBoxLayout *verticalLayout_2;
     QLabel *label_25;
     QLabel *label_24;
+    QScrollArea *scrollArea;
+    QWidget *scrollAreaWidgetContents;
+    QHBoxLayout *horizontalLayout_11;
+    QLabel *label_nacestne;
     QVBoxLayout *verticalLayout_21;
     QHBoxLayout *horizontalLayout_19;
     QLabel *label_cil_sipka;
@@ -89,29 +93,31 @@ public:
     QLabel *label_navaznaLinka;
     QLabel *label_continuesas;
     QLabel *label_navaznyCil;
-    QHBoxLayout *horizontalLayout_2;
     QStackedWidget *stackedWidget_prostredek;
     QWidget *page_hlavni_2;
     QGridLayout *gridLayout_2;
     QHBoxLayout *horizontalLayout_3;
-    QLabel *sipka;
     QGridLayout *gridLayout_5;
-    QLabel *Lnacestna4;
+    QLabel *Lnacestna5;
     QVBoxLayout *verticalLayout_17;
     QLabel *label_pasmo3_2;
     QLabel *label_pasmo3_1;
     QLabel *Lnacestna2;
-    QVBoxLayout *verticalLayout_18;
-    QLabel *label_pasmo2_2;
-    QLabel *label_pasmo2_1;
     QVBoxLayout *verticalLayout_15;
     QLabel *label_pasmo5_2;
     QLabel *label_pasmo5_1;
+    QLabel *Lnacestna4;
+    QVBoxLayout *verticalLayout_18;
+    QLabel *label_pasmo2_2;
+    QLabel *label_pasmo2_1;
+    QLabel *Lnacestna3;
     QVBoxLayout *verticalLayout_16;
     QLabel *label_pasmo4_2;
     QLabel *label_pasmo4_1;
-    QLabel *Lnacestna5;
-    QLabel *Lnacestna3;
+    QLabel *sipka;
+    QLabel *sipka_2;
+    QLabel *sipka_3;
+    QLabel *sipka_4;
     QWidget *page_oznameni;
     QGridLayout *gridLayout_6;
     QHBoxLayout *horizontalLayout_17;
@@ -228,6 +234,7 @@ public:
     QVBoxLayout *verticalLayout_20;
     QLabel *label_pasmo1_2;
     QLabel *label_pasmo1_1;
+    QLabel *sipka_5;
     QLabel *Lnacestna1;
     QWidget *page_verze;
     QGridLayout *gridLayout_12;
@@ -240,7 +247,7 @@ public:
     QLabel *label_11;
     QLabel *label_12;
     QWidget *page_zmenaLinky;
-    QWidget *verticalLayoutWidget_5;
+    QGridLayout *gridLayout_14;
     QVBoxLayout *verticalLayout_9;
     QLabel *label_13;
     QLabel *label_14;
@@ -248,28 +255,19 @@ public:
     QLabel *label_15;
     QLabel *label_17;
     QLabel *label_16;
-    QFrame *frame_debug;
-    QFormLayout *formLayout;
-    QLabel *label_announcement;
-    QLabel *label_6;
-    QLabel *label_zmena;
-    QLabel *label_2;
-    QLabel *label_currentStopIndex;
-    QLabel *label_4;
-    QLabel *label_locationState;
-    QLabel *label_build;
-    QLabel *label_10;
     QWidget *page_seznamSluzeb;
     QGridLayout *gridLayout_10;
     QTableWidget *tabulkaSubscriberu;
     QWidget *page_casovac;
-    QLabel *label;
-    QLabel *labelZbyvajiciVteriny;
     QWidget *verticalLayoutWidget_3;
     QVBoxLayout *verticalLayout_5;
     QLabel *label_3;
     QLineEdit *lineEdit;
     QPushButton *tlacitkoNastavVteriny;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *verticalLayout;
+    QLabel *label;
+    QLabel *labelZbyvajiciVteriny;
     QWidget *page_svg;
     QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout_6;
@@ -319,8 +317,8 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->setEnabled(true);
-        MainWindow->resize(1285, 1080);
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+        MainWindow->resize(1088, 888);
+        QSizePolicy sizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(MainWindow->sizePolicy().hasHeightForWidth());
@@ -339,16 +337,6 @@ public:
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        verticalLayout = new QVBoxLayout();
-        verticalLayout->setSpacing(0);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setSizeConstraint(QLayout::SetMaximumSize);
-        horizontalLayout_5 = new QHBoxLayout();
-        horizontalLayout_5->setSpacing(0);
-        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setSpacing(0);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
         frame_menu = new QFrame(centralWidget);
         frame_menu->setObjectName(QString::fromUtf8("frame_menu"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -356,12 +344,14 @@ public:
         sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(frame_menu->sizePolicy().hasHeightForWidth());
         frame_menu->setSizePolicy(sizePolicy1);
+        frame_menu->setMaximumSize(QSize(150, 16777215));
         frame_menu->setFrameShape(QFrame::StyledPanel);
         frame_menu->setFrameShadow(QFrame::Raised);
         verticalLayout_13 = new QVBoxLayout(frame_menu);
-        verticalLayout_13->setSpacing(6);
+        verticalLayout_13->setSpacing(0);
         verticalLayout_13->setContentsMargins(11, 11, 11, 11);
         verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
+        verticalLayout_13->setContentsMargins(0, 0, 0, 0);
         tlacitkoHlavni = new QPushButton(frame_menu);
         tlacitkoHlavni->setObjectName(QString::fromUtf8("tlacitkoHlavni"));
         QFont font;
@@ -427,10 +417,7 @@ public:
         verticalLayout_13->addWidget(quitTlacitko);
 
 
-        verticalLayout_4->addWidget(frame_menu);
-
-
-        horizontalLayout_5->addLayout(verticalLayout_4);
+        horizontalLayout_4->addWidget(frame_menu);
 
         prepinadloStran = new QStackedWidget(centralWidget);
         prepinadloStran->setObjectName(QString::fromUtf8("prepinadloStran"));
@@ -442,12 +429,83 @@ public:
         prepinadloStran->setLineWidth(0);
         page_hlavniObrazovka = new QWidget();
         page_hlavniObrazovka->setObjectName(QString::fromUtf8("page_hlavniObrazovka"));
+        sizePolicy2.setHeightForWidth(page_hlavniObrazovka->sizePolicy().hasHeightForWidth());
+        page_hlavniObrazovka->setSizePolicy(sizePolicy2);
+        page_hlavniObrazovka->setMaximumSize(QSize(16777215, 16777215));
         page_hlavniObrazovka->setStyleSheet(QString::fromUtf8("font-family: roboto,sans;"));
         gridLayout_4 = new QGridLayout(page_hlavniObrazovka);
-        gridLayout_4->setSpacing(6);
+        gridLayout_4->setSpacing(0);
         gridLayout_4->setContentsMargins(11, 11, 11, 11);
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        frame_debug = new QFrame(page_hlavniObrazovka);
+        frame_debug->setObjectName(QString::fromUtf8("frame_debug"));
+        sizePolicy.setHeightForWidth(frame_debug->sizePolicy().hasHeightForWidth());
+        frame_debug->setSizePolicy(sizePolicy);
+        frame_debug->setFrameShape(QFrame::StyledPanel);
+        frame_debug->setFrameShadow(QFrame::Raised);
+        gridLayout_13 = new QGridLayout(frame_debug);
+        gridLayout_13->setSpacing(6);
+        gridLayout_13->setContentsMargins(11, 11, 11, 11);
+        gridLayout_13->setObjectName(QString::fromUtf8("gridLayout_13"));
+        label_4 = new QLabel(frame_debug);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout_13->addWidget(label_4, 0, 4, 1, 1);
+
+        label_locationState = new QLabel(frame_debug);
+        label_locationState->setObjectName(QString::fromUtf8("label_locationState"));
+
+        gridLayout_13->addWidget(label_locationState, 0, 5, 1, 1);
+
+        label_10 = new QLabel(frame_debug);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        QSizePolicy sizePolicy3(QSizePolicy::Maximum, QSizePolicy::Preferred);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
+        label_10->setSizePolicy(sizePolicy3);
+
+        gridLayout_13->addWidget(label_10, 0, 0, 1, 1);
+
+        label_currentStopIndex = new QLabel(frame_debug);
+        label_currentStopIndex->setObjectName(QString::fromUtf8("label_currentStopIndex"));
+
+        gridLayout_13->addWidget(label_currentStopIndex, 0, 3, 1, 1);
+
+        label_build = new QLabel(frame_debug);
+        label_build->setObjectName(QString::fromUtf8("label_build"));
+
+        gridLayout_13->addWidget(label_build, 0, 1, 1, 1);
+
+        label_announcement = new QLabel(frame_debug);
+        label_announcement->setObjectName(QString::fromUtf8("label_announcement"));
+
+        gridLayout_13->addWidget(label_announcement, 2, 0, 1, 1);
+
+        label_zmena = new QLabel(frame_debug);
+        label_zmena->setObjectName(QString::fromUtf8("label_zmena"));
+
+        gridLayout_13->addWidget(label_zmena, 7, 0, 1, 1);
+
+        label_2 = new QLabel(frame_debug);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout_13->addWidget(label_2, 0, 2, 1, 1);
+
+        label_6 = new QLabel(frame_debug);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        QSizePolicy sizePolicy4(QSizePolicy::Fixed, QSizePolicy::Maximum);
+        sizePolicy4.setHorizontalStretch(0);
+        sizePolicy4.setVerticalStretch(0);
+        sizePolicy4.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
+        label_6->setSizePolicy(sizePolicy4);
+
+        gridLayout_13->addWidget(label_6, 0, 6, 1, 1);
+
+
+        gridLayout_4->addWidget(frame_debug, 4, 0, 1, 1);
+
         stackedWidget_obrazovka = new QStackedWidget(page_hlavniObrazovka);
         stackedWidget_obrazovka->setObjectName(QString::fromUtf8("stackedWidget_obrazovka"));
         sizePolicy2.setHeightForWidth(stackedWidget_obrazovka->sizePolicy().hasHeightForWidth());
@@ -456,57 +514,38 @@ public:
 "QLabel{color:#FFFFFF}"));
         page_hlavni = new QWidget();
         page_hlavni->setObjectName(QString::fromUtf8("page_hlavni"));
-        sizePolicy.setHeightForWidth(page_hlavni->sizePolicy().hasHeightForWidth());
-        page_hlavni->setSizePolicy(sizePolicy);
+        sizePolicy2.setHeightForWidth(page_hlavni->sizePolicy().hasHeightForWidth());
+        page_hlavni->setSizePolicy(sizePolicy2);
         gridLayout_7 = new QGridLayout(page_hlavni);
         gridLayout_7->setSpacing(0);
         gridLayout_7->setContentsMargins(11, 11, 11, 11);
         gridLayout_7->setObjectName(QString::fromUtf8("gridLayout_7"));
         gridLayout_7->setContentsMargins(0, 0, 0, 0);
-        horizontalLayout_25 = new QHBoxLayout();
-        horizontalLayout_25->setSpacing(6);
-        horizontalLayout_25->setObjectName(QString::fromUtf8("horizontalLayout_25"));
-
-        gridLayout_7->addLayout(horizontalLayout_25, 1, 0, 1, 1);
-
-        frame_2 = new QFrame(page_hlavni);
-        frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(frame_2->sizePolicy().hasHeightForWidth());
-        frame_2->setSizePolicy(sizePolicy3);
+        frame_hlavni = new QFrame(page_hlavni);
+        frame_hlavni->setObjectName(QString::fromUtf8("frame_hlavni"));
+        sizePolicy2.setHeightForWidth(frame_hlavni->sizePolicy().hasHeightForWidth());
+        frame_hlavni->setSizePolicy(sizePolicy2);
         QFont font1;
         font1.setFamily(QString::fromUtf8("roboto"));
-        frame_2->setFont(font1);
-        frame_2->setAutoFillBackground(false);
-        frame_2->setStyleSheet(QString::fromUtf8("*{background-color:rgb(25,25,25); color: rgb(255,255,255)}"));
-        frame_2->setFrameShape(QFrame::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Raised);
-        gridLayout_9 = new QGridLayout(frame_2);
-        gridLayout_9->setSpacing(6);
-        gridLayout_9->setContentsMargins(11, 11, 11, 11);
-        gridLayout_9->setObjectName(QString::fromUtf8("gridLayout_9"));
-        gridLayout_9->setHorizontalSpacing(0);
-        gridLayout_9->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_3 = new QVBoxLayout();
+        frame_hlavni->setFont(font1);
+        frame_hlavni->setAutoFillBackground(false);
+        frame_hlavni->setStyleSheet(QString::fromUtf8("*{background-color:rgb(25,25,25); color: rgb(255,255,255)}"));
+        frame_hlavni->setFrameShape(QFrame::StyledPanel);
+        frame_hlavni->setFrameShadow(QFrame::Raised);
+        verticalLayout_3 = new QVBoxLayout(frame_hlavni);
         verticalLayout_3->setSpacing(0);
+        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(0);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         gridLayout_hlavicka = new QGridLayout();
         gridLayout_hlavicka->setSpacing(0);
         gridLayout_hlavicka->setObjectName(QString::fromUtf8("gridLayout_hlavicka"));
-        Llinka = new QLabel(frame_2);
+        Llinka = new QLabel(frame_hlavni);
         Llinka->setObjectName(QString::fromUtf8("Llinka"));
-        QSizePolicy sizePolicy4(QSizePolicy::Maximum, QSizePolicy::Maximum);
-        sizePolicy4.setHorizontalStretch(0);
-        sizePolicy4.setVerticalStretch(0);
-        sizePolicy4.setHeightForWidth(Llinka->sizePolicy().hasHeightForWidth());
-        Llinka->setSizePolicy(sizePolicy4);
-        Llinka->setMinimumSize(QSize(200, 130));
-        Llinka->setMaximumSize(QSize(200, 130));
+        sizePolicy2.setHeightForWidth(Llinka->sizePolicy().hasHeightForWidth());
+        Llinka->setSizePolicy(sizePolicy2);
+        Llinka->setMinimumSize(QSize(50, 50));
+        Llinka->setMaximumSize(QSize(1000, 1000));
         QFont font2;
         font2.setFamily(QString::fromUtf8("roboto"));
         font2.setPointSize(80);
@@ -519,58 +558,18 @@ public:
 
         gridLayout_hlavicka->addWidget(Llinka, 0, 0, 1, 1);
 
-        scrollArea = new QScrollArea(frame_2);
-        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
-        sizePolicy2.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
-        scrollArea->setSizePolicy(sizePolicy2);
-        scrollArea->setMaximumSize(QSize(16777215, 60));
-        scrollArea->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
-        scrollArea->setFrameShape(QFrame::NoFrame);
-        scrollArea->setFrameShadow(QFrame::Plain);
-        scrollArea->setLineWidth(0);
-        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        scrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 914, 60));
-        horizontalLayout_11 = new QHBoxLayout(scrollAreaWidgetContents);
-        horizontalLayout_11->setSpacing(0);
-        horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
-        horizontalLayout_11->setContentsMargins(0, 0, 0, 0);
-        label_nacestne = new QLabel(scrollAreaWidgetContents);
-        label_nacestne->setObjectName(QString::fromUtf8("label_nacestne"));
-        sizePolicy4.setHeightForWidth(label_nacestne->sizePolicy().hasHeightForWidth());
-        label_nacestne->setSizePolicy(sizePolicy4);
-        QFont font3;
-        font3.setFamily(QString::fromUtf8("roboto"));
-        font3.setPointSize(36);
-        label_nacestne->setFont(font3);
-        label_nacestne->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
-        label_nacestne->setTextFormat(Qt::AutoText);
-
-        horizontalLayout_11->addWidget(label_nacestne);
-
-        scrollArea->setWidget(scrollAreaWidgetContents);
-
-        gridLayout_hlavicka->addWidget(scrollArea, 2, 1, 1, 1);
-
         horizontalLayout_18 = new QHBoxLayout();
         horizontalLayout_18->setSpacing(0);
         horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
-        label_hodiny = new QLabel(frame_2);
+        label_hodiny = new QLabel(frame_hlavni);
         label_hodiny->setObjectName(QString::fromUtf8("label_hodiny"));
-        QSizePolicy sizePolicy5(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy5.setHorizontalStretch(0);
-        sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(label_hodiny->sizePolicy().hasHeightForWidth());
-        label_hodiny->setSizePolicy(sizePolicy5);
-        label_hodiny->setMaximumSize(QSize(150, 60));
-        QFont font4;
-        font4.setFamily(QString::fromUtf8("roboto"));
-        font4.setPointSize(40);
-        label_hodiny->setFont(font4);
+        sizePolicy2.setHeightForWidth(label_hodiny->sizePolicy().hasHeightForWidth());
+        label_hodiny->setSizePolicy(sizePolicy2);
+        label_hodiny->setMaximumSize(QSize(500, 500));
+        QFont font3;
+        font3.setFamily(QString::fromUtf8("roboto"));
+        font3.setPointSize(40);
+        label_hodiny->setFont(font3);
         label_hodiny->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
         label_hodiny->setAlignment(Qt::AlignCenter);
 
@@ -580,29 +579,29 @@ public:
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
-        label_25 = new QLabel(frame_2);
+        label_25 = new QLabel(frame_hlavni);
         label_25->setObjectName(QString::fromUtf8("label_25"));
-        QSizePolicy sizePolicy6(QSizePolicy::Maximum, QSizePolicy::Preferred);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(label_25->sizePolicy().hasHeightForWidth());
-        label_25->setSizePolicy(sizePolicy6);
-        label_25->setMaximumSize(QSize(50, 30));
-        QFont font5;
-        font5.setFamily(QString::fromUtf8("roboto"));
-        font5.setPointSize(15);
-        label_25->setFont(font5);
+        QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Expanding);
+        sizePolicy5.setHorizontalStretch(0);
+        sizePolicy5.setVerticalStretch(0);
+        sizePolicy5.setHeightForWidth(label_25->sizePolicy().hasHeightForWidth());
+        label_25->setSizePolicy(sizePolicy5);
+        label_25->setMaximumSize(QSize(300, 300));
+        QFont font4;
+        font4.setFamily(QString::fromUtf8("roboto"));
+        font4.setPointSize(15);
+        label_25->setFont(font4);
         label_25->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
         label_25->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
         verticalLayout_2->addWidget(label_25);
 
-        label_24 = new QLabel(frame_2);
+        label_24 = new QLabel(frame_hlavni);
         label_24->setObjectName(QString::fromUtf8("label_24"));
-        sizePolicy1.setHeightForWidth(label_24->sizePolicy().hasHeightForWidth());
-        label_24->setSizePolicy(sizePolicy1);
-        label_24->setMaximumSize(QSize(50, 30));
-        label_24->setFont(font5);
+        sizePolicy5.setHeightForWidth(label_24->sizePolicy().hasHeightForWidth());
+        label_24->setSizePolicy(sizePolicy5);
+        label_24->setMaximumSize(QSize(300, 300));
+        label_24->setFont(font4);
         label_24->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
         label_24->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
@@ -612,26 +611,62 @@ public:
         horizontalLayout_18->addLayout(verticalLayout_2);
 
 
-        gridLayout_hlavicka->addLayout(horizontalLayout_18, 2, 0, 1, 1);
+        gridLayout_hlavicka->addLayout(horizontalLayout_18, 1, 0, 1, 1);
+
+        scrollArea = new QScrollArea(frame_hlavni);
+        scrollArea->setObjectName(QString::fromUtf8("scrollArea"));
+        sizePolicy2.setHeightForWidth(scrollArea->sizePolicy().hasHeightForWidth());
+        scrollArea->setSizePolicy(sizePolicy2);
+        scrollArea->setMaximumSize(QSize(16777215, 16777215));
+        scrollArea->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
+        scrollArea->setFrameShape(QFrame::NoFrame);
+        scrollArea->setFrameShadow(QFrame::Plain);
+        scrollArea->setLineWidth(0);
+        scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        scrollArea->setWidgetResizable(true);
+        scrollAreaWidgetContents = new QWidget();
+        scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 712, 80));
+        horizontalLayout_11 = new QHBoxLayout(scrollAreaWidgetContents);
+        horizontalLayout_11->setSpacing(0);
+        horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_11->setObjectName(QString::fromUtf8("horizontalLayout_11"));
+        horizontalLayout_11->setContentsMargins(0, 0, 0, 0);
+        label_nacestne = new QLabel(scrollAreaWidgetContents);
+        label_nacestne->setObjectName(QString::fromUtf8("label_nacestne"));
+        sizePolicy.setHeightForWidth(label_nacestne->sizePolicy().hasHeightForWidth());
+        label_nacestne->setSizePolicy(sizePolicy);
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("roboto"));
+        font5.setPointSize(36);
+        label_nacestne->setFont(font5);
+        label_nacestne->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
+        label_nacestne->setTextFormat(Qt::AutoText);
+
+        horizontalLayout_11->addWidget(label_nacestne);
+
+        scrollArea->setWidget(scrollAreaWidgetContents);
+
+        gridLayout_hlavicka->addWidget(scrollArea, 1, 1, 1, 1);
 
         verticalLayout_21 = new QVBoxLayout();
-        verticalLayout_21->setSpacing(6);
+        verticalLayout_21->setSpacing(0);
         verticalLayout_21->setObjectName(QString::fromUtf8("verticalLayout_21"));
         horizontalLayout_19 = new QHBoxLayout();
         horizontalLayout_19->setSpacing(6);
         horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
-        label_cil_sipka = new QLabel(frame_2);
+        label_cil_sipka = new QLabel(frame_hlavni);
         label_cil_sipka->setObjectName(QString::fromUtf8("label_cil_sipka"));
+        sizePolicy3.setHeightForWidth(label_cil_sipka->sizePolicy().hasHeightForWidth());
+        label_cil_sipka->setSizePolicy(sizePolicy3);
 
         horizontalLayout_19->addWidget(label_cil_sipka);
 
-        Lcil = new QLabel(frame_2);
+        Lcil = new QLabel(frame_hlavni);
         Lcil->setObjectName(QString::fromUtf8("Lcil"));
-        QSizePolicy sizePolicy7(QSizePolicy::Expanding, QSizePolicy::Maximum);
-        sizePolicy7.setHorizontalStretch(0);
-        sizePolicy7.setVerticalStretch(0);
-        sizePolicy7.setHeightForWidth(Lcil->sizePolicy().hasHeightForWidth());
-        Lcil->setSizePolicy(sizePolicy7);
+        sizePolicy2.setHeightForWidth(Lcil->sizePolicy().hasHeightForWidth());
+        Lcil->setSizePolicy(sizePolicy2);
         QFont font6;
         font6.setFamily(QString::fromUtf8("roboto"));
         font6.setPointSize(40);
@@ -649,7 +684,7 @@ public:
         horizontalLayout_navaznySpoj = new QHBoxLayout();
         horizontalLayout_navaznySpoj->setSpacing(6);
         horizontalLayout_navaznySpoj->setObjectName(QString::fromUtf8("horizontalLayout_navaznySpoj"));
-        frame_navaznySpoj = new QFrame(frame_2);
+        frame_navaznySpoj = new QFrame(frame_hlavni);
         frame_navaznySpoj->setObjectName(QString::fromUtf8("frame_navaznySpoj"));
         frame_navaznySpoj->setFrameShape(QFrame::StyledPanel);
         frame_navaznySpoj->setFrameShadow(QFrame::Raised);
@@ -659,8 +694,8 @@ public:
         horizontalLayout_13->setObjectName(QString::fromUtf8("horizontalLayout_13"));
         label_adalejako = new QLabel(frame_navaznySpoj);
         label_adalejako->setObjectName(QString::fromUtf8("label_adalejako"));
-        sizePolicy6.setHeightForWidth(label_adalejako->sizePolicy().hasHeightForWidth());
-        label_adalejako->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_adalejako->sizePolicy().hasHeightForWidth());
+        label_adalejako->setSizePolicy(sizePolicy3);
         QFont font7;
         font7.setFamily(QString::fromUtf8("roboto"));
         font7.setPointSize(20);
@@ -670,8 +705,8 @@ public:
 
         label_navaznaLinka = new QLabel(frame_navaznySpoj);
         label_navaznaLinka->setObjectName(QString::fromUtf8("label_navaznaLinka"));
-        sizePolicy6.setHeightForWidth(label_navaznaLinka->sizePolicy().hasHeightForWidth());
-        label_navaznaLinka->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_navaznaLinka->sizePolicy().hasHeightForWidth());
+        label_navaznaLinka->setSizePolicy(sizePolicy3);
         QFont font8;
         font8.setFamily(QString::fromUtf8("roboto"));
         font8.setPointSize(20);
@@ -689,14 +724,19 @@ public:
 
         label_continuesas = new QLabel(frame_navaznySpoj);
         label_continuesas->setObjectName(QString::fromUtf8("label_continuesas"));
-        sizePolicy6.setHeightForWidth(label_continuesas->sizePolicy().hasHeightForWidth());
-        label_continuesas->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_continuesas->sizePolicy().hasHeightForWidth());
+        label_continuesas->setSizePolicy(sizePolicy3);
         label_continuesas->setFont(font7);
 
         horizontalLayout_13->addWidget(label_continuesas);
 
         label_navaznyCil = new QLabel(frame_navaznySpoj);
         label_navaznyCil->setObjectName(QString::fromUtf8("label_navaznyCil"));
+        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy6.setHorizontalStretch(0);
+        sizePolicy6.setVerticalStretch(0);
+        sizePolicy6.setHeightForWidth(label_navaznyCil->sizePolicy().hasHeightForWidth());
+        label_navaznyCil->setSizePolicy(sizePolicy6);
         label_navaznyCil->setFont(font7);
 
         horizontalLayout_13->addWidget(label_navaznyCil);
@@ -710,22 +750,22 @@ public:
 
         gridLayout_hlavicka->addLayout(verticalLayout_21, 0, 1, 1, 1);
 
+        gridLayout_hlavicka->setRowStretch(0, 2);
+        gridLayout_hlavicka->setRowStretch(1, 1);
+        gridLayout_hlavicka->setColumnStretch(0, 400);
+        gridLayout_hlavicka->setColumnStretch(1, 1280);
 
-        horizontalLayout->addLayout(gridLayout_hlavicka);
+        verticalLayout_3->addLayout(gridLayout_hlavicka);
 
-
-        verticalLayout_3->addLayout(horizontalLayout);
-
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setSpacing(0);
-        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-
-        verticalLayout_3->addLayout(horizontalLayout_2);
-
-        stackedWidget_prostredek = new QStackedWidget(frame_2);
+        stackedWidget_prostredek = new QStackedWidget(frame_hlavni);
         stackedWidget_prostredek->setObjectName(QString::fromUtf8("stackedWidget_prostredek"));
+        sizePolicy2.setHeightForWidth(stackedWidget_prostredek->sizePolicy().hasHeightForWidth());
+        stackedWidget_prostredek->setSizePolicy(sizePolicy2);
         page_hlavni_2 = new QWidget();
         page_hlavni_2->setObjectName(QString::fromUtf8("page_hlavni_2"));
+        sizePolicy.setHeightForWidth(page_hlavni_2->sizePolicy().hasHeightForWidth());
+        page_hlavni_2->setSizePolicy(sizePolicy);
+        page_hlavni_2->setMaximumSize(QSize(16777215, 16777215));
         gridLayout_2 = new QGridLayout(page_hlavni_2);
         gridLayout_2->setSpacing(0);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -734,60 +774,44 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(0);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        sipka = new QLabel(page_hlavni_2);
-        sipka->setObjectName(QString::fromUtf8("sipka"));
-        QSizePolicy sizePolicy8(QSizePolicy::Fixed, QSizePolicy::Preferred);
-        sizePolicy8.setHorizontalStretch(0);
-        sizePolicy8.setVerticalStretch(0);
-        sizePolicy8.setHeightForWidth(sipka->sizePolicy().hasHeightForWidth());
-        sipka->setSizePolicy(sizePolicy8);
-        sipka->setMaximumSize(QSize(50, 16777215));
-        QFont font9;
-        font9.setFamily(QString::fromUtf8("roboto"));
-        font9.setPointSize(70);
-        sipka->setFont(font9);
-        sipka->setAlignment(Qt::AlignCenter);
-
-        horizontalLayout_3->addWidget(sipka);
-
         gridLayout_5 = new QGridLayout();
         gridLayout_5->setSpacing(6);
         gridLayout_5->setObjectName(QString::fromUtf8("gridLayout_5"));
-        gridLayout_5->setHorizontalSpacing(0);
-        gridLayout_5->setVerticalSpacing(10);
-        Lnacestna4 = new QLabel(page_hlavni_2);
-        Lnacestna4->setObjectName(QString::fromUtf8("Lnacestna4"));
-        sizePolicy.setHeightForWidth(Lnacestna4->sizePolicy().hasHeightForWidth());
-        Lnacestna4->setSizePolicy(sizePolicy);
-        Lnacestna4->setFont(font3);
+        gridLayout_5->setHorizontalSpacing(20);
+        gridLayout_5->setVerticalSpacing(0);
+        Lnacestna5 = new QLabel(page_hlavni_2);
+        Lnacestna5->setObjectName(QString::fromUtf8("Lnacestna5"));
+        sizePolicy2.setHeightForWidth(Lnacestna5->sizePolicy().hasHeightForWidth());
+        Lnacestna5->setSizePolicy(sizePolicy2);
+        Lnacestna5->setFont(font5);
 
-        gridLayout_5->addWidget(Lnacestna4, 2, 1, 1, 1);
+        gridLayout_5->addWidget(Lnacestna5, 0, 2, 1, 1);
 
         verticalLayout_17 = new QVBoxLayout();
         verticalLayout_17->setSpacing(6);
         verticalLayout_17->setObjectName(QString::fromUtf8("verticalLayout_17"));
         label_pasmo3_2 = new QLabel(page_hlavni_2);
         label_pasmo3_2->setObjectName(QString::fromUtf8("label_pasmo3_2"));
-        sizePolicy6.setHeightForWidth(label_pasmo3_2->sizePolicy().hasHeightForWidth());
-        label_pasmo3_2->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_pasmo3_2->sizePolicy().hasHeightForWidth());
+        label_pasmo3_2->setSizePolicy(sizePolicy3);
         label_pasmo3_2->setMinimumSize(QSize(150, 0));
-        QFont font10;
-        font10.setFamily(QString::fromUtf8("roboto"));
-        font10.setPointSize(24);
-        label_pasmo3_2->setFont(font10);
+        QFont font9;
+        font9.setFamily(QString::fromUtf8("roboto"));
+        font9.setPointSize(24);
+        label_pasmo3_2->setFont(font9);
         label_pasmo3_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo3_2->setMargin(10);
+        label_pasmo3_2->setMargin(0);
 
         verticalLayout_17->addWidget(label_pasmo3_2);
 
         label_pasmo3_1 = new QLabel(page_hlavni_2);
         label_pasmo3_1->setObjectName(QString::fromUtf8("label_pasmo3_1"));
-        sizePolicy6.setHeightForWidth(label_pasmo3_1->sizePolicy().hasHeightForWidth());
-        label_pasmo3_1->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_pasmo3_1->sizePolicy().hasHeightForWidth());
+        label_pasmo3_1->setSizePolicy(sizePolicy3);
         label_pasmo3_1->setMinimumSize(QSize(150, 0));
-        label_pasmo3_1->setFont(font10);
+        label_pasmo3_1->setFont(font9);
         label_pasmo3_1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo3_1->setMargin(10);
+        label_pasmo3_1->setMargin(0);
 
         verticalLayout_17->addWidget(label_pasmo3_1);
 
@@ -796,119 +820,165 @@ public:
 
         Lnacestna2 = new QLabel(page_hlavni_2);
         Lnacestna2->setObjectName(QString::fromUtf8("Lnacestna2"));
-        sizePolicy.setHeightForWidth(Lnacestna2->sizePolicy().hasHeightForWidth());
-        Lnacestna2->setSizePolicy(sizePolicy);
-        Lnacestna2->setFont(font3);
+        QSizePolicy sizePolicy7(QSizePolicy::Minimum, QSizePolicy::Expanding);
+        sizePolicy7.setHorizontalStretch(0);
+        sizePolicy7.setVerticalStretch(0);
+        sizePolicy7.setHeightForWidth(Lnacestna2->sizePolicy().hasHeightForWidth());
+        Lnacestna2->setSizePolicy(sizePolicy7);
+        Lnacestna2->setFont(font5);
 
-        gridLayout_5->addWidget(Lnacestna2, 4, 1, 1, 1);
-
-        verticalLayout_18 = new QVBoxLayout();
-        verticalLayout_18->setSpacing(6);
-        verticalLayout_18->setObjectName(QString::fromUtf8("verticalLayout_18"));
-        label_pasmo2_2 = new QLabel(page_hlavni_2);
-        label_pasmo2_2->setObjectName(QString::fromUtf8("label_pasmo2_2"));
-        sizePolicy6.setHeightForWidth(label_pasmo2_2->sizePolicy().hasHeightForWidth());
-        label_pasmo2_2->setSizePolicy(sizePolicy6);
-        label_pasmo2_2->setMinimumSize(QSize(150, 0));
-        label_pasmo2_2->setFont(font10);
-        label_pasmo2_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo2_2->setMargin(10);
-
-        verticalLayout_18->addWidget(label_pasmo2_2);
-
-        label_pasmo2_1 = new QLabel(page_hlavni_2);
-        label_pasmo2_1->setObjectName(QString::fromUtf8("label_pasmo2_1"));
-        sizePolicy6.setHeightForWidth(label_pasmo2_1->sizePolicy().hasHeightForWidth());
-        label_pasmo2_1->setSizePolicy(sizePolicy6);
-        label_pasmo2_1->setMinimumSize(QSize(150, 0));
-        label_pasmo2_1->setFont(font10);
-        label_pasmo2_1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo2_1->setMargin(10);
-
-        verticalLayout_18->addWidget(label_pasmo2_1);
-
-
-        gridLayout_5->addLayout(verticalLayout_18, 4, 0, 1, 1);
+        gridLayout_5->addWidget(Lnacestna2, 4, 2, 1, 1);
 
         verticalLayout_15 = new QVBoxLayout();
         verticalLayout_15->setSpacing(6);
         verticalLayout_15->setObjectName(QString::fromUtf8("verticalLayout_15"));
         label_pasmo5_2 = new QLabel(page_hlavni_2);
         label_pasmo5_2->setObjectName(QString::fromUtf8("label_pasmo5_2"));
-        QSizePolicy sizePolicy9(QSizePolicy::Maximum, QSizePolicy::Minimum);
-        sizePolicy9.setHorizontalStretch(0);
-        sizePolicy9.setVerticalStretch(0);
-        sizePolicy9.setHeightForWidth(label_pasmo5_2->sizePolicy().hasHeightForWidth());
-        label_pasmo5_2->setSizePolicy(sizePolicy9);
+        sizePolicy.setHeightForWidth(label_pasmo5_2->sizePolicy().hasHeightForWidth());
+        label_pasmo5_2->setSizePolicy(sizePolicy);
         label_pasmo5_2->setMinimumSize(QSize(150, 0));
-        label_pasmo5_2->setFont(font10);
+        label_pasmo5_2->setFont(font9);
         label_pasmo5_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo5_2->setMargin(10);
+        label_pasmo5_2->setMargin(0);
 
         verticalLayout_15->addWidget(label_pasmo5_2);
 
         label_pasmo5_1 = new QLabel(page_hlavni_2);
         label_pasmo5_1->setObjectName(QString::fromUtf8("label_pasmo5_1"));
-        sizePolicy6.setHeightForWidth(label_pasmo5_1->sizePolicy().hasHeightForWidth());
-        label_pasmo5_1->setSizePolicy(sizePolicy6);
+        QSizePolicy sizePolicy8(QSizePolicy::Maximum, QSizePolicy::Minimum);
+        sizePolicy8.setHorizontalStretch(0);
+        sizePolicy8.setVerticalStretch(0);
+        sizePolicy8.setHeightForWidth(label_pasmo5_1->sizePolicy().hasHeightForWidth());
+        label_pasmo5_1->setSizePolicy(sizePolicy8);
         label_pasmo5_1->setMinimumSize(QSize(150, 0));
-        label_pasmo5_1->setFont(font10);
+        label_pasmo5_1->setFont(font9);
         label_pasmo5_1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo5_1->setMargin(10);
+        label_pasmo5_1->setMargin(0);
 
         verticalLayout_15->addWidget(label_pasmo5_1);
 
 
         gridLayout_5->addLayout(verticalLayout_15, 0, 0, 1, 1);
 
+        Lnacestna4 = new QLabel(page_hlavni_2);
+        Lnacestna4->setObjectName(QString::fromUtf8("Lnacestna4"));
+        sizePolicy7.setHeightForWidth(Lnacestna4->sizePolicy().hasHeightForWidth());
+        Lnacestna4->setSizePolicy(sizePolicy7);
+        Lnacestna4->setFont(font5);
+
+        gridLayout_5->addWidget(Lnacestna4, 2, 2, 1, 1);
+
+        verticalLayout_18 = new QVBoxLayout();
+        verticalLayout_18->setSpacing(6);
+        verticalLayout_18->setObjectName(QString::fromUtf8("verticalLayout_18"));
+        label_pasmo2_2 = new QLabel(page_hlavni_2);
+        label_pasmo2_2->setObjectName(QString::fromUtf8("label_pasmo2_2"));
+        sizePolicy.setHeightForWidth(label_pasmo2_2->sizePolicy().hasHeightForWidth());
+        label_pasmo2_2->setSizePolicy(sizePolicy);
+        label_pasmo2_2->setMinimumSize(QSize(150, 0));
+        label_pasmo2_2->setFont(font9);
+        label_pasmo2_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_pasmo2_2->setMargin(0);
+
+        verticalLayout_18->addWidget(label_pasmo2_2);
+
+        label_pasmo2_1 = new QLabel(page_hlavni_2);
+        label_pasmo2_1->setObjectName(QString::fromUtf8("label_pasmo2_1"));
+        sizePolicy.setHeightForWidth(label_pasmo2_1->sizePolicy().hasHeightForWidth());
+        label_pasmo2_1->setSizePolicy(sizePolicy);
+        label_pasmo2_1->setMinimumSize(QSize(150, 0));
+        label_pasmo2_1->setFont(font9);
+        label_pasmo2_1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_pasmo2_1->setMargin(0);
+
+        verticalLayout_18->addWidget(label_pasmo2_1);
+
+
+        gridLayout_5->addLayout(verticalLayout_18, 4, 0, 1, 1);
+
+        Lnacestna3 = new QLabel(page_hlavni_2);
+        Lnacestna3->setObjectName(QString::fromUtf8("Lnacestna3"));
+        sizePolicy7.setHeightForWidth(Lnacestna3->sizePolicy().hasHeightForWidth());
+        Lnacestna3->setSizePolicy(sizePolicy7);
+        Lnacestna3->setFont(font5);
+        Lnacestna3->setStyleSheet(QString::fromUtf8("#metro{color:#ff00ff;}"));
+
+        gridLayout_5->addWidget(Lnacestna3, 3, 2, 1, 1);
+
         verticalLayout_16 = new QVBoxLayout();
         verticalLayout_16->setSpacing(6);
         verticalLayout_16->setObjectName(QString::fromUtf8("verticalLayout_16"));
         label_pasmo4_2 = new QLabel(page_hlavni_2);
         label_pasmo4_2->setObjectName(QString::fromUtf8("label_pasmo4_2"));
-        sizePolicy6.setHeightForWidth(label_pasmo4_2->sizePolicy().hasHeightForWidth());
-        label_pasmo4_2->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_pasmo4_2->sizePolicy().hasHeightForWidth());
+        label_pasmo4_2->setSizePolicy(sizePolicy3);
         label_pasmo4_2->setMinimumSize(QSize(150, 0));
-        label_pasmo4_2->setFont(font10);
+        label_pasmo4_2->setFont(font9);
         label_pasmo4_2->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo4_2->setMargin(10);
+        label_pasmo4_2->setMargin(0);
 
         verticalLayout_16->addWidget(label_pasmo4_2);
 
         label_pasmo4_1 = new QLabel(page_hlavni_2);
         label_pasmo4_1->setObjectName(QString::fromUtf8("label_pasmo4_1"));
-        sizePolicy6.setHeightForWidth(label_pasmo4_1->sizePolicy().hasHeightForWidth());
-        label_pasmo4_1->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_pasmo4_1->sizePolicy().hasHeightForWidth());
+        label_pasmo4_1->setSizePolicy(sizePolicy3);
         label_pasmo4_1->setMinimumSize(QSize(150, 0));
-        label_pasmo4_1->setFont(font10);
+        label_pasmo4_1->setFont(font9);
         label_pasmo4_1->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-        label_pasmo4_1->setMargin(10);
+        label_pasmo4_1->setMargin(0);
 
         verticalLayout_16->addWidget(label_pasmo4_1);
 
 
         gridLayout_5->addLayout(verticalLayout_16, 2, 0, 1, 1);
 
-        Lnacestna5 = new QLabel(page_hlavni_2);
-        Lnacestna5->setObjectName(QString::fromUtf8("Lnacestna5"));
-        QSizePolicy sizePolicy10(QSizePolicy::Expanding, QSizePolicy::Minimum);
-        sizePolicy10.setHorizontalStretch(0);
-        sizePolicy10.setVerticalStretch(0);
-        sizePolicy10.setHeightForWidth(Lnacestna5->sizePolicy().hasHeightForWidth());
-        Lnacestna5->setSizePolicy(sizePolicy10);
-        Lnacestna5->setFont(font3);
+        sipka = new QLabel(page_hlavni_2);
+        sipka->setObjectName(QString::fromUtf8("sipka"));
+        sizePolicy.setHeightForWidth(sipka->sizePolicy().hasHeightForWidth());
+        sipka->setSizePolicy(sizePolicy);
+        sipka->setMaximumSize(QSize(50, 16777215));
+        QFont font10;
+        font10.setFamily(QString::fromUtf8("roboto"));
+        font10.setPointSize(50);
+        sipka->setFont(font10);
+        sipka->setAlignment(Qt::AlignCenter);
 
-        gridLayout_5->addWidget(Lnacestna5, 0, 1, 1, 1);
+        gridLayout_5->addWidget(sipka, 4, 1, 1, 1);
 
-        Lnacestna3 = new QLabel(page_hlavni_2);
-        Lnacestna3->setObjectName(QString::fromUtf8("Lnacestna3"));
-        sizePolicy.setHeightForWidth(Lnacestna3->sizePolicy().hasHeightForWidth());
-        Lnacestna3->setSizePolicy(sizePolicy);
-        Lnacestna3->setFont(font3);
-        Lnacestna3->setStyleSheet(QString::fromUtf8("#metro{color:#ff00ff;}"));
+        sipka_2 = new QLabel(page_hlavni_2);
+        sipka_2->setObjectName(QString::fromUtf8("sipka_2"));
+        sizePolicy.setHeightForWidth(sipka_2->sizePolicy().hasHeightForWidth());
+        sipka_2->setSizePolicy(sizePolicy);
+        sipka_2->setMaximumSize(QSize(50, 16777215));
+        sipka_2->setFont(font10);
+        sipka_2->setAlignment(Qt::AlignCenter);
 
-        gridLayout_5->addWidget(Lnacestna3, 3, 1, 1, 1);
+        gridLayout_5->addWidget(sipka_2, 3, 1, 1, 1);
 
+        sipka_3 = new QLabel(page_hlavni_2);
+        sipka_3->setObjectName(QString::fromUtf8("sipka_3"));
+        sizePolicy.setHeightForWidth(sipka_3->sizePolicy().hasHeightForWidth());
+        sipka_3->setSizePolicy(sizePolicy);
+        sipka_3->setMaximumSize(QSize(50, 16777215));
+        sipka_3->setFont(font10);
+        sipka_3->setAlignment(Qt::AlignCenter);
+
+        gridLayout_5->addWidget(sipka_3, 2, 1, 1, 1);
+
+        sipka_4 = new QLabel(page_hlavni_2);
+        sipka_4->setObjectName(QString::fromUtf8("sipka_4"));
+        sizePolicy.setHeightForWidth(sipka_4->sizePolicy().hasHeightForWidth());
+        sipka_4->setSizePolicy(sizePolicy);
+        sipka_4->setMaximumSize(QSize(50, 16777215));
+        sipka_4->setFont(font10);
+        sipka_4->setAlignment(Qt::AlignCenter);
+
+        gridLayout_5->addWidget(sipka_4, 0, 1, 1, 1);
+
+        gridLayout_5->setColumnStretch(0, 3);
+        gridLayout_5->setColumnStretch(1, 1);
+        gridLayout_5->setColumnStretch(2, 10);
 
         horizontalLayout_3->addLayout(gridLayout_5);
 
@@ -918,6 +988,8 @@ public:
         stackedWidget_prostredek->addWidget(page_hlavni_2);
         page_oznameni = new QWidget();
         page_oznameni->setObjectName(QString::fromUtf8("page_oznameni"));
+        sizePolicy.setHeightForWidth(page_oznameni->sizePolicy().hasHeightForWidth());
+        page_oznameni->setSizePolicy(sizePolicy);
         gridLayout_6 = new QGridLayout(page_oznameni);
         gridLayout_6->setSpacing(6);
         gridLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -964,6 +1036,8 @@ public:
         stackedWidget_prostredek->addWidget(page_oznameni);
         page_zmenaPasma = new QWidget();
         page_zmenaPasma->setObjectName(QString::fromUtf8("page_zmenaPasma"));
+        sizePolicy.setHeightForWidth(page_zmenaPasma->sizePolicy().hasHeightForWidth());
+        page_zmenaPasma->setSizePolicy(sizePolicy);
         gridLayout_3 = new QGridLayout(page_zmenaPasma);
         gridLayout_3->setSpacing(6);
         gridLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -1045,6 +1119,8 @@ public:
         stackedWidget_prostredek->addWidget(page_zmenaPasma);
         page_konecna = new QWidget();
         page_konecna->setObjectName(QString::fromUtf8("page_konecna"));
+        sizePolicy.setHeightForWidth(page_konecna->sizePolicy().hasHeightForWidth());
+        page_konecna->setSizePolicy(sizePolicy);
         gridLayout_8 = new QGridLayout(page_konecna);
         gridLayout_8->setSpacing(6);
         gridLayout_8->setContentsMargins(11, 11, 11, 11);
@@ -1054,7 +1130,7 @@ public:
         verticalLayout_12->setObjectName(QString::fromUtf8("verticalLayout_12"));
         label_20 = new QLabel(page_konecna);
         label_20->setObjectName(QString::fromUtf8("label_20"));
-        label_20->setFont(font2);
+        label_20->setFont(font6);
         label_20->setAlignment(Qt::AlignCenter);
         label_20->setWordWrap(true);
 
@@ -1062,7 +1138,7 @@ public:
 
         label_22 = new QLabel(page_konecna);
         label_22->setObjectName(QString::fromUtf8("label_22"));
-        label_22->setFont(font14);
+        label_22->setFont(font3);
         label_22->setAlignment(Qt::AlignCenter);
         label_22->setWordWrap(true);
 
@@ -1075,9 +1151,10 @@ public:
         page_prestupy = new QWidget();
         page_prestupy->setObjectName(QString::fromUtf8("page_prestupy"));
         horizontalLayout_20 = new QHBoxLayout(page_prestupy);
-        horizontalLayout_20->setSpacing(6);
+        horizontalLayout_20->setSpacing(0);
         horizontalLayout_20->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_20->setObjectName(QString::fromUtf8("horizontalLayout_20"));
+        horizontalLayout_20->setContentsMargins(0, -1, 0, -1);
         verticalLayout_prestupy0 = new QVBoxLayout();
         verticalLayout_prestupy0->setSpacing(6);
         verticalLayout_prestupy0->setObjectName(QString::fromUtf8("verticalLayout_prestupy0"));
@@ -1092,10 +1169,10 @@ public:
         horizontalLayout_22->setObjectName(QString::fromUtf8("horizontalLayout_22"));
         label_prestup0_linka = new QLabel(frame_odjezd0);
         label_prestup0_linka->setObjectName(QString::fromUtf8("label_prestup0_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup0_linka->sizePolicy().hasHeightForWidth());
-        label_prestup0_linka->setSizePolicy(sizePolicy6);
-        label_prestup0_linka->setMinimumSize(QSize(80, 60));
-        label_prestup0_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup0_linka->sizePolicy().hasHeightForWidth());
+        label_prestup0_linka->setSizePolicy(sizePolicy5);
+        label_prestup0_linka->setMinimumSize(QSize(80, 20));
+        label_prestup0_linka->setMaximumSize(QSize(200, 200));
         label_prestup0_linka->setFont(font8);
         label_prestup0_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup0_linka->setAlignment(Qt::AlignCenter);
@@ -1104,8 +1181,8 @@ public:
 
         label_prestup0_sipky = new QLabel(frame_odjezd0);
         label_prestup0_sipky->setObjectName(QString::fromUtf8("label_prestup0_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup0_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup0_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup0_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup0_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_22->addWidget(label_prestup0_sipky);
 
@@ -1118,20 +1195,25 @@ public:
 
         label_prestup0_nastupiste = new QLabel(frame_odjezd0);
         label_prestup0_nastupiste->setObjectName(QString::fromUtf8("label_prestup0_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup0_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup0_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup0_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup0_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup0_nastupiste->setFont(font7);
 
         horizontalLayout_22->addWidget(label_prestup0_nastupiste);
 
         label_prestup0_odjezd = new QLabel(frame_odjezd0);
         label_prestup0_odjezd->setObjectName(QString::fromUtf8("label_prestup0_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup0_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup0_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup0_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup0_odjezd->setSizePolicy(sizePolicy3);
         label_prestup0_odjezd->setFont(font7);
 
         horizontalLayout_22->addWidget(label_prestup0_odjezd);
 
+        horizontalLayout_22->setStretch(0, 2);
+        horizontalLayout_22->setStretch(1, 1);
+        horizontalLayout_22->setStretch(2, 6);
+        horizontalLayout_22->setStretch(3, 1);
+        horizontalLayout_22->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd0);
 
@@ -1145,10 +1227,10 @@ public:
         horizontalLayout_23->setObjectName(QString::fromUtf8("horizontalLayout_23"));
         label_prestup1_linka = new QLabel(frame_odjezd1);
         label_prestup1_linka->setObjectName(QString::fromUtf8("label_prestup1_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup1_linka->sizePolicy().hasHeightForWidth());
-        label_prestup1_linka->setSizePolicy(sizePolicy6);
-        label_prestup1_linka->setMinimumSize(QSize(80, 60));
-        label_prestup1_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup1_linka->sizePolicy().hasHeightForWidth());
+        label_prestup1_linka->setSizePolicy(sizePolicy5);
+        label_prestup1_linka->setMinimumSize(QSize(80, 20));
+        label_prestup1_linka->setMaximumSize(QSize(200, 200));
         label_prestup1_linka->setFont(font8);
         label_prestup1_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup1_linka->setAlignment(Qt::AlignCenter);
@@ -1157,8 +1239,8 @@ public:
 
         label_prestup1_sipky = new QLabel(frame_odjezd1);
         label_prestup1_sipky->setObjectName(QString::fromUtf8("label_prestup1_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup1_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup1_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup1_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup1_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_23->addWidget(label_prestup1_sipky);
 
@@ -1170,20 +1252,25 @@ public:
 
         label_prestup1_nastupiste = new QLabel(frame_odjezd1);
         label_prestup1_nastupiste->setObjectName(QString::fromUtf8("label_prestup1_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup1_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup1_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup1_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup1_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup1_nastupiste->setFont(font7);
 
         horizontalLayout_23->addWidget(label_prestup1_nastupiste);
 
         label_prestup1_odjezd = new QLabel(frame_odjezd1);
         label_prestup1_odjezd->setObjectName(QString::fromUtf8("label_prestup1_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup1_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup1_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup1_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup1_odjezd->setSizePolicy(sizePolicy3);
         label_prestup1_odjezd->setFont(font7);
 
         horizontalLayout_23->addWidget(label_prestup1_odjezd);
 
+        horizontalLayout_23->setStretch(0, 2);
+        horizontalLayout_23->setStretch(1, 1);
+        horizontalLayout_23->setStretch(2, 6);
+        horizontalLayout_23->setStretch(3, 1);
+        horizontalLayout_23->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd1);
 
@@ -1198,10 +1285,10 @@ public:
         horizontalLayout_24->setObjectName(QString::fromUtf8("horizontalLayout_24"));
         label_prestup2_linka = new QLabel(frame_odjezd2);
         label_prestup2_linka->setObjectName(QString::fromUtf8("label_prestup2_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup2_linka->sizePolicy().hasHeightForWidth());
-        label_prestup2_linka->setSizePolicy(sizePolicy6);
-        label_prestup2_linka->setMinimumSize(QSize(80, 60));
-        label_prestup2_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup2_linka->sizePolicy().hasHeightForWidth());
+        label_prestup2_linka->setSizePolicy(sizePolicy5);
+        label_prestup2_linka->setMinimumSize(QSize(80, 20));
+        label_prestup2_linka->setMaximumSize(QSize(200, 200));
         label_prestup2_linka->setFont(font8);
         label_prestup2_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup2_linka->setAlignment(Qt::AlignCenter);
@@ -1210,8 +1297,8 @@ public:
 
         label_prestup2_sipky = new QLabel(frame_odjezd2);
         label_prestup2_sipky->setObjectName(QString::fromUtf8("label_prestup2_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup2_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup2_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup2_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup2_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_24->addWidget(label_prestup2_sipky);
 
@@ -1223,20 +1310,25 @@ public:
 
         label_prestup2_nastupiste = new QLabel(frame_odjezd2);
         label_prestup2_nastupiste->setObjectName(QString::fromUtf8("label_prestup2_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup2_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup2_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup2_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup2_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup2_nastupiste->setFont(font7);
 
         horizontalLayout_24->addWidget(label_prestup2_nastupiste);
 
         label_prestup2_odjezd = new QLabel(frame_odjezd2);
         label_prestup2_odjezd->setObjectName(QString::fromUtf8("label_prestup2_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup2_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup2_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup2_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup2_odjezd->setSizePolicy(sizePolicy3);
         label_prestup2_odjezd->setFont(font7);
 
         horizontalLayout_24->addWidget(label_prestup2_odjezd);
 
+        horizontalLayout_24->setStretch(0, 2);
+        horizontalLayout_24->setStretch(1, 1);
+        horizontalLayout_24->setStretch(2, 6);
+        horizontalLayout_24->setStretch(3, 1);
+        horizontalLayout_24->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd2);
 
@@ -1250,10 +1342,10 @@ public:
         horizontalLayout_28->setObjectName(QString::fromUtf8("horizontalLayout_28"));
         label_prestup3_linka = new QLabel(frame_odjezd3);
         label_prestup3_linka->setObjectName(QString::fromUtf8("label_prestup3_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup3_linka->sizePolicy().hasHeightForWidth());
-        label_prestup3_linka->setSizePolicy(sizePolicy6);
-        label_prestup3_linka->setMinimumSize(QSize(80, 60));
-        label_prestup3_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup3_linka->sizePolicy().hasHeightForWidth());
+        label_prestup3_linka->setSizePolicy(sizePolicy5);
+        label_prestup3_linka->setMinimumSize(QSize(80, 20));
+        label_prestup3_linka->setMaximumSize(QSize(200, 200));
         label_prestup3_linka->setFont(font8);
         label_prestup3_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup3_linka->setAlignment(Qt::AlignCenter);
@@ -1262,8 +1354,8 @@ public:
 
         label_prestup3_sipky = new QLabel(frame_odjezd3);
         label_prestup3_sipky->setObjectName(QString::fromUtf8("label_prestup3_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup3_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup3_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup3_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup3_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_28->addWidget(label_prestup3_sipky);
 
@@ -1275,20 +1367,25 @@ public:
 
         label_prestup3_nastupiste = new QLabel(frame_odjezd3);
         label_prestup3_nastupiste->setObjectName(QString::fromUtf8("label_prestup3_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup3_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup3_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup3_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup3_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup3_nastupiste->setFont(font7);
 
         horizontalLayout_28->addWidget(label_prestup3_nastupiste);
 
         label_prestup3_odjezd = new QLabel(frame_odjezd3);
         label_prestup3_odjezd->setObjectName(QString::fromUtf8("label_prestup3_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup3_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup3_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup3_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup3_odjezd->setSizePolicy(sizePolicy3);
         label_prestup3_odjezd->setFont(font7);
 
         horizontalLayout_28->addWidget(label_prestup3_odjezd);
 
+        horizontalLayout_28->setStretch(0, 2);
+        horizontalLayout_28->setStretch(1, 1);
+        horizontalLayout_28->setStretch(2, 6);
+        horizontalLayout_28->setStretch(3, 1);
+        horizontalLayout_28->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd3);
 
@@ -1303,10 +1400,10 @@ public:
         horizontalLayout_27->setObjectName(QString::fromUtf8("horizontalLayout_27"));
         label_prestup4_linka = new QLabel(frame_odjezd4);
         label_prestup4_linka->setObjectName(QString::fromUtf8("label_prestup4_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup4_linka->sizePolicy().hasHeightForWidth());
-        label_prestup4_linka->setSizePolicy(sizePolicy6);
-        label_prestup4_linka->setMinimumSize(QSize(80, 60));
-        label_prestup4_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup4_linka->sizePolicy().hasHeightForWidth());
+        label_prestup4_linka->setSizePolicy(sizePolicy5);
+        label_prestup4_linka->setMinimumSize(QSize(80, 20));
+        label_prestup4_linka->setMaximumSize(QSize(200, 200));
         label_prestup4_linka->setFont(font8);
         label_prestup4_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup4_linka->setAlignment(Qt::AlignCenter);
@@ -1315,8 +1412,8 @@ public:
 
         label_prestup4_sipky = new QLabel(frame_odjezd4);
         label_prestup4_sipky->setObjectName(QString::fromUtf8("label_prestup4_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup4_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup4_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup4_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup4_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_27->addWidget(label_prestup4_sipky);
 
@@ -1328,20 +1425,25 @@ public:
 
         label_prestup4_nastupiste = new QLabel(frame_odjezd4);
         label_prestup4_nastupiste->setObjectName(QString::fromUtf8("label_prestup4_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup4_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup4_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup4_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup4_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup4_nastupiste->setFont(font7);
 
         horizontalLayout_27->addWidget(label_prestup4_nastupiste);
 
         label_prestup4_odjezd = new QLabel(frame_odjezd4);
         label_prestup4_odjezd->setObjectName(QString::fromUtf8("label_prestup4_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup4_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup4_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup4_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup4_odjezd->setSizePolicy(sizePolicy3);
         label_prestup4_odjezd->setFont(font7);
 
         horizontalLayout_27->addWidget(label_prestup4_odjezd);
 
+        horizontalLayout_27->setStretch(0, 2);
+        horizontalLayout_27->setStretch(1, 1);
+        horizontalLayout_27->setStretch(2, 6);
+        horizontalLayout_27->setStretch(3, 1);
+        horizontalLayout_27->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd4);
 
@@ -1355,10 +1457,10 @@ public:
         horizontalLayout_26->setObjectName(QString::fromUtf8("horizontalLayout_26"));
         label_prestup5_linka = new QLabel(frame_odjezd5);
         label_prestup5_linka->setObjectName(QString::fromUtf8("label_prestup5_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup5_linka->sizePolicy().hasHeightForWidth());
-        label_prestup5_linka->setSizePolicy(sizePolicy6);
-        label_prestup5_linka->setMinimumSize(QSize(80, 60));
-        label_prestup5_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup5_linka->sizePolicy().hasHeightForWidth());
+        label_prestup5_linka->setSizePolicy(sizePolicy5);
+        label_prestup5_linka->setMinimumSize(QSize(80, 20));
+        label_prestup5_linka->setMaximumSize(QSize(200, 200));
         label_prestup5_linka->setFont(font8);
         label_prestup5_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup5_linka->setAlignment(Qt::AlignCenter);
@@ -1367,8 +1469,8 @@ public:
 
         label_prestup5_sipky = new QLabel(frame_odjezd5);
         label_prestup5_sipky->setObjectName(QString::fromUtf8("label_prestup5_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup5_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup5_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup5_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup5_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_26->addWidget(label_prestup5_sipky);
 
@@ -1380,23 +1482,34 @@ public:
 
         label_prestup5_nastupiste = new QLabel(frame_odjezd5);
         label_prestup5_nastupiste->setObjectName(QString::fromUtf8("label_prestup5_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup5_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup5_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup5_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup5_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup5_nastupiste->setFont(font7);
 
         horizontalLayout_26->addWidget(label_prestup5_nastupiste);
 
         label_prestup5_odjezd = new QLabel(frame_odjezd5);
         label_prestup5_odjezd->setObjectName(QString::fromUtf8("label_prestup5_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup5_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup5_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup5_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup5_odjezd->setSizePolicy(sizePolicy3);
         label_prestup5_odjezd->setFont(font7);
 
         horizontalLayout_26->addWidget(label_prestup5_odjezd);
 
+        horizontalLayout_26->setStretch(0, 2);
+        horizontalLayout_26->setStretch(1, 1);
+        horizontalLayout_26->setStretch(2, 6);
+        horizontalLayout_26->setStretch(3, 1);
+        horizontalLayout_26->setStretch(4, 2);
 
         verticalLayout_prestupy0->addWidget(frame_odjezd5);
 
+        verticalLayout_prestupy0->setStretch(0, 1);
+        verticalLayout_prestupy0->setStretch(1, 1);
+        verticalLayout_prestupy0->setStretch(2, 1);
+        verticalLayout_prestupy0->setStretch(3, 1);
+        verticalLayout_prestupy0->setStretch(4, 1);
+        verticalLayout_prestupy0->setStretch(5, 1);
 
         horizontalLayout_20->addLayout(verticalLayout_prestupy0);
 
@@ -1415,10 +1528,10 @@ public:
         horizontalLayout_29->setObjectName(QString::fromUtf8("horizontalLayout_29"));
         label_prestup6_linka = new QLabel(frame_odjezd6);
         label_prestup6_linka->setObjectName(QString::fromUtf8("label_prestup6_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup6_linka->sizePolicy().hasHeightForWidth());
-        label_prestup6_linka->setSizePolicy(sizePolicy6);
-        label_prestup6_linka->setMinimumSize(QSize(80, 60));
-        label_prestup6_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup6_linka->sizePolicy().hasHeightForWidth());
+        label_prestup6_linka->setSizePolicy(sizePolicy5);
+        label_prestup6_linka->setMinimumSize(QSize(80, 20));
+        label_prestup6_linka->setMaximumSize(QSize(200, 200));
         label_prestup6_linka->setFont(font8);
         label_prestup6_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup6_linka->setAlignment(Qt::AlignCenter);
@@ -1427,8 +1540,8 @@ public:
 
         label_prestup6_sipky = new QLabel(frame_odjezd6);
         label_prestup6_sipky->setObjectName(QString::fromUtf8("label_prestup6_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup6_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup6_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup6_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup6_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_29->addWidget(label_prestup6_sipky);
 
@@ -1440,20 +1553,25 @@ public:
 
         label_prestup6_nastupiste = new QLabel(frame_odjezd6);
         label_prestup6_nastupiste->setObjectName(QString::fromUtf8("label_prestup6_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup6_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup6_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup6_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup6_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup6_nastupiste->setFont(font7);
 
         horizontalLayout_29->addWidget(label_prestup6_nastupiste);
 
         label_prestup6_odjezd = new QLabel(frame_odjezd6);
         label_prestup6_odjezd->setObjectName(QString::fromUtf8("label_prestup6_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup6_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup6_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup6_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup6_odjezd->setSizePolicy(sizePolicy3);
         label_prestup6_odjezd->setFont(font7);
 
         horizontalLayout_29->addWidget(label_prestup6_odjezd);
 
+        horizontalLayout_29->setStretch(0, 2);
+        horizontalLayout_29->setStretch(1, 1);
+        horizontalLayout_29->setStretch(2, 6);
+        horizontalLayout_29->setStretch(3, 1);
+        horizontalLayout_29->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd6);
 
@@ -1467,10 +1585,10 @@ public:
         horizontalLayout_30->setObjectName(QString::fromUtf8("horizontalLayout_30"));
         label_prestup7_linka = new QLabel(frame_odjezd7);
         label_prestup7_linka->setObjectName(QString::fromUtf8("label_prestup7_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup7_linka->sizePolicy().hasHeightForWidth());
-        label_prestup7_linka->setSizePolicy(sizePolicy6);
-        label_prestup7_linka->setMinimumSize(QSize(80, 60));
-        label_prestup7_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup7_linka->sizePolicy().hasHeightForWidth());
+        label_prestup7_linka->setSizePolicy(sizePolicy5);
+        label_prestup7_linka->setMinimumSize(QSize(80, 20));
+        label_prestup7_linka->setMaximumSize(QSize(200, 200));
         label_prestup7_linka->setFont(font8);
         label_prestup7_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup7_linka->setAlignment(Qt::AlignCenter);
@@ -1479,8 +1597,8 @@ public:
 
         label_prestup7_sipky = new QLabel(frame_odjezd7);
         label_prestup7_sipky->setObjectName(QString::fromUtf8("label_prestup7_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup7_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup7_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup7_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup7_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_30->addWidget(label_prestup7_sipky);
 
@@ -1492,20 +1610,25 @@ public:
 
         label_prestup7_nastupiste = new QLabel(frame_odjezd7);
         label_prestup7_nastupiste->setObjectName(QString::fromUtf8("label_prestup7_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup7_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup7_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup7_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup7_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup7_nastupiste->setFont(font7);
 
         horizontalLayout_30->addWidget(label_prestup7_nastupiste);
 
         label_prestup7_odjezd = new QLabel(frame_odjezd7);
         label_prestup7_odjezd->setObjectName(QString::fromUtf8("label_prestup7_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup7_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup7_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup7_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup7_odjezd->setSizePolicy(sizePolicy3);
         label_prestup7_odjezd->setFont(font7);
 
         horizontalLayout_30->addWidget(label_prestup7_odjezd);
 
+        horizontalLayout_30->setStretch(0, 2);
+        horizontalLayout_30->setStretch(1, 1);
+        horizontalLayout_30->setStretch(2, 6);
+        horizontalLayout_30->setStretch(3, 1);
+        horizontalLayout_30->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd7);
 
@@ -1520,10 +1643,10 @@ public:
         horizontalLayout_31->setObjectName(QString::fromUtf8("horizontalLayout_31"));
         label_prestup8_linka = new QLabel(frame_odjezd8);
         label_prestup8_linka->setObjectName(QString::fromUtf8("label_prestup8_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup8_linka->sizePolicy().hasHeightForWidth());
-        label_prestup8_linka->setSizePolicy(sizePolicy6);
-        label_prestup8_linka->setMinimumSize(QSize(80, 60));
-        label_prestup8_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup8_linka->sizePolicy().hasHeightForWidth());
+        label_prestup8_linka->setSizePolicy(sizePolicy5);
+        label_prestup8_linka->setMinimumSize(QSize(80, 20));
+        label_prestup8_linka->setMaximumSize(QSize(200, 200));
         label_prestup8_linka->setFont(font8);
         label_prestup8_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup8_linka->setAlignment(Qt::AlignCenter);
@@ -1532,8 +1655,8 @@ public:
 
         label_prestup8_sipky = new QLabel(frame_odjezd8);
         label_prestup8_sipky->setObjectName(QString::fromUtf8("label_prestup8_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup8_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup8_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup8_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup8_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_31->addWidget(label_prestup8_sipky);
 
@@ -1545,20 +1668,25 @@ public:
 
         label_prestup8_nastupiste = new QLabel(frame_odjezd8);
         label_prestup8_nastupiste->setObjectName(QString::fromUtf8("label_prestup8_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup8_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup8_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup8_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup8_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup8_nastupiste->setFont(font7);
 
         horizontalLayout_31->addWidget(label_prestup8_nastupiste);
 
         label_prestup8_odjezd = new QLabel(frame_odjezd8);
         label_prestup8_odjezd->setObjectName(QString::fromUtf8("label_prestup8_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup8_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup8_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup8_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup8_odjezd->setSizePolicy(sizePolicy3);
         label_prestup8_odjezd->setFont(font7);
 
         horizontalLayout_31->addWidget(label_prestup8_odjezd);
 
+        horizontalLayout_31->setStretch(0, 2);
+        horizontalLayout_31->setStretch(1, 1);
+        horizontalLayout_31->setStretch(2, 6);
+        horizontalLayout_31->setStretch(3, 1);
+        horizontalLayout_31->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd8);
 
@@ -1572,10 +1700,10 @@ public:
         horizontalLayout_32->setObjectName(QString::fromUtf8("horizontalLayout_32"));
         label_prestup9_linka = new QLabel(frame_odjezd9);
         label_prestup9_linka->setObjectName(QString::fromUtf8("label_prestup9_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup9_linka->sizePolicy().hasHeightForWidth());
-        label_prestup9_linka->setSizePolicy(sizePolicy6);
-        label_prestup9_linka->setMinimumSize(QSize(80, 60));
-        label_prestup9_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup9_linka->sizePolicy().hasHeightForWidth());
+        label_prestup9_linka->setSizePolicy(sizePolicy5);
+        label_prestup9_linka->setMinimumSize(QSize(80, 20));
+        label_prestup9_linka->setMaximumSize(QSize(200, 200));
         label_prestup9_linka->setFont(font8);
         label_prestup9_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup9_linka->setAlignment(Qt::AlignCenter);
@@ -1584,8 +1712,8 @@ public:
 
         label_prestup9_sipky = new QLabel(frame_odjezd9);
         label_prestup9_sipky->setObjectName(QString::fromUtf8("label_prestup9_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup9_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup9_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup9_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup9_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_32->addWidget(label_prestup9_sipky);
 
@@ -1597,20 +1725,25 @@ public:
 
         label_prestup9_nastupiste = new QLabel(frame_odjezd9);
         label_prestup9_nastupiste->setObjectName(QString::fromUtf8("label_prestup9_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup9_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup9_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup9_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup9_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup9_nastupiste->setFont(font7);
 
         horizontalLayout_32->addWidget(label_prestup9_nastupiste);
 
         label_prestup9_odjezd = new QLabel(frame_odjezd9);
         label_prestup9_odjezd->setObjectName(QString::fromUtf8("label_prestup9_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup9_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup9_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup9_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup9_odjezd->setSizePolicy(sizePolicy3);
         label_prestup9_odjezd->setFont(font7);
 
         horizontalLayout_32->addWidget(label_prestup9_odjezd);
 
+        horizontalLayout_32->setStretch(0, 2);
+        horizontalLayout_32->setStretch(1, 1);
+        horizontalLayout_32->setStretch(2, 6);
+        horizontalLayout_32->setStretch(3, 1);
+        horizontalLayout_32->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd9);
 
@@ -1625,10 +1758,10 @@ public:
         horizontalLayout_33->setObjectName(QString::fromUtf8("horizontalLayout_33"));
         label_prestup10_linka = new QLabel(frame_odjezd10);
         label_prestup10_linka->setObjectName(QString::fromUtf8("label_prestup10_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup10_linka->sizePolicy().hasHeightForWidth());
-        label_prestup10_linka->setSizePolicy(sizePolicy6);
-        label_prestup10_linka->setMinimumSize(QSize(80, 60));
-        label_prestup10_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup10_linka->sizePolicy().hasHeightForWidth());
+        label_prestup10_linka->setSizePolicy(sizePolicy5);
+        label_prestup10_linka->setMinimumSize(QSize(80, 20));
+        label_prestup10_linka->setMaximumSize(QSize(200, 200));
         label_prestup10_linka->setFont(font8);
         label_prestup10_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup10_linka->setAlignment(Qt::AlignCenter);
@@ -1637,8 +1770,8 @@ public:
 
         label_prestup10_sipky = new QLabel(frame_odjezd10);
         label_prestup10_sipky->setObjectName(QString::fromUtf8("label_prestup10_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup10_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup10_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup10_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup10_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_33->addWidget(label_prestup10_sipky);
 
@@ -1650,20 +1783,25 @@ public:
 
         label_prestup10_nastupiste = new QLabel(frame_odjezd10);
         label_prestup10_nastupiste->setObjectName(QString::fromUtf8("label_prestup10_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup10_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup10_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup10_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup10_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup10_nastupiste->setFont(font7);
 
         horizontalLayout_33->addWidget(label_prestup10_nastupiste);
 
         label_prestup10_odjezd = new QLabel(frame_odjezd10);
         label_prestup10_odjezd->setObjectName(QString::fromUtf8("label_prestup10_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup10_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup10_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup10_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup10_odjezd->setSizePolicy(sizePolicy3);
         label_prestup10_odjezd->setFont(font7);
 
         horizontalLayout_33->addWidget(label_prestup10_odjezd);
 
+        horizontalLayout_33->setStretch(0, 2);
+        horizontalLayout_33->setStretch(1, 1);
+        horizontalLayout_33->setStretch(2, 6);
+        horizontalLayout_33->setStretch(3, 1);
+        horizontalLayout_33->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd10);
 
@@ -1677,10 +1815,10 @@ public:
         horizontalLayout_34->setObjectName(QString::fromUtf8("horizontalLayout_34"));
         label_prestup11_linka = new QLabel(frame_odjezd11);
         label_prestup11_linka->setObjectName(QString::fromUtf8("label_prestup11_linka"));
-        sizePolicy6.setHeightForWidth(label_prestup11_linka->sizePolicy().hasHeightForWidth());
-        label_prestup11_linka->setSizePolicy(sizePolicy6);
-        label_prestup11_linka->setMinimumSize(QSize(80, 60));
-        label_prestup11_linka->setMaximumSize(QSize(80, 60));
+        sizePolicy5.setHeightForWidth(label_prestup11_linka->sizePolicy().hasHeightForWidth());
+        label_prestup11_linka->setSizePolicy(sizePolicy5);
+        label_prestup11_linka->setMinimumSize(QSize(80, 20));
+        label_prestup11_linka->setMaximumSize(QSize(200, 200));
         label_prestup11_linka->setFont(font8);
         label_prestup11_linka->setStyleSheet(QString::fromUtf8("background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;"));
         label_prestup11_linka->setAlignment(Qt::AlignCenter);
@@ -1689,8 +1827,8 @@ public:
 
         label_prestup11_sipky = new QLabel(frame_odjezd11);
         label_prestup11_sipky->setObjectName(QString::fromUtf8("label_prestup11_sipky"));
-        sizePolicy6.setHeightForWidth(label_prestup11_sipky->sizePolicy().hasHeightForWidth());
-        label_prestup11_sipky->setSizePolicy(sizePolicy6);
+        sizePolicy5.setHeightForWidth(label_prestup11_sipky->sizePolicy().hasHeightForWidth());
+        label_prestup11_sipky->setSizePolicy(sizePolicy5);
 
         horizontalLayout_34->addWidget(label_prestup11_sipky);
 
@@ -1702,23 +1840,34 @@ public:
 
         label_prestup11_nastupiste = new QLabel(frame_odjezd11);
         label_prestup11_nastupiste->setObjectName(QString::fromUtf8("label_prestup11_nastupiste"));
-        sizePolicy6.setHeightForWidth(label_prestup11_nastupiste->sizePolicy().hasHeightForWidth());
-        label_prestup11_nastupiste->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup11_nastupiste->sizePolicy().hasHeightForWidth());
+        label_prestup11_nastupiste->setSizePolicy(sizePolicy3);
         label_prestup11_nastupiste->setFont(font7);
 
         horizontalLayout_34->addWidget(label_prestup11_nastupiste);
 
         label_prestup11_odjezd = new QLabel(frame_odjezd11);
         label_prestup11_odjezd->setObjectName(QString::fromUtf8("label_prestup11_odjezd"));
-        sizePolicy6.setHeightForWidth(label_prestup11_odjezd->sizePolicy().hasHeightForWidth());
-        label_prestup11_odjezd->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_prestup11_odjezd->sizePolicy().hasHeightForWidth());
+        label_prestup11_odjezd->setSizePolicy(sizePolicy3);
         label_prestup11_odjezd->setFont(font7);
 
         horizontalLayout_34->addWidget(label_prestup11_odjezd);
 
+        horizontalLayout_34->setStretch(0, 2);
+        horizontalLayout_34->setStretch(1, 1);
+        horizontalLayout_34->setStretch(2, 6);
+        horizontalLayout_34->setStretch(3, 1);
+        horizontalLayout_34->setStretch(4, 2);
 
         verticalLayout_prestupy1->addWidget(frame_odjezd11);
 
+        verticalLayout_prestupy1->setStretch(0, 1);
+        verticalLayout_prestupy1->setStretch(1, 1);
+        verticalLayout_prestupy1->setStretch(2, 1);
+        verticalLayout_prestupy1->setStretch(3, 1);
+        verticalLayout_prestupy1->setStretch(4, 1);
+        verticalLayout_prestupy1->setStretch(5, 1);
 
         horizontalLayout_20->addLayout(verticalLayout_prestupy1);
 
@@ -1728,10 +1877,13 @@ public:
 
         verticalLayout_3->addWidget(stackedWidget_prostredek);
 
-        frame_spodniRadek = new QFrame(frame_2);
+        frame_spodniRadek = new QFrame(frame_hlavni);
         frame_spodniRadek->setObjectName(QString::fromUtf8("frame_spodniRadek"));
-        sizePolicy7.setHeightForWidth(frame_spodniRadek->sizePolicy().hasHeightForWidth());
-        frame_spodniRadek->setSizePolicy(sizePolicy7);
+        QSizePolicy sizePolicy9(QSizePolicy::Expanding, QSizePolicy::Maximum);
+        sizePolicy9.setHorizontalStretch(0);
+        sizePolicy9.setVerticalStretch(0);
+        sizePolicy9.setHeightForWidth(frame_spodniRadek->sizePolicy().hasHeightForWidth());
+        frame_spodniRadek->setSizePolicy(sizePolicy9);
         frame_spodniRadek->setMinimumSize(QSize(0, 130));
         frame_spodniRadek->setMaximumSize(QSize(16777215, 130));
         frame_spodniRadek->setStyleSheet(QString::fromUtf8("*{background-color: rgb(50,50,50)}"));
@@ -1743,7 +1895,7 @@ public:
         gridLayout_11->setObjectName(QString::fromUtf8("gridLayout_11"));
         gridLayout_11->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_7 = new QHBoxLayout();
-        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setSpacing(0);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         verticalLayout_20 = new QVBoxLayout();
         verticalLayout_20->setSpacing(6);
@@ -1754,17 +1906,17 @@ public:
         label_pasmo1_2->setSizePolicy(sizePolicy1);
         label_pasmo1_2->setMinimumSize(QSize(175, 0));
         label_pasmo1_2->setMaximumSize(QSize(175, 16777215));
-        label_pasmo1_2->setFont(font10);
+        label_pasmo1_2->setFont(font9);
         label_pasmo1_2->setAlignment(Qt::AlignCenter);
 
         verticalLayout_20->addWidget(label_pasmo1_2);
 
         label_pasmo1_1 = new QLabel(frame_spodniRadek);
         label_pasmo1_1->setObjectName(QString::fromUtf8("label_pasmo1_1"));
-        sizePolicy6.setHeightForWidth(label_pasmo1_1->sizePolicy().hasHeightForWidth());
-        label_pasmo1_1->setSizePolicy(sizePolicy6);
+        sizePolicy3.setHeightForWidth(label_pasmo1_1->sizePolicy().hasHeightForWidth());
+        label_pasmo1_1->setSizePolicy(sizePolicy3);
         label_pasmo1_1->setMaximumSize(QSize(175, 16777215));
-        label_pasmo1_1->setFont(font10);
+        label_pasmo1_1->setFont(font9);
         label_pasmo1_1->setAlignment(Qt::AlignCenter);
 
         verticalLayout_20->addWidget(label_pasmo1_1);
@@ -1772,11 +1924,21 @@ public:
 
         horizontalLayout_7->addLayout(verticalLayout_20);
 
+        sipka_5 = new QLabel(frame_spodniRadek);
+        sipka_5->setObjectName(QString::fromUtf8("sipka_5"));
+        sizePolicy.setHeightForWidth(sipka_5->sizePolicy().hasHeightForWidth());
+        sipka_5->setSizePolicy(sizePolicy);
+        sipka_5->setMaximumSize(QSize(50, 16777215));
+        sipka_5->setFont(font10);
+        sipka_5->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_7->addWidget(sipka_5);
+
         Lnacestna1 = new QLabel(frame_spodniRadek);
         Lnacestna1->setObjectName(QString::fromUtf8("Lnacestna1"));
-        sizePolicy7.setHeightForWidth(Lnacestna1->sizePolicy().hasHeightForWidth());
-        Lnacestna1->setSizePolicy(sizePolicy7);
-        Lnacestna1->setMaximumSize(QSize(16777215, 108));
+        sizePolicy2.setHeightForWidth(Lnacestna1->sizePolicy().hasHeightForWidth());
+        Lnacestna1->setSizePolicy(sizePolicy2);
+        Lnacestna1->setMaximumSize(QSize(16777215, 500));
         QFont font15;
         font15.setFamily(QString::fromUtf8("roboto"));
         font15.setPointSize(36);
@@ -1788,21 +1950,26 @@ public:
 
         horizontalLayout_7->addWidget(Lnacestna1);
 
+        horizontalLayout_7->setStretch(0, 3);
+        horizontalLayout_7->setStretch(1, 1);
+        horizontalLayout_7->setStretch(2, 10);
 
         gridLayout_11->addLayout(horizontalLayout_7, 0, 0, 1, 1);
 
 
         verticalLayout_3->addWidget(frame_spodniRadek);
 
+        verticalLayout_3->setStretch(0, 300);
+        verticalLayout_3->setStretch(1, 485);
+        verticalLayout_3->setStretch(2, 265);
 
-        gridLayout_9->addLayout(verticalLayout_3, 0, 0, 1, 1);
-
-
-        gridLayout_7->addWidget(frame_2, 0, 0, 1, 1);
+        gridLayout_7->addWidget(frame_hlavni, 0, 0, 1, 1);
 
         stackedWidget_obrazovka->addWidget(page_hlavni);
         page_verze = new QWidget();
         page_verze->setObjectName(QString::fromUtf8("page_verze"));
+        sizePolicy.setHeightForWidth(page_verze->sizePolicy().hasHeightForWidth());
+        page_verze->setSizePolicy(sizePolicy);
         gridLayout_12 = new QGridLayout(page_verze);
         gridLayout_12->setSpacing(6);
         gridLayout_12->setContentsMargins(11, 11, 11, 11);
@@ -1812,7 +1979,7 @@ public:
         verticalLayout_8->setObjectName(QString::fromUtf8("verticalLayout_8"));
         label_5 = new QLabel(page_verze);
         label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setFont(font3);
+        label_5->setFont(font5);
 
         verticalLayout_8->addWidget(label_5);
 
@@ -1821,13 +1988,20 @@ public:
         horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
         label_7 = new QLabel(page_verze);
         label_7->setObjectName(QString::fromUtf8("label_7"));
-        label_7->setFont(font3);
+        sizePolicy.setHeightForWidth(label_7->sizePolicy().hasHeightForWidth());
+        label_7->setSizePolicy(sizePolicy);
+        label_7->setFont(font5);
 
         horizontalLayout_9->addWidget(label_7);
 
         label_8 = new QLabel(page_verze);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setFont(font3);
+        QSizePolicy sizePolicy10(QSizePolicy::Preferred, QSizePolicy::Maximum);
+        sizePolicy10.setHorizontalStretch(0);
+        sizePolicy10.setVerticalStretch(0);
+        sizePolicy10.setHeightForWidth(label_8->sizePolicy().hasHeightForWidth());
+        label_8->setSizePolicy(sizePolicy10);
+        label_8->setFont(font5);
 
         horizontalLayout_9->addWidget(label_8);
 
@@ -1839,13 +2013,17 @@ public:
         horizontalLayout_14->setObjectName(QString::fromUtf8("horizontalLayout_14"));
         label_11 = new QLabel(page_verze);
         label_11->setObjectName(QString::fromUtf8("label_11"));
-        label_11->setFont(font3);
+        sizePolicy.setHeightForWidth(label_11->sizePolicy().hasHeightForWidth());
+        label_11->setSizePolicy(sizePolicy);
+        label_11->setFont(font5);
 
         horizontalLayout_14->addWidget(label_11);
 
         label_12 = new QLabel(page_verze);
         label_12->setObjectName(QString::fromUtf8("label_12"));
-        label_12->setFont(font3);
+        sizePolicy10.setHeightForWidth(label_12->sizePolicy().hasHeightForWidth());
+        label_12->setSizePolicy(sizePolicy10);
+        label_12->setFont(font5);
 
         horizontalLayout_14->addWidget(label_12);
 
@@ -1858,15 +2036,14 @@ public:
         stackedWidget_obrazovka->addWidget(page_verze);
         page_zmenaLinky = new QWidget();
         page_zmenaLinky->setObjectName(QString::fromUtf8("page_zmenaLinky"));
-        verticalLayoutWidget_5 = new QWidget(page_zmenaLinky);
-        verticalLayoutWidget_5->setObjectName(QString::fromUtf8("verticalLayoutWidget_5"));
-        verticalLayoutWidget_5->setGeometry(QRect(110, 60, 465, 221));
-        verticalLayout_9 = new QVBoxLayout(verticalLayoutWidget_5);
+        gridLayout_14 = new QGridLayout(page_zmenaLinky);
+        gridLayout_14->setSpacing(6);
+        gridLayout_14->setContentsMargins(11, 11, 11, 11);
+        gridLayout_14->setObjectName(QString::fromUtf8("gridLayout_14"));
+        verticalLayout_9 = new QVBoxLayout();
         verticalLayout_9->setSpacing(6);
-        verticalLayout_9->setContentsMargins(11, 11, 11, 11);
         verticalLayout_9->setObjectName(QString::fromUtf8("verticalLayout_9"));
-        verticalLayout_9->setContentsMargins(0, 0, 0, 0);
-        label_13 = new QLabel(verticalLayoutWidget_5);
+        label_13 = new QLabel(page_zmenaLinky);
         label_13->setObjectName(QString::fromUtf8("label_13"));
         sizePolicy1.setHeightForWidth(label_13->sizePolicy().hasHeightForWidth());
         label_13->setSizePolicy(sizePolicy1);
@@ -1875,7 +2052,7 @@ public:
 
         verticalLayout_9->addWidget(label_13);
 
-        label_14 = new QLabel(verticalLayoutWidget_5);
+        label_14 = new QLabel(page_zmenaLinky);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setFont(font7);
         label_14->setAlignment(Qt::AlignCenter);
@@ -1885,21 +2062,21 @@ public:
         horizontalLayout_15 = new QHBoxLayout();
         horizontalLayout_15->setSpacing(6);
         horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
-        label_15 = new QLabel(verticalLayoutWidget_5);
+        label_15 = new QLabel(page_zmenaLinky);
         label_15->setObjectName(QString::fromUtf8("label_15"));
         label_15->setFont(font8);
         label_15->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_15->addWidget(label_15);
 
-        label_17 = new QLabel(verticalLayoutWidget_5);
+        label_17 = new QLabel(page_zmenaLinky);
         label_17->setObjectName(QString::fromUtf8("label_17"));
         label_17->setFont(font7);
         label_17->setAlignment(Qt::AlignCenter);
 
         horizontalLayout_15->addWidget(label_17);
 
-        label_16 = new QLabel(verticalLayoutWidget_5);
+        label_16 = new QLabel(page_zmenaLinky);
         label_16->setObjectName(QString::fromUtf8("label_16"));
         label_16->setFont(font8);
         label_16->setAlignment(Qt::AlignCenter);
@@ -1909,72 +2086,12 @@ public:
 
         verticalLayout_9->addLayout(horizontalLayout_15);
 
+
+        gridLayout_14->addLayout(verticalLayout_9, 0, 0, 1, 1);
+
         stackedWidget_obrazovka->addWidget(page_zmenaLinky);
 
         gridLayout_4->addWidget(stackedWidget_obrazovka, 0, 0, 1, 2);
-
-        frame_debug = new QFrame(page_hlavniObrazovka);
-        frame_debug->setObjectName(QString::fromUtf8("frame_debug"));
-        frame_debug->setFrameShape(QFrame::StyledPanel);
-        frame_debug->setFrameShadow(QFrame::Raised);
-        formLayout = new QFormLayout(frame_debug);
-        formLayout->setSpacing(6);
-        formLayout->setContentsMargins(11, 11, 11, 11);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        label_announcement = new QLabel(frame_debug);
-        label_announcement->setObjectName(QString::fromUtf8("label_announcement"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, label_announcement);
-
-        label_6 = new QLabel(frame_debug);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        QSizePolicy sizePolicy11(QSizePolicy::Fixed, QSizePolicy::Maximum);
-        sizePolicy11.setHorizontalStretch(0);
-        sizePolicy11.setVerticalStretch(0);
-        sizePolicy11.setHeightForWidth(label_6->sizePolicy().hasHeightForWidth());
-        label_6->setSizePolicy(sizePolicy11);
-
-        formLayout->setWidget(7, QFormLayout::LabelRole, label_6);
-
-        label_zmena = new QLabel(frame_debug);
-        label_zmena->setObjectName(QString::fromUtf8("label_zmena"));
-
-        formLayout->setWidget(10, QFormLayout::LabelRole, label_zmena);
-
-        label_2 = new QLabel(frame_debug);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_2);
-
-        label_currentStopIndex = new QLabel(frame_debug);
-        label_currentStopIndex->setObjectName(QString::fromUtf8("label_currentStopIndex"));
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, label_currentStopIndex);
-
-        label_4 = new QLabel(frame_debug);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-
-        formLayout->setWidget(4, QFormLayout::LabelRole, label_4);
-
-        label_locationState = new QLabel(frame_debug);
-        label_locationState->setObjectName(QString::fromUtf8("label_locationState"));
-
-        formLayout->setWidget(4, QFormLayout::FieldRole, label_locationState);
-
-        label_build = new QLabel(frame_debug);
-        label_build->setObjectName(QString::fromUtf8("label_build"));
-
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_build);
-
-        label_10 = new QLabel(frame_debug);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-        sizePolicy6.setHeightForWidth(label_10->sizePolicy().hasHeightForWidth());
-        label_10->setSizePolicy(sizePolicy6);
-
-        formLayout->setWidget(1, QFormLayout::FieldRole, label_10);
-
-
-        gridLayout_4->addWidget(frame_debug, 4, 0, 1, 1);
 
         prepinadloStran->addWidget(page_hlavniObrazovka);
         page_seznamSluzeb = new QWidget();
@@ -2001,15 +2118,6 @@ public:
         prepinadloStran->addWidget(page_seznamSluzeb);
         page_casovac = new QWidget();
         page_casovac->setObjectName(QString::fromUtf8("page_casovac"));
-        label = new QLabel(page_casovac);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(420, 80, 151, 41));
-        labelZbyvajiciVteriny = new QLabel(page_casovac);
-        labelZbyvajiciVteriny->setObjectName(QString::fromUtf8("labelZbyvajiciVteriny"));
-        labelZbyvajiciVteriny->setGeometry(QRect(420, 140, 231, 121));
-        QFont font16;
-        font16.setPointSize(60);
-        labelZbyvajiciVteriny->setFont(font16);
         verticalLayoutWidget_3 = new QWidget(page_casovac);
         verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
         verticalLayoutWidget_3->setGeometry(QRect(60, 110, 160, 84));
@@ -2033,6 +2141,27 @@ public:
 
         verticalLayout_5->addWidget(tlacitkoNastavVteriny);
 
+        verticalLayoutWidget = new QWidget(page_casovac);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(330, 160, 160, 118));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(verticalLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        verticalLayout->addWidget(label);
+
+        labelZbyvajiciVteriny = new QLabel(verticalLayoutWidget);
+        labelZbyvajiciVteriny->setObjectName(QString::fromUtf8("labelZbyvajiciVteriny"));
+        QFont font16;
+        font16.setPointSize(60);
+        labelZbyvajiciVteriny->setFont(font16);
+
+        verticalLayout->addWidget(labelZbyvajiciVteriny);
+
         prepinadloStran->addWidget(page_casovac);
         page_svg = new QWidget();
         page_svg->setObjectName(QString::fromUtf8("page_svg"));
@@ -2053,6 +2182,8 @@ public:
         graphicsView->setLineWidth(0);
         graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        graphicsView->setSizeAdjustPolicy(QAbstractScrollArea::AdjustIgnored);
+        graphicsView->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
 
         verticalLayout_6->addWidget(graphicsView);
 
@@ -2073,8 +2204,8 @@ public:
         bocniTabloWrapper->setContentsMargins(0, 0, 0, 0);
         bocniTabloNazev = new QLabel(verticalLayoutWidget_4);
         bocniTabloNazev->setObjectName(QString::fromUtf8("bocniTabloNazev"));
-        sizePolicy9.setHeightForWidth(bocniTabloNazev->sizePolicy().hasHeightForWidth());
-        bocniTabloNazev->setSizePolicy(sizePolicy9);
+        sizePolicy8.setHeightForWidth(bocniTabloNazev->sizePolicy().hasHeightForWidth());
+        bocniTabloNazev->setSizePolicy(sizePolicy8);
 
         bocniTabloWrapper->addWidget(bocniTabloNazev);
 
@@ -2083,8 +2214,8 @@ public:
         jenBocniTablo->setObjectName(QString::fromUtf8("jenBocniTablo"));
         labelSideLine = new QLabel(verticalLayoutWidget_4);
         labelSideLine->setObjectName(QString::fromUtf8("labelSideLine"));
-        sizePolicy11.setHeightForWidth(labelSideLine->sizePolicy().hasHeightForWidth());
-        labelSideLine->setSizePolicy(sizePolicy11);
+        sizePolicy4.setHeightForWidth(labelSideLine->sizePolicy().hasHeightForWidth());
+        labelSideLine->setSizePolicy(sizePolicy4);
         labelSideLine->setMinimumSize(QSize(115, 78));
         labelSideLine->setMaximumSize(QSize(115, 78));
         labelSideLine->setBaseSize(QSize(115, 78));
@@ -2104,11 +2235,11 @@ public:
         pravplka->setSizeConstraint(QLayout::SetDefaultConstraint);
         labelSideTopRow = new QLabel(verticalLayoutWidget_4);
         labelSideTopRow->setObjectName(QString::fromUtf8("labelSideTopRow"));
-        QSizePolicy sizePolicy12(QSizePolicy::Fixed, QSizePolicy::Minimum);
-        sizePolicy12.setHorizontalStretch(0);
-        sizePolicy12.setVerticalStretch(0);
-        sizePolicy12.setHeightForWidth(labelSideTopRow->sizePolicy().hasHeightForWidth());
-        labelSideTopRow->setSizePolicy(sizePolicy12);
+        QSizePolicy sizePolicy11(QSizePolicy::Fixed, QSizePolicy::Minimum);
+        sizePolicy11.setHorizontalStretch(0);
+        sizePolicy11.setVerticalStretch(0);
+        sizePolicy11.setHeightForWidth(labelSideTopRow->sizePolicy().hasHeightForWidth());
+        labelSideTopRow->setSizePolicy(sizePolicy11);
         labelSideTopRow->setMinimumSize(QSize(344, 0));
         labelSideTopRow->setMaximumSize(QSize(344, 37));
         labelSideTopRow->setBaseSize(QSize(344, 0));
@@ -2124,8 +2255,8 @@ public:
 
         labelSideBottomRow = new QLabel(verticalLayoutWidget_4);
         labelSideBottomRow->setObjectName(QString::fromUtf8("labelSideBottomRow"));
-        sizePolicy12.setHeightForWidth(labelSideBottomRow->sizePolicy().hasHeightForWidth());
-        labelSideBottomRow->setSizePolicy(sizePolicy12);
+        sizePolicy11.setHeightForWidth(labelSideBottomRow->sizePolicy().hasHeightForWidth());
+        labelSideBottomRow->setSizePolicy(sizePolicy11);
         labelSideBottomRow->setMinimumSize(QSize(344, 0));
         labelSideBottomRow->setMaximumSize(QSize(344, 41));
         labelSideBottomRow->setBaseSize(QSize(344, 0));
@@ -2156,8 +2287,8 @@ public:
         vnitrniTabloWraper->setContentsMargins(0, 0, 0, 0);
         predniLabel_3 = new QLabel(verticalLayoutWidget_7);
         predniLabel_3->setObjectName(QString::fromUtf8("predniLabel_3"));
-        sizePolicy4.setHeightForWidth(predniLabel_3->sizePolicy().hasHeightForWidth());
-        predniLabel_3->setSizePolicy(sizePolicy4);
+        sizePolicy.setHeightForWidth(predniLabel_3->sizePolicy().hasHeightForWidth());
+        predniLabel_3->setSizePolicy(sizePolicy);
 
         vnitrniTabloWraper->addWidget(predniLabel_3);
 
@@ -2170,11 +2301,11 @@ public:
         horizontalLayout_10->setSizeConstraint(QLayout::SetDefaultConstraint);
         labelInnerLine = new QLabel(verticalLayoutWidget_7);
         labelInnerLine->setObjectName(QString::fromUtf8("labelInnerLine"));
-        QSizePolicy sizePolicy13(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy13.setHorizontalStretch(0);
-        sizePolicy13.setVerticalStretch(0);
-        sizePolicy13.setHeightForWidth(labelInnerLine->sizePolicy().hasHeightForWidth());
-        labelInnerLine->setSizePolicy(sizePolicy13);
+        QSizePolicy sizePolicy12(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy12.setHorizontalStretch(0);
+        sizePolicy12.setVerticalStretch(0);
+        sizePolicy12.setHeightForWidth(labelInnerLine->sizePolicy().hasHeightForWidth());
+        labelInnerLine->setSizePolicy(sizePolicy12);
         labelInnerLine->setMinimumSize(QSize(91, 0));
         labelInnerLine->setMaximumSize(QSize(91, 33));
         QFont font19;
@@ -2188,8 +2319,8 @@ public:
 
         labelInnerTopRow = new QLabel(verticalLayoutWidget_7);
         labelInnerTopRow->setObjectName(QString::fromUtf8("labelInnerTopRow"));
-        sizePolicy13.setHeightForWidth(labelInnerTopRow->sizePolicy().hasHeightForWidth());
-        labelInnerTopRow->setSizePolicy(sizePolicy13);
+        sizePolicy12.setHeightForWidth(labelInnerTopRow->sizePolicy().hasHeightForWidth());
+        labelInnerTopRow->setSizePolicy(sizePolicy12);
         labelInnerTopRow->setMinimumSize(QSize(464, 0));
         labelInnerTopRow->setMaximumSize(QSize(464, 33));
         labelInnerTopRow->setFont(font19);
@@ -2208,8 +2339,8 @@ public:
 
         labelInnerBottomRow = new QLabel(verticalLayoutWidget_7);
         labelInnerBottomRow->setObjectName(QString::fromUtf8("labelInnerBottomRow"));
-        sizePolicy13.setHeightForWidth(labelInnerBottomRow->sizePolicy().hasHeightForWidth());
-        labelInnerBottomRow->setSizePolicy(sizePolicy13);
+        sizePolicy12.setHeightForWidth(labelInnerBottomRow->sizePolicy().hasHeightForWidth());
+        labelInnerBottomRow->setSizePolicy(sizePolicy12);
         labelInnerBottomRow->setMinimumSize(QSize(555, 0));
         labelInnerBottomRow->setMaximumSize(QSize(555, 33));
         labelInnerBottomRow->setFont(font19);
@@ -2229,11 +2360,11 @@ public:
         zadniTabloWrapper->setContentsMargins(0, 0, 0, 0);
         predniLabel_4 = new QLabel(verticalLayoutWidget_9);
         predniLabel_4->setObjectName(QString::fromUtf8("predniLabel_4"));
-        QSizePolicy sizePolicy14(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy14.setHorizontalStretch(0);
-        sizePolicy14.setVerticalStretch(0);
-        sizePolicy14.setHeightForWidth(predniLabel_4->sizePolicy().hasHeightForWidth());
-        predniLabel_4->setSizePolicy(sizePolicy14);
+        QSizePolicy sizePolicy13(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy13.setHorizontalStretch(0);
+        sizePolicy13.setVerticalStretch(0);
+        sizePolicy13.setHeightForWidth(predniLabel_4->sizePolicy().hasHeightForWidth());
+        predniLabel_4->setSizePolicy(sizePolicy13);
 
         zadniTabloWrapper->addWidget(predniLabel_4);
 
@@ -2242,8 +2373,11 @@ public:
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         labelRearLine = new QLabel(verticalLayoutWidget_9);
         labelRearLine->setObjectName(QString::fromUtf8("labelRearLine"));
-        sizePolicy5.setHeightForWidth(labelRearLine->sizePolicy().hasHeightForWidth());
-        labelRearLine->setSizePolicy(sizePolicy5);
+        QSizePolicy sizePolicy14(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy14.setHorizontalStretch(0);
+        sizePolicy14.setVerticalStretch(0);
+        sizePolicy14.setHeightForWidth(labelRearLine->sizePolicy().hasHeightForWidth());
+        labelRearLine->setSizePolicy(sizePolicy14);
         labelRearLine->setMinimumSize(QSize(115, 78));
         labelRearLine->setMaximumSize(QSize(115, 78));
         labelRearLine->setFont(font17);
@@ -2273,8 +2407,8 @@ public:
         horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
         labelFrontLine = new QLabel(layoutWidget);
         labelFrontLine->setObjectName(QString::fromUtf8("labelFrontLine"));
-        sizePolicy4.setHeightForWidth(labelFrontLine->sizePolicy().hasHeightForWidth());
-        labelFrontLine->setSizePolicy(sizePolicy4);
+        sizePolicy.setHeightForWidth(labelFrontLine->sizePolicy().hasHeightForWidth());
+        labelFrontLine->setSizePolicy(sizePolicy);
         labelFrontLine->setMinimumSize(QSize(115, 78));
         labelFrontLine->setMaximumSize(QSize(115, 78));
         labelFrontLine->setFont(font17);
@@ -2291,8 +2425,8 @@ public:
         layoutDvaRadky->setObjectName(QString::fromUtf8("layoutDvaRadky"));
         labelFrontTopRow = new QLabel(layoutWidget);
         labelFrontTopRow->setObjectName(QString::fromUtf8("labelFrontTopRow"));
-        sizePolicy9.setHeightForWidth(labelFrontTopRow->sizePolicy().hasHeightForWidth());
-        labelFrontTopRow->setSizePolicy(sizePolicy9);
+        sizePolicy8.setHeightForWidth(labelFrontTopRow->sizePolicy().hasHeightForWidth());
+        labelFrontTopRow->setSizePolicy(sizePolicy8);
         labelFrontTopRow->setMinimumSize(QSize(460, 0));
         labelFrontTopRow->setMaximumSize(QSize(460, 37));
         QFont font20;
@@ -2309,8 +2443,8 @@ public:
 
         labelFrontBottomRow = new QLabel(layoutWidget);
         labelFrontBottomRow->setObjectName(QString::fromUtf8("labelFrontBottomRow"));
-        sizePolicy9.setHeightForWidth(labelFrontBottomRow->sizePolicy().hasHeightForWidth());
-        labelFrontBottomRow->setSizePolicy(sizePolicy9);
+        sizePolicy8.setHeightForWidth(labelFrontBottomRow->sizePolicy().hasHeightForWidth());
+        labelFrontBottomRow->setSizePolicy(sizePolicy8);
         labelFrontBottomRow->setMinimumSize(QSize(460, 0));
         labelFrontBottomRow->setMaximumSize(QSize(460, 41));
         labelFrontBottomRow->setFont(font19);
@@ -2326,8 +2460,8 @@ public:
         labelFrontSingle = new QLabel(layoutWidget);
         labelFrontSingle->setObjectName(QString::fromUtf8("labelFrontSingle"));
         labelFrontSingle->setEnabled(false);
-        sizePolicy9.setHeightForWidth(labelFrontSingle->sizePolicy().hasHeightForWidth());
-        labelFrontSingle->setSizePolicy(sizePolicy9);
+        sizePolicy8.setHeightForWidth(labelFrontSingle->sizePolicy().hasHeightForWidth());
+        labelFrontSingle->setSizePolicy(sizePolicy8);
         labelFrontSingle->setMinimumSize(QSize(460, 0));
         labelFrontSingle->setMaximumSize(QSize(460, 78));
         QFont font21;
@@ -2350,20 +2484,14 @@ public:
 
         prepinadloStran->addWidget(page_led);
 
-        horizontalLayout_5->addWidget(prepinadloStran);
-
-
-        verticalLayout->addLayout(horizontalLayout_5);
-
-
-        horizontalLayout_4->addLayout(verticalLayout);
+        horizontalLayout_4->addWidget(prepinadloStran);
 
         MainWindow->setCentralWidget(centralWidget);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         mainToolBar->setEnabled(true);
-        sizePolicy14.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
-        mainToolBar->setSizePolicy(sizePolicy14);
+        sizePolicy13.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
+        mainToolBar->setSizePolicy(sizePolicy13);
         mainToolBar->setMovable(false);
         mainToolBar->setFloatable(false);
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
@@ -2375,7 +2503,7 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
         menuBar->setEnabled(true);
-        menuBar->setGeometry(QRect(0, 0, 1285, 21));
+        menuBar->setGeometry(QRect(0, 0, 1088, 21));
         menuBar->setNativeMenuBar(false);
         menunacti = new QMenu(menuBar);
         menunacti->setObjectName(QString::fromUtf8("menunacti"));
@@ -2419,30 +2547,42 @@ public:
         pushButton_fullscreen->setText(QCoreApplication::translate("MainWindow", "F6 Fullscreen", nullptr));
         refreshTlac->setText(QCoreApplication::translate("MainWindow", "F7 refresh", nullptr));
         quitTlacitko->setText(QCoreApplication::translate("MainWindow", "F8 QUIT", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "LocationState", nullptr));
+        label_locationState->setText(QCoreApplication::translate("MainWindow", "unknown", nullptr));
+        label_10->setText(QCoreApplication::translate("MainWindow", "verze:", nullptr));
+        label_currentStopIndex->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        label_build->setText(QCoreApplication::translate("MainWindow", "verze", nullptr));
+        label_announcement->setText(QCoreApplication::translate("MainWindow", "announcement", nullptr));
+        label_zmena->setText(QCoreApplication::translate("MainWindow", "zmena", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "CurrentStopIndex", nullptr));
+        label_6->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));
-        label_nacestne->setText(QCoreApplication::translate("MainWindow", "\305\240anghaj", nullptr));
         label_hodiny->setText(QCoreApplication::translate("MainWindow", "16:14", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "P\305\231es:", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Via:", nullptr));
+        label_nacestne->setText(QCoreApplication::translate("MainWindow", "\305\240anghaj", nullptr));
         label_cil_sipka->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><img src=\":/images/resources/LCD-piktogramy_verze-LCD-5-17.svg\" height=\"50\" /></p></body></html>", nullptr));
         Lcil->setText(QCoreApplication::translate("MainWindow", "textCile", nullptr));
         label_adalejako->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:20pt;\">a d\303\241le jako</span><span style=\" font-size:15pt; color:#969696;\">/ continues as</span></p></body></html>", nullptr));
         label_navaznaLinka->setText(QCoreApplication::translate("MainWindow", "XXX", nullptr));
         label_continuesas->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><img src=\":/images/resources/LCD-piktogramy_verze-LCD-5-17.svg\" height=\"30\"/></p></body></html>", nullptr));
         label_navaznyCil->setText(QCoreApplication::translate("MainWindow", "cil", nullptr));
-        sipka->setText(QCoreApplication::translate("MainWindow", "\342\206\221", nullptr));
-        Lnacestna4->setText(QCoreApplication::translate("MainWindow", "Dalsi 3", nullptr));
+        Lnacestna5->setText(QCoreApplication::translate("MainWindow", "Dalsi 4", nullptr));
         label_pasmo3_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo3_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
         Lnacestna2->setText(QCoreApplication::translate("MainWindow", "Dalsi 1", nullptr));
-        label_pasmo2_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
-        label_pasmo2_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
         label_pasmo5_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo5_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
+        Lnacestna4->setText(QCoreApplication::translate("MainWindow", "Dalsi 3", nullptr));
+        label_pasmo2_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
+        label_pasmo2_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
+        Lnacestna3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Dalsi 2</p></body></html>", nullptr));
         label_pasmo4_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo4_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
-        Lnacestna5->setText(QCoreApplication::translate("MainWindow", "Dalsi 4", nullptr));
-        Lnacestna3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p>Dalsi 2</p></body></html>", nullptr));
+        sipka->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
+        sipka_2->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
+        sipka_3->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
+        sipka_4->setText(QCoreApplication::translate("MainWindow", "\342\206\221", nullptr));
         label_oznType->setText(QCoreApplication::translate("MainWindow", "obrazek", nullptr));
         label_oznTitle->setText(QCoreApplication::translate("MainWindow", "Nadpis", nullptr));
         label_oznTextCs->setText(QCoreApplication::translate("MainWindow", "TextCZ", nullptr));
@@ -2517,6 +2657,7 @@ public:
         label_prestup11_odjezd->setText(QCoreApplication::translate("MainWindow", "5min", nullptr));
         label_pasmo1_2->setText(QCoreApplication::translate("MainWindow", "P2", nullptr));
         label_pasmo1_1->setText(QCoreApplication::translate("MainWindow", "P1", nullptr));
+        sipka_5->setText(QCoreApplication::translate("MainWindow", "|", nullptr));
         Lnacestna1->setText(QCoreApplication::translate("MainWindow", "PristiZastavka", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "PID", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "FW version:", nullptr));
@@ -2528,15 +2669,6 @@ public:
         label_15->setText(QCoreApplication::translate("MainWindow", "Linka1", nullptr));
         label_17->setText(QCoreApplication::translate("MainWindow", "->", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "Linka2", nullptr));
-        label_announcement->setText(QCoreApplication::translate("MainWindow", "announcement", nullptr));
-        label_6->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
-        label_zmena->setText(QCoreApplication::translate("MainWindow", "zmena", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "CurrentStopIndex", nullptr));
-        label_currentStopIndex->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "LocationState", nullptr));
-        label_locationState->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
-        label_build->setText(QCoreApplication::translate("MainWindow", "verze", nullptr));
-        label_10->setText(QCoreApplication::translate("MainWindow", "verze:", nullptr));
         QTableWidgetItem *___qtablewidgetitem = tabulkaSubscriberu->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "N\303\241zev slu\305\276by", nullptr));
         QTableWidgetItem *___qtablewidgetitem1 = tabulkaSubscriberu->horizontalHeaderItem(1);
@@ -2545,10 +2677,10 @@ public:
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "IP Adresa", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tabulkaSubscriberu->horizontalHeaderItem(3);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "port", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));
-        labelZbyvajiciVteriny->setText(QCoreApplication::translate("MainWindow", "xx s", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Pole pro zad\303\241n\303\255 intervalu", nullptr));
         tlacitkoNastavVteriny->setText(QCoreApplication::translate("MainWindow", "Nastav interval", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));
+        labelZbyvajiciVteriny->setText(QCoreApplication::translate("MainWindow", "xx s", nullptr));
         bocniTabloNazev->setText(QCoreApplication::translate("MainWindow", "Bo\304\215n\303\255 tablo", nullptr));
         labelSideLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
         labelSideTopRow->setText(QCoreApplication::translate("MainWindow", "DestinationSideName", nullptr));

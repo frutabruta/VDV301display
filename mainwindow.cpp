@@ -1063,6 +1063,13 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
     labelVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
     svgVykreslovac.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
+
+    QString stylTextu="color:"+barvaPisma;
+    ui->Lnacestna1->setStyleSheet(stylTextu);
+    ui->label_pasmo1_1->setStyleSheet(stylTextu);
+    ui->label_pasmo1_2->setStyleSheet(stylTextu);
+
+
 }
 
 
