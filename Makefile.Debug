@@ -230,7 +230,19 @@ debug/qrc_resources.cpp: resources.qrc \
 		resources/LCD-piktogramy_verze-LCD-5-33.svg \
 		resources/LCD-piktogramy_verze-LCD-5-37.svg \
 		resources/LCD-piktogramy_verze-LCD-5-41.svg \
-		resources/LCD-piktogramy_verze-LCD-5-32.svg
+		resources/LCD-piktogramy_verze-LCD-5-32.svg \
+		fonty/21-pid-28.ttf \
+		fonty/Roboto-Regular.ttf \
+		fonty/21-pid-8.ttf \
+		fonty/21-pid-10.ttf \
+		fonty/21-pid-23.ttf \
+		fonty/21-pid-3.ttf \
+		fonty/21-pid-26.ttf \
+		fonty/21-pid-30.ttf \
+		fonty/21-pid-21.ttf \
+		fonty/21-pid-1.ttf \
+		fonty/21-pid-5.ttf \
+		fonty/Roboto-Bold.ttf
 	C:\Qt\5.15.2\mingw81_32\bin\rcc.exe -name resources resources.qrc -o debug\qrc_resources.cpp
 
 compiler_moc_predefs_make_all: debug/moc_predefs.h
@@ -3480,6 +3492,13 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QFormLayout \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qformlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QLayout \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QFrame \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGraphicsView \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgraphicsview.h \
@@ -3488,10 +3507,6 @@ debug/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qscrollarea.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractscrollarea.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGridLayout \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHeaderView \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qheaderview.h \

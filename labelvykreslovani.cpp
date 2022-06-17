@@ -88,6 +88,7 @@ void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozad
     //
 
     qframe->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
+
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
 
 }

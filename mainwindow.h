@@ -81,6 +81,11 @@ public:
     QFont font8;
     QFont font10;
 
+    //RobotoRegular
+    QFont standardPismoRegular;
+
+
+
     //LCD fonty
 
     //set font

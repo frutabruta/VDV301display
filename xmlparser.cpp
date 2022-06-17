@@ -97,7 +97,6 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
 {
     qDebug()<<"XmlParser::tripDoSeznamuZastavek";
 
-
     QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
 
     docasnyPocetZastavek= nodes.count();
@@ -115,11 +114,7 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.elementsByTagName("StopLcdName").at(0).firstChildElement().text();
         docasnaZastavka.linka.LineName=aktZastavkaDOM.elementsByTagName("DisplayContent").at(0).toElement().elementsByTagName("LineInformation").at(0).toElement().elementsByTagName("LineName").at(0).firstChildElement().text();
 
-
-
-
         QVector<QString> priznakyStringy;
-
 
         QDomNodeList seznamPriznakuElements=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").elementsByTagName("LineProperty");
 
@@ -130,8 +125,6 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
             priznakyStringy.push_back(priznak);
         }
         docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
-
-
 
         docasnaZastavka.zastavka.StopIndex=i;
         docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky(aktZastavkaDOM);
@@ -158,9 +151,6 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         docasnaZastavka.cil.NameRear=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationRearName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameInner=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameLcd=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
-
-
-
 
         qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
         docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
@@ -400,15 +390,15 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         aktualniPrestup.line.LineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
 
         aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-        aktualniPrestup.departureTime=aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.expectedDepartureTime=aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue();
 
 
-        QDateTime timestamp = QDateTime::fromString(aktualniPrestup.departureTime,Qt::ISODate);
+        QDateTime timestamp = QDateTime::fromString(aktualniPrestup.expectedDepartureTime,Qt::ISODate);
         // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
         //  timestamp = timestamp.toLocalTime(); // convert to local time
 
         QString vysledek= QString::number(-timestamp.secsTo(QDateTime::currentDateTime())/60)+" min." ;
-        aktualniPrestup.departureTime=vysledek;
+        aktualniPrestup.expectedDepartureTime=vysledek;
 
         // aktualniPrestup.departureTime=timestamp.toString("hh:mm");
 
@@ -430,7 +420,7 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         }
         aktualniPrestup.line=priznakyDoLinky(priznakyStringy,aktualniPrestup.line);
 
-        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.departureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform;
+        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform;
 
 
 

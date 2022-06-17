@@ -43,4 +43,18 @@
         <file>resources/LCD-piktogramy_verze-LCD-5-41.svg</file>
         <file>resources/LCD-piktogramy_verze-LCD-5-42.svg</file>
     </qresource>
+    <qresource prefix="/fonts">
+        <file>fonty/21-pid-1.ttf</file>
+        <file>fonty/21-pid-3.ttf</file>
+        <file>fonty/21-pid-5.ttf</file>
+        <file>fonty/21-pid-8.ttf</file>
+        <file>fonty/21-pid-10.ttf</file>
+        <file>fonty/21-pid-21.ttf</file>
+        <file>fonty/21-pid-23.ttf</file>
+        <file>fonty/21-pid-26.ttf</file>
+        <file>fonty/21-pid-28.ttf</file>
+        <file>fonty/21-pid-30.ttf</file>
+        <file>fonty/Roboto-Bold.ttf</file>
+        <file>fonty/Roboto-Regular.ttf</file>
+    </qresource>
 </RCC>

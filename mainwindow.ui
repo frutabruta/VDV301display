@@ -306,6 +306,11 @@ QLabel{color:#FFFFFF}</string>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="font">
+                   <font>
+                    <family>roboto</family>
+                   </font>
+                  </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
                   </property>
@@ -525,37 +530,6 @@ QLabel{color:#FFFFFF}</string>
                               <enum>QLayout::SetDefaultConstraint</enum>
                              </property>
                              <item>
-                              <widget class="QLabel" name="label_24">
-                               <property name="sizePolicy">
-                                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                                 <horstretch>0</horstretch>
-                                 <verstretch>0</verstretch>
-                                </sizepolicy>
-                               </property>
-                               <property name="maximumSize">
-                                <size>
-                                 <width>50</width>
-                                 <height>25</height>
-                                </size>
-                               </property>
-                               <property name="font">
-                                <font>
-                                 <family>roboto</family>
-                                 <pointsize>15</pointsize>
-                                </font>
-                               </property>
-                               <property name="styleSheet">
-                                <string notr="true">*{background-color: rgb(100,100,100)}</string>
-                               </property>
-                               <property name="text">
-                                <string>via:</string>
-                               </property>
-                               <property name="alignment">
-                                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                               </property>
-                              </widget>
-                             </item>
-                             <item>
                               <widget class="QLabel" name="label_25">
                                <property name="sizePolicy">
                                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -580,6 +554,37 @@ QLabel{color:#FFFFFF}</string>
                                </property>
                                <property name="text">
                                 <string>Přes:</string>
+                               </property>
+                               <property name="alignment">
+                                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                               </property>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QLabel" name="label_24">
+                               <property name="sizePolicy">
+                                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                 <horstretch>0</horstretch>
+                                 <verstretch>0</verstretch>
+                                </sizepolicy>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>50</width>
+                                 <height>25</height>
+                                </size>
+                               </property>
+                               <property name="font">
+                                <font>
+                                 <family>roboto</family>
+                                 <pointsize>15</pointsize>
+                                </font>
+                               </property>
+                               <property name="styleSheet">
+                                <string notr="true">*{background-color: rgb(100,100,100)}</string>
+                               </property>
+                               <property name="text">
+                                <string>Via:</string>
                                </property>
                                <property name="alignment">
                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -742,7 +747,7 @@ border-radius: 8px;
                      <item>
                       <widget class="QStackedWidget" name="stackedWidget_prostredek">
                        <property name="currentIndex">
-                        <number>4</number>
+                        <number>0</number>
                        </property>
                        <widget class="QWidget" name="page_hlavni_2">
                         <layout class="QGridLayout" name="gridLayout_2">

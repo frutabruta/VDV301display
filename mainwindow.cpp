@@ -21,11 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     // fonty
-    fdb.addApplicationFont("fonty/21-pid-1.ttf");
-    fdb.addApplicationFont("fonty/21-pid-3.ttf");
-    fdb.addApplicationFont("fonty/21-pid-5.ttf");
-    fdb.addApplicationFont("fonty/21-pid-8.ttf");
-    fdb.addApplicationFont("fonty/21-pid-10.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
+
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
 
     font8.setFamily("21-PID 8");
     font8.setPointSize(65);
@@ -37,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //LCD fonty
     fontPasmoVelke.setPointSize(36);
     fontPasmoVelke.setBold(true);
+    fontPasmoVelke.setFamily("Roboto");
 
     fontPasmoMale.setPointSize(20);
     fontPasmoMale.setBold(true);
@@ -443,6 +447,7 @@ int MainWindow::VykresleniPrijatychDat()
 
     //   hlavniVykresliNasledne();
 
+    FormatZobrazeni();
     indexAktualniStridaneStranky=0;
     timerStridejStranky->start();
 
@@ -576,6 +581,7 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
         seznamLabelNazevZastavky.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu)));
 
+
         //if(navazny==true)
         if(stavSystemu.locationState=="AtStop")
         {
@@ -626,6 +632,20 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
             seznamLabelPasmoHorni.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
         }
+
+        if(navazny==false)
+        {
+            seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
+            seznamLabelPasmoHorni.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
+            seznamLabelPasmoDolni.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
+        }
+        else
+        {
+            seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
+            seznamLabelPasmoHorni.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
+            seznamLabelPasmoDolni.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
+        }
+
 
 
         //  qDebug()<<"label pasma "<<i<<" "<<stavSystemu.indexAktZastavky<<" p1:"<<pasmaString1<<" p2:"<<pasmaString2<<" "<<"pomocnyIndex";
@@ -688,9 +708,6 @@ int MainWindow::FormatZobrazeni()
 {
     qDebug()<<"MainWindow::FormatZobrazeni";
     qInfo()<<"\n FormatZobrazeni";
-
-
-
 
 
 
@@ -1368,7 +1385,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );
         seznamLabelPrestupNastupiste.at(i)->show();
 
-        seznamLabelPrestupOdjezd.at(i)->setText(aktualniPrestup.departureTime );
+        seznamLabelPrestupOdjezd.at(i)->setText(aktualniPrestup.expectedDepartureTime);
         seznamLabelPrestupOdjezd.at(i)->show();
     }
 }
