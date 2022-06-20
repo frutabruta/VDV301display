@@ -227,6 +227,17 @@ void SvgVykreslovani::vymazObrazovku()
 {
     qDebug()<<"SvgVykreslovani::vymazObrazovku()";
 
+
+
+            QString celaCesta=interniCestaSlozkaSvg+"/hlavni.svg";
+
+            QDomDocument xmlko = this->souborDoQDomDocument(celaCesta);
+            if (xmlko.isNull())
+            {
+                qDebug()<<"soubor SVG se nenacetl";
+            }
+            xmlko=vymazZastavky(xmlko);
+            qDomDocumentDoSouboru(interniCestaSlozkaSvg+"/vystup.svg",xmlko);
 }
 
 

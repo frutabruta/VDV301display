@@ -17,7 +17,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
-    svgVykreslovac(QCoreApplication::applicationDirPath()),
+    svgVykreslovani(QCoreApplication::applicationDirPath()),
     ui(new Ui::MainWindow)
 {
 
@@ -93,10 +93,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     FormatZobrazeni();
     instanceXMLparser.Test();
+
+
+
     timer->start(1000); //refresh vterin
-    timerBocniPanel->start(2000);
-    timerNacestneZastavky->start(20);
-    timerStridejStranky->start(10000);
+    timerBocniPanel->start(intervalBocniPanel);
+    timerNacestneZastavky->start(intervalPosunuNacest);
+    timerStridejStranky->start(intervalStridaniStranek);
 
     CustomerInformationServiceSubscriber.odebirano=false ;
     CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -139,6 +142,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 }
+
+
+
 
 
 int MainWindow::existujeKonfigurak()
@@ -220,7 +226,7 @@ void MainWindow::vsechnyConnecty()
     connect(keyF2, &QShortcut::activated, this,&MainWindow::on_svgTlacitko_clicked );
     connect(keyF3, &QShortcut::activated, this, &MainWindow::on_tlacitkoLed_clicked );
     connect(keyF4, &QShortcut::activated, this, &MainWindow::on_tlacitkoSeznamSluzeb_clicked);
-    connect(keyF5, &QShortcut::activated, this,&MainWindow::on_tlacitkoCasovac_clicked );
+    connect(keyF5, &QShortcut::activated, this, &MainWindow::on_tlacitkoCasovac_clicked );
     connect(keyF6, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
     connect(keyF7, &QShortcut::activated, this, &MainWindow::on_refreshTlac_clicked);
     connect(keyF8, &QShortcut::activated, this, &MainWindow::on_quitTlacitko_clicked);
@@ -290,7 +296,8 @@ void MainWindow::hlavniNaplnPoleLabelu()
     seznamLabelPasmoHorni.push_back(ui->label_pasmo4_2);
     seznamLabelPasmoHorni.push_back(ui->label_pasmo5_2);
 
-    seznamLabelPrestupCil.push_back(ui->label_prestup0_cil);
+
+    seznamLabelPrestupCil .push_back(ui->label_prestup0_cil);
     seznamLabelPrestupCil.push_back(ui->label_prestup1_cil);
     seznamLabelPrestupCil.push_back(ui->label_prestup2_cil);
     seznamLabelPrestupCil.push_back(ui->label_prestup3_cil);
@@ -366,23 +373,40 @@ void MainWindow::naplnMapBarev()
     barvaTextu["localTram"]=barva_Tramvaj_120_2_0;
     barvaPozadi["localTram"]=barva_bila_255_255_255;
 
+    barvaTextu["localTramDiversion"]=barva_Tramvaj_120_2_0;
+    barvaPozadi["localTramDiversion"]=barva_Vyluky_255_170_30;
+
     //dd3 Denní městská autobusová linka
     barvaTextu["localBus"]=barva_Autobus_0_120_160;
     barvaPozadi["localBus"]=barva_bila_255_255_255;
+
+    barvaTextu["localBusDiversion"]=barva_Autobus_0_120_160;
+    barvaPozadi["localBusDiversion"]=barva_Vyluky_255_170_30;
 
 
     //dd4 Denní příměstská nebo regionální linka
     barvaTextu["regionalBus"]=barva_cerna_0_0_0;
     barvaPozadi["regionalBus"]=barva_bila_255_255_255;
 
+
+    barvaTextu["regionalBusDiversion"]=barva_cerna_0_0_0;
+    barvaPozadi["regionalBusDiversion"]=barva_Vyluky_255_170_30;
+
     //dd5 Noční městská autobusová linka
     barvaTextu["localBusNight"]=barva_bila_255_255_255;
     barvaPozadi["localBusNight"]=barva_Autobus_0_120_160;
+
+
+    barvaTextu["localBusNightDiversion"]=barva_Vyluky_255_170_30;
+    barvaPozadi["localBusNightDiversion"]=barva_Autobus_0_120_160;
 
     //dd6 Noční tramvaj
 
     barvaTextu["localTramNight"]=barva_bila_255_255_255;
     barvaPozadi["localTramNight"]=barva_Tramvaj_120_2_0;
+
+    barvaTextu["localTramNightDiversion"]=barva_Vyluky_255_170_30;
+    barvaPozadi["localTramNightDiversion"]=barva_Tramvaj_120_2_0;
 
     //dd7 Linka náhradní dopravy, městský autobus
     barvaTextu["localBusReplacement"]=barva_Vyluky_255_170_30;
@@ -398,8 +422,8 @@ void MainWindow::naplnMapBarev()
     barvaTextu["specialNeedsBus"]=barva_Specialni_143_188_25;
     barvaPozadi["specialNeedsBus"]=barva_bila_255_255_255;
     //dd11 Smluvni
-    // barvaTextu[""]=barva;
-    // barvaPozadi[""]=barva_bila_255_255_255;
+    barvaTextu["localBusSpecial"]=barva_Specialni_143_188_25;
+    barvaPozadi["localBusSpecial"]=barva_bila_255_255_255;
     //dd12 Přívoz
     barvaTextu["localPassengerFerry"]=barva_Privoz_0_164_167;
     barvaPozadi["localPassengerFerry"]=barva_bila_255_255_255;
@@ -409,12 +433,22 @@ void MainWindow::naplnMapBarev()
     //dd14 Linka náhradní dopravy, NAD za vlak
     barvaTextu["railReplacementBus"]=barva_Vyluky_255_170_30;
     barvaPozadi["railReplacementBus"]=barva_bila_255_255_255;
+
+    barvaTextu["railReplacementBusReplacement"]=barva_Vyluky_255_170_30;
+    barvaPozadi["railReplacementBusReplacement"]=barva_bila_255_255_255;
+
+
+
     //dd15 Linka náhradní dopravy, Tram
     barvaTextu["localTramReplacement"]=barva_Vyluky_255_170_30;
     barvaPozadi["localTramReplacement"]=barva_bila_255_255_255;
     //dd16 Noční příměstská nebo regionální linka
     barvaTextu["regionalBusNight"]=barva_bila_255_255_255;
     barvaPozadi["regionalBusNight"]=barva_Nocni_9_0_62;
+
+    barvaTextu["regionalBusNightDiversion"]=barva_Vyluky_255_170_30;
+    barvaPozadi["regionalBusNightDiversion"]=barva_Nocni_9_0_62;
+
     //dd17 Linka mimo systém PID (3 znaky)
     //  barvaTextu[""]=barva_PozadiD_150_150_150;
     //  barvaPozadi[""]=barva_bila_255_255_255;
@@ -452,6 +486,10 @@ void MainWindow::vymazObrazovku()
 {
     qDebug()<<"MainWindow::vymazObrazovku()";
     hlavniVymazObrazovku();
+    svgVykreslovani.vymazObrazovku();
+    ledVymazPanely();
+
+
 }
 
 
@@ -464,6 +502,15 @@ void MainWindow::hlavniVymazObrazovku()
     vymazPoleLabelu(seznamLabelNazevZastavky);
     vymazPoleLabelu(seznamLabelPasmoDolni);
     vymazPoleLabelu(seznamLabelPasmoHorni);
+    //obrazovka prestupu
+    vymazPoleLabelu(seznamLabelPrestupCil);
+    vymazPoleLabelu(seznamLabelPrestupLinka);
+    vymazPoleLabelu(seznamLabelPrestupNastupiste);
+    vymazPoleLabelu(seznamLabelPrestupOdjezd);
+
+    timerStridejStranky->stop();
+    strankyKeStridani.clear();
+    strankyKeStridani.push_back(ui->page_hlavni_2);
 }
 
 
@@ -716,7 +763,7 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         }
         else
         {
-            QString pasmaString1=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
+            QString pasmaString1=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
             QString zkratkaSystemuDvojtecka="";
             if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
             {
@@ -734,7 +781,7 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         }
         else
         {
-            QString pasmaString2=svgVykreslovac.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
+            QString pasmaString2=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
             seznamLabelPasmoHorni.at(i)->show();
 
             seznamLabelPasmoHorni.at(i)->setFont(fontPasmoMale );
@@ -997,8 +1044,11 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     globalniSeznamZastavek.clear();
     globalniSeznamZastavekNavaznehoSpoje.clear();
 
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek);
-    instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
+    if(!instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
+   {
+        vymazObrazovku();
+    }
+        instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
 
     //additional text message
     instanceXMLparser.nactiAdditionalTextMessage(instanceXMLparser.dokument, additionalTextMessage);
@@ -1061,7 +1111,7 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
     qDebug()<<"MainWindow::obarviPozadiPristi";
     //
     labelVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
-    svgVykreslovac.obarviPozadiPristi(barvaPisma,barvaPozadi);
+    svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
 
     QString stylTextu="color:"+barvaPisma;
@@ -1107,7 +1157,7 @@ bool MainWindow::svgVykresleni()
     if (globalniSeznamZastavek.length()>0)
     {
         //svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
-        svgVykreslovac.aktualizujVse(globalniSeznamZastavek,stavSystemu);
+        svgVykreslovani.aktualizujVse(globalniSeznamZastavek,stavSystemu);
     }
     else
     {
@@ -1251,6 +1301,17 @@ void MainWindow::ledInicializujVirtualniPanely()
     ledNaplnInner("123","vnitřní cíl", "vnitřní nácesty");
 }
 
+void MainWindow::ledVymazPanely()
+{
+    qDebug()<<"MainWindow::ledVymazPanelyy";
+    ledNaplnFront("","","");
+    ledNaplnSide("","","");
+    ledNaplnRear("");
+    ledNaplnInner("","", "");
+    textyBocniPanelkIteraci.clear();
+    textyVnitrniPanelkIteraci.clear();
+}
+
 void MainWindow::ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav )
 {
     qDebug()<<"MainWindow::aktualizujZobrazeniVirtualnichLedPanelu";
@@ -1360,7 +1421,7 @@ void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
     qDebug()<<"MainWindow::zobrazZmenuPasma";
     hlavniZobrazZmenuPasma(zPasem,naPasma);
-    svgVykreslovac.zobrazZmenuPasma(zPasem,naPasma);
+    svgVykreslovani.zobrazZmenuPasma(zPasem,naPasma);
 }
 
 void MainWindow::hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
@@ -1381,7 +1442,7 @@ void MainWindow::zobrazAnnoucement(QString title,QString type,QString textCz, QS
 {
     qDebug()<<"MainWindow::zobrazAnnoucement";
     hlavniZobrazAnnoucement(title,type,textCz,textEn);
-    svgVykreslovac.zobrazAnnoucement(title,type,textCz,textEn);
+    svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
 }
 
 void MainWindow::hlavniZobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
@@ -1490,6 +1551,11 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         label->hide();
     }
 
+    vymazPoleLabelu(seznamLabelPrestupCil);
+    vymazPoleLabelu(seznamLabelPrestupLinka);
+    vymazPoleLabelu(seznamLabelPrestupNastupiste);
+    vymazPoleLabelu(seznamLabelPrestupOdjezd);
+
 
 
     for (int i=0;i<labelVykreslovani.minimum(seznamPrestupu.count(), seznamLabelPrestupCil.count()) ; i++)
@@ -1519,29 +1585,43 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
 
     QString nahrazeno=labelVykreslovani.nahradMetro(line.LineName,subMode);
 
-    QString pozadi="";
-    QString text="";
+    //defaultni seda barva na bile pozadi, neznama kombinace
+    QString pozadi="background-color:"+barva_bila_255_255_255+";";
+    QString text="color:"+barva_PozadiD_150_150_150+";";
     if(nahrazeno==line.LineName)
     {
         if(line.isNight==true)
         {
             subMode=subMode+"Night";
         }
+
+        if(line.isDiversion)
+        {
+            subMode=subMode+"Diversion";
+          //  pozadi="background-color:"+barva_Vyluky_255_170_30+";";
+            qDebug()<<"linka je vylukova";
+        }
+        if(line.isReplacement)
+        {
+             subMode=subMode+"Replacement";
+        }
+        if(line.isSpecial)
+        {
+             subMode=subMode+"Special";
+        }
+
+
         if(barvaPozadi.contains(subMode))
         {
             pozadi="background-color:"+barvaPozadi[subMode]+";";
 
 
         }
-        if(line.isDiversion)
-        {
-            pozadi="background-color:"+barva_Vyluky_255_170_30+";";
-            qDebug()<<"linka je vylukova";
-        }
         if(barvaTextu.contains(subMode))
         {
             text="color:"+barvaTextu[subMode]+";";
         }
+        qDebug()<<"linka "<<line.LineName<<" submode "<<subMode;
 
         label->setStyleSheet(linkaStyleSheetStandard+text+pozadi);
         label->setText(line.LineName);

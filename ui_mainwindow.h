@@ -2520,9 +2520,9 @@ public:
         retranslateUi(MainWindow);
 
         pushButton_fullscreen->setDefault(false);
-        prepinadloStran->setCurrentIndex(3);
+        prepinadloStran->setCurrentIndex(0);
         stackedWidget_obrazovka->setCurrentIndex(0);
-        stackedWidget_prostredek->setCurrentIndex(1);
+        stackedWidget_prostredek->setCurrentIndex(4);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

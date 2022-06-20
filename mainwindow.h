@@ -66,7 +66,7 @@ public:
 
     IbisIpSubscriber CustomerInformationServiceSubscriber;
     bool svgOpenFile(const QString &fileName);
-    SvgVykreslovani svgVykreslovac;
+    SvgVykreslovani svgVykreslovani;
 
 
 
@@ -167,6 +167,12 @@ private:
 
     int posunRotovani=0;
     int pocetVykreslovanychZastavek=5;
+
+    const int intervalBocniPanel=2000;
+    const int intervalPosunuNacest=20;
+    const int intervalStridaniStranek=10000;
+
+
 
     QMap<QString, QString> barvaTextu;
     QMap<QString, QString> barvaPozadi;
@@ -287,6 +293,7 @@ private:
 
     int existujeKonfigurak();
     void fullscreenPoZapnuti();
+    void ledVymazPanely();
 };
 
 #endif // MAINWINDOW_H

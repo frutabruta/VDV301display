@@ -47,6 +47,7 @@ int XmlParser::VytvorSeznamZastavek(QVector<ZastavkaCil> &docasnySeznamZst,QVect
     {
     case 0:
         qDebug()<<"seznam tripu je prazdny";
+        return 0;
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
@@ -419,12 +420,12 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 
         for(int j=0; j<seznamPriznakuElements.count();j++)
         {
-            QString priznak=seznamPriznakuElements.at(i).firstChild().nodeValue();
+            QString priznak=seznamPriznakuElements.at(j).firstChild().nodeValue();
             priznakyStringy.push_back(priznak);
         }
         aktualniPrestup.line=priznakyDoLinky(priznakyStringy,aktualniPrestup.line);
 
-        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform;
+        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform<<" replacement "<<aktualniPrestup.line.isReplacement;
 
 
 
@@ -464,6 +465,7 @@ Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
         if(textPriznak=="Replacement")
         {
             vstupniLinka.isReplacement=true;
+            qDebug()<<"linak je nahradni";
         }
         if(textPriznak=="Special")
         {
