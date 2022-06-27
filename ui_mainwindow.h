@@ -2101,8 +2101,8 @@ public:
         gridLayout_10->setContentsMargins(11, 11, 11, 11);
         gridLayout_10->setObjectName(QString::fromUtf8("gridLayout_10"));
         tabulkaSubscriberu = new QTableWidget(page_seznamSluzeb);
-        if (tabulkaSubscriberu->columnCount() < 4)
-            tabulkaSubscriberu->setColumnCount(4);
+        if (tabulkaSubscriberu->columnCount() < 5)
+            tabulkaSubscriberu->setColumnCount(5);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tabulkaSubscriberu->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -2111,6 +2111,8 @@ public:
         tabulkaSubscriberu->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tabulkaSubscriberu->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        tabulkaSubscriberu->setHorizontalHeaderItem(4, __qtablewidgetitem4);
         tabulkaSubscriberu->setObjectName(QString::fromUtf8("tabulkaSubscriberu"));
 
         gridLayout_10->addWidget(tabulkaSubscriberu, 0, 0, 1, 1);
@@ -2520,7 +2522,7 @@ public:
         retranslateUi(MainWindow);
 
         pushButton_fullscreen->setDefault(false);
-        prepinadloStran->setCurrentIndex(0);
+        prepinadloStran->setCurrentIndex(1);
         stackedWidget_obrazovka->setCurrentIndex(0);
         stackedWidget_prostredek->setCurrentIndex(4);
 
@@ -2677,6 +2679,8 @@ public:
         ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "IP Adresa", nullptr));
         QTableWidgetItem *___qtablewidgetitem3 = tabulkaSubscriberu->horizontalHeaderItem(3);
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "port", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = tabulkaSubscriberu->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("MainWindow", "host", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Pole pro zad\303\241n\303\255 intervalu", nullptr));
         tlacitkoNastavVteriny->setText(QCoreApplication::translate("MainWindow", "Nastav interval", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));

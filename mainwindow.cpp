@@ -39,7 +39,6 @@ MainWindow::MainWindow(QWidget *parent) :
     font10.setFamily("21-PID 10");
     font10.setPointSize(65);
 
-
     //LCD fonty
     fontPasmoVelke.setPointSize(36);
     fontPasmoVelke.setBold(true);
@@ -78,23 +77,15 @@ MainWindow::MainWindow(QWidget *parent) :
     keyF8 = new QShortcut(this);
     keyF8->setKey(Qt::Key_F8);
 
-
-
     vsechnyConnecty();
-
-
     hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
     naplnMapBarev();
-
 
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
-
     FormatZobrazeni();
     instanceXMLparser.Test();
-
-
 
     timer->start(1000); //refresh vterin
     timerBocniPanel->start(intervalBocniPanel);
@@ -132,20 +123,8 @@ MainWindow::MainWindow(QWidget *parent) :
     compilationTime+="T";
     compilationTime+=QString(__TIME__);
     ui->label_build->setText(compilationTime);
-
-
-    existujeKonfigurak();
-
-
-
-
-
-
+   existujeKonfigurak();
 }
-
-
-
-
 
 int MainWindow::existujeKonfigurak()
 {
@@ -159,52 +138,35 @@ int MainWindow::existujeKonfigurak()
     }
     else
     {
-       QString obsah= file.readAll();
-       if (obsah=="1")
-       {
-           on_tlacitkoHlavni_clicked();
-       }
-       if (obsah=="2")
-       {
-           on_svgTlacitko_clicked();
-       }
-       if (obsah=="3")
-       {
-           on_tlacitkoLed_clicked();
-       }
-       if (obsah=="4")
-       {
-           on_tlacitkoSeznamSluzeb_clicked();
-       }
+        QString obsah= file.readAll();
+        if (obsah=="1")
+        {
+            on_tlacitkoHlavni_clicked();
+        }
+        if (obsah=="2")
+        {
+            on_svgTlacitko_clicked();
+        }
+        if (obsah=="3")
+        {
+            on_tlacitkoLed_clicked();
+        }
+        if (obsah=="4")
+        {
+            on_tlacitkoSeznamSluzeb_clicked();
+        }
 
-
-
-
-       toggleFullscreen();
-
-
-
+        toggleFullscreen();
     }
-
-
-
-
-
-
-
-
-
-
     file.close();
     return 1;
-
 }
 
 void MainWindow::fullscreenPoZapnuti()
-        {
+{
 
 
-        }
+}
 
 void MainWindow::vsechnyConnecty()
 {
@@ -230,8 +192,6 @@ void MainWindow::vsechnyConnecty()
     connect(keyF6, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
     connect(keyF7, &QShortcut::activated, this, &MainWindow::on_refreshTlac_clicked);
     connect(keyF8, &QShortcut::activated, this, &MainWindow::on_quitTlacitko_clicked);
-
-
 }
 
 int MainWindow::slotKazdouVterinu()
@@ -715,23 +675,30 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
 
 
-
+    int counterNavazny=0;
     for(int i=offset;i<konec ; i++)
     {
 
 
         int pomocnyIndex=0;
+
+        qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
+
+
+          Zastavka aktualniZastavka;
+
         if(navazny==false)
         {
             pomocnyIndex=indexZastavky+i;
+             aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
         }
         else
         {
+             aktualniZastavka=zastavky.at(counterNavazny).zastavka;
             pomocnyIndex=i;
         }
 
-        qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
-        Zastavka aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
+
 
         PasmoveDvojiceLcd pasmoveDvojiceLcd;
         pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.seznamPasem);
@@ -807,10 +774,11 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
         //  qDebug()<<"label pasma "<<i<<" "<<stavSystemu.indexAktZastavky<<" p1:"<<pasmaString1<<" p2:"<<pasmaString2<<" "<<"pomocnyIndex";
 
+        counterNavazny++;
         vysledek=i;
     }
 
-    return vysledek+1;
+    return (vysledek+1);
 }
 
 
@@ -977,6 +945,7 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
     // qDebug() << "Added service: " << zcs;
     QString nazev=zcs->name();
     QString ipadresa=zcs->ip().toString();
+    QString host=zcs->host();
     QString verze=zcs.data()->txt().value("ver");
     int port=zcs->port();
     /*
@@ -991,16 +960,21 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
 
     cell = new QTableWidgetItem(verze);
     ui->tabulkaSubscriberu->setItem(row, 1, cell);
-    ui->tabulkaSubscriberu->resizeColumnsToContents();
+    // ui->tabulkaSubscriberu->resizeColumnsToContents();
 
     cell = new QTableWidgetItem(ipadresa);
     ui->tabulkaSubscriberu->setItem(row, 2, cell);
-    ui->tabulkaSubscriberu->resizeColumnsToContents();
+    // ui->tabulkaSubscriberu->resizeColumnsToContents();
 
-    // cell = new QTableWidgetItem(QString::number(port));
-    QString obsahHtml="<html><head/><body style=\"padding: 0px ;\"><p><img src=\":/images/UndergroundA\" height=\"50\" /></p></body></html>";
-    cell = new QTableWidgetItem(obsahHtml);
+    cell = new QTableWidgetItem(QString::number(port));
+    //QString obsahHtml="<html><head/><body style=\"padding: 0px ;\"><p><img src=\":/images/UndergroundA\" height=\"50\" /></p></body></html>";
+    //cell = new QTableWidgetItem(obsahHtml);
     ui->tabulkaSubscriberu->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(host);
+    ui->tabulkaSubscriberu->setItem(row, 4, cell);
+
+
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
 #if !(defined(Q_OS_IOS) || defined(Q_OS_ANDROID))
@@ -1045,10 +1019,10 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     globalniSeznamZastavekNavaznehoSpoje.clear();
 
     if(!instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
-   {
+    {
         vymazObrazovku();
     }
-        instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
+    instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
 
     //additional text message
     instanceXMLparser.nactiAdditionalTextMessage(instanceXMLparser.dokument, additionalTextMessage);
@@ -1598,16 +1572,16 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
         if(line.isDiversion)
         {
             subMode=subMode+"Diversion";
-          //  pozadi="background-color:"+barva_Vyluky_255_170_30+";";
+            //  pozadi="background-color:"+barva_Vyluky_255_170_30+";";
             qDebug()<<"linka je vylukova";
         }
         if(line.isReplacement)
         {
-             subMode=subMode+"Replacement";
+            subMode=subMode+"Replacement";
         }
         if(line.isSpecial)
         {
-             subMode=subMode+"Special";
+            subMode=subMode+"Special";
         }
 
 
@@ -1681,7 +1655,7 @@ void MainWindow::toggleFullscreen()
         ui->frame_debug->show();
 
 
-      // this->setWindowFlags(flags|Qt::SplashScreen);
+        // this->setWindowFlags(flags|Qt::SplashScreen);
     }
     else
     {

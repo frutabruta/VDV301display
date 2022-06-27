@@ -239,7 +239,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -3468,6 +3468,11 @@ border-radius: 30px;
           <column>
            <property name="text">
             <string>port</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>host</string>
            </property>
           </column>
          </widget>
