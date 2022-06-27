@@ -108,7 +108,8 @@ public:
     void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
     int hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny);
     void hlavniVykresliNazevCile(QString alias);
-    void naplnPoleLinky(QString subMode, Linka line, QLabel *label);
+    void naplnPoleLinky(QString subMode, Linka line, QLabel *label, int velikostPiktogramu, bool prestup);
+    void hlavniAutoformat();
 private slots:
     void on_actiontestPolozka_triggered();
     void OnRefreshClicked();
@@ -172,6 +173,25 @@ private:
     const int intervalPosunuNacest=20;
     const int intervalStridaniStranek=10000;
 
+    //velikosti fontu v bodech
+    const int velikostFontLinka=200;
+    const int velikostFontCil=100;
+    const int velikostFontNacestne=72;
+    const int velikostFontNasledujici=100;
+
+    const int velikostFontPrestupLinka=48;
+    const int velikostFontPrestupCil=36;
+
+    const int velikostPiktogramPrestup=65;
+    int velikostPiktogramPrestupDynamic=20;
+    const int velikostPrestupRamecekSirka=95;
+    const int velikostPrestupRamecekVyska=65;
+
+    //velikosti oken
+    const int velikostSirkaPrestupLinka=100;
+
+
+    float pomerPixelBod=1080/1050.0;
 
 
     QMap<QString, QString> barvaTextu;

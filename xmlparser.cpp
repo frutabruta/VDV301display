@@ -124,7 +124,7 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         {
             QString priznak=seznamPriznakuElements.at(j).firstChild().nodeValue();
             priznakyStringy.push_back(priznak);
-            qDebug()<<"parsuju priznaky:"<<priznak;
+           // qDebug()<<"parsuju priznaky:"<<priznak;
         }
         docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
 
@@ -154,7 +154,7 @@ int XmlParser::tripDoSeznamuZastavek(QVector<ZastavkaCil> &docasnySeznamZst, QDo
         docasnaZastavka.cil.NameInner=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationInnerName").at(0).firstChildElement().text();
         docasnaZastavka.cil.NameLcd=displayContent.elementsByTagName("Destination").at(0).toElement().elementsByTagName("DestinationLcdName").at(0).firstChildElement().text();
 
-        qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
+    //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
         docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
     }
@@ -178,7 +178,7 @@ QVector<QString> XmlParser::naplnVektorPriznaku(QDomNode vstup,QString nazevElem
     for (int j=0;j<priznaky.count();j++)
     {
         QString hodnotaPriznaku=priznaky.at(j).firstChild().nodeValue();
-        qDebug()<<"priznak "<<hodnotaPriznaku;
+   //     qDebug()<<"priznak "<<hodnotaPriznaku;
         vystup.push_back(hodnotaPriznaku);
     }
     return vystup;
@@ -425,7 +425,7 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         }
         aktualniPrestup.line=priznakyDoLinky(priznakyStringy,aktualniPrestup.line);
 
-        qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform<<" replacement "<<aktualniPrestup.line.isReplacement;
+    //    qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform<<" replacement "<<aktualniPrestup.line.isReplacement;
 
 
 

@@ -76,8 +76,8 @@ public:
     QHBoxLayout *horizontalLayout_18;
     QLabel *label_hodiny;
     QVBoxLayout *verticalLayout_2;
-    QLabel *label_25;
-    QLabel *label_24;
+    QLabel *label_textVia;
+    QLabel *label_textPres;
     QScrollArea *scrollArea;
     QWidget *scrollAreaWidgetContents;
     QHBoxLayout *horizontalLayout_11;
@@ -444,6 +444,7 @@ public:
         frame_debug->setSizePolicy(sizePolicy);
         frame_debug->setFrameShape(QFrame::StyledPanel);
         frame_debug->setFrameShadow(QFrame::Raised);
+        frame_debug->setLineWidth(3);
         gridLayout_13 = new QGridLayout(frame_debug);
         gridLayout_13->setSpacing(6);
         gridLayout_13->setContentsMargins(11, 11, 11, 11);
@@ -579,33 +580,33 @@ public:
         verticalLayout_2->setSpacing(0);
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         verticalLayout_2->setSizeConstraint(QLayout::SetDefaultConstraint);
-        label_25 = new QLabel(frame_hlavni);
-        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_textVia = new QLabel(frame_hlavni);
+        label_textVia->setObjectName(QString::fromUtf8("label_textVia"));
         QSizePolicy sizePolicy5(QSizePolicy::Maximum, QSizePolicy::Expanding);
         sizePolicy5.setHorizontalStretch(0);
         sizePolicy5.setVerticalStretch(0);
-        sizePolicy5.setHeightForWidth(label_25->sizePolicy().hasHeightForWidth());
-        label_25->setSizePolicy(sizePolicy5);
-        label_25->setMaximumSize(QSize(300, 300));
+        sizePolicy5.setHeightForWidth(label_textVia->sizePolicy().hasHeightForWidth());
+        label_textVia->setSizePolicy(sizePolicy5);
+        label_textVia->setMaximumSize(QSize(300, 300));
         QFont font4;
         font4.setFamily(QString::fromUtf8("roboto"));
         font4.setPointSize(15);
-        label_25->setFont(font4);
-        label_25->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
-        label_25->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_textVia->setFont(font4);
+        label_textVia->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
+        label_textVia->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        verticalLayout_2->addWidget(label_25);
+        verticalLayout_2->addWidget(label_textVia);
 
-        label_24 = new QLabel(frame_hlavni);
-        label_24->setObjectName(QString::fromUtf8("label_24"));
-        sizePolicy5.setHeightForWidth(label_24->sizePolicy().hasHeightForWidth());
-        label_24->setSizePolicy(sizePolicy5);
-        label_24->setMaximumSize(QSize(300, 300));
-        label_24->setFont(font4);
-        label_24->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
-        label_24->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+        label_textPres = new QLabel(frame_hlavni);
+        label_textPres->setObjectName(QString::fromUtf8("label_textPres"));
+        sizePolicy5.setHeightForWidth(label_textPres->sizePolicy().hasHeightForWidth());
+        label_textPres->setSizePolicy(sizePolicy5);
+        label_textPres->setMaximumSize(QSize(300, 300));
+        label_textPres->setFont(font4);
+        label_textPres->setStyleSheet(QString::fromUtf8("*{background-color: rgb(100,100,100)}"));
+        label_textPres->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
 
-        verticalLayout_2->addWidget(label_24);
+        verticalLayout_2->addWidget(label_textPres);
 
 
         horizontalLayout_18->addLayout(verticalLayout_2);
@@ -2522,9 +2523,9 @@ public:
         retranslateUi(MainWindow);
 
         pushButton_fullscreen->setDefault(false);
-        prepinadloStran->setCurrentIndex(1);
+        prepinadloStran->setCurrentIndex(0);
         stackedWidget_obrazovka->setCurrentIndex(0);
-        stackedWidget_prostredek->setCurrentIndex(4);
+        stackedWidget_prostredek->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -2560,8 +2561,8 @@ public:
         label_6->setText(QCoreApplication::translate("MainWindow", "STOP", nullptr));
         Llinka->setText(QCoreApplication::translate("MainWindow", "741", nullptr));
         label_hodiny->setText(QCoreApplication::translate("MainWindow", "16:14", nullptr));
-        label_25->setText(QCoreApplication::translate("MainWindow", "P\305\231es:", nullptr));
-        label_24->setText(QCoreApplication::translate("MainWindow", "Via:", nullptr));
+        label_textVia->setText(QCoreApplication::translate("MainWindow", "P\305\231es:", nullptr));
+        label_textPres->setText(QCoreApplication::translate("MainWindow", "Via:", nullptr));
         label_nacestne->setText(QCoreApplication::translate("MainWindow", "\305\240anghaj", nullptr));
         label_cil_sipka->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><img src=\":/images/resources/LCD-piktogramy_verze-LCD-5-17.svg\" height=\"50\" /></p></body></html>", nullptr));
         Lcil->setText(QCoreApplication::translate("MainWindow", "textCile", nullptr));

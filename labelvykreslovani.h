@@ -27,7 +27,11 @@ public:
     void vykresliNacestneForce(QVector<ZastavkaCil> globalniSeznamZastavek, CestaUdaje stavSystemu, QLabel *label);
     void zmensiCisloLinkyLabel(QLabel *label);
     void naplnNazevCileLabel(QString vstup, QLabel *label);
-    QString nahradMetro(QString linka, QString submode);
+    QString nahradMetro(QString linka, QString submode, int vyska);
+    void poleLabelNastavVelikost(QVector<QLabel*> labely, int bodovaVelikost, float pomerBodu);
+    void labelNastavVelikost(QLabel *label, int bodovaVelikost, float pomerBodu);
+    void poleLabelNastavSirku(QVector<QLabel*> seznamLabelu, int sirka);
+    void poleLabelNastavVysku(QVector<QLabel*>  seznamLabelu, int vyska);
 signals:
 
 };

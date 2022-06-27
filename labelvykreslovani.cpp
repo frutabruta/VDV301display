@@ -1,5 +1,5 @@
 #include "labelvykreslovani.h"
-
+#include <QtMath>
 
 
 LabelVykreslovani::LabelVykreslovani()
@@ -27,15 +27,32 @@ QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pa
 }
 
 
+void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel*> labely, int bodovaVelikost, float pomerBodu)
+{
+    foreach(QLabel* label, labely)
+    {
+        QFont fontLabelu =label->font();
+        qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
+        fontLabelu.setPixelSize(qFloor(pomerBodu*bodovaVelikost));
+        label->setFont(fontLabelu);
+    }
+}
+
+void LabelVykreslovani::labelNastavVelikost(QLabel* label, int bodovaVelikost, float pomerBodu)
+{
+    QFont fontLabelu =label->font();
+   // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
+    fontLabelu.setPixelSize(qFloor(pomerBodu*bodovaVelikost));
+    label->setFont(fontLabelu);
+}
+
 void LabelVykreslovani::zmensiCisloLinkyLabel( QLabel* label)
 {
-
-
     qDebug()<<"LabelVykreslovani::naplnCisloLinkyLabel";
 
-     QFont puvodniFont=label->font();
-     puvodniFont.setPixelSize(label->height());
-     label->setFont(puvodniFont);
+    QFont puvodniFont=label->font();
+    puvodniFont.setPixelSize(label->height());
+    label->setFont(puvodniFont);
 
     int vyskaLabelu=label->height();
     int sirkaLabelu=label->width();
@@ -46,34 +63,23 @@ void LabelVykreslovani::zmensiCisloLinkyLabel( QLabel* label)
     qDebug()<<"V labelu "<<vyskaLabelu<<" V Fontu "<< vyskaFontu <<" S labelu "<<sirkaLabelu<<" S fontu "<< sirkaFontu;
 
 
-
-    while((sirkaFontu>sirkaLabelu) || (vyskaFontu>vyskaLabelu)  )
+    int counter=0;
+    while(((sirkaFontu>sirkaLabelu) || (vyskaFontu>vyskaLabelu))&&(counter<4 ) )
     {
-        puvodniFont.setPixelSize(qRound( puvodniFont.pixelSize()*0.9));
+        puvodniFont.setPixelSize(qRound( puvodniFont.pixelSize()*0.90));
 
         vyskaFontu= label->fontMetrics().boundingRect(label->text()).height();
         sirkaFontu= label->fontMetrics().boundingRect(label->text()).width();
         label->setFont(puvodniFont);
+        counter++;
     }
 
 
-
-
-/*
-
-
-
-
+    /*
     int velikostFontuDefault=80;
-
     label->setFont(QFont("Roboto",velikostFontuDefault ));
    label->update();
-
-
-
-
     int pomer= int(sirkaFontu/sirkaLabelu);
-
     label->setFont(QFont("Roboto",velikostFontuDefault*pomer ));
    label->update();
 */
@@ -105,26 +111,38 @@ void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozad
 {
     qDebug()<<"LabelVykreslovani::obarviPozadiPristi";
     //
-
     qframe->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
-
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
-
 }
 
+void LabelVykreslovani::poleLabelNastavSirku(QVector<QLabel*> seznamLabelu, int sirka)
+{
+    foreach(QLabel* label, seznamLabelu)
+    {
+        label->setMaximumWidth(sirka);
+    }
+}
 
-QString LabelVykreslovani::nahradMetro(QString linka, QString submode)
+void LabelVykreslovani::poleLabelNastavVysku(QVector<QLabel*> seznamLabelu, int vyska)
+{
+    foreach(QLabel* label, seznamLabelu)
+    {
+        label->setMaximumHeight(vyska);
+    }
+}
+
+QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska)
 {
     QString vysledek=linka;
 
     if(submode=="metro")
     {
-        vysledek="<html><head/><body><p><img src=\":/images/Underground"+linka+"\" height=\"50\" /></p></body></html>";
+        vysledek="<html><head/><body><p><img src=\":/images/Underground"+linka+"\" height=\""+QString::number(vyska)+"\" /></p></body></html>";
     }
 
 
     //<html><head/><body><p><img src=":/images/UndergroundA" height="50" /></p></body></html>
-
+    qDebug()<<"nahradMetro:"<<vysledek;
     return vysledek;
 
 }

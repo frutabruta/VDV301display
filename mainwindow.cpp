@@ -123,7 +123,9 @@ MainWindow::MainWindow(QWidget *parent) :
     compilationTime+="T";
     compilationTime+=QString(__TIME__);
     ui->label_build->setText(compilationTime);
-   existujeKonfigurak();
+    existujeKonfigurak();
+    // hlavniAutoformat();
+
 }
 
 int MainWindow::existujeKonfigurak()
@@ -578,7 +580,7 @@ void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMod
     //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
     qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
-    naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka);
+    naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka, qFloor(pomerPixelBod*200),false);
     labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
 }
@@ -685,16 +687,16 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
 
 
-          Zastavka aktualniZastavka;
+        Zastavka aktualniZastavka;
 
         if(navazny==false)
         {
             pomocnyIndex=indexZastavky+i;
-             aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
+            aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
         }
         else
         {
-             aktualniZastavka=zastavky.at(counterNavazny).zastavka;
+            aktualniZastavka=zastavky.at(counterNavazny).zastavka;
             pomocnyIndex=i;
         }
 
@@ -844,6 +846,8 @@ int MainWindow::FormatZobrazeni()
     {
         obarviPozadiPristi(barva_bila_255_255_255,barva_PozadiB_50_50_50);
     }
+
+    // hlavniAutoformat();
     return 1;
 
 }
@@ -1538,7 +1542,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         seznamLabelPrestupCil.at(i)->setText(aktualniPrestup.destinationName);
         seznamLabelPrestupCil.at(i)->show();
 
-        naplnPoleLinky(aktualniPrestup.subMode,aktualniPrestup.line, seznamLabelPrestupLinka.at(i));
+        naplnPoleLinky(aktualniPrestup.subMode,aktualniPrestup.line, seznamLabelPrestupLinka.at(i),velikostPiktogramPrestupDynamic,true);
 
         seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );
         seznamLabelPrestupNastupiste.at(i)->show();
@@ -1549,15 +1553,21 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 }
 
 
-void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label)
+void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int velikostPiktogramu,bool prestup)
 {
+    QString linkaStyleSheetStandard="font-weight: bold;";
 
-    QString linkaStyleSheetStandard="border-radius:6px;padding: 5px; font-weight: bold;";
+    if(prestup)
+    {
+        linkaStyleSheetStandard+="border-radius:6px;padding: 5px; ";
+    }
+
+
     QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
 
 
 
-    QString nahrazeno=labelVykreslovani.nahradMetro(line.LineName,subMode);
+    QString nahrazeno=labelVykreslovani.nahradMetro(line.LineName,subMode,velikostPiktogramu);
 
     //defaultni seda barva na bile pozadi, neznama kombinace
     QString pozadi="background-color:"+barva_bila_255_255_255+";";
@@ -1667,9 +1677,67 @@ void MainWindow::toggleFullscreen()
         ui->mainToolBar->hide();
         ui->frame_debug->hide();
 
+
     }
+    hlavniAutoformat();
 
 }
+
+
+void MainWindow::hlavniAutoformat()
+{
+    qDebug()<<"MainWindow::hlavniAutoformat()";
+    this->show();
+    pomerPixelBod=ui->frame_hlavni->height()/1050.0;
+
+    velikostPiktogramPrestupDynamic=qFloor(velikostPiktogramPrestup*pomerPixelBod);
+    //ui->wid
+    //   QFont fontLabelu = ui->Lnacestna5->font();
+    qDebug()<<"pomerPixelBod stran vyska "<<ui->frame_hlavni->height()<<" sirka:"<<ui->frame_hlavni->width()<<" pomerPixelBod:"<<pomerPixelBod;
+    // fontLabelu.setPixelSize(qFloor(pomerPixelBod*100));
+    //ui->Lnacestna5->setFont(fontLabelu);
+
+
+    labelVykreslovani.labelNastavVelikost(ui->Lcil,velikostFontCil,pomerPixelBod ); //100
+    labelVykreslovani.labelNastavVelikost(ui->label_nacestne,velikostFontNacestne,pomerPixelBod); //72
+
+
+    labelVykreslovani.poleLabelNastavVelikost(seznamLabelNazevZastavky,velikostFontNasledujici,pomerPixelBod); //100
+
+    labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupLinka,velikostFontPrestupLinka,pomerPixelBod); //48
+    labelVykreslovani.poleLabelNastavSirku(seznamLabelPrestupLinka,pomerPixelBod*velikostPrestupRamecekSirka); //95
+    labelVykreslovani.poleLabelNastavVysku(seznamLabelPrestupLinka,pomerPixelBod*velikostPrestupRamecekVyska); //65
+
+
+    labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupCil,velikostFontPrestupCil,pomerPixelBod); //36
+    labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupNastupiste,velikostFontPrestupCil,pomerPixelBod); //36
+    labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupOdjezd,velikostFontPrestupCil,pomerPixelBod); //36
+
+
+
+    labelVykreslovani.labelNastavVelikost(ui->label_hodiny,80,pomerPixelBod); //80
+    labelVykreslovani.labelNastavVelikost(ui->label_textPres,30,pomerPixelBod); //30
+    labelVykreslovani.labelNastavVelikost(ui->label_textVia ,30,pomerPixelBod); //30
+    /*
+    labelVykreslovani.labelNastavVelikost(,,);
+    labelVykreslovani.labelNastavVelikost(,,);
+    labelVykreslovani.labelNastavVelikost(,,);
+    labelVykreslovani.labelNastavVelikost(,,);
+    */
+    labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
+
+    /*
+    foreach(QLabel* label, seznamLabelPrestupLinka )
+    {
+        labelVykreslovani.zmensiCisloLinkyLabel(label);
+    }
+    */
+
+}
+
+
+
+
 
 void MainWindow::on_pushButton_fullscreen_clicked()
 {
