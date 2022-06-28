@@ -85,12 +85,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
     FormatZobrazeni();
-    instanceXMLparser.Test();
+    //instanceXMLparser.Test();
 
-    timer->start(1000); //refresh vterin
-    timerBocniPanel->start(intervalBocniPanel);
-    timerNacestneZastavky->start(intervalPosunuNacest);
-    timerStridejStranky->start(intervalStridaniStranek);
+
 
     CustomerInformationServiceSubscriber.odebirano=false ;
     CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -123,7 +120,14 @@ MainWindow::MainWindow(QWidget *parent) :
     compilationTime+="T";
     compilationTime+=QString(__TIME__);
     ui->label_build->setText(compilationTime);
-    existujeKonfigurak();
+  //  existujeKonfigurak();
+
+
+    timer->start(1000); //refresh vterin
+    timerBocniPanel->start(intervalBocniPanel);
+    timerNacestneZastavky->start(intervalPosunuNacest);
+    timerStridejStranky->start(intervalStridaniStranek);
+
     // hlavniAutoformat();
 
 }
@@ -141,24 +145,35 @@ int MainWindow::existujeKonfigurak()
     else
     {
         QString obsah= file.readAll();
-        if (obsah=="1")
-        {
-            on_tlacitkoHlavni_clicked();
-        }
-        if (obsah=="2")
-        {
-            on_svgTlacitko_clicked();
-        }
-        if (obsah=="3")
-        {
-            on_tlacitkoLed_clicked();
-        }
-        if (obsah=="4")
-        {
-            on_tlacitkoSeznamSluzeb_clicked();
-        }
+        int obsahInt=obsah.toInt();
 
+        switch(obsahInt)
+        {
+        case 0:
+            return 0;
+            break;
+
+        case 1:
+            on_tlacitkoHlavni_clicked();
+            break;
+
+        case 2:
+            on_svgTlacitko_clicked();
+            break;
+        case 3:
+            on_tlacitkoLed_clicked();
+
+            break;
+        case 4:
+            on_tlacitkoSeznamSluzeb_clicked();
+            break;
+
+
+
+        }
         toggleFullscreen();
+
+
     }
     file.close();
     return 1;
@@ -172,8 +187,8 @@ void MainWindow::fullscreenPoZapnuti()
 
 void MainWindow::vsechnyConnecty()
 {
-    QObject::connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
-    QObject::connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
+    connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
 
@@ -581,7 +596,7 @@ void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMod
     qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
     naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka, qFloor(pomerPixelBod*200),false);
-    labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
+    //  labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
 }
 
@@ -1679,7 +1694,7 @@ void MainWindow::toggleFullscreen()
 
 
     }
-    hlavniAutoformat();
+    // hlavniAutoformat();
 
 }
 
@@ -1726,12 +1741,7 @@ void MainWindow::hlavniAutoformat()
     */
     labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
-    /*
-    foreach(QLabel* label, seznamLabelPrestupLinka )
-    {
-        labelVykreslovani.zmensiCisloLinkyLabel(label);
-    }
-    */
+
 
 }
 

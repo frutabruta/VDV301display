@@ -394,7 +394,6 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
         aktualniPrestup.expectedDepartureTime=aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue();
 
-
         QDateTime timestamp = QDateTime::fromString(aktualniPrestup.expectedDepartureTime,Qt::ISODate);
         // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
         //  timestamp = timestamp.toLocalTime(); // convert to local time
@@ -404,7 +403,6 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 
         // aktualniPrestup.departureTime=timestamp.toString("hh:mm");
 
-
         aktualniPrestup.platform=aktualniElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();
 
         QDomElement connectionMode=aktualniElement.firstChildElement("ConnectionMode");
@@ -413,10 +411,7 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 
         QVector<QString> priznakyStringy;
 
-
         QDomNodeList seznamPriznakuElements=aktualniElement.elementsByTagName("LineProperty");
-
-
 
         for(int j=0; j<seznamPriznakuElements.count();j++)
         {
@@ -427,19 +422,10 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 
     //    qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform<<" replacement "<<aktualniPrestup.line.isReplacement;
 
-
-
         vystup.push_back(aktualniPrestup);
-
     }
-
-
-
-
-
     return vystup;
 }
-
 
 
 Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
@@ -481,7 +467,6 @@ Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
             vstupniLinka.=true;
         }
         */
-
     }
    // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;
     return vstupniLinka;
