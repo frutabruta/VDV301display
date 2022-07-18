@@ -35,6 +35,7 @@ public:
     QVector<Prestup> nactiPrestupy(QDomElement vstup);
     Linka priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka);
 
+    QDateTime vyparsujTimestamp(QDomDocument vstupniDokument);
 private:
     QVector<Zastavka> vyparsujNacestneZastavky(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);

@@ -11,6 +11,7 @@ QT+= httpserver
 QT += svg
 
 
+
 #QT += svg
 #QT += webenginewidgets
 

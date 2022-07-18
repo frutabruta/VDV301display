@@ -21,6 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
 
+    ui->setupUi(this);
+
+
     // fonty
     fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
     fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
@@ -47,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
     fontPasmoMale.setPointSize(20);
     fontPasmoMale.setBold(true);
 
-    ui->setupUi(this);
 
     //klávesové zkratky menu
     keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
@@ -78,6 +80,8 @@ MainWindow::MainWindow(QWidget *parent) :
     keyF8->setKey(Qt::Key_F8);
 
     vsechnyConnecty();
+
+
     hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
     naplnMapBarev();
 
@@ -88,9 +92,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //instanceXMLparser.Test();
 
 
-
     CustomerInformationServiceSubscriber.odebirano=false ;
-    CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+
 
     this->ledInicializujVirtualniPanely();
 
@@ -120,20 +123,39 @@ MainWindow::MainWindow(QWidget *parent) :
     compilationTime+="T";
     compilationTime+=QString(__TIME__);
     ui->label_build->setText(compilationTime);
-  //  existujeKonfigurak();
+    //
 
 
     timer->start(1000); //refresh vterin
     timerBocniPanel->start(intervalBocniPanel);
-    timerNacestneZastavky->start(intervalPosunuNacest);
-    timerStridejStranky->start(intervalStridaniStranek);
 
-    // hlavniAutoformat();
+    timerStridejStranky->setInterval(intervalStridaniStranek);
+    timerOpozdenyStart->setInterval(intervalOpozdeniStartu);
+    timerOpozdenyStart->setSingleShot(true);
 
+
+    existujeKonfigurak();
+
+
+
+
+    hlavniAutoformat();
+
+    timerOpozdenyStart->start();
+
+}
+
+void MainWindow::slotOpozdenyStart()
+{
+    qDebug()<<"MainWindow::slotOpozdenyStart()";
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
+  //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+    CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
 }
 
 int MainWindow::existujeKonfigurak()
 {
+    qDebug()<<"MainWindow::existujeKonfigurak";
     QString cestaSouboru=QCoreApplication::applicationDirPath()+"/fullscreen.txt";
     QFile file(cestaSouboru);
     if (!file.open(QIODevice::ReadOnly))
@@ -187,16 +209,23 @@ void MainWindow::fullscreenPoZapnuti()
 
 void MainWindow::vsechnyConnecty()
 {
+    qDebug()<<"MainWindow::vsechnyConnecty";
     connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
-    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbyDoTabulky);
+  //  connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbaDoTabulky);
+    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
+
+
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
 
     connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::ledIiterujVsechnyPanely);
     connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
     connect(timerStridejStranky, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
+    connect(timerOpozdenyStart, &QTimer::timeout, this, &MainWindow::slotOpozdenyStart);
+
 
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
 
     //klávesové zkratky
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
@@ -216,6 +245,13 @@ int MainWindow::slotKazdouVterinu()
     ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
     ui->label_hodiny->setText(QTime::currentTime().toString("hh:mm") );
     return 1;
+}
+
+void MainWindow::slotZtrataOdberu()
+{
+    vymazObrazovku();
+    qDebug()<<"MainWindow::slotZtrataOdberu";
+
 }
 
 void MainWindow::slotPosunNacestnych()
@@ -245,16 +281,23 @@ void MainWindow::slotPosunNacestnych()
 
 }
 
+void MainWindow::slotAktualizaceTabulkySluzeb()
+{
+    qDebug()<<"MainWindow::slotAktualizaceTabulkySluzeb";
+    vykresliSluzbyDoTabulky(CustomerInformationServiceSubscriber.seznamSluzeb);
+}
+
 void MainWindow::vyprselCasovacSluzby()
 {
     qDebug()<<"MainWindow::vyprselCasovacSluzby()";
-    vymazObrazovku();
+
 }
 
 
 
 void MainWindow::hlavniNaplnPoleLabelu()
 {
+    qDebug()<<"MainWindow::hlavniNaplnPoleLabelu()";
     seznamLabelNazevZastavky.push_back(ui->Lnacestna1);
     seznamLabelNazevZastavky.push_back(ui->Lnacestna2);
     seznamLabelNazevZastavky.push_back(ui->Lnacestna3);
@@ -342,6 +385,7 @@ void MainWindow::hlavniNaplnPoleLabelu()
 
 void MainWindow::naplnMapBarev()
 {
+    qDebug()<<"MainWindow::naplnMapBarev";
     //dd1 Metro, nahrazuje se piktogramem
     barvaTextu["metro"]=barva_cerna_0_0_0;
     barvaPozadi["metro"]=barva_bila_255_255_255;
@@ -472,6 +516,7 @@ void MainWindow::vymazObrazovku()
 
 void MainWindow::hlavniVymazObrazovku()
 {
+    qDebug()<<"MainWindow::hlavniVymazObrazovku";
     ui->Lcil->setText("");
     ui->Llinka->setText("");
     ui->label_nacestne->setText("");
@@ -819,6 +864,7 @@ void MainWindow::hlavniVykresliNacestne()
     QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky);
     if(ui->label_nacestne->text()!=novyVstup)
     {
+        timerNacestneZastavky->start(intervalPosunuNacest);
         ui->label_nacestne->setText( novyVstup);
     }
 
@@ -910,58 +956,60 @@ nejsem autorem
 
 
 
-// == PRIVATE SLOTS ==
-void MainWindow::OnRefreshClicked()
-{
-    qDebug()<<"MainWindow::OnRefreshClicked";
-    qInfo()<<"\n OnRefreshClicked";
-}
-
-void MainWindow::OnDataReadyToRead()
-{
-    qDebug()<<"MainWindow::OnDataReadyToRead";
-    qInfo()<<"\n OnDataReadyToRead";
-    //mDataBuffer->append(mNetReply->readAll());
-}
-
-void MainWindow::OnListReadFinished()
-{
-    qDebug()<<"MainWindow::OnListReadFinished";
-
-
-}
-
-
 void MainWindow::on_refreshTlac_clicked()
 {
     qDebug()<<"MainWindow::on_refreshTlac_clicked";
     qInfo()<<"\n on_refreshTlac_clicked";
-    /*
-    CustomerInformationServiceSubscriber.odebirano=false ;
-    CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+
+  //  CustomerInformationServiceSubscriber.odebirano=false ;
+  //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     this->vymazObrazovku();
-    ui->tabulkaSubscriberu->setRowCount(0);
+    slotAktualizaceTabulkySluzeb();
     //xmlDoPromenne(1);
-*/
-    /*
-    QWidget *wdg = new QWidget;
-    wdg->show();
-    hide();//this will disappear main window
 
 
-    ui->graphicsView->setParent(wdg);
-   wdg->showFullScreen();
-   */
-    //  ui->stackedWidget_obrazovka->showFullScreen();
     vymazObrazovku();
+    CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
 }
 
 
-void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
+void MainWindow::vymazTabulkuSubscriberu(QTableWidget *tableWidget)
 {
+    qDebug()<<"MainWindow::vymazTabulkuSubscriberu";
+    //  https://stackoverflow.com/a/31564541
+    tableWidget->clearSelection();
+
+    // Disconnect all signals from table widget ! important !
+    tableWidget->disconnect();
+
+    // Remove all items
+    tableWidget->clearContents();
+
+    // Set row count to 0 (remove rows)
+    tableWidget->setRowCount(0);
+
+}
+
+void MainWindow::vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb)
+{
+    qDebug()<<"MainWindow::vykresliSluzbyDoTabulky";
+  // ui->tabulkaSubscriberu->setRowCount(0);
+    vymazTabulkuSubscriberu(ui->tabulkaSubscriberu);
+
+
+    foreach(QZeroConfService sluzba, seznamSluzeb)
+    {
+        sluzbaDoTabulky(sluzba);
+    }
+}
+
+
+void MainWindow::sluzbaDoTabulky(QZeroConfService zcs)
+{
+    qDebug()<<"MainWindow::sluzbaDoTabulky";
     qint32 row;
     QTableWidgetItem *cell;
-    // qDebug() << "Added service: " << zcs;
+
     QString nazev=zcs->name();
     QString ipadresa=zcs->ip().toString();
     QString host=zcs->host();
@@ -979,15 +1027,11 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
 
     cell = new QTableWidgetItem(verze);
     ui->tabulkaSubscriberu->setItem(row, 1, cell);
-    // ui->tabulkaSubscriberu->resizeColumnsToContents();
 
     cell = new QTableWidgetItem(ipadresa);
     ui->tabulkaSubscriberu->setItem(row, 2, cell);
-    // ui->tabulkaSubscriberu->resizeColumnsToContents();
 
     cell = new QTableWidgetItem(QString::number(port));
-    //QString obsahHtml="<html><head/><body style=\"padding: 0px ;\"><p><img src=\":/images/UndergroundA\" height=\"50\" /></p></body></html>";
-    //cell = new QTableWidgetItem(obsahHtml);
     ui->tabulkaSubscriberu->setItem(row, 3, cell);
 
     cell = new QTableWidgetItem(host);
@@ -996,46 +1040,21 @@ void MainWindow::sluzbyDoTabulky(QZeroConfService zcs)
 
     ui->tabulkaSubscriberu->resizeColumnsToContents();
 
-#if !(defined(Q_OS_IOS) || defined(Q_OS_ANDROID))
-    //setFixedSize(ui->tabulkaSubscriberu->horizontalHeader()->length() + 60, ui->tabulkaSubscriberu->verticalHeader()->length() + 100);
-#endif
 
-
+    qDebug()<<"sluzbaDoTabulky_konec";
 
 }
 
 void MainWindow::xmlDoPromenne(QString vstupniXml)
 {
     qDebug()<<"MainWindow::xmlDoPromenne";
-    //vstup=0;
 
-    //QByteArray retezec ="";
-    //retezec+=instanceHttpServeru.prijatoZeServeruTelo;
     instanceXMLparser.nactiXML(vstupniXml);
-
-    QByteArray argumentXMLserveru = "";
-    QByteArray hlavicka="";
-    QByteArray telo="";
-    hlavicka+=("HTTP/1.1 200 OK\r\n");       // \r needs to be before \n
-    //hlavicka+=("Content-Type: application/xml\r\n");
-    telo+=("<?xml version=\"1.0\" encoding=\"UTF-8\"?>  <body> neco </body>");
-    QByteArray teloVelikost = QByteArray::number(telo.size());
-    hlavicka+=("Content-Length: "+teloVelikost+"\r\n");
-    hlavicka+=("Content-Type: text/xml\r\n");
-    // hlavicka+=("Connection: close\r\n");
-    hlavicka+=("Pragma: no-cache\r\n");
-    hlavicka+=("Server: Microsoft-HTTPAPI/1.0");
-    hlavicka+=("\r\n");
-
-
-    QByteArray pozadavek=hlavicka+telo;
-    argumentXMLserveru.append(pozadavek);
-    //instanceHttpServeru.zapisDoPromenne(argumentXMLserveru);
-    qInfo()<<argumentXMLserveru;
-    /* konec obracena archtitektura*/
 
     globalniSeznamZastavek.clear();
     globalniSeznamZastavekNavaznehoSpoje.clear();
+
+    qDebug()<<"timestamp:"<<instanceXMLparser.vyparsujTimestamp(instanceXMLparser.dokument).toString(Qt::ISODate);
 
     if(!instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
     {
@@ -1487,6 +1506,7 @@ void MainWindow::zobrazKonecnou()
 
 int MainWindow::jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky)
 {
+
     qDebug()<<"MainWindow::jeVozidloNaKonecne";
     if((stav.indexAktZastavky==(zastavky.count()-1))&&(stav.locationState=="AtStop"))
     {
@@ -1518,12 +1538,14 @@ int MainWindow::jeVRozsahu(int index, int pocetHodnot)
 
 void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 {
+    qDebug()<<"MainWindow::hlavniVykresliPrestupy";
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
 
+    /*
     foreach(QFrame* ramec,seznamFramePrestup)
     {
         // ramec->hide();
-    }
+    }*/
     foreach(QFrame* label,seznamLabelPrestupCil)
     {
         label->hide();
@@ -1570,6 +1592,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 
 void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int velikostPiktogramu,bool prestup)
 {
+    qDebug()<<"MainWindow::naplnPoleLinky";
     QString linkaStyleSheetStandard="font-weight: bold;";
 
     if(prestup)
@@ -1639,7 +1662,7 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int
 
 void MainWindow::slotHlavniStridejStranky()
 {
-    qDebug()<<"MainWindow::slotHlavniStridejStranky"<<" counter ma hodnotu "<<indexAktualniStridaneStranky;
+    qDebug()<<"MainWindow::slotHlavniStridejStranky"<<" counter ma hodnotu "<<indexAktualniStridaneStranky<<" v seznamu je "<<strankyKeStridani.count();
 
     if(indexAktualniStridaneStranky==(strankyKeStridani.count()-1))
     {
@@ -1663,6 +1686,7 @@ void MainWindow::slotHlavniStridejStranky()
 
 void MainWindow::toggleFullscreen()
 {
+    qDebug()<<"MainWindow::toggleFullscreen()";
     // isFullScreen() ? showNormal() : showFullScreen();
 
 
@@ -1759,4 +1783,6 @@ void MainWindow::on_Llinka_linkActivated(const QString &link)
 {
     toggleFullscreen();
 }
+
+
 
