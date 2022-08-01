@@ -19,8 +19,8 @@ public:
     QString vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
     void naplnAnouncementLabel(QString vstup, QLabel *label);
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe);
-    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
-    QString doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu);
+    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky, int velikostPiktogramu);
+    QString doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu,int vyskaObrazku);
     QString zabalHtmlDoZnacek(QString vstup);
 
     int minimum(int cislo1, int cislo2);
@@ -32,6 +32,7 @@ public:
     void labelNastavVelikost(QLabel *label, int bodovaVelikost, float pomerBodu);
     void poleLabelNastavSirku(QVector<QLabel*> seznamLabelu, int sirka);
     void poleLabelNastavVysku(QVector<QLabel*>  seznamLabelu, int vyska);
+    QString textNaPiktogramOznameni(QString announcementType, int vyskaObrazku);
 signals:
 
 };

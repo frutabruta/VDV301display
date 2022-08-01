@@ -88,7 +88,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
-    FormatZobrazeni();
+    formatZobrazeni();
     //instanceXMLparser.Test();
 
 
@@ -369,6 +369,7 @@ void MainWindow::hlavniNaplnPoleLabelu()
     seznamLabelPrestupNastupiste.push_back(ui->label_prestup10_nastupiste);
     seznamLabelPrestupNastupiste.push_back(ui->label_prestup11_nastupiste);
 
+    /*
     seznamFramePrestup.push_back(ui->frame_odjezd0);
     seznamFramePrestup.push_back(ui->frame_odjezd1);
     seznamFramePrestup.push_back(ui->frame_odjezd2);
@@ -381,6 +382,7 @@ void MainWindow::hlavniNaplnPoleLabelu()
     seznamFramePrestup.push_back(ui->frame_odjezd9);
     seznamFramePrestup.push_back(ui->frame_odjezd10);
     seznamFramePrestup.push_back(ui->frame_odjezd11);
+    */
 }
 
 void MainWindow::naplnMapBarev()
@@ -521,6 +523,8 @@ void MainWindow::hlavniVymazObrazovku()
     ui->Llinka->setText("");
     ui->label_nacestne->setText("");
 
+    ui->frame_navaznySpoj->hide();
+
     vymazPoleLabelu(seznamLabelNazevZastavky);
     vymazPoleLabelu(seznamLabelPasmoDolni);
     vymazPoleLabelu(seznamLabelPasmoHorni);
@@ -536,7 +540,7 @@ void MainWindow::hlavniVymazObrazovku()
 }
 
 
-int MainWindow::VykresleniPrijatychDat()
+int MainWindow::vykresleniPrijatychDat()
 {
     qDebug()<<"MainWindow::VykresleniPrijatychDat";
 
@@ -552,6 +556,8 @@ int MainWindow::VykresleniPrijatychDat()
     hlavniVykresliNacestne();
 
     strankyKeStridani.clear();
+
+
 
 
 
@@ -580,9 +586,9 @@ int MainWindow::VykresleniPrijatychDat()
 
     //additional text message
 
-    if(additionalTextMessage!="")
+    if(additionalTextMessageText!="")
     {
-        zobrazAnnoucement("","",additionalTextMessage,"");
+        zobrazAnnoucement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
         strankyKeStridani.push_back(ui->page_oznameni);
     }
     else
@@ -594,7 +600,7 @@ int MainWindow::VykresleniPrijatychDat()
 
     if(jeVozidloNaKonecne(stavSystemu,globalniSeznamZastavek)&&(!instanceXMLparser.existujeNavaznySpoj(globalniSeznamZastavekNavaznehoSpoje)))
     {
-        strankyKeStridani.push_back(ui->page_konecna);
+        strankyKeStridani.push_front(ui->page_konecna);
         zobrazKonecnou();
     }
     else
@@ -605,8 +611,11 @@ int MainWindow::VykresleniPrijatychDat()
         }
         else
         {
+           if(instanceXMLparser.zmenaDat==true)
+           {
             navratJizda();
-            strankyKeStridani.push_back(ui->page_hlavni_2);
+           }
+            strankyKeStridani.push_front(ui->page_hlavni_2);
             // skryjZmenuPasma();
         }
 
@@ -624,7 +633,7 @@ int MainWindow::VykresleniPrijatychDat()
 
     //   hlavniVykresliNasledne();
 
-    FormatZobrazeni();
+    formatZobrazeni();
     indexAktualniStridaneStranky=0;
     timerStridejStranky->start();
 
@@ -765,7 +774,8 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
         PasmoveDvojiceLcd pasmoveDvojiceLcd;
         pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.seznamPasem);
 
-        seznamLabelNazevZastavky.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu)));
+
+        seznamLabelNazevZastavky.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu,seznamLabelNazevZastavky.at(i)->font().pixelSize() )));
 
 
         //if(navazny==true)
@@ -861,7 +871,7 @@ void MainWindow::hlavniVykresliNacestne()
         return;
     }
 
-    QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky);
+    QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky, ui->label_nacestne->font().pixelSize());
     if(ui->label_nacestne->text()!=novyVstup)
     {
         timerNacestneZastavky->start(intervalPosunuNacest);
@@ -873,7 +883,7 @@ void MainWindow::hlavniVykresliNacestne()
 
 
 
-int MainWindow::DoplneniPromennych()
+int MainWindow::doplneniPromennych()
 {
     qDebug()<<"MainWindow::DoplneniPromennych";
     // qInfo()<<"\n DoplneniPromennych";
@@ -881,7 +891,7 @@ int MainWindow::DoplneniPromennych()
     if (globalniSeznamZastavek.size()>indexZastavky)
     {
         ZastavkaCil aktualniZastavka=globalniSeznamZastavek.at(indexZastavky);
-        nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu));
+        nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu,ui->Lcil->font().pixelSize()));
         nazevLinky=aktualniZastavka.linka.LineName;
     }
     else
@@ -892,7 +902,7 @@ int MainWindow::DoplneniPromennych()
     return 1;
 }
 
-int MainWindow::FormatZobrazeni()
+int MainWindow::formatZobrazeni()
 {
     qDebug()<<"MainWindow::FormatZobrazeni";
     qInfo()<<"\n FormatZobrazeni";
@@ -1063,7 +1073,7 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
 
     //additional text message
-    instanceXMLparser.nactiAdditionalTextMessage(instanceXMLparser.dokument, additionalTextMessage);
+    instanceXMLparser.nactiAdditionalTextMessage(instanceXMLparser.dokument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
 
     //zmena tarifniho pasma
 
@@ -1076,9 +1086,9 @@ void MainWindow::xmlDoPromenne(QString vstupniXml)
     qInfo()<<"CIl:"<<nazevCile;
     if( globalniSeznamZastavek.size()>0)
     {
-        DoplneniPromennych();
-        VykresleniPrijatychDat();
-        FormatZobrazeni();
+        doplneniPromennych();
+        vykresleniPrijatychDat();
+        formatZobrazeni();
         this->ledAktualizujZobrazeniVirtualnichPanelu(globalniSeznamZastavek,stavSystemu);
         this->svgVykresleni();
         qInfo()<<"CIl:"<<nazevCile;
@@ -1465,7 +1475,7 @@ void MainWindow::hlavniZobrazAnnoucement(QString title,QString type,QString text
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
 
     ui->label_oznTitle->setText(title);
-    ui->label_oznType->setText(type);
+    ui->label_oznType->setText(  labelVykreslovani.textNaPiktogramOznameni(type,100*pomerPixelBod));
     ui->label_oznTextCs->setText(textCz);
     ui->label_oznTextEn->setText(textEn);
 
@@ -1539,7 +1549,7 @@ int MainWindow::jeVRozsahu(int index, int pocetHodnot)
 void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 {
     qDebug()<<"MainWindow::hlavniVykresliPrestupy";
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
+    //ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
 
     /*
     foreach(QFrame* ramec,seznamFramePrestup)
@@ -1584,7 +1594,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );
         seznamLabelPrestupNastupiste.at(i)->show();
 
-        seznamLabelPrestupOdjezd.at(i)->setText(aktualniPrestup.expectedDepartureTime);
+        seznamLabelPrestupOdjezd.at(i)->setText("<b>"+ QString::number( aktualniPrestup.minutDoOdjezdu(QDateTime::currentDateTime() ))+"</b> min.");
         seznamLabelPrestupOdjezd.at(i)->show();
     }
 }

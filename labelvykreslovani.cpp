@@ -41,7 +41,7 @@ void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel*> labely, int bod
 void LabelVykreslovani::labelNastavVelikost(QLabel* label, int bodovaVelikost, float pomerBodu)
 {
     QFont fontLabelu =label->font();
-   // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
+    // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
     fontLabelu.setPixelSize(qFloor(pomerBodu*bodovaVelikost));
     label->setFont(fontLabelu);
 }
@@ -148,7 +148,7 @@ QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska
 }
 
 
-QString LabelVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestneZastavky)
+QString LabelVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> nacestneZastavky, int velikostPiktogramu)
 {
     qDebug()<<"MainWindow::vykresliNacestneZastavkyText";
     if (nacestneZastavky.count()==0)
@@ -160,10 +160,10 @@ QString LabelVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> naces
 
 
 
-    nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu);
+    nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
     for (int i=1;i<nacestneZastavky.count();i++)
     {
-        nacestyString+=" – "+doplnPiktogramyBezZacatkuKonce( nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).seznamPiktogramu);
+        nacestyString+=" – "+doplnPiktogramyBezZacatkuKonce( nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).seznamPiktogramu,velikostPiktogramu);
     }
 
 
@@ -176,21 +176,42 @@ QString LabelVykreslovani::vykresliNacestneZastavkyText( QVector<Zastavka> naces
 }
 
 
-QString LabelVykreslovani::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky,QVector<QString> seznamPiktogramu)
+QString LabelVykreslovani::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky,QVector<QString> seznamPiktogramu, int vyskaObrazku)
 {
     QString vystup="";
-    int vyskaObrazku=40; //konstanta v px, ovlivnuje vysku piktogramu
+    // int vyskaObrazku=40; //konstanta v px, ovlivnuje vysku piktogramu
     QString htmlObrazky="";
 
     foreach(QString nazevPiktogramu,seznamPiktogramu)
     {
-        htmlObrazky+="<img  src=\":/images/"+nazevPiktogramu+"\" height=\""+QString::number(vyskaObrazku)+"\"  >";
+        htmlObrazky+="<img  src=\":/images/"+nazevPiktogramu+"\"height=\""+QString::number(vyskaObrazku)+"\"  >";
     }
 
     vystup=nazevZastavky+htmlObrazky;
     return vystup;
 
 }
+
+
+QString LabelVykreslovani::textNaPiktogramOznameni(QString announcementType, int vyskaObrazku)
+{
+    QString vystup="";
+    // int vyskaObrazku=40; //konstanta v px, ovlivnuje vysku piktogramu
+    QString htmlObrazky="";
+    if (announcementType=="" )
+    {
+        return "";
+    }
+
+    htmlObrazky+="<img  src=\":/images/"+announcementType+"\" height=\""+QString::number(vyskaObrazku)+"\"  >";
+
+    qDebug()<<"nastavuju piktogram oznameni:"<<htmlObrazky;
+
+    vystup=htmlObrazky;
+    return vystup;
+
+}
+
 
 
 QString LabelVykreslovani::zabalHtmlDoZnacek(QString vstup)
@@ -222,6 +243,7 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<ZastavkaCil> globalniSezna
     }
 
     label->setText(" ");
-    QString novyVstup=vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky);
+    int velikostTextu=label->font().pixelSize();
+    QString novyVstup=vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky,velikostTextu);
     label->setText( novyVstup);
 }

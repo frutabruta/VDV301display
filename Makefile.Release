@@ -203,15 +203,16 @@ release/qrc_resources.cpp: resources.qrc \
 		resources/LCD-piktogramy_verze-LCD-5-04.svg \
 		resources/LCD-piktogramy_verze-LCD-5-06.svg \
 		resources/LCD-piktogramy_verze-LCD-5-11.svg \
-		resources/LCD-piktogramy_verze-LCD-5-23.svg \
 		resources/LCD-piktogramy_verze-LCD-5-31.svg \
+		resources/LCD-piktogramy_verze-LCD-5-26normal.svg \
+		resources/LCD-piktogramy_verze-LCD-5-15.svg \
 		resources/LCD-piktogramy_verze-LCD-5-19.svg \
 		resources/LCD-piktogramy_verze-LCD-5-20.svg \
 		resources/LCD-piktogramy_verze-LCD-5-27.svg \
 		resources/LCD-piktogramy_verze-LCD-5-21.svg \
 		resources/LCD-piktogramy_verze-LCD-5-10.svg \
-		resources/LCD-piktogramy_verze-LCD-5-15.svg \
 		resources/LCD-piktogramy_verze-LCD-5_1.svg \
+		resources/LCD-piktogramy_verze-LCD-5-23.svg \
 		resources/LCD-piktogramy_verze-LCD-5-25.svg \
 		resources/LCD-piktogramy_verze-LCD-5-14.svg \
 		resources/LCD-piktogramy_verze-LCD-5-09.svg \
@@ -1470,6 +1471,7 @@ release/moc_mainwindow.cpp: mainwindow.h \
 		VDV301struktury/zastavka.h \
 		VDV301struktury/pasmo.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		VDV301struktury/linka.h \
 		VDV301struktury/zastavkacil.h \
 		VDV301struktury/cestaudaje.h \
@@ -2678,11 +2680,12 @@ release/labelvykreslovani.o: labelvykreslovani.cpp labelvykreslovani.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtXml/qtxml-config.h \
 		VDV301struktury/zastavka.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/linka.h \
 		VDV301struktury/zastavkacil.h \
 		VDV301struktury/cestaudaje.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDate \
-		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/obeh.h \
 		VDV301struktury/spoj.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/QFont \
@@ -2938,6 +2941,7 @@ release/main.o: main.cpp mainwindow.h \
 		VDV301struktury/zastavka.h \
 		VDV301struktury/pasmo.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		VDV301struktury/linka.h \
 		VDV301struktury/zastavkacil.h \
 		VDV301struktury/cestaudaje.h \
@@ -3366,6 +3370,7 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		VDV301struktury/zastavka.h \
 		VDV301struktury/pasmo.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		VDV301struktury/linka.h \
 		VDV301struktury/zastavkacil.h \
 		VDV301struktury/cestaudaje.h \
@@ -3538,6 +3543,48 @@ release/mainwindow.o: mainwindow.cpp mainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmessagebox.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qdialog.h \
 		ui_mainwindow.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QAction \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qaction.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qactiongroup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QApplication \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qapplication.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qdesktopwidget.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qguiapplication.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qinputmethod.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QFrame \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGraphicsView \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgraphicsview.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qpainter.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextoption.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qscrollarea.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QGridLayout \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qgridlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlayoutitem.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qboxlayout.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHBoxLayout \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QHeaderView \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qheaderview.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QLineEdit \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qlineedit.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextcursor.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qtextformat.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QMenu \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmenu.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QMenuBar \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmenubar.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QPushButton \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qpushbutton.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qabstractbutton.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QScrollArea \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QSpacerItem \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QStackedWidget \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstackedwidget.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QStatusBar \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qstatusbar.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QToolBar \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtoolbar.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QVBoxLayout \
 		../../../../Qt/5.15.2/mingw81_32/include/QtNetwork/QNetworkReply \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/QSvgWidget \
 		../../../../Qt/5.15.2/mingw81_32/include/QtSvg/qsvgwidget.h \
@@ -3717,11 +3764,12 @@ release/svgvykreslovani.o: svgvykreslovani.cpp svgvykreslovani.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qicon.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/linka.h \
 		VDV301struktury/zastavkacil.h \
 		VDV301struktury/cestaudaje.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDate \
-		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/obeh.h \
 		VDV301struktury/spoj.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDebug \
@@ -3972,6 +4020,7 @@ release/xmlparser.o: xmlparser.cpp xmlparser.h \
 		VDV301struktury/zastavka.h \
 		VDV301struktury/pasmo.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		VDV301struktury/linka.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QWidget \
 		VDV301struktury/zastavkacil.h \
@@ -4092,6 +4141,8 @@ release/zastavka.o: VDV301struktury/zastavka.cpp VDV301struktury/zastavka.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qicon.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/linka.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\zastavka.o VDV301struktury\zastavka.cpp
@@ -4207,6 +4258,8 @@ release/zastavkacil.o: VDV301struktury/zastavkacil.cpp VDV301struktury/zastavkac
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qicon.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
 		VDV301struktury/linka.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\zastavkacil.o VDV301struktury\zastavkacil.cpp
@@ -4329,6 +4382,7 @@ release/cestaudaje.o: VDV301struktury/cestaudaje.cpp VDV301struktury/cestaudaje.
 		VDV301struktury/zastavka.h \
 		VDV301struktury/pasmo.h \
 		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\cestaudaje.o VDV301struktury\cestaudaje.cpp
 
@@ -4553,7 +4607,9 @@ release/obeh.o: VDV301struktury/obeh.cpp VDV301struktury/obeh.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qicon.h \
-		VDV301struktury/prestup.h
+		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\obeh.o VDV301struktury\obeh.cpp
 
 release/spoj.o: VDV301struktury/spoj.cpp VDV301struktury/spoj.h \
@@ -4669,7 +4725,9 @@ release/spoj.o: VDV301struktury/spoj.cpp VDV301struktury/spoj.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qmainwindow.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qtabwidget.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qicon.h \
-		VDV301struktury/prestup.h
+		VDV301struktury/prestup.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\spoj.o VDV301struktury\spoj.cpp
 
 release/pasmo.o: VDV301struktury/pasmo.cpp VDV301struktury/pasmo.h \
@@ -4795,6 +4853,10 @@ release/prestup.o: VDV301struktury/prestup.cpp VDV301struktury/prestup.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qvarlengtharray.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qcontainerfwd.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qobject_impl.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/QDateTime \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qdatetime.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qshareddata.h \
+		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qhash.h \
 		VDV301struktury/linka.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/QWidget \
 		../../../../Qt/5.15.2/mingw81_32/include/QtWidgets/qwidget.h \
@@ -4824,8 +4886,6 @@ release/prestup.o: VDV301struktury/prestup.cpp VDV301struktury/prestup.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qpixelformat.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qpixmap.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qshareddata.h \
-		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qhash.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtCore/qsharedpointer_impl.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfont.h \
 		../../../../Qt/5.15.2/mingw81_32/include/QtGui/qfontmetrics.h \

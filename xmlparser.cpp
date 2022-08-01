@@ -17,6 +17,16 @@ void XmlParser::nactiXML(QString vstup)
 {
     qDebug()<<"XmlParser::nactiXML";
 
+    if(vstup!=stareXml)
+    {
+        zmenaDat=true;
+        zmenaDat=false;
+    }
+    else
+    {
+        zmenaDat=false;
+    }
+
     dokument.setContent(vstup);
    // QString blabla = dokument.toString();
 
@@ -267,12 +277,11 @@ int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
 }
 
 
-
-int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup )
+int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &type ,QString &headline,QString &text )
 {
     qDebug()<<"XmlParser::nactiAdditionalTextMessage";
 
-    vystup="";
+
 
     QDomElement root = xmlko.firstChildElement();
 
@@ -299,21 +308,15 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &vystup )
 
 
     QDomElement additionalTextMessage=tripInformation.firstChildElement("AdditionalTextMessage");
-    QDomElement additionalTextMessageText=additionalTextMessage.firstChildElement("AdditionalTextMessageText");
-    QDomElement value=additionalTextMessageText.firstChildElement("Value");
-    vystup=value.firstChild().nodeValue();
-    qDebug()<<"additional text je "<<vystup;
+    type=additionalTextMessage.firstChildElement("AdditionalTextMessageType").firstChildElement("Value").firstChild().nodeValue();
+   headline=additionalTextMessage.firstChildElement("AdditionalTextMessageHeadline").firstChildElement("Value").firstChild().nodeValue();
+    text=additionalTextMessage.firstChildElement("AdditionalTextMessageText").firstChildElement("Value").firstChild().nodeValue();
 
-    /*
-    QDomElement root = xmlko.firstChildElement();
-    qDebug()<<"root name "<<root.nodeName();
-    QDomElement allData=root.firstChildElement("AllData");
-    qDebug()<<"alldata name "<<allData.nodeName();
-    stav.indexAktZastavky=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt();
-    stav.VehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
-    stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
-    qDebug()<<"stopIndex "<<QString::number(stav.indexAktZastavky)<<"stopRequested "<<stav.VehicleStopRequested<<" locState "<<stav.locationState;
-*/
+
+
+
+    qDebug()<<"additional text je "<<type<<" "<<headline<<" "<<text;
+
 
     return 1;
 }
@@ -391,15 +394,16 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         aktualniPrestup.line.LineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
 
         aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-        aktualniPrestup.expectedDepartureTime=aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.expectedDepartureTime=QDateTime::fromString( aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
 
-        QDateTime timestamp = QDateTime::fromString(aktualniPrestup.expectedDepartureTime,Qt::ISODate);
+        QDateTime timestamp = aktualniPrestup.expectedDepartureTime;
         // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
         //  timestamp = timestamp.toLocalTime(); // convert to local time
 
+        /*
         QString vysledek= QString::number(-timestamp.secsTo(QDateTime::currentDateTime())/60)+" min." ;
         aktualniPrestup.expectedDepartureTime=vysledek;
-
+    */
         // aktualniPrestup.departureTime=timestamp.toString("hh:mm");
 
         aktualniPrestup.platform=aktualniElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();

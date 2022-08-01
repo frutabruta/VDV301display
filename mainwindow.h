@@ -53,16 +53,22 @@ public:
     QString nazevLinky="";
     QString nazevCile="";
 
-    QString additionalTextMessage="";
+
+
+
+    QString additionalTextMessageType="";
+    QString additionalTextMessageHeadline="";
+    QString additionalTextMessageText="";
+
     QVector<Pasmo> pasmaZ;
     QVector<Pasmo> pasmaDo;
     bool zmenaPasma=false;
 
     int indexZastavky=0;
     int pocetZastavek=0;
-    int VykresleniPrijatychDat();
-    int DoplneniPromennych ();
-    int FormatZobrazeni();
+    int vykresleniPrijatychDat();
+    int doplneniPromennych ();
+    int formatZobrazeni();
     ~MainWindow();
 
     IbisIpSubscriber CustomerInformationServiceSubscriber;

@@ -14,7 +14,7 @@
         <file alias="Air">resources/LCD-piktogramy_verze-LCD-5-12.svg</file>
         <file alias="RequestStop">resources/LCD-piktogramy_verze-LCD-5-13.svg</file>
         <file alias="ReplacementService">resources/LCD-piktogramy_verze-LCD-5-14.svg</file>
-        <file alias="ReplacementStop">resources/LCD-piktogramy_verze-LCD-5-15.svg</file>
+        <file alias="Diversion">resources/LCD-piktogramy_verze-LCD-5-15.svg</file>
         <file alias="WheelchairLine">resources/LCD-piktogramy_verze-LCD-5-16.svg</file>
         <file>resources/LCD-piktogramy_verze-LCD-5-17.svg</file>
         <file>resources/LCD-piktogramy_verze-LCD-5-18.svg</file>
@@ -22,7 +22,7 @@
         <file alias="RequestStopInv">resources/LCD-piktogramy_verze-LCD-5-20.svg</file>
         <file alias="Accessible">resources/LCD-piktogramy_verze-LCD-5-21.svg</file>
         <file alias="Pram">resources/LCD-piktogramy_verze-LCD-5-22.svg</file>
-        <file alias="WheelChair ">resources/LCD-piktogramy_verze-LCD-5-23.svg</file>
+        <file alias="WheelChair">resources/LCD-piktogramy_verze-LCD-5-23.svg</file>
         <file alias="GoFurther">resources/LCD-piktogramy_verze-LCD-5-24.svg</file>
         <file alias="Luggage">resources/LCD-piktogramy_verze-LCD-5-25.svg</file>
         <file alias="NoFoodInv">resources/LCD-piktogramy_verze-LCD-5-26.svg</file>
@@ -42,6 +42,7 @@
         <file>resources/LCD-piktogramy_verze-LCD-5-40.svg</file>
         <file>resources/LCD-piktogramy_verze-LCD-5-41.svg</file>
         <file>resources/LCD-piktogramy_verze-LCD-5-42.svg</file>
+        <file alias="NoFood">resources/LCD-piktogramy_verze-LCD-5-26normal.svg</file>
     </qresource>
     <qresource prefix="/fonts">
         <file>fonty/21-pid-1.ttf</file>

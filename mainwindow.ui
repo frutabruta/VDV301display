@@ -858,7 +858,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>1</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -1374,60 +1374,101 @@ border-radius: 8px;
                    <item row="0" column="0">
                     <layout class="QHBoxLayout" name="horizontalLayout_17">
                      <item>
-                      <widget class="QLabel" name="label_oznType">
-                       <property name="font">
-                        <font>
-                         <family>roboto</family>
-                         <pointsize>30</pointsize>
-                        </font>
+                      <widget class="QFrame" name="frame_2">
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
                        </property>
-                       <property name="text">
-                        <string>obrazek</string>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
                        </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout">
+                        <item>
+                         <widget class="QLabel" name="label_oznType">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>roboto</family>
+                            <pointsize>30</pointsize>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_11">
+                          <item>
+                           <widget class="QLabel" name="label_oznTitle">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>40</pointsize>
+                              <weight>75</weight>
+                              <bold>true</bold>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>Nadpis</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_oznTextCs">
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>30</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>TextCZ</string>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="label_oznTextEn">
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>30</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>TextEN</string>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
                       </widget>
-                     </item>
-                     <item>
-                      <layout class="QVBoxLayout" name="verticalLayout_11">
-                       <item>
-                        <widget class="QLabel" name="label_oznTitle">
-                         <property name="font">
-                          <font>
-                           <family>roboto</family>
-                           <pointsize>30</pointsize>
-                          </font>
-                         </property>
-                         <property name="text">
-                          <string>Nadpis</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLabel" name="label_oznTextCs">
-                         <property name="font">
-                          <font>
-                           <family>roboto</family>
-                           <pointsize>30</pointsize>
-                          </font>
-                         </property>
-                         <property name="text">
-                          <string>TextCZ</string>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QLabel" name="label_oznTextEn">
-                         <property name="font">
-                          <font>
-                           <family>roboto</family>
-                           <pointsize>30</pointsize>
-                          </font>
-                         </property>
-                         <property name="text">
-                          <string>TextEN</string>
-                         </property>
-                        </widget>
-                       </item>
-                      </layout>
                      </item>
                     </layout>
                    </item>
@@ -1627,7 +1668,7 @@ border-radius: 30px;
                     <number>0</number>
                    </property>
                    <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_prestupy0" stretch="1,1,1,1,1,1">
+                    <layout class="QVBoxLayout" name="verticalLayout_prestupy0" stretch="0,0,0,0,0,0">
                      <item>
                       <widget class="QFrame" name="frame_odjezd0">
                        <property name="styleSheet">
@@ -1639,7 +1680,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_22" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_22" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup0_linka">
                           <property name="sizePolicy">
@@ -1711,7 +1752,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup0_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1725,12 +1766,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup0_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1742,7 +1786,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -1757,7 +1804,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup1_linka">
                           <property name="sizePolicy">
@@ -1790,8 +1837,7 @@ border-radius: 30px;
                            <string notr="true">background-color: rgb(255,255,255); color:rgb(0,0,0); border-radius:6px;padding: 5px; font-weight: bold;</string>
                           </property>
                           <property name="text">
-                           <string>&lt;html&gt;&lt;head/&gt;&lt;body style=&quot;padding: 0px
-;&quot;&gt;&lt;p&gt;&lt;img src=&quot;:/images/UndergroundA&quot; height=&quot;50&quot; /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                           <string>666</string>
                           </property>
                           <property name="alignment">
                            <set>Qt::AlignCenter</set>
@@ -1827,7 +1873,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup1_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1841,12 +1887,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup1_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1858,7 +1907,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -1876,7 +1928,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup2_linka">
                           <property name="sizePolicy">
@@ -1945,7 +1997,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup2_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1959,12 +2011,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup2_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -1976,7 +2031,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -1991,7 +2049,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_28" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_28" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup3_linka">
                           <property name="sizePolicy">
@@ -2060,7 +2118,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup3_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2074,12 +2132,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup3_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2091,7 +2152,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2109,7 +2173,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup4_linka">
                           <property name="sizePolicy">
@@ -2178,7 +2242,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup4_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2192,12 +2256,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup4_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2209,7 +2276,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2224,7 +2294,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_26" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_26" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup5_linka">
                           <property name="sizePolicy">
@@ -2293,7 +2363,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup5_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2307,12 +2377,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup5_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2324,7 +2397,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2349,7 +2425,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup6_linka">
                           <property name="sizePolicy">
@@ -2418,7 +2494,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup6_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2432,12 +2508,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup6_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2449,7 +2528,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2464,7 +2546,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_30" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_30" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup7_linka">
                           <property name="sizePolicy">
@@ -2533,7 +2615,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup7_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2547,12 +2629,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup7_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2564,7 +2649,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2582,7 +2670,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup8_linka">
                           <property name="sizePolicy">
@@ -2651,7 +2739,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup8_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2665,12 +2753,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup8_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2682,7 +2773,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2697,7 +2791,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup9_linka">
                           <property name="sizePolicy">
@@ -2766,7 +2860,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup9_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2780,12 +2874,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup9_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2797,7 +2894,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2815,7 +2915,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_33" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_33" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup10_linka">
                           <property name="sizePolicy">
@@ -2884,7 +2984,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup10_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2898,12 +2998,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup10_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -2915,7 +3018,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -2930,7 +3036,7 @@ border-radius: 30px;
                        <property name="frameShadow">
                         <enum>QFrame::Raised</enum>
                        </property>
-                       <layout class="QHBoxLayout" name="horizontalLayout_34" stretch="2,1,6,1,2">
+                       <layout class="QHBoxLayout" name="horizontalLayout_34" stretch="19,10,100,10,40">
                         <item>
                          <widget class="QLabel" name="label_prestup11_linka">
                           <property name="sizePolicy">
@@ -2999,7 +3105,7 @@ border-radius: 30px;
                         <item>
                          <widget class="QLabel" name="label_prestup11_nastupiste">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -3013,12 +3119,15 @@ border-radius: 30px;
                           <property name="text">
                            <string>A</string>
                           </property>
+                          <property name="alignment">
+                           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                          </property>
                          </widget>
                         </item>
                         <item>
                          <widget class="QLabel" name="label_prestup11_odjezd">
                           <property name="sizePolicy">
-                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                             <horstretch>0</horstretch>
                             <verstretch>0</verstretch>
                            </sizepolicy>
@@ -3030,7 +3139,10 @@ border-radius: 30px;
                            </font>
                           </property>
                           <property name="text">
-                           <string>5min</string>
+                           <string> &lt;b&gt;5&lt;/b&gt; min.</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -3089,7 +3201,7 @@ border-radius: 30px;
                    <number>0</number>
                   </property>
                   <item row="0" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,10">
+                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,0">
                     <property name="spacing">
                      <number>0</number>
                     </property>
