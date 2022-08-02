@@ -247,3 +247,11 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<ZastavkaCil> globalniSezna
     QString novyVstup=vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky,velikostTextu);
     label->setText( novyVstup);
 }
+
+void LabelVykreslovani::vymazPoleLabelu(QVector<QLabel*> vstup)
+{
+    foreach( QLabel* odkaz, vstup)
+    {
+        odkaz->setText("");
+    }
+}

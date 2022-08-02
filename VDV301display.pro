@@ -53,8 +53,8 @@ SOURCES += \
     VDV301struktury/obeh.cpp\
     VDV301struktury/spoj.cpp\
     VDV301struktury/pasmo.cpp\
-    VDV301struktury/prestup.cpp
-
+    VDV301struktury/prestup.cpp\
+    VDV301struktury/specialnihlaseni.cpp
 HEADERS += \
     VDV301subscriber/newhttpserver.h \
     VDV301subscriber/ibisipsubscriber.h \
@@ -70,7 +70,8 @@ HEADERS += \
     VDV301struktury/obeh.h\
     VDV301struktury/spoj.h\
     VDV301struktury/prestup.h\
-    VDV301struktury/cestaudaje.h
+    VDV301struktury/cestaudaje.h\
+    VDV301struktury/specialnihlaseni.cpp
 
 
 FORMS += \

@@ -19,6 +19,7 @@ release/obeh.o
 release/spoj.o
 release/pasmo.o
 release/prestup.o
+release/specialnihlaseni.o
 release/qrc_resources.o
 release/moc_qzeroconf.o
 release/moc_bonjour_p.o

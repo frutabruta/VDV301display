@@ -176,24 +176,24 @@ int MainWindow::existujeKonfigurak()
             break;
 
         case 1:
-            on_tlacitkoHlavni_clicked();
+            on_pushButton_menu_hlavni_clicked();
             break;
 
         case 2:
-            on_svgTlacitko_clicked();
+            on_pushButton_menu_svg_clicked();
             break;
         case 3:
-            on_tlacitkoLed_clicked();
+            on_pushButton_menu_svg_clicked();
 
             break;
         case 4:
-            on_tlacitkoSeznamSluzeb_clicked();
+            on_pushButton_menu_sluzby_clicked();
             break;
 
 
 
         }
-        toggleFullscreen();
+        slotToggleFullscreen();
 
 
     }
@@ -201,16 +201,12 @@ int MainWindow::existujeKonfigurak()
     return 1;
 }
 
-void MainWindow::fullscreenPoZapnuti()
-{
 
-
-}
 
 void MainWindow::vsechnyConnecty()
 {
     qDebug()<<"MainWindow::vsechnyConnecty";
-    connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::xmlDoPromenne);
+    connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
   //  connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbaDoTabulky);
     connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
 
@@ -218,7 +214,7 @@ void MainWindow::vsechnyConnecty()
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
 
-    connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::ledIiterujVsechnyPanely);
+    connect(timerBocniPanel, &QTimer::timeout, this, &MainWindow::ledIterujVsechnyPanely);
     connect(timerNacestneZastavky, &QTimer::timeout, this, &MainWindow::slotPosunNacestnych);
     connect(timerStridejStranky, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
     connect(timerOpozdenyStart, &QTimer::timeout, this, &MainWindow::slotOpozdenyStart);
@@ -229,15 +225,15 @@ void MainWindow::vsechnyConnecty()
 
     //klávesové zkratky
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
-    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
-    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_tlacitkoHlavni_clicked );
-    connect(keyF2, &QShortcut::activated, this,&MainWindow::on_svgTlacitko_clicked );
-    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_tlacitkoLed_clicked );
-    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_tlacitkoSeznamSluzeb_clicked);
-    connect(keyF5, &QShortcut::activated, this, &MainWindow::on_tlacitkoCasovac_clicked );
-    connect(keyF6, &QShortcut::activated, this, &MainWindow::toggleFullscreen);
-    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_refreshTlac_clicked);
-    connect(keyF8, &QShortcut::activated, this, &MainWindow::on_quitTlacitko_clicked);
+    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
+    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_hlavni_clicked );
+    connect(keyF2, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_svg_clicked );
+    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_svg_clicked );
+    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_sluzby_clicked);
+    connect(keyF5, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_casovac_clicked );
+    connect(keyF6, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
+    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refreh_clicked);
+    connect(keyF8, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_quit_clicked);
 }
 
 int MainWindow::slotKazdouVterinu()
@@ -495,19 +491,13 @@ void MainWindow::naplnMapBarev()
 
 }
 
-void MainWindow::vymazPoleLabelu(QVector<QLabel*> vstup)
-{
-    foreach( QLabel* odkaz, vstup)
-    {
-        odkaz->setText("");
-    }
-}
+
 
 
 
 void MainWindow::vymazObrazovku()
 {
-    qDebug()<<"MainWindow::vymazObrazovku()";
+   qDebug() <<  Q_FUNC_INFO;
     hlavniVymazObrazovku();
     svgVykreslovani.vymazObrazovku();
     ledVymazPanely();
@@ -518,21 +508,21 @@ void MainWindow::vymazObrazovku()
 
 void MainWindow::hlavniVymazObrazovku()
 {
-    qDebug()<<"MainWindow::hlavniVymazObrazovku";
+   qDebug() <<  Q_FUNC_INFO;
     ui->Lcil->setText("");
     ui->Llinka->setText("");
     ui->label_nacestne->setText("");
 
     ui->frame_navaznySpoj->hide();
 
-    vymazPoleLabelu(seznamLabelNazevZastavky);
-    vymazPoleLabelu(seznamLabelPasmoDolni);
-    vymazPoleLabelu(seznamLabelPasmoHorni);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelNazevZastavky);
+   labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoDolni);
+   labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoHorni);
     //obrazovka prestupu
-    vymazPoleLabelu(seznamLabelPrestupCil);
-    vymazPoleLabelu(seznamLabelPrestupLinka);
-    vymazPoleLabelu(seznamLabelPrestupNastupiste);
-    vymazPoleLabelu(seznamLabelPrestupOdjezd);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupCil);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
+   labelVykreslovani. vymazPoleLabelu(seznamLabelPrestupOdjezd);
 
     timerStridejStranky->stop();
     strankyKeStridani.clear();
@@ -542,7 +532,7 @@ void MainWindow::hlavniVymazObrazovku()
 
 int MainWindow::vykresleniPrijatychDat()
 {
-    qDebug()<<"MainWindow::VykresleniPrijatychDat";
+    qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
@@ -552,7 +542,7 @@ int MainWindow::vykresleniPrijatychDat()
 
     hlavniVykresliNazevCile(nazevCile);
     hlavniVykresliCisloLinky(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky),stavSystemu.vehicleSubMode);
-    hlavniVykreslZastavkyiPasma(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje);
+    hlavniVykresliZastavkyiPasma(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje);
     hlavniVykresliNacestne();
 
     strankyKeStridani.clear();
@@ -718,7 +708,7 @@ void MainWindow::hlavniVykresliNasledne()
 */
 
 
-void MainWindow::hlavniVykreslZastavkyiPasma(QVector<ZastavkaCil>aktZastavky, QVector<ZastavkaCil>navazZastavky )
+void MainWindow::hlavniVykresliZastavkyiPasma(QVector<ZastavkaCil>aktZastavky, QVector<ZastavkaCil>navazZastavky )
 {
     qDebug()<<"MainWindow::hlavniVykreslZastavkyiPasma";
     int offset=0;
@@ -728,7 +718,7 @@ void MainWindow::hlavniVykreslZastavkyiPasma(QVector<ZastavkaCil>aktZastavky, QV
 
 int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny)
 {
-    qDebug()<<"MainWindow::hlavniVykresliSkupinuZastavek";
+    qDebug() <<  Q_FUNC_INFO;
     if(zastavky.isEmpty())
     {
         return 0;
@@ -862,8 +852,7 @@ int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector
 
 void MainWindow::hlavniVykresliNacestne()
 {
-    qDebug()<<"MainWindow::vykresliNacestne()";
-    //ui->label_nacestne->setText(" ");
+    qDebug() <<  Q_FUNC_INFO;
 
     if(globalniSeznamZastavek.isEmpty())
     {
@@ -885,7 +874,7 @@ void MainWindow::hlavniVykresliNacestne()
 
 int MainWindow::doplneniPromennych()
 {
-    qDebug()<<"MainWindow::DoplneniPromennych";
+    qDebug() <<  Q_FUNC_INFO;
     // qInfo()<<"\n DoplneniPromennych";
 
     if (globalniSeznamZastavek.size()>indexZastavky)
@@ -904,8 +893,7 @@ int MainWindow::doplneniPromennych()
 
 int MainWindow::formatZobrazeni()
 {
-    qDebug()<<"MainWindow::FormatZobrazeni";
-    qInfo()<<"\n FormatZobrazeni";
+    qDebug() <<  Q_FUNC_INFO;
 
 
 
@@ -925,7 +913,7 @@ int MainWindow::formatZobrazeni()
 
 MainWindow::~MainWindow()
 {
-    qDebug()<<"MainWindow::~MainWindow";
+    qDebug() <<  Q_FUNC_INFO;
     delete ui;
 }
 
@@ -933,8 +921,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actiontestPolozka_triggered()
 {
-    qDebug()<<"MainWindow::on_actiontestPolozka_triggered";
-    qInfo()<<"\n on_actiontestPolozka_triggered";
+    qDebug() <<  Q_FUNC_INFO;
     /*
     instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, stavSystemu.indexAktZastavky, pocetZastavek);
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
@@ -945,7 +932,7 @@ void MainWindow::on_actiontestPolozka_triggered()
     FormatZobrazeni();
     qInfo()<<"CIl:"<<nazevCile;
     */
-    toggleFullscreen();
+    slotToggleFullscreen();
 }
 
 
@@ -966,10 +953,9 @@ nejsem autorem
 
 
 
-void MainWindow::on_refreshTlac_clicked()
+void MainWindow::on_pushButton_menu_refreh_clicked()
 {
-    qDebug()<<"MainWindow::on_refreshTlac_clicked";
-    qInfo()<<"\n on_refreshTlac_clicked";
+   qDebug() <<  Q_FUNC_INFO;
 
   //  CustomerInformationServiceSubscriber.odebirano=false ;
   //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -985,7 +971,7 @@ void MainWindow::on_refreshTlac_clicked()
 
 void MainWindow::vymazTabulkuSubscriberu(QTableWidget *tableWidget)
 {
-    qDebug()<<"MainWindow::vymazTabulkuSubscriberu";
+    qDebug() <<  Q_FUNC_INFO;
     //  https://stackoverflow.com/a/31564541
     tableWidget->clearSelection();
 
@@ -1002,21 +988,21 @@ void MainWindow::vymazTabulkuSubscriberu(QTableWidget *tableWidget)
 
 void MainWindow::vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb)
 {
-    qDebug()<<"MainWindow::vykresliSluzbyDoTabulky";
+    qDebug() <<  Q_FUNC_INFO;
   // ui->tabulkaSubscriberu->setRowCount(0);
     vymazTabulkuSubscriberu(ui->tabulkaSubscriberu);
 
 
     foreach(QZeroConfService sluzba, seznamSluzeb)
     {
-        sluzbaDoTabulky(sluzba);
+        slotSluzbaDoTabulky(sluzba);
     }
 }
 
 
-void MainWindow::sluzbaDoTabulky(QZeroConfService zcs)
+void MainWindow::slotSluzbaDoTabulky(QZeroConfService zcs)
 {
-    qDebug()<<"MainWindow::sluzbaDoTabulky";
+    qDebug() <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
 
@@ -1055,9 +1041,9 @@ void MainWindow::sluzbaDoTabulky(QZeroConfService zcs)
 
 }
 
-void MainWindow::xmlDoPromenne(QString vstupniXml)
+void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 {
-    qDebug()<<"MainWindow::xmlDoPromenne";
+    qDebug() <<  Q_FUNC_INFO;
 
     instanceXMLparser.nactiXML(vstupniXml);
 
@@ -1113,24 +1099,24 @@ void MainWindow::on_prepinaciOkno_currentChanged()
 }
 */
 
-void MainWindow::on_tlacitkoSeznamSluzeb_clicked()
+void MainWindow::on_pushButton_menu_sluzby_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_seznamSluzeb);
 }
 
-void MainWindow::on_tlacitkoHlavni_clicked()
+void MainWindow::on_pushButton_menu_hlavni_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
 }
 
-void MainWindow::on_tlacitkoCasovac_clicked()
+void MainWindow::on_pushButton_menu_casovac_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_casovac);
 }
 
 void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
 {
-    qDebug()<<"MainWindow::obarviPozadiPristi";
+    qDebug() <<  Q_FUNC_INFO;
     //
     labelVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
     svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
@@ -1145,15 +1131,15 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
 }
 
 
-void MainWindow::on_quitTlacitko_clicked()
+void MainWindow::on_pushButton_menu_quit_clicked()
 {
-    qDebug()<<"\n on_quitTlacitko_clicked \n";
+    qDebug() <<  Q_FUNC_INFO;
     MainWindow::close();
 }
 
 
 
-void MainWindow::on_svgTlacitko_clicked()
+void MainWindow::on_pushButton_menu_svg_clicked()
 {
 
     ui->prepinadloStran->setCurrentWidget(ui->page_svg);
@@ -1196,7 +1182,7 @@ bool MainWindow::svgVykresleni()
 
 bool MainWindow::svgOpenFile(const QString &fileName)
 {
-    qDebug()<<"MainWindow::openFile";
+    qDebug() <<  Q_FUNC_INFO;
     QGraphicsScene *s = &scene;
 
     QFile soubor;
@@ -1231,7 +1217,7 @@ bool MainWindow::svgOpenFile(const QString &fileName)
     return true;
 }
 
-void MainWindow::on_tlacitkoLed_clicked()
+void MainWindow::on_pushButton_menu_led_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_led);
     ui->labelFrontBottomRow->setText("");
@@ -1240,7 +1226,7 @@ void MainWindow::on_tlacitkoLed_clicked()
 
 void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRadek)
 {
-    qDebug()<<"MainWindow::naplnLedFront";
+    qDebug() <<  Q_FUNC_INFO;
 
     if (dolniRadek!="")
     {
@@ -1272,7 +1258,7 @@ void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRad
 
 void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRadek)
 {
-    qDebug()<<"MainWindow::naplnLedSide";
+    qDebug() <<  Q_FUNC_INFO;
     ui->labelSideLine->setText(linka);
     ui->labelSideTopRow->setText(horniRadek);
     ui->labelSideBottomRow->setText(dolniRadek);
@@ -1290,7 +1276,7 @@ void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRade
 
 void MainWindow::ledNaplnRear(QString linka)
 {
-    qDebug()<<"MainWindow::naplnLedRear";
+    qDebug() <<  Q_FUNC_INFO;
     ui->labelRearLine->setText(linka);
 
     if (linka.length()>3)
@@ -1307,7 +1293,7 @@ void MainWindow::ledNaplnRear(QString linka)
 
 void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRadek)
 {
-    qDebug()<<"MainWindow::naplnLedInner";
+   qDebug() <<  Q_FUNC_INFO;
     ui->labelInnerLine->setText(linka);
     ui->labelInnerTopRow->setText(horniRadek);
     ui->labelInnerBottomRow->setText(dolniRadek);
@@ -1316,7 +1302,7 @@ void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRad
 
 void MainWindow::ledInicializujVirtualniPanely()
 {
-    qDebug()<<"MainWindow::inicializujVirtualniLedPanely";
+   qDebug() <<  Q_FUNC_INFO;
     ledNaplnFront("123","čelní horní","čelní dolní");
     ledNaplnSide("456","Boční cíl","Boční nácestné");
     ledNaplnRear("789");
@@ -1325,7 +1311,7 @@ void MainWindow::ledInicializujVirtualniPanely()
 
 void MainWindow::ledVymazPanely()
 {
-    qDebug()<<"MainWindow::ledVymazPanelyy";
+    qDebug() <<  Q_FUNC_INFO;
     ledNaplnFront("","","");
     ledNaplnSide("","","");
     ledNaplnRear("");
@@ -1336,7 +1322,7 @@ void MainWindow::ledVymazPanely()
 
 void MainWindow::ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav )
 {
-    qDebug()<<"MainWindow::aktualizujZobrazeniVirtualnichLedPanelu";
+    qDebug() <<  Q_FUNC_INFO;
     ZastavkaCil aktZast=zastavky.at(stav.indexAktZastavky);
 
     ledNaplnFront(aktZast.linka.LineName,aktZast.cil.NameFront,aktZast.cil.NameFront2);
@@ -1351,7 +1337,7 @@ void MainWindow::ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> za
 
 QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZastavka)
 {
-    qDebug()<<"MainWindow::naplnNacestyBocniPanel";
+    qDebug() <<  Q_FUNC_INFO;
     Zastavka nacesta;
     QVector<QString> textyNaBocniPanel;
     textyNaBocniPanel.append("přes:");
@@ -1366,7 +1352,7 @@ QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZasta
 
 QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka)
 {
-    qDebug()<<"MainWindow::naplnNacestyVnitrniPanel";
+   qDebug() <<  Q_FUNC_INFO;
     Zastavka nacesta;
     QVector<QString> textyNaVnitrniPanel;
     textyNaVnitrniPanel.append("přes:");
@@ -1380,7 +1366,7 @@ QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZas
 }
 
 
-void MainWindow::ledIiterujVsechnyPanely()
+void MainWindow::ledIterujVsechnyPanely()
 {
     // qDebug()<<"MainWindow::iterujVsechnyPanely()";
     ledIterujBocniPanel(textyBocniPanelkIteraci,cyklovaniIndex);
@@ -1441,14 +1427,14 @@ void MainWindow::naplnZmenaLabel(QString vstup)
 
 void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
-    qDebug()<<"MainWindow::zobrazZmenuPasma";
+    qDebug() <<  Q_FUNC_INFO;
     hlavniZobrazZmenuPasma(zPasem,naPasma);
     svgVykreslovani.zobrazZmenuPasma(zPasem,naPasma);
 }
 
 void MainWindow::hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
-    qDebug()<<"MainWindow::zobrazZmenuPasma";
+   qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
@@ -1462,14 +1448,14 @@ void MainWindow::hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> na
 
 void MainWindow::zobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
-    qDebug()<<"MainWindow::zobrazAnnoucement";
+    qDebug() <<  Q_FUNC_INFO;
     hlavniZobrazAnnoucement(title,type,textCz,textEn);
     svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
 }
 
 void MainWindow::hlavniZobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
-    qDebug()<<"MainWindow::hlavniZobrazAnnoucement";
+    qDebug() <<  Q_FUNC_INFO;
     labelVykreslovani.naplnAnouncementLabel(textCz,ui->label_announcement);
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
@@ -1485,20 +1471,20 @@ void MainWindow::hlavniZobrazAnnoucement(QString title,QString type,QString text
 
 void MainWindow::skryjAnnouncement()
 {
-    qDebug()<<"MainWindow::skryjZmenuPasma";
+    qDebug() <<  Q_FUNC_INFO;
     navratJizda();
 }
 
 void MainWindow::skryjZmenuPasma()
 {
-    qDebug()<<"MainWindow::skryjZmenuPasma";
+   qDebug() <<  Q_FUNC_INFO;
     navratJizda();
 }
 
 
 void MainWindow::navratJizda()
 {
-    qDebug()<<"MainWindow::navratJizda";
+    qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     labelVykreslovani.naplnZmenaLabel("",ui->label_zmena);
@@ -1507,7 +1493,7 @@ void MainWindow::navratJizda()
 
 void MainWindow::zobrazKonecnou()
 {
-    qDebug()<<"MainWindow::zobrazKonecnou()";
+    qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
 
@@ -1517,7 +1503,7 @@ void MainWindow::zobrazKonecnou()
 int MainWindow::jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky)
 {
 
-    qDebug()<<"MainWindow::jeVozidloNaKonecne";
+    qDebug() <<  Q_FUNC_INFO;
     if((stav.indexAktZastavky==(zastavky.count()-1))&&(stav.locationState=="AtStop"))
     {
         return true;
@@ -1548,7 +1534,7 @@ int MainWindow::jeVRozsahu(int index, int pocetHodnot)
 
 void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 {
-    qDebug()<<"MainWindow::hlavniVykresliPrestupy";
+    qDebug() <<  Q_FUNC_INFO;
     //ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
 
     /*
@@ -1576,10 +1562,10 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
         label->hide();
     }
 
-    vymazPoleLabelu(seznamLabelPrestupCil);
-    vymazPoleLabelu(seznamLabelPrestupLinka);
-    vymazPoleLabelu(seznamLabelPrestupNastupiste);
-    vymazPoleLabelu(seznamLabelPrestupOdjezd);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupCil);
+   labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
+   labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
+  labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupOdjezd);
 
 
 
@@ -1694,7 +1680,7 @@ void MainWindow::slotHlavniStridejStranky()
 
 }
 
-void MainWindow::toggleFullscreen()
+void MainWindow::slotToggleFullscreen()
 {
     qDebug()<<"MainWindow::toggleFullscreen()";
     // isFullScreen() ? showNormal() : showFullScreen();
@@ -1783,16 +1769,12 @@ void MainWindow::hlavniAutoformat()
 
 
 
-void MainWindow::on_pushButton_fullscreen_clicked()
+void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
-    toggleFullscreen();
+    slotToggleFullscreen();
 }
 
 
-void MainWindow::on_Llinka_linkActivated(const QString &link)
-{
-    toggleFullscreen();
-}
 
 
 

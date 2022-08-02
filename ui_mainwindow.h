@@ -44,14 +44,14 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QFrame *frame_menu;
     QVBoxLayout *verticalLayout_13;
-    QPushButton *tlacitkoHlavni;
-    QPushButton *svgTlacitko;
-    QPushButton *tlacitkoLed;
-    QPushButton *tlacitkoSeznamSluzeb;
-    QPushButton *tlacitkoCasovac;
-    QPushButton *pushButton_fullscreen;
-    QPushButton *refreshTlac;
-    QPushButton *quitTlacitko;
+    QPushButton *pushButton_hlavni;
+    QPushButton *pushButton_menu_svg;
+    QPushButton *pushButton_menu_led;
+    QPushButton *pushButton_menu_sluzby;
+    QPushButton *pushButton_menu_casovac;
+    QPushButton *pushButton_menu_fullscreen;
+    QPushButton *pushButton_menu_refresh;
+    QPushButton *pushButton_menu_quit;
     QStackedWidget *prepinadloStran;
     QWidget *page_hlavniObrazovka;
     QGridLayout *gridLayout_4;
@@ -354,69 +354,69 @@ public:
         verticalLayout_13->setContentsMargins(11, 11, 11, 11);
         verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
         verticalLayout_13->setContentsMargins(0, 0, 0, 0);
-        tlacitkoHlavni = new QPushButton(frame_menu);
-        tlacitkoHlavni->setObjectName(QString::fromUtf8("tlacitkoHlavni"));
+        pushButton_hlavni = new QPushButton(frame_menu);
+        pushButton_hlavni->setObjectName(QString::fromUtf8("pushButton_hlavni"));
         QFont font;
         font.setPointSize(20);
-        tlacitkoHlavni->setFont(font);
-        tlacitkoHlavni->setCheckable(true);
-        tlacitkoHlavni->setChecked(true);
-        tlacitkoHlavni->setAutoExclusive(true);
+        pushButton_hlavni->setFont(font);
+        pushButton_hlavni->setCheckable(true);
+        pushButton_hlavni->setChecked(true);
+        pushButton_hlavni->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(tlacitkoHlavni);
+        verticalLayout_13->addWidget(pushButton_hlavni);
 
-        svgTlacitko = new QPushButton(frame_menu);
-        svgTlacitko->setObjectName(QString::fromUtf8("svgTlacitko"));
-        svgTlacitko->setFont(font);
-        svgTlacitko->setCheckable(true);
-        svgTlacitko->setAutoExclusive(true);
+        pushButton_menu_svg = new QPushButton(frame_menu);
+        pushButton_menu_svg->setObjectName(QString::fromUtf8("pushButton_menu_svg"));
+        pushButton_menu_svg->setFont(font);
+        pushButton_menu_svg->setCheckable(true);
+        pushButton_menu_svg->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(svgTlacitko);
+        verticalLayout_13->addWidget(pushButton_menu_svg);
 
-        tlacitkoLed = new QPushButton(frame_menu);
-        tlacitkoLed->setObjectName(QString::fromUtf8("tlacitkoLed"));
-        tlacitkoLed->setFont(font);
-        tlacitkoLed->setCheckable(true);
-        tlacitkoLed->setAutoExclusive(true);
+        pushButton_menu_led = new QPushButton(frame_menu);
+        pushButton_menu_led->setObjectName(QString::fromUtf8("pushButton_menu_led"));
+        pushButton_menu_led->setFont(font);
+        pushButton_menu_led->setCheckable(true);
+        pushButton_menu_led->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(tlacitkoLed);
+        verticalLayout_13->addWidget(pushButton_menu_led);
 
-        tlacitkoSeznamSluzeb = new QPushButton(frame_menu);
-        tlacitkoSeznamSluzeb->setObjectName(QString::fromUtf8("tlacitkoSeznamSluzeb"));
-        tlacitkoSeznamSluzeb->setFont(font);
-        tlacitkoSeznamSluzeb->setCheckable(true);
-        tlacitkoSeznamSluzeb->setAutoExclusive(true);
+        pushButton_menu_sluzby = new QPushButton(frame_menu);
+        pushButton_menu_sluzby->setObjectName(QString::fromUtf8("pushButton_menu_sluzby"));
+        pushButton_menu_sluzby->setFont(font);
+        pushButton_menu_sluzby->setCheckable(true);
+        pushButton_menu_sluzby->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(tlacitkoSeznamSluzeb);
+        verticalLayout_13->addWidget(pushButton_menu_sluzby);
 
-        tlacitkoCasovac = new QPushButton(frame_menu);
-        tlacitkoCasovac->setObjectName(QString::fromUtf8("tlacitkoCasovac"));
-        tlacitkoCasovac->setFont(font);
-        tlacitkoCasovac->setCheckable(true);
-        tlacitkoCasovac->setAutoExclusive(true);
+        pushButton_menu_casovac = new QPushButton(frame_menu);
+        pushButton_menu_casovac->setObjectName(QString::fromUtf8("pushButton_menu_casovac"));
+        pushButton_menu_casovac->setFont(font);
+        pushButton_menu_casovac->setCheckable(true);
+        pushButton_menu_casovac->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(tlacitkoCasovac);
+        verticalLayout_13->addWidget(pushButton_menu_casovac);
 
-        pushButton_fullscreen = new QPushButton(frame_menu);
-        pushButton_fullscreen->setObjectName(QString::fromUtf8("pushButton_fullscreen"));
-        pushButton_fullscreen->setFont(font);
-        pushButton_fullscreen->setFlat(false);
+        pushButton_menu_fullscreen = new QPushButton(frame_menu);
+        pushButton_menu_fullscreen->setObjectName(QString::fromUtf8("pushButton_menu_fullscreen"));
+        pushButton_menu_fullscreen->setFont(font);
+        pushButton_menu_fullscreen->setFlat(false);
 
-        verticalLayout_13->addWidget(pushButton_fullscreen);
+        verticalLayout_13->addWidget(pushButton_menu_fullscreen);
 
-        refreshTlac = new QPushButton(frame_menu);
-        refreshTlac->setObjectName(QString::fromUtf8("refreshTlac"));
-        refreshTlac->setFont(font);
+        pushButton_menu_refresh = new QPushButton(frame_menu);
+        pushButton_menu_refresh->setObjectName(QString::fromUtf8("pushButton_menu_refresh"));
+        pushButton_menu_refresh->setFont(font);
 
-        verticalLayout_13->addWidget(refreshTlac);
+        verticalLayout_13->addWidget(pushButton_menu_refresh);
 
-        quitTlacitko = new QPushButton(frame_menu);
-        quitTlacitko->setObjectName(QString::fromUtf8("quitTlacitko"));
-        quitTlacitko->setFont(font);
-        quitTlacitko->setCheckable(true);
-        quitTlacitko->setAutoExclusive(true);
+        pushButton_menu_quit = new QPushButton(frame_menu);
+        pushButton_menu_quit->setObjectName(QString::fromUtf8("pushButton_menu_quit"));
+        pushButton_menu_quit->setFont(font);
+        pushButton_menu_quit->setCheckable(true);
+        pushButton_menu_quit->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(quitTlacitko);
+        verticalLayout_13->addWidget(pushButton_menu_quit);
 
 
         horizontalLayout_4->addWidget(frame_menu);
@@ -2561,7 +2561,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        pushButton_fullscreen->setDefault(false);
+        pushButton_menu_fullscreen->setDefault(false);
         prepinadloStran->setCurrentIndex(0);
         stackedWidget_obrazovka->setCurrentIndex(0);
         stackedWidget_prostredek->setCurrentIndex(1);
@@ -2579,16 +2579,16 @@ public:
 #endif // QT_CONFIG(shortcut)
         actionstahnoutXML->setText(QCoreApplication::translate("MainWindow", "stahnoutXML", nullptr));
         action->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
-        tlacitkoHlavni->setText(QCoreApplication::translate("MainWindow", "F1 Hlavn\303\255 \n"
+        pushButton_hlavni->setText(QCoreApplication::translate("MainWindow", "F1 Hlavn\303\255 \n"
 " obrazovka", nullptr));
-        svgTlacitko->setText(QCoreApplication::translate("MainWindow", "F2 SVG", nullptr));
-        tlacitkoLed->setText(QCoreApplication::translate("MainWindow", "F3 LED", nullptr));
-        tlacitkoSeznamSluzeb->setText(QCoreApplication::translate("MainWindow", "F4 Seznam \n"
+        pushButton_menu_svg->setText(QCoreApplication::translate("MainWindow", "F2 SVG", nullptr));
+        pushButton_menu_led->setText(QCoreApplication::translate("MainWindow", "F3 LED", nullptr));
+        pushButton_menu_sluzby->setText(QCoreApplication::translate("MainWindow", "F4 Seznam \n"
 " slu\305\276eb", nullptr));
-        tlacitkoCasovac->setText(QCoreApplication::translate("MainWindow", "F5 \304\214asova\304\215", nullptr));
-        pushButton_fullscreen->setText(QCoreApplication::translate("MainWindow", "F6 Fullscreen", nullptr));
-        refreshTlac->setText(QCoreApplication::translate("MainWindow", "F7 refresh", nullptr));
-        quitTlacitko->setText(QCoreApplication::translate("MainWindow", "F8 QUIT", nullptr));
+        pushButton_menu_casovac->setText(QCoreApplication::translate("MainWindow", "F5 \304\214asova\304\215", nullptr));
+        pushButton_menu_fullscreen->setText(QCoreApplication::translate("MainWindow", "F6 Fullscreen", nullptr));
+        pushButton_menu_refresh->setText(QCoreApplication::translate("MainWindow", "F7 refresh", nullptr));
+        pushButton_menu_quit->setText(QCoreApplication::translate("MainWindow", "F8 QUIT", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "LocationState", nullptr));
         label_locationState->setText(QCoreApplication::translate("MainWindow", "unknown", nullptr));
         label_10->setText(QCoreApplication::translate("MainWindow", "verze:", nullptr));

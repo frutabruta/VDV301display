@@ -19,6 +19,7 @@ debug/obeh.o
 debug/spoj.o
 debug/pasmo.o
 debug/prestup.o
+debug/specialnihlaseni.o
 debug/qrc_resources.o
 debug/moc_qzeroconf.o
 debug/moc_bonjour_p.o

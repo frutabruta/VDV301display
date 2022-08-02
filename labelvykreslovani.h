@@ -33,6 +33,7 @@ public:
     void poleLabelNastavSirku(QVector<QLabel*> seznamLabelu, int sirka);
     void poleLabelNastavVysku(QVector<QLabel*>  seznamLabelu, int vyska);
     QString textNaPiktogramOznameni(QString announcementType, int vyskaObrazku);
+    void vymazPoleLabelu(QVector<QLabel*> vstup);
 signals:
 
 };

@@ -82,7 +82,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="tlacitkoHlavni">
+        <widget class="QPushButton" name="pushButton_hlavni">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -104,7 +104,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="svgTlacitko">
+        <widget class="QPushButton" name="pushButton_menu_svg">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -122,7 +122,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="tlacitkoLed">
+        <widget class="QPushButton" name="pushButton_menu_led">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -140,7 +140,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="tlacitkoSeznamSluzeb">
+        <widget class="QPushButton" name="pushButton_menu_sluzby">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -159,7 +159,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="tlacitkoCasovac">
+        <widget class="QPushButton" name="pushButton_menu_casovac">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -177,7 +177,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_fullscreen">
+        <widget class="QPushButton" name="pushButton_menu_fullscreen">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -195,7 +195,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="refreshTlac">
+        <widget class="QPushButton" name="pushButton_menu_refresh">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -207,7 +207,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="quitTlacitko">
+        <widget class="QPushButton" name="pushButton_menu_quit">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
