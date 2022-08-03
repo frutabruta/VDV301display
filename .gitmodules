@@ -7,3 +7,6 @@
 [submodule "VDV301subscriber"]
 	path = VDV301subscriber
 	url = https://github.com/frutabruta/VDV301subscriber.git
+[submodule "VDV301publisher"]
+	path = VDV301publisher
+	url = https://github.com/frutabruta/VDV301publisher
