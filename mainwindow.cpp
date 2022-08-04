@@ -16,9 +16,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+    ui(new Ui::MainWindow),
     CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
-    svgVykreslovani(QCoreApplication::applicationDirPath()),
-    ui(new Ui::MainWindow)
+    svgVykreslovani(QCoreApplication::applicationDirPath())
 {
 
     ui->setupUi(this);

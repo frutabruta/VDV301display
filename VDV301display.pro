@@ -4,16 +4,17 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT += core gui
 QT += xml
-QT       += core gui network
-QT+= httpserver
+QT += core gui network
+QT += httpserver
 QT += svg
 
 
+#DEFINES+= QZEROCONF_STATIC
 
-#QT += svg
-#QT += webenginewidgets
+#include(qtzeroconf/qtzeroconf.pri)
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -33,13 +34,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 DEFINES+= QZEROCONF_STATIC
 include(VDV301subscriber/QtZeroConf/qtzeroconf.pri)
+
 target.path=/home/pi
 target.files=VDV301displayNew
 INSTALLS+=target
 
 SOURCES += \
-    VDV301subscriber/newhttpserver.cpp \
+    VDV301publisher/httpserverpublisher.cpp \
+    VDV301subscriber/httpserversubscriber.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
+    VDV301publisher/httpsluzba.cpp \
+    VDV301publisher/subscriber.cpp \
     labelvykreslovani.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -56,8 +61,11 @@ SOURCES += \
     VDV301struktury/prestup.cpp\
     VDV301struktury/specialnihlaseni.cpp
 HEADERS += \
-    VDV301subscriber/newhttpserver.h \
+    VDV301publisher/httpserverpublisher.h \
+    VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
+    VDV301publisher/httpsluzba.h\
+    VDV301publisher/subscriber.h\
     labelvykreslovani.h \
         mainwindow.h \
     pasmovedvojicelcd.h \
