@@ -1,15 +1,5 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#define MAX_ZAST 100
-
-
-
-void on_actionstahnoutXML_triggered();
-
-#include <QMainWindow>
-#include <QWidget>
-#include <QShortcut>
-
 
 #include "xmlparser.h"
 //#include "httpserver2/myhttpserver.h"
@@ -21,15 +11,29 @@ void on_actionstahnoutXML_triggered();
 #include "svgvykreslovani.h"
 #include "labelvykreslovani.h"
 
+#include <QApplication>
+//#include <QtDebug>
+#include <QFile>
+#include <QFontDatabase>
+#include <QLabel>
+#include <QMainWindow>
+#include <QMessageBox>
+#include <QShortcut>
+#include <QTableWidget>
+#include <QTextStream>
+#include <QUrl>
+//#include <QWidget>
+
+
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
-#include <QFontDatabase>
-#include <QtDebug>
-#include <QTableWidget>
+#include <QSvgWidget>
 
-#include <QLabel>
-#include <QMessageBox>
+
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
 
 
 
@@ -77,6 +81,7 @@ private:
     int pocetZastavek=0;
     int cyklovaniIndex=0;
     int indexAktualniStridaneStranky =0;
+    bool zobrazDvojtecku=0;
 
     //konstanty
     int posunRotovani=0;

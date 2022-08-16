@@ -1,9 +1,5 @@
 #include "mainwindow.h"
 #include <QApplication>
-
-#include <QtDebug>
-#include <QFile>
-#include <QTextStream>
 //#include <QWebEngineView>
 
 
@@ -29,12 +25,14 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context, con
 
 
    QFile outFile("E:/LogFile.log");
-  // outFile.open(QIODevice::WriteOnly | QIODevice::Append);
-
    outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+
+  // outFile.open(QIODevice::WriteOnly);
 
    QTextStream textStream(&outFile);
    textStream << txt << Qt::endl;
+
+   outFile.close();
 }
 
 

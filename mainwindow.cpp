@@ -3,16 +3,6 @@
 
 
 
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QUrl>
-#include <QWidget>
-#include <QGraphicsSvgItem>
-#include <QSvgRenderer>
-#include <QSvgWidget>
-#include "QFile"
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +12,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 
     ui->setupUi(this);
+
+    /*
+   * oprava záseků při špatně nastavené IP adrese po HTTP POST
+   * https://bugreports.qt.io/browse/QTBUG-10106
+   */
+    QNetworkProxyFactory::setUseSystemConfiguration(false);
 
 
     // fonty
@@ -44,12 +40,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //LCD fonty
     fontPasmoVelke.setPointSize(36);
-    fontPasmoVelke.setBold(true);
     fontPasmoVelke.setFamily("Roboto");
+    fontPasmoVelke.setBold(true);
 
     fontPasmoMale.setPointSize(20);
+    fontPasmoMale.setFamily("Roboto");
     fontPasmoMale.setBold(true);
-
 
     //klávesové zkratky menu
     keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
@@ -149,7 +145,7 @@ void MainWindow::slotOpozdenyStart()
 {
     qDebug()<<"MainWindow::slotOpozdenyStart()";
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
-  //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
 }
 
@@ -207,7 +203,7 @@ void MainWindow::vsechnyConnecty()
 {
     qDebug()<<"MainWindow::vsechnyConnecty";
     connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
-  //  connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbaDoTabulky);
+    //  connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbaDoTabulky);
     connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
 
 
@@ -238,8 +234,20 @@ void MainWindow::vsechnyConnecty()
 
 int MainWindow::slotKazdouVterinu()
 {
+
     ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
-    ui->label_hodiny->setText(QTime::currentTime().toString("hh:mm") );
+
+    if(zobrazDvojtecku==true)
+    {
+        ui->label_hodiny->setText(QTime::currentTime().toString("hh:mm") );
+        zobrazDvojtecku=false;
+    }
+    else
+    {
+        ui->label_hodiny->setText(QTime::currentTime().toString("hh mm") );
+        zobrazDvojtecku=true;
+    }
+
     return 1;
 }
 
@@ -497,7 +505,7 @@ void MainWindow::naplnMapBarev()
 
 void MainWindow::vymazObrazovku()
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     hlavniVymazObrazovku();
     svgVykreslovani.vymazObrazovku();
     ledVymazPanely();
@@ -508,7 +516,7 @@ void MainWindow::vymazObrazovku()
 
 void MainWindow::hlavniVymazObrazovku()
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     ui->Lcil->setText("");
     ui->Llinka->setText("");
     ui->label_nacestne->setText("");
@@ -516,13 +524,13 @@ void MainWindow::hlavniVymazObrazovku()
     ui->frame_navaznySpoj->hide();
 
     labelVykreslovani.vymazPoleLabelu(seznamLabelNazevZastavky);
-   labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoDolni);
-   labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoHorni);
+    labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoDolni);
+    labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoHorni);
     //obrazovka prestupu
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupCil);
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
-   labelVykreslovani. vymazPoleLabelu(seznamLabelPrestupOdjezd);
+    labelVykreslovani. vymazPoleLabelu(seznamLabelPrestupOdjezd);
 
     timerStridejStranky->stop();
     strankyKeStridani.clear();
@@ -601,10 +609,10 @@ int MainWindow::vykresleniPrijatychDat()
         }
         else
         {
-           if(instanceXMLparser.zmenaDat==true)
-           {
-            navratJizda();
-           }
+            if(instanceXMLparser.zmenaDat==true)
+            {
+                navratJizda();
+            }
             strankyKeStridani.push_front(ui->page_hlavni_2);
             // skryjZmenuPasma();
         }
@@ -955,10 +963,10 @@ nejsem autorem
 
 void MainWindow::on_pushButton_menu_refreh_clicked()
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
 
-  //  CustomerInformationServiceSubscriber.odebirano=false ;
-  //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+    //  CustomerInformationServiceSubscriber.odebirano=false ;
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     this->vymazObrazovku();
     slotAktualizaceTabulkySluzeb();
     //xmlDoPromenne(1);
@@ -989,7 +997,7 @@ void MainWindow::vymazTabulkuSubscriberu(QTableWidget *tableWidget)
 void MainWindow::vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb)
 {
     qDebug() <<  Q_FUNC_INFO;
-  // ui->tabulkaSubscriberu->setRowCount(0);
+    // ui->tabulkaSubscriberu->setRowCount(0);
     vymazTabulkuSubscriberu(ui->tabulkaSubscriberu);
 
 
@@ -1293,7 +1301,7 @@ void MainWindow::ledNaplnRear(QString linka)
 
 void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRadek)
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     ui->labelInnerLine->setText(linka);
     ui->labelInnerTopRow->setText(horniRadek);
     ui->labelInnerBottomRow->setText(dolniRadek);
@@ -1302,7 +1310,7 @@ void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRad
 
 void MainWindow::ledInicializujVirtualniPanely()
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     ledNaplnFront("123","čelní horní","čelní dolní");
     ledNaplnSide("456","Boční cíl","Boční nácestné");
     ledNaplnRear("789");
@@ -1352,7 +1360,7 @@ QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZasta
 
 QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka)
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     Zastavka nacesta;
     QVector<QString> textyNaVnitrniPanel;
     textyNaVnitrniPanel.append("přes:");
@@ -1434,7 +1442,7 @@ void MainWindow::zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 
 void MainWindow::hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
@@ -1477,7 +1485,7 @@ void MainWindow::skryjAnnouncement()
 
 void MainWindow::skryjZmenuPasma()
 {
-   qDebug() <<  Q_FUNC_INFO;
+    qDebug() <<  Q_FUNC_INFO;
     navratJizda();
 }
 
@@ -1563,9 +1571,9 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
     }
 
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupCil);
-   labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
-   labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
-  labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupOdjezd);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupOdjezd);
 
 
 
