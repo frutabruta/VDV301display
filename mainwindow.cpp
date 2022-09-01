@@ -203,9 +203,9 @@ void MainWindow::vsechnyConnecty()
 {
     qDebug()<<"MainWindow::vsechnyConnecty";
     connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
-    //  connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::nalezenaSluzba,this,&MainWindow::sluzbaDoTabulky);
     connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
-
+    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
 
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
@@ -216,8 +216,7 @@ void MainWindow::vsechnyConnecty()
     connect(timerOpozdenyStart, &QTimer::timeout, this, &MainWindow::slotOpozdenyStart);
 
 
-    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
-    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
+
 
     //klávesové zkratky
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));

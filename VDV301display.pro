@@ -39,48 +39,64 @@ target.path=/home/pi
 target.files=VDV301displayNew
 INSTALLS+=target
 
-SOURCES += \
+SOURCES += \ 
+    VDV301publisher/customerinformationservice.cpp \
+    VDV301publisher/devicemanagementservice.cpp\
+    VDV301publisher/httpsluzba.cpp \
     VDV301publisher/httpserverpublisher.cpp \
+    VDV301publisher/subscriber.cpp \
+    VDV301publisher/ticketvalidationservice.cpp \
+    VDV301publisher/xmlcommon.cpp \
+    VDV301publisher/xmlcustomerinformationservice.cpp \
+    VDV301publisher/xmldevicemanagementservice.cpp \
+    VDV301publisher/xmlticketvalidationservice.cpp \
     VDV301subscriber/httpserversubscriber.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
-    VDV301publisher/httpsluzba.cpp \
-    VDV301publisher/subscriber.cpp \
     labelvykreslovani.cpp \
         main.cpp \
         mainwindow.cpp \
     pasmovedvojicelcd.cpp \
     svgvykreslovani.cpp \
     xmlparser.cpp \
-    VDV301struktury/zastavka.cpp\
-    VDV301struktury/zastavkacil.cpp\
-    VDV301struktury/cestaudaje.cpp\
-    VDV301struktury/linka.cpp\
-    VDV301struktury/obeh.cpp\
-    VDV301struktury/spoj.cpp\
-    VDV301struktury/pasmo.cpp\
-    VDV301struktury/prestup.cpp\
+    VDV301struktury/cestaudaje.cpp \
+    VDV301struktury/linka.cpp \
+    VDV301struktury/obeh.cpp \
+    VDV301struktury/pasmo.cpp \
+    VDV301struktury/prestup.cpp \
+    VDV301struktury/prestupmpv.cpp \
+    VDV301struktury/spoj.cpp \
+    VDV301struktury/zastavka.cpp \
+    VDV301struktury/zastavkacil.cpp \
     VDV301struktury/specialnihlaseni.cpp
+
 HEADERS += \
+    VDV301publisher/customerinformationservice.h \
+    VDV301publisher/devicemanagementservice.h \
+    VDV301publisher/httpsluzba.h \
     VDV301publisher/httpserverpublisher.h \
+    VDV301publisher/subscriber.h \
+    VDV301publisher/ticketvalidationservice.h \
+    VDV301publisher/xmlcommon.h \
+    VDV301publisher/xmlcustomerinformationservice.h \
+    VDV301publisher/xmldevicemanagementservice.h \
+    VDV301publisher/xmlticketvalidationservice.h \
     VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
-    VDV301publisher/httpsluzba.h\
-    VDV301publisher/subscriber.h\
     labelvykreslovani.h \
-        mainwindow.h \
+    mainwindow.h \
     pasmovedvojicelcd.h \
     svgvykreslovani.h \
     xmlparser.h \
-    VDV301struktury/zastavka.h\
-    VDV301struktury/zastavkacil.h\
-    VDV301struktury/pasmo.h\
-    VDV301struktury/linka.h\
-    VDV301struktury/obeh.h\
-    VDV301struktury/spoj.h\
-    VDV301struktury/prestup.h\
-    VDV301struktury/cestaudaje.h\
-    VDV301struktury/specialnihlaseni.cpp
-
+    VDV301struktury/cestaudaje.h \
+    VDV301struktury/linka.h \
+    VDV301struktury/obeh.h \
+    VDV301struktury/prestup.h \
+    VDV301struktury/pasmo.h \
+    VDV301struktury/prestupmpv.h \
+    VDV301struktury/specialnihlaseni.h \
+    VDV301struktury/spoj.h \
+    VDV301struktury/zastavka.h \
+    VDV301struktury/zastavkacil.h
 
 FORMS += \
         mainwindow.ui
