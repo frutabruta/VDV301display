@@ -4,6 +4,7 @@
 #include "xmlparser.h"
 //#include "httpserver2/myhttpserver.h"
 #include "VDV301subscriber/ibisipsubscriber.h"
+#include "VDV301publisher/devicemanagementservice.h"
 #include "VDV301struktury/cestaudaje.h"
 #include "VDV301struktury/zastavkacil.h"
 #include "VDV301struktury/prestup.h"
@@ -62,6 +63,11 @@ private:
 
     IbisIpSubscriber CustomerInformationServiceSubscriber;
     SvgVykreslovani svgVykreslovani;
+    DeviceManagementService deviceManagementService1_0;
+
+
+
+
 
     //datoveStruktury jizda
     QVector<ZastavkaCil> globalniSeznamZastavek;

@@ -8,7 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
-    svgVykreslovani(QCoreApplication::applicationDirPath())
+    svgVykreslovani(QCoreApplication::applicationDirPath()),
+    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0")
 {
 
     ui->setupUi(this);
@@ -133,6 +134,17 @@ MainWindow::MainWindow(QWidget *parent) :
     existujeKonfigurak();
 
 
+    deviceManagementService1_0.deviceName="VDV301Display";
+    deviceManagementService1_0.deviceManufacturer="ROPID";
+    deviceManagementService1_0.deviceSerialNumber="654321";
+    deviceManagementService1_0.deviceClass="InnerDisplay";
+    deviceManagementService1_0.deviceId="1";
+    deviceManagementService1_0.swVersion=compilationTime;
+    deviceManagementService1_0.slotAktualizaceDat();
+
+
+
+    deviceManagementService1_0.slotStart(true);
 
 
     hlavniAutoformat();
@@ -143,7 +155,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::slotOpozdenyStart()
 {
-    qDebug()<<"MainWindow::slotOpozdenyStart()";
+    qDebug() <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
@@ -151,7 +163,7 @@ void MainWindow::slotOpozdenyStart()
 
 int MainWindow::existujeKonfigurak()
 {
-    qDebug()<<"MainWindow::existujeKonfigurak";
+    qDebug() <<  Q_FUNC_INFO;
     QString cestaSouboru=QCoreApplication::applicationDirPath()+"/fullscreen.txt";
     QFile file(cestaSouboru);
     if (!file.open(QIODevice::ReadOnly))
@@ -201,7 +213,7 @@ int MainWindow::existujeKonfigurak()
 
 void MainWindow::vsechnyConnecty()
 {
-    qDebug()<<"MainWindow::vsechnyConnecty";
+    qDebug() <<  Q_FUNC_INFO;
     connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
     connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
     connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
@@ -252,9 +264,8 @@ int MainWindow::slotKazdouVterinu()
 
 void MainWindow::slotZtrataOdberu()
 {
+    qDebug() <<  Q_FUNC_INFO;
     vymazObrazovku();
-    qDebug()<<"MainWindow::slotZtrataOdberu";
-
 }
 
 void MainWindow::slotPosunNacestnych()
@@ -286,13 +297,13 @@ void MainWindow::slotPosunNacestnych()
 
 void MainWindow::slotAktualizaceTabulkySluzeb()
 {
-    qDebug()<<"MainWindow::slotAktualizaceTabulkySluzeb";
+    qDebug() <<  Q_FUNC_INFO;
     vykresliSluzbyDoTabulky(CustomerInformationServiceSubscriber.seznamSluzeb);
 }
 
 void MainWindow::vyprselCasovacSluzby()
 {
-    qDebug()<<"MainWindow::vyprselCasovacSluzby()";
+    qDebug() <<  Q_FUNC_INFO;
 
 }
 
@@ -300,7 +311,7 @@ void MainWindow::vyprselCasovacSluzby()
 
 void MainWindow::hlavniNaplnPoleLabelu()
 {
-    qDebug()<<"MainWindow::hlavniNaplnPoleLabelu()";
+    qDebug() <<  Q_FUNC_INFO;
     seznamLabelNazevZastavky.push_back(ui->Lnacestna1);
     seznamLabelNazevZastavky.push_back(ui->Lnacestna2);
     seznamLabelNazevZastavky.push_back(ui->Lnacestna3);
@@ -390,7 +401,7 @@ void MainWindow::hlavniNaplnPoleLabelu()
 
 void MainWindow::naplnMapBarev()
 {
-    qDebug()<<"MainWindow::naplnMapBarev";
+    qDebug() <<  Q_FUNC_INFO;
     //dd1 Metro, nahrazuje se piktogramem
     barvaTextu["metro"]=barva_cerna_0_0_0;
     barvaPozadi["metro"]=barva_bila_255_255_255;
@@ -643,6 +654,7 @@ int MainWindow::vykresleniPrijatychDat()
 
 void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMode)
 {
+    qDebug() <<  Q_FUNC_INFO;
     //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
     qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
@@ -653,6 +665,7 @@ void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMod
 
 void MainWindow::hlavniVykresliNazevCile(QString nazev)
 {
+    qDebug() <<  Q_FUNC_INFO;
     labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
 }
 
@@ -717,7 +730,7 @@ void MainWindow::hlavniVykresliNasledne()
 
 void MainWindow::hlavniVykresliZastavkyiPasma(QVector<ZastavkaCil>aktZastavky, QVector<ZastavkaCil>navazZastavky )
 {
-    qDebug()<<"MainWindow::hlavniVykreslZastavkyiPasma";
+    qDebug() <<  Q_FUNC_INFO;
     int offset=0;
     offset=hlavniVykresliSkupinuZastavek(0,pocetVykreslovanychZastavek,aktZastavky,false);
     hlavniVykresliSkupinuZastavek(offset,pocetVykreslovanychZastavek,navazZastavky,true);
@@ -1665,7 +1678,7 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int
 
 void MainWindow::slotHlavniStridejStranky()
 {
-    qDebug()<<"MainWindow::slotHlavniStridejStranky"<<" counter ma hodnotu "<<indexAktualniStridaneStranky<<" v seznamu je "<<strankyKeStridani.count();
+    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<indexAktualniStridaneStranky<<" v seznamu je "<<strankyKeStridani.count();
 
     if(indexAktualniStridaneStranky==(strankyKeStridani.count()-1))
     {
@@ -1689,7 +1702,7 @@ void MainWindow::slotHlavniStridejStranky()
 
 void MainWindow::slotToggleFullscreen()
 {
-    qDebug()<<"MainWindow::toggleFullscreen()";
+    qDebug() <<  Q_FUNC_INFO;
     // isFullScreen() ? showNormal() : showFullScreen();
 
 
@@ -1728,7 +1741,7 @@ void MainWindow::slotToggleFullscreen()
 
 void MainWindow::hlavniAutoformat()
 {
-    qDebug()<<"MainWindow::hlavniAutoformat()";
+    qDebug() <<  Q_FUNC_INFO;
     this->show();
     pomerPixelBod=ui->frame_hlavni->height()/1050.0;
 
