@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
-    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0")
+    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
 {
 
     ui->setupUi(this);
@@ -144,7 +144,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-    deviceManagementService1_0.slotStart(true);
+    deviceManagementService1_0.slotStartServer();
 
 
     hlavniAutoformat();
