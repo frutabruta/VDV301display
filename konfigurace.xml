@@ -1,0 +1,23 @@
+<konfigurace>
+  <konstanty>
+  </konstanty>
+  <deviceInformation>
+    <deviceName>VDV301Display</deviceName>
+
+  <deviceManufacturer>ROPID</deviceManufacturer>
+
+   <deviceSerialNumber>654321</deviceSerialNumber>
+   <deviceClass>InnerDisplay</deviceClass>
+  </deviceInformation>
+  <deviceConfiguration>
+
+   <deviceId>1</deviceId>
+  </deviceConfiguration>
+  <sluzby>
+    <sluzba>
+      <nazev>DeviceManagementService</nazev>
+      <port>12121</port>
+      <verze>2.2CZ1.0</verze>
+    </sluzba>
+
+</konfigurace>

@@ -39,7 +39,7 @@ target.path=/home/pi
 target.files=VDV301displayNew
 INSTALLS+=target
 
-SOURCES += \ 
+SOURCES += \
     VDV301publisher/customerinformationservice.cpp \
     VDV301publisher/devicemanagementservice.cpp\
     VDV301publisher/httpsluzba.cpp \
@@ -50,8 +50,12 @@ SOURCES += \
     VDV301publisher/xmlcustomerinformationservice.cpp \
     VDV301publisher/xmldevicemanagementservice.cpp \
     VDV301publisher/xmlticketvalidationservice.cpp \
-    VDV301subscriber/httpserversubscriber.cpp \
-    VDV301subscriber/ibisipsubscriber.cpp \
+    VDV301subscriber/cissubscriber.cpp \
+    VDV301subscriber/devmgmtpublisherstruct.cpp \
+    VDV301subscriber/devmgmtsubscriber.cpp \
+    VDV301subscriber/httpserversubscriber.cpp \    
+    VDV301subscriber/ibisipsubscriber.cpp \    
+    VDV301subscriber/ibisipsubscriberonepublisher.cpp \
     labelvykreslovani.cpp \
         main.cpp \
         mainwindow.cpp \
@@ -80,8 +84,12 @@ HEADERS += \
     VDV301publisher/xmlcustomerinformationservice.h \
     VDV301publisher/xmldevicemanagementservice.h \
     VDV301publisher/xmlticketvalidationservice.h \
+    VDV301subscriber/cissubscriber.h \    
+    VDV301subscriber/devmgmtpublisherstruct.h \
+    VDV301subscriber/devmgmtsubscriber.h \
     VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
+    VDV301subscriber/ibisipsubscriberonepublisher.h \
     labelvykreslovani.h \
     mainwindow.h \
     pasmovedvojicelcd.h \

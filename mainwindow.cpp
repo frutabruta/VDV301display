@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    CustomerInformationServiceSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
+    CisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
 {
@@ -89,7 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //instanceXMLparser.Test();
 
 
-    CustomerInformationServiceSubscriber.odebirano=false ;
+     CisSubscriber.odebirano=false ;
 
 
     this->ledInicializujVirtualniPanely();
@@ -134,12 +134,12 @@ MainWindow::MainWindow(QWidget *parent) :
     existujeKonfigurak();
 
 
-    deviceManagementService1_0.deviceName="VDV301Display";
-    deviceManagementService1_0.deviceManufacturer="ROPID";
-    deviceManagementService1_0.deviceSerialNumber="654321";
-    deviceManagementService1_0.deviceClass="InnerDisplay";
-    deviceManagementService1_0.deviceId="1";
-    deviceManagementService1_0.swVersion=compilationTime;
+    deviceManagementService1_0.setDeviceName("VDV301Display");
+    deviceManagementService1_0.setDeviceManufacturer("ROPID");
+    deviceManagementService1_0.setDeviceSerialNumber("654321");
+    deviceManagementService1_0.setDeviceClass("InnerDisplay");
+    deviceManagementService1_0.setDeviceId("1");
+    deviceManagementService1_0.setSwVersion(compilationTime);
     deviceManagementService1_0.slotAktualizaceDat();
 
 
@@ -158,7 +158,9 @@ void MainWindow::slotOpozdenyStart()
     qDebug() <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-    CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
+   CisSubscriber.novePrihlaseniOdberu();
+
+
 }
 
 int MainWindow::existujeKonfigurak()
@@ -214,10 +216,10 @@ int MainWindow::existujeKonfigurak()
 void MainWindow::vsechnyConnecty()
 {
     qDebug() <<  Q_FUNC_INFO;
-    connect(&CustomerInformationServiceSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
-    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::aktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
-    connect(CustomerInformationServiceSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
-    connect(&CustomerInformationServiceSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
+    connect(&CisSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
+   connect(&CisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
+   connect(CisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(&CisSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
 
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
@@ -246,7 +248,7 @@ void MainWindow::vsechnyConnecty()
 int MainWindow::slotKazdouVterinu()
 {
 
-    ui->labelZbyvajiciVteriny->setText(QString::number(CustomerInformationServiceSubscriber.timer->remainingTime()/1000) );
+    ui->labelZbyvajiciVteriny->setText(QString::number(CisSubscriber.timer->remainingTime()/1000) );
 
     if(zobrazDvojtecku==true)
     {
@@ -298,7 +300,7 @@ void MainWindow::slotPosunNacestnych()
 void MainWindow::slotAktualizaceTabulkySluzeb()
 {
     qDebug() <<  Q_FUNC_INFO;
-    vykresliSluzbyDoTabulky(CustomerInformationServiceSubscriber.seznamSluzeb);
+    vykresliSluzbyDoTabulky(CisSubscriber.seznamSluzeb);
 }
 
 void MainWindow::vyprselCasovacSluzby()
@@ -985,7 +987,7 @@ void MainWindow::on_pushButton_menu_refreh_clicked()
 
 
     vymazObrazovku();
-    CustomerInformationServiceSubscriber.novePrihlaseniOdberu();
+    CisSubscriber.novePrihlaseniOdberu();
 }
 
 

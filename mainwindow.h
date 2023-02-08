@@ -3,8 +3,10 @@
 
 #include "xmlparser.h"
 //#include "httpserver2/myhttpserver.h"
-#include "VDV301subscriber/ibisipsubscriber.h"
+//#include "VDV301subscriber/ibisipsubscriber.h"
+
 #include "VDV301publisher/devicemanagementservice.h"
+#include "VDV301subscriber/cissubscriber.h"
 #include "VDV301struktury/cestaudaje.h"
 #include "VDV301struktury/zastavkacil.h"
 #include "VDV301struktury/prestup.h"
@@ -61,13 +63,9 @@ private:
     CestaUdaje stavSystemu;
     LabelVykreslovani labelVykreslovani;
 
-    IbisIpSubscriber CustomerInformationServiceSubscriber;
+    CisSubscriber CisSubscriber;
     SvgVykreslovani svgVykreslovani;
     DeviceManagementService deviceManagementService1_0;
-
-
-
-
 
     //datoveStruktury jizda
     QVector<ZastavkaCil> globalniSeznamZastavek;
@@ -96,7 +94,7 @@ private:
     const int intervalBocniPanel=2000;
     const int intervalPosunuNacest=20;
     const int intervalStridaniStranek=10000;
-    const int intervalOpozdeniStartu=2000;
+    const int intervalOpozdeniStartu=500;
 
     //velikosti fontu v bodech
     //const int velikostFontLinka=200;

@@ -13,8 +13,12 @@ debug/xmlcommon.o
 debug/xmlcustomerinformationservice.o
 debug/xmldevicemanagementservice.o
 debug/xmlticketvalidationservice.o
+debug/cissubscriber.o
+debug/devmgmtpublisherstruct.o
+debug/devmgmtsubscriber.o
 debug/httpserversubscriber.o
 debug/ibisipsubscriber.o
+debug/ibisipsubscriberonepublisher.o
 debug/labelvykreslovani.o
 debug/main.o
 debug/mainwindow.o
@@ -37,6 +41,8 @@ debug/moc_bonjour_p.o
 debug/moc_qzeroconfservice.o
 debug/moc_httpsluzba.o
 debug/moc_httpserverpublisher.o
+debug/moc_cissubscriber.o
+debug/moc_devmgmtsubscriber.o
 debug/moc_httpserversubscriber.o
 debug/moc_ibisipsubscriber.o
 debug/moc_mainwindow.o

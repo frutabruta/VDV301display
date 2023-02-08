@@ -13,8 +13,12 @@ release/xmlcommon.o
 release/xmlcustomerinformationservice.o
 release/xmldevicemanagementservice.o
 release/xmlticketvalidationservice.o
+release/cissubscriber.o
+release/devmgmtpublisherstruct.o
+release/devmgmtsubscriber.o
 release/httpserversubscriber.o
 release/ibisipsubscriber.o
+release/ibisipsubscriberonepublisher.o
 release/labelvykreslovani.o
 release/main.o
 release/mainwindow.o
@@ -37,6 +41,8 @@ release/moc_bonjour_p.o
 release/moc_qzeroconfservice.o
 release/moc_httpsluzba.o
 release/moc_httpserverpublisher.o
+release/moc_cissubscriber.o
+release/moc_devmgmtsubscriber.o
 release/moc_httpserversubscriber.o
 release/moc_ibisipsubscriber.o
 release/moc_mainwindow.o
