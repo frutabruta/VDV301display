@@ -9,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     CisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
-    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
+    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
+    settings(QCoreApplication::applicationDirPath()+"/nastaveni.ini", QSettings::IniFormat)
 {
 
     ui->setupUi(this);
@@ -78,18 +79,27 @@ MainWindow::MainWindow(QWidget *parent) :
 
     vsechnyConnecty();
 
+    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+
+
+
 
     hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
     naplnMapBarev();
 
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
-    formatZobrazeni();
+
+
     //instanceXMLparser.Test();
 
 
-     CisSubscriber.odebirano=false ;
+    natahniKonstanty();
+    formatZobrazeni();
+     hlavniAutoformat();
+
+
+    CisSubscriber.odebirano=false ;
 
 
     this->ledInicializujVirtualniPanely();
@@ -116,10 +126,7 @@ MainWindow::MainWindow(QWidget *parent) :
     sw1->setGeometry(50, 50, rect().width(), rect().height());
     */
 
-    QString compilationTime = QString(__DATE__);
-    compilationTime+="T";
-    compilationTime+=QString(__TIME__);
-    ui->label_build->setText(compilationTime);
+    ui->label_build->setText(textVerze());
     //
 
 
@@ -131,25 +138,30 @@ MainWindow::MainWindow(QWidget *parent) :
     timerOpozdenyStart->setSingleShot(true);
 
 
-    existujeKonfigurak();
 
 
-    deviceManagementService1_0.setDeviceName("VDV301Display");
-    deviceManagementService1_0.setDeviceManufacturer("ROPID");
-    deviceManagementService1_0.setDeviceSerialNumber("654321");
-    deviceManagementService1_0.setDeviceClass("InnerDisplay");
-    deviceManagementService1_0.setDeviceId("1");
-    deviceManagementService1_0.setSwVersion(compilationTime);
-    deviceManagementService1_0.slotAktualizaceDat();
-
-
-
-    deviceManagementService1_0.slotStartServer();
-
-
-    hlavniAutoformat();
 
     timerOpozdenyStart->start();
+
+}
+
+void MainWindow::natahniKonstanty()
+{
+    deviceManagementService1_0.setDeviceName(settings.value("deviceManagementService1_0/deviceName").toString());
+    deviceManagementService1_0.setDeviceManufacturer(settings.value("deviceManagementService1_0/deviceManufacturer").toString());
+    deviceManagementService1_0.setDeviceSerialNumber(settings.value("deviceManagementService1_0/deviceSerialNumber").toString());
+    deviceManagementService1_0.setDeviceClass(settings.value("deviceManagementService1_0/deviceClass").toString());
+    deviceManagementService1_0.setDeviceId(settings.value("deviceManagementService1_0/deviceId").toString());
+    deviceManagementService1_0.setSwVersion(textVerze());
+
+    deviceManagementService1_0.slotAktualizaceDat();
+    deviceManagementService1_0.slotStartServer();
+
+    prepniObrazovku(settings.value("konstanty/defaultniObrazovka").toInt());
+    if(settings.value("konstanty/fullscreen").toBool()==true)
+    {
+        slotToggleFullscreen();
+    }
 
 }
 
@@ -158,57 +170,34 @@ void MainWindow::slotOpozdenyStart()
     qDebug() <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-   CisSubscriber.novePrihlaseniOdberu();
-
-
+    CisSubscriber.novePrihlaseniOdberu();
 }
 
-int MainWindow::existujeKonfigurak()
+void MainWindow::prepniObrazovku(int vstup)
 {
-    qDebug() <<  Q_FUNC_INFO;
-    QString cestaSouboru=QCoreApplication::applicationDirPath()+"/fullscreen.txt";
-    QFile file(cestaSouboru);
-    if (!file.open(QIODevice::ReadOnly))
+    qDebug() <<  Q_FUNC_INFO<<" "<<vstup;
+
+    switch(vstup)
     {
+    case 0:
 
-        qDebug()<<"fail1";
-        return 0;
+        break;
+
+    case 1:
+        on_pushButton_menu_hlavni_clicked();
+        break;
+
+    case 2:
+        on_pushButton_menu_svg_clicked();
+        break;
+    case 3:
+        on_pushButton_menu_led_clicked();
+
+        break;
+    case 4:
+        on_pushButton_menu_sluzby_clicked();
+        break;
     }
-    else
-    {
-        QString obsah= file.readAll();
-        int obsahInt=obsah.toInt();
-
-        switch(obsahInt)
-        {
-        case 0:
-            return 0;
-            break;
-
-        case 1:
-            on_pushButton_menu_hlavni_clicked();
-            break;
-
-        case 2:
-            on_pushButton_menu_svg_clicked();
-            break;
-        case 3:
-            on_pushButton_menu_svg_clicked();
-
-            break;
-        case 4:
-            on_pushButton_menu_sluzby_clicked();
-            break;
-
-
-
-        }
-        slotToggleFullscreen();
-
-
-    }
-    file.close();
-    return 1;
 }
 
 
@@ -217,8 +206,8 @@ void MainWindow::vsechnyConnecty()
 {
     qDebug() <<  Q_FUNC_INFO;
     connect(&CisSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
-   connect(&CisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
-   connect(CisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(&CisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
+    connect(CisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
     connect(&CisSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
 
 
@@ -237,13 +226,24 @@ void MainWindow::vsechnyConnecty()
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
     connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_hlavni_clicked );
     connect(keyF2, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_svg_clicked );
-    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_svg_clicked );
+    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_led_clicked);
     connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_sluzby_clicked);
     connect(keyF5, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_casovac_clicked );
     connect(keyF6, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
     connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refreh_clicked);
     connect(keyF8, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_quit_clicked);
 }
+
+
+QString MainWindow::textVerze()
+{
+    QDate datumKompilace=QLocale("en_US").toDate(QString(__DATE__).simplified(), "MMM d yyyy");
+    QTime casKompilace=QTime::fromString(__TIME__,"hh:mm:ss");
+    qDebug()<<" date:"<<datumKompilace<<" time:"<<casKompilace;
+    QString verze=datumKompilace.toString("yyyyMMdd")+"_"+casKompilace.toString("hhmm");
+    return verze;
+}
+
 
 int MainWindow::slotKazdouVterinu()
 {
@@ -644,6 +644,7 @@ int MainWindow::vykresleniPrijatychDat()
     //   hlavniVykresliNasledne();
 
     formatZobrazeni();
+    hlavniAutoformat();
     indexAktualniStridaneStranky=0;
     timerStridejStranky->start();
 
@@ -1129,6 +1130,8 @@ void MainWindow::on_pushButton_menu_sluzby_clicked()
 void MainWindow::on_pushButton_menu_hlavni_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    formatZobrazeni();
+     hlavniAutoformat();
 }
 
 void MainWindow::on_pushButton_menu_casovac_clicked()
@@ -1163,7 +1166,7 @@ void MainWindow::on_pushButton_menu_quit_clicked()
 
 void MainWindow::on_pushButton_menu_svg_clicked()
 {
-
+    qDebug()<<Q_FUNC_INFO;
     ui->prepinadloStran->setCurrentWidget(ui->page_svg);
 
 
@@ -1795,6 +1798,9 @@ void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
     slotToggleFullscreen();
 }
+
+
+
 
 
 

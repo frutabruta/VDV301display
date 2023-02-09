@@ -44,7 +44,7 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QFrame *frame_menu;
     QVBoxLayout *verticalLayout_13;
-    QPushButton *pushButton_hlavni;
+    QPushButton *pushButton_menu_hlavni;
     QPushButton *pushButton_menu_svg;
     QPushButton *pushButton_menu_led;
     QPushButton *pushButton_menu_sluzby;
@@ -354,16 +354,16 @@ public:
         verticalLayout_13->setContentsMargins(11, 11, 11, 11);
         verticalLayout_13->setObjectName(QString::fromUtf8("verticalLayout_13"));
         verticalLayout_13->setContentsMargins(0, 0, 0, 0);
-        pushButton_hlavni = new QPushButton(frame_menu);
-        pushButton_hlavni->setObjectName(QString::fromUtf8("pushButton_hlavni"));
+        pushButton_menu_hlavni = new QPushButton(frame_menu);
+        pushButton_menu_hlavni->setObjectName(QString::fromUtf8("pushButton_menu_hlavni"));
         QFont font;
         font.setPointSize(20);
-        pushButton_hlavni->setFont(font);
-        pushButton_hlavni->setCheckable(true);
-        pushButton_hlavni->setChecked(true);
-        pushButton_hlavni->setAutoExclusive(true);
+        pushButton_menu_hlavni->setFont(font);
+        pushButton_menu_hlavni->setCheckable(true);
+        pushButton_menu_hlavni->setChecked(true);
+        pushButton_menu_hlavni->setAutoExclusive(true);
 
-        verticalLayout_13->addWidget(pushButton_hlavni);
+        verticalLayout_13->addWidget(pushButton_menu_hlavni);
 
         pushButton_menu_svg = new QPushButton(frame_menu);
         pushButton_menu_svg->setObjectName(QString::fromUtf8("pushButton_menu_svg"));
@@ -553,7 +553,6 @@ public:
         font2.setFamily(QString::fromUtf8("roboto"));
         font2.setPointSize(80);
         font2.setBold(true);
-        font2.setWeight(75);
         Llinka->setFont(font2);
         Llinka->setAutoFillBackground(false);
         Llinka->setStyleSheet(QString::fromUtf8("*{background-color:#FFFFFF; color:#000000;font-weight: bold;}"));
@@ -630,7 +629,7 @@ public:
         scrollArea->setWidgetResizable(true);
         scrollAreaWidgetContents = new QWidget();
         scrollAreaWidgetContents->setObjectName(QString::fromUtf8("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 712, 80));
+        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 712, 78));
         horizontalLayout_11 = new QHBoxLayout(scrollAreaWidgetContents);
         horizontalLayout_11->setSpacing(0);
         horizontalLayout_11->setContentsMargins(11, 11, 11, 11);
@@ -674,7 +673,6 @@ public:
         font6.setFamily(QString::fromUtf8("roboto"));
         font6.setPointSize(40);
         font6.setBold(true);
-        font6.setWeight(75);
         Lcil->setFont(font6);
         Lcil->setAutoFillBackground(false);
         Lcil->setStyleSheet(QString::fromUtf8("*{color:#FFFFFF;font-weight: bold;}"));
@@ -714,7 +712,6 @@ public:
         font8.setFamily(QString::fromUtf8("roboto"));
         font8.setPointSize(20);
         font8.setBold(true);
-        font8.setWeight(75);
         label_navaznaLinka->setFont(font8);
         label_navaznaLinka->setStyleSheet(QString::fromUtf8("color:rgb(25,25,25);\n"
 "background-color: rgb(150,150,150);\n"
@@ -1086,7 +1083,6 @@ public:
         font12.setFamily(QString::fromUtf8("roboto"));
         font12.setPointSize(30);
         font12.setBold(false);
-        font12.setWeight(50);
         label_19->setFont(font12);
         label_19->setAlignment(Qt::AlignCenter);
 
@@ -1101,7 +1097,6 @@ public:
         font13.setFamily(QString::fromUtf8("roboto"));
         font13.setPointSize(50);
         font13.setBold(true);
-        font13.setWeight(75);
         label_pasmo1->setFont(font13);
         label_pasmo1->setStyleSheet(QString::fromUtf8("*{\n"
 "background-color: rgb(100,100,100);\n"
@@ -1987,7 +1982,6 @@ public:
         font15.setFamily(QString::fromUtf8("roboto"));
         font15.setPointSize(36);
         font15.setBold(true);
-        font15.setWeight(75);
         Lnacestna1->setFont(font15);
         Lnacestna1->setStyleSheet(QString::fromUtf8(""));
         Lnacestna1->setScaledContents(false);
@@ -2185,7 +2179,7 @@ public:
 
         verticalLayoutWidget = new QWidget(page_casovac);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(330, 160, 160, 118));
+        verticalLayoutWidget->setGeometry(QRect(330, 160, 160, 131));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -2321,7 +2315,7 @@ public:
 
         verticalLayoutWidget_7 = new QWidget(page_led);
         verticalLayoutWidget_7->setObjectName(QString::fromUtf8("verticalLayoutWidget_7"));
-        verticalLayoutWidget_7->setGeometry(QRect(10, 290, 561, 85));
+        verticalLayoutWidget_7->setGeometry(QRect(10, 290, 561, 88));
         vnitrniTabloWraper = new QVBoxLayout(verticalLayoutWidget_7);
         vnitrniTabloWraper->setSpacing(0);
         vnitrniTabloWraper->setContentsMargins(11, 11, 11, 11);
@@ -2394,7 +2388,7 @@ public:
 
         verticalLayoutWidget_9 = new QWidget(page_led);
         verticalLayoutWidget_9->setObjectName(QString::fromUtf8("verticalLayoutWidget_9"));
-        verticalLayoutWidget_9->setGeometry(QRect(550, 190, 119, 95));
+        verticalLayoutWidget_9->setGeometry(QRect(550, 190, 119, 98));
         zadniTabloWrapper = new QVBoxLayout(verticalLayoutWidget_9);
         zadniTabloWrapper->setSpacing(0);
         zadniTabloWrapper->setContentsMargins(11, 11, 11, 11);
@@ -2475,7 +2469,6 @@ public:
         font20.setFamily(QString::fromUtf8("21-PID 3"));
         font20.setPointSize(65);
         font20.setBold(false);
-        font20.setWeight(50);
         labelFrontTopRow->setFont(font20);
         labelFrontTopRow->setAutoFillBackground(false);
         labelFrontTopRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
@@ -2579,7 +2572,7 @@ public:
 #endif // QT_CONFIG(shortcut)
         actionstahnoutXML->setText(QCoreApplication::translate("MainWindow", "stahnoutXML", nullptr));
         action->setText(QCoreApplication::translate("MainWindow", "QUIT", nullptr));
-        pushButton_hlavni->setText(QCoreApplication::translate("MainWindow", "F1 Hlavn\303\255 \n"
+        pushButton_menu_hlavni->setText(QCoreApplication::translate("MainWindow", "F1 Hlavn\303\255 \n"
 " obrazovka", nullptr));
         pushButton_menu_svg->setText(QCoreApplication::translate("MainWindow", "F2 SVG", nullptr));
         pushButton_menu_led->setText(QCoreApplication::translate("MainWindow", "F3 LED", nullptr));

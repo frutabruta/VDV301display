@@ -82,7 +82,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton_hlavni">
+        <widget class="QPushButton" name="pushButton_menu_hlavni">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -477,7 +477,6 @@ QLabel{color:#FFFFFF}</string>
                     <font>
                      <family>roboto</family>
                      <pointsize>80</pointsize>
-                     <weight>75</weight>
                      <bold>true</bold>
                     </font>
                    </property>
@@ -646,7 +645,7 @@ QLabel{color:#FFFFFF}</string>
                       <x>0</x>
                       <y>0</y>
                       <width>712</width>
-                      <height>80</height>
+                      <height>78</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -726,7 +725,6 @@ QLabel{color:#FFFFFF}</string>
                         <font>
                          <family>roboto</family>
                          <pointsize>40</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -785,7 +783,6 @@ QLabel{color:#FFFFFF}</string>
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -1418,7 +1415,6 @@ border-radius: 8px;
                              <font>
                               <family>roboto</family>
                               <pointsize>40</pointsize>
-                              <weight>75</weight>
                               <bold>true</bold>
                              </font>
                             </property>
@@ -1496,7 +1492,6 @@ border-radius: 8px;
                         <font>
                          <family>roboto</family>
                          <pointsize>40</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -1514,7 +1509,6 @@ border-radius: 8px;
                         <font>
                          <family>roboto</family>
                          <pointsize>30</pointsize>
-                         <weight>50</weight>
                          <bold>false</bold>
                         </font>
                        </property>
@@ -1534,7 +1528,6 @@ border-radius: 8px;
                           <font>
                            <family>roboto</family>
                            <pointsize>50</pointsize>
-                           <weight>75</weight>
                            <bold>true</bold>
                           </font>
                          </property>
@@ -1576,7 +1569,6 @@ border-radius: 30px;
                           <font>
                            <family>roboto</family>
                            <pointsize>50</pointsize>
-                           <weight>75</weight>
                            <bold>true</bold>
                           </font>
                          </property>
@@ -1618,7 +1610,6 @@ border-radius: 30px;
                         <font>
                          <family>roboto</family>
                          <pointsize>40</pointsize>
-                         <weight>75</weight>
                          <bold>true</bold>
                         </font>
                        </property>
@@ -1705,7 +1696,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -1829,7 +1819,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -1953,7 +1942,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2074,7 +2062,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2198,7 +2185,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2319,7 +2305,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2450,7 +2435,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2571,7 +2555,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2695,7 +2678,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2816,7 +2798,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -2940,7 +2921,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -3061,7 +3041,6 @@ border-radius: 30px;
                            <font>
                             <family>roboto</family>
                             <pointsize>20</pointsize>
-                            <weight>75</weight>
                             <bold>true</bold>
                            </font>
                           </property>
@@ -3317,7 +3296,6 @@ border-radius: 30px;
                        <font>
                         <family>roboto</family>
                         <pointsize>36</pointsize>
-                        <weight>75</weight>
                         <bold>true</bold>
                        </font>
                       </property>
@@ -3469,7 +3447,6 @@ border-radius: 30px;
                  <font>
                   <family>roboto</family>
                   <pointsize>20</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -3505,7 +3482,6 @@ border-radius: 30px;
                    <font>
                     <family>roboto</family>
                     <pointsize>20</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -3539,7 +3515,6 @@ border-radius: 30px;
                    <font>
                     <family>roboto</family>
                     <pointsize>20</pointsize>
-                    <weight>75</weight>
                     <bold>true</bold>
                    </font>
                   </property>
@@ -3630,7 +3605,7 @@ border-radius: 30px;
           <x>330</x>
           <y>160</y>
           <width>160</width>
-          <height>118</height>
+          <height>131</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -3919,7 +3894,7 @@ border-radius: 30px;
           <x>10</x>
           <y>290</y>
           <width>561</width>
-          <height>85</height>
+          <height>88</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="vnitrniTabloWraper">
@@ -4084,7 +4059,7 @@ border-radius: 30px;
           <x>550</x>
           <y>190</y>
           <width>119</width>
-          <height>95</height>
+          <height>98</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="zadniTabloWrapper">
@@ -4263,7 +4238,6 @@ border-radius: 30px;
                 <font>
                  <family>21-PID 3</family>
                  <pointsize>65</pointsize>
-                 <weight>50</weight>
                  <bold>false</bold>
                 </font>
                </property>

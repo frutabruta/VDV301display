@@ -21,24 +21,22 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QSettings>
 #include <QShortcut>
 #include <QTableWidget>
 #include <QTextStream>
 #include <QUrl>
-//#include <QWidget>
 
+//#include <QWidget>
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
 #include <QSvgRenderer>
 #include <QSvgWidget>
 
-
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
-
-
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -56,6 +54,7 @@ public:
     Ui::MainWindow *ui;
     ~MainWindow();
 
+
 private:
 
     //instance trid
@@ -66,6 +65,7 @@ private:
     CisSubscriber CisSubscriber;
     SvgVykreslovani svgVykreslovani;
     DeviceManagementService deviceManagementService1_0;
+    QSettings settings;
 
     //datoveStruktury jizda
     QVector<ZastavkaCil> globalniSeznamZastavek;
@@ -122,8 +122,6 @@ private:
     QFont font8;
     QFont font10;
 
-    //_RobotoRegular
-    //QFont standardPismoRegular;
 
     //_LCD fonty
 
@@ -139,13 +137,15 @@ private:
 
     //funkce spolecne (vsem typum zobrazeni)
     int doplneniPromennych ();
-    int existujeKonfigurak();
+    void prepniObrazovku(int vstup);
     int formatZobrazeni();
     void naplnMapBarev();
+    QString textVerze();
     int vykresleniPrijatychDat();
     void vymazTabulkuSubscriberu(QTableWidget *tableWidget);
     void vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb);
     void vsechnyConnecty();
+
 
     //funkce pomocne
 
@@ -190,6 +190,7 @@ private:
     //obecne Udalosti
     int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
     void navratJizda();
+    void natahniKonstanty();
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
     void skryjAnnouncement(); //nepouzito
@@ -261,6 +262,7 @@ private:
     QString barva_Letiste_155_203_234 ="rgb(155,203,234)";
     QString barva_Specialni_143_188_25 ="rgb(143,188,25)";
 
+
 private slots:
 
     void on_actiontestPolozka_triggered();
@@ -284,6 +286,7 @@ private slots:
     void slotOpozdenyStart();
     void slotAktualizaceTabulkySluzeb();
     void slotZtrataOdberu();
+
 
 public slots:
 

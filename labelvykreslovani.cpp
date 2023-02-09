@@ -32,9 +32,14 @@ void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel*> labely, int bod
     foreach(QLabel* label, labely)
     {
         QFont fontLabelu =label->font();
-        qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
-        fontLabelu.setPixelSize(qFloor(pomerBodu*bodovaVelikost));
+
+        int pixelSize=qFloor(pomerBodu*bodovaVelikost*0.6);
+        qDebug()<<"label:"<<label->objectName()<<" pomer stran vyska pomer: "<<pomerBodu<<" pixelSize:"<<pixelSize;
+        fontLabelu.setPointSize(pixelSize);
+        //fontLabelu.setPixelSize(pixelSize);
         label->setFont(fontLabelu);
+      //  label->font().setPointSize(pixelSize);
+        //qDebug()<<"obsah: "<<label->style ;
     }
 }
 
@@ -42,7 +47,7 @@ void LabelVykreslovani::labelNastavVelikost(QLabel* label, int bodovaVelikost, f
 {
     QFont fontLabelu =label->font();
     // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
-    fontLabelu.setPixelSize(qFloor(pomerBodu*bodovaVelikost));
+    fontLabelu.setPointSize(qFloor(pomerBodu*bodovaVelikost*0.6));
     label->setFont(fontLabelu);
 }
 
@@ -184,7 +189,7 @@ QString LabelVykreslovani::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky,
 
     foreach(QString nazevPiktogramu,seznamPiktogramu)
     {
-        htmlObrazky+="<img  src=\":/images/"+nazevPiktogramu+"\"height=\""+QString::number(vyskaObrazku)+"\"  >";
+        htmlObrazky+="   <img  src=\":/images/"+nazevPiktogramu+"\"height=\""+QString::number(vyskaObrazku)+"\"  >";
     }
 
     vystup=nazevZastavky+htmlObrazky;
