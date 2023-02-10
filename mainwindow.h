@@ -62,7 +62,7 @@ private:
     CestaUdaje stavSystemu;
     LabelVykreslovani labelVykreslovani;
 
-    CisSubscriber CisSubscriber;
+    CisSubscriber cisSubscriber;
     SvgVykreslovani svgVykreslovani;
     DeviceManagementService deviceManagementService1_0;
     QSettings settings;
@@ -290,6 +290,7 @@ private slots:
 
 public slots:
 
+    void slotParametryZarizeniDoConfigu();
 };
 
 #endif // MAINWINDOW_H

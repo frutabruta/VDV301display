@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    CisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
+    cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
     settings(QCoreApplication::applicationDirPath()+"/nastaveni.ini", QSettings::IniFormat)
@@ -99,7 +99,7 @@ MainWindow::MainWindow(QWidget *parent) :
      hlavniAutoformat();
 
 
-    CisSubscriber.odebirano=false ;
+    cisSubscriber.odebirano=false ;
 
 
     this->ledInicializujVirtualniPanely();
@@ -170,7 +170,7 @@ void MainWindow::slotOpozdenyStart()
     qDebug() <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-    CisSubscriber.novePrihlaseniOdberu();
+    cisSubscriber.novePrihlaseniOdberu();
 }
 
 void MainWindow::prepniObrazovku(int vstup)
@@ -205,10 +205,12 @@ void MainWindow::prepniObrazovku(int vstup)
 void MainWindow::vsechnyConnecty()
 {
     qDebug() <<  Q_FUNC_INFO;
-    connect(&CisSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
-    connect(&CisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
-    connect(CisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
-    connect(&CisSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
+    connect(&cisSubscriber, &IbisIpSubscriber::dataNahrana  ,this, &MainWindow::slotXmlDoPromenne);
+    connect(&cisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
+    connect(cisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
+    connect(&cisSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
+
+    connect(&deviceManagementService1_0,&DeviceManagementService::signalZmenaParametruVen,this,&MainWindow::slotParametryZarizeniDoConfigu);
 
 
     connect(timer, &QTimer::timeout, this, &MainWindow::slotKazdouVterinu);
@@ -248,7 +250,7 @@ QString MainWindow::textVerze()
 int MainWindow::slotKazdouVterinu()
 {
 
-    ui->labelZbyvajiciVteriny->setText(QString::number(CisSubscriber.timer->remainingTime()/1000) );
+    ui->labelZbyvajiciVteriny->setText(QString::number(cisSubscriber.timer->remainingTime()/1000) );
 
     if(zobrazDvojtecku==true)
     {
@@ -300,7 +302,7 @@ void MainWindow::slotPosunNacestnych()
 void MainWindow::slotAktualizaceTabulkySluzeb()
 {
     qDebug() <<  Q_FUNC_INFO;
-    vykresliSluzbyDoTabulky(CisSubscriber.seznamSluzeb);
+    vykresliSluzbyDoTabulky(cisSubscriber.seznamSluzeb);
 }
 
 void MainWindow::vyprselCasovacSluzby()
@@ -988,7 +990,7 @@ void MainWindow::on_pushButton_menu_refreh_clicked()
 
 
     vymazObrazovku();
-    CisSubscriber.novePrihlaseniOdberu();
+    cisSubscriber.novePrihlaseniOdberu();
 }
 
 
@@ -1797,6 +1799,16 @@ void MainWindow::hlavniAutoformat()
 void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
     slotToggleFullscreen();
+}
+
+void MainWindow::slotParametryZarizeniDoConfigu()
+{
+    qDebug()<<Q_FUNC_INFO;
+    settings.setValue("deviceManagementService1_0/deviceName",deviceManagementService1_0.deviceName());
+    settings.setValue("deviceManagementService1_0/deviceManufacturer",deviceManagementService1_0.deviceManufacturer());
+    settings.setValue("deviceManagementService1_0/deviceSerialNumber",deviceManagementService1_0.deviceSerialNumber());
+    settings.setValue("deviceManagementService1_0/deviceClass",deviceManagementService1_0.deviceClass());
+    settings.setValue("deviceManagementService1_0/deviceId",deviceManagementService1_0.deviceId());
 }
 
 
