@@ -22,17 +22,30 @@ MainWindow::MainWindow(QWidget *parent) :
     QNetworkProxyFactory::setUseSystemConfiguration(false);
 
 
+
+
     // fonty
     fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
     fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
     fdb.addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
     fdb.addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
     fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/pid-3v.ttf");
 
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
+
+
+    font1.setFamily("21-PID 1");
+    font1.setPointSize(65);
+
+    font3.setFamily("21-PID 3");
+    font3.setPointSize(65);
+
+    font5.setFamily("21-PID 5");
+    font5.setPointSize(65);
 
     font8.setFamily("21-PID 8");
     font8.setPointSize(65);
@@ -79,32 +92,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
     vsechnyConnecty();
 
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
-
-
-
-
-    hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
-    naplnMapBarev();
-
-
-
-
-    //instanceXMLparser.Test();
 
 
     natahniKonstanty();
+
+
+    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+    hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
+    naplnMapBarev();
+
     formatZobrazeni();
-     hlavniAutoformat();
+    hlavniAutoformat();
 
 
     cisSubscriber.odebirano=false ;
 
+    cisSubscriber.start();
+
+    cisSubscriber.novePrihlaseniOdberu();
+
+
 
     this->ledInicializujVirtualniPanely();
-
-    // ui->tabulkaSubscriberu->setColumnCount(4);
 
 
     bool dvaradky=true;
@@ -127,6 +137,8 @@ MainWindow::MainWindow(QWidget *parent) :
     */
 
     ui->label_build->setText(textVerze());
+    ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
     //
 
 
@@ -137,10 +149,7 @@ MainWindow::MainWindow(QWidget *parent) :
     timerOpozdenyStart->setInterval(intervalOpozdeniStartu);
     timerOpozdenyStart->setSingleShot(true);
 
-
-
-
-
+    vymazObrazovku();
     timerOpozdenyStart->start();
 
 }
@@ -153,9 +162,14 @@ void MainWindow::natahniKonstanty()
     deviceManagementService1_0.setDeviceClass(settings.value("deviceManagementService1_0/deviceClass").toString());
     deviceManagementService1_0.setDeviceId(settings.value("deviceManagementService1_0/deviceId").toString());
     deviceManagementService1_0.setSwVersion(textVerze());
+    deviceManagementService1_0.setCisloPortu(settings.value("deviceManagementService1_0/port").toInt() ); //47477
+
 
     deviceManagementService1_0.slotAktualizaceDat();
     deviceManagementService1_0.slotStartServer();
+
+    cisSubscriber.setVerze(settings.value("cisSubscriber/verze").toString());
+    cisSubscriber.setCisloPortu(settings.value("cisSubscriber/port").toUInt());
 
     prepniObrazovku(settings.value("konstanty/defaultniObrazovka").toInt());
     if(settings.value("konstanty/fullscreen").toBool()==true)
@@ -170,7 +184,7 @@ void MainWindow::slotOpozdenyStart()
     qDebug() <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-    cisSubscriber.novePrihlaseniOdberu();
+    //cisSubscriber.novePrihlaseniOdberu();
 }
 
 void MainWindow::prepniObrazovku(int vstup)
@@ -251,6 +265,7 @@ int MainWindow::slotKazdouVterinu()
 {
 
     ui->labelZbyvajiciVteriny->setText(QString::number(cisSubscriber.timer->remainingTime()/1000) );
+    ui->label_odebirano->setText(QString::number(cisSubscriber.odebirano));
 
     if(zobrazDvojtecku==true)
     {
@@ -538,13 +553,13 @@ void MainWindow::hlavniVymazObrazovku()
     ui->frame_navaznySpoj->hide();
 
     labelVykreslovani.vymazPoleLabelu(seznamLabelNazevZastavky);
-    labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoDolni);
-    labelVykreslovani. vymazPoleLabelu(seznamLabelPasmoHorni);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPasmoDolni);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPasmoHorni);
     //obrazovka prestupu
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupCil);
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupLinka);
     labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupNastupiste);
-    labelVykreslovani. vymazPoleLabelu(seznamLabelPrestupOdjezd);
+    labelVykreslovani.vymazPoleLabelu(seznamLabelPrestupOdjezd);
 
     timerStridejStranky->stop();
     strankyKeStridani.clear();
@@ -561,6 +576,13 @@ int MainWindow::vykresleniPrijatychDat()
     hlavniVymazObrazovku();
     ui->label_locationState->setText(stavSystemu.locationState);
     ui->label_currentStopIndex->setText(QString::number(stavSystemu.indexAktZastavky+1));
+
+    if(stavSystemu.indexAktZastavky<0 )
+    {
+        vyskakovaciOkno("index zastavky je mensi nez 0");
+        return 0;
+    }
+
 
     hlavniVykresliNazevCile(nazevCile);
     hlavniVykresliCisloLinky(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky),stavSystemu.vehicleSubMode);
@@ -902,7 +924,8 @@ int MainWindow::doplneniPromennych()
     qDebug() <<  Q_FUNC_INFO;
     // qInfo()<<"\n DoplneniPromennych";
 
-    if (globalniSeznamZastavek.size()>indexZastavky)
+
+    if ((globalniSeznamZastavek.size()>indexZastavky)&&(indexZastavky>=0))
     {
         ZastavkaCil aktualniZastavka=globalniSeznamZastavek.at(indexZastavky);
         nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu,ui->Lcil->font().pixelSize()));
@@ -1070,17 +1093,41 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 {
     qDebug() <<  Q_FUNC_INFO;
 
+
     instanceXMLparser.nactiXML(vstupniXml);
+
 
     globalniSeznamZastavek.clear();
     globalniSeznamZastavekNavaznehoSpoje.clear();
 
     qDebug()<<"timestamp:"<<instanceXMLparser.vyparsujTimestamp(instanceXMLparser.dokument).toString(Qt::ISODate);
 
-    if(!instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
+
+    if(cisSubscriber.verze()=="1.0")
     {
-        vymazObrazovku();
+        if(!instanceXMLparser.VytvorSeznamZastavek1_0(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
+        {
+            vymazObrazovku();
+        }
     }
+    else if(cisSubscriber.verze()=="2.2CZ1.0")
+    {
+        if(!instanceXMLparser.VytvorSeznamZastavek2_2CZ1_0(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
+        {
+            vymazObrazovku();
+        }
+    }
+    else if(cisSubscriber.verze()=="2.4")
+    {
+
+    }
+    else
+    {
+        qDebug()<<"neznámá verze";
+    }
+
+
+
     instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
 
     //additional text message
@@ -1095,20 +1142,44 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     //qInfo()<<globalniSeznamZastavek[4].StopName;
     qInfo()<<indexZastavky;
     qInfo()<<"CIl:"<<nazevCile;
-    if( globalniSeznamZastavek.size()>0)
+
+    if(indexZastavky>=0)
     {
-        doplneniPromennych();
-        vykresleniPrijatychDat();
-        formatZobrazeni();
-        this->ledAktualizujZobrazeniVirtualnichPanelu(globalniSeznamZastavek,stavSystemu);
-        this->svgVykresleni();
-        qInfo()<<"CIl:"<<nazevCile;
-        //instanceHttpServeru.prijatoZeServeruTelo="";
+        if( globalniSeznamZastavek.size()>0)
+        {
+            if(jeVRozsahu(indexZastavky,globalniSeznamZastavek.count()))
+            {
+                doplneniPromennych();
+                vykresleniPrijatychDat();
+                formatZobrazeni();
+                this->ledAktualizujZobrazeniVirtualnichPanelu(globalniSeznamZastavek,stavSystemu);
+                this->svgVykresleni();
+                qInfo()<<"CIl:"<<nazevCile;
+            }
+            else
+            {
+                //vyskakovaciOkno("index zastávky: "+QString::number(indexZastavky));
+                qDebug()<<"index zastavky je 0";
+
+            }
+
+            //instanceHttpServeru.prijatoZeServeruTelo="";
+        }
+        else
+        {
+            vymazObrazovku();
+            qDebug()<<"nepodarilo se vyparsovat zastavky";
+        }
     }
     else
     {
-        qDebug()<<"nepodarilo se vyparsovat zastavky";
+        vymazObrazovku();
     }
+
+
+
+
+
     //NetworkCleanup();
 
 }
@@ -1133,7 +1204,7 @@ void MainWindow::on_pushButton_menu_hlavni_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     formatZobrazeni();
-     hlavniAutoformat();
+    hlavniAutoformat();
 }
 
 void MainWindow::on_pushButton_menu_casovac_clicked()
@@ -1268,18 +1339,27 @@ void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRad
         ui->labelFrontTopRow->setVisible(false);
     }
 
-    ui->labelFrontLine->setText(linka);
+
     ui->labelFrontTopRow->setText(horniRadek);
     ui->labelFrontBottomRow->setText(dolniRadek);
     ui->labelFrontSingle->setText(horniRadek);
 
-    if (linka.length()>3)
+    ledZapisLinku(ui->labelFrontLine,linka);
+}
+
+
+void MainWindow::ledZarovnejPretecenyRadek(QLabel* label)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    QFontMetrics metrics(label->font());
+
+    if(metrics.width(label->text())> label->width())
     {
-        ui->labelFrontLine->setFont(font10);
+        label->setAlignment(Qt::AlignLeading|Qt::AlignBottom);
     }
     else
     {
-        ui->labelFrontLine->setFont(font8);
+        label->setAlignment(Qt::AlignHCenter|Qt::AlignBottom);
     }
 }
 
@@ -1287,34 +1367,44 @@ void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRade
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->labelSideLine->setText(linka);
+
+
+
     ui->labelSideTopRow->setText(horniRadek);
+    ledZarovnejPretecenyRadek(ui->labelSideTopRow);
+
+
+
     ui->labelSideBottomRow->setText(dolniRadek);
 
-    if (linka.length()>3)
+
+    ledZapisLinku(ui->labelSideLine,linka);
+
+
+}
+
+
+void MainWindow::ledZapisLinku(QLabel* label, QString text)
+{
+    qDebug()<<Q_FUNC_INFO;
+    label->setText(text);
+    if (text.length()>3)
     {
 
-        ui->labelSideLine->setFont(font10);
+        label->setFont(font10);
     }
     else
     {
-        ui->labelSideLine->setFont(font8);
+        label->setFont(font8);
     }
+    ledZarovnejPretecenyRadek(label);
 }
 
 void MainWindow::ledNaplnRear(QString linka)
 {
     qDebug() <<  Q_FUNC_INFO;
-    ui->labelRearLine->setText(linka);
 
-    if (linka.length()>3)
-    {
-
-        ui->labelRearLine->setFont(font10);
-    }
-    else
-    {
-        ui->labelRearLine->setFont(font8);
-    }
+    ledZapisLinku(ui->labelRearLine,linka);
 
 }
 
@@ -1330,10 +1420,30 @@ void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRad
 void MainWindow::ledInicializujVirtualniPanely()
 {
     qDebug() <<  Q_FUNC_INFO;
+    /*
     ledNaplnFront("123","čelní horní","čelní dolní");
     ledNaplnSide("456","Boční cíl","Boční nácestné");
     ledNaplnRear("789");
     ledNaplnInner("123","vnitřní cíl", "vnitřní nácesty");
+*/
+    ui->labelFrontLine->setFont(font8);
+    ui->labelFrontSingle->setFont(font5);
+
+
+    ui->labelFrontTopRow->setFont(font1);
+    ui->labelFrontBottomRow->setFont(font1);
+
+    ui->labelSideLine->setFont(font8);
+    ui->labelSideTopRow->setFont(font1);
+    ui->labelSideBottomRow->setFont(font1);
+
+
+    ui->labelRearLine->setFont(font8);
+
+    ui->labelInnerLine->setFont(font3);
+    ui->labelInnerBottomRow->setFont(font1);
+    ui->labelInnerTopRow->setFont(font1);
+
 }
 
 void MainWindow::ledVymazPanely()
@@ -1350,15 +1460,25 @@ void MainWindow::ledVymazPanely()
 void MainWindow::ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav )
 {
     qDebug() <<  Q_FUNC_INFO;
+    if(!jeVRozsahu(stav.indexAktZastavky,zastavky.count()))
+    {
+        return;
+    }
+
     ZastavkaCil aktZast=zastavky.at(stav.indexAktZastavky);
 
     ledNaplnFront(aktZast.linka.LineName,aktZast.cil.NameFront,aktZast.cil.NameFront2);
-    ledNaplnSide(aktZast.linka.LineName,aktZast.cil.NameSide,aktZast.zastavka.NameSide );
+
+    //ledNaplnSide(aktZast.linka.LineName,aktZast.cil.NameSide,aktZast.zastavka.NameSide );
+    ledNaplnSide(aktZast.linka.LineName,aktZast.cil.NameSide,"" );
     ledNaplnRear(aktZast.linka.LineName);
     ledNaplnInner(aktZast.linka.LineName,aktZast.cil.NameInner, aktZast.zastavka.NameInner);
 
     textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
     textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+
+    ledZmenVelikostPanelu();
+
 
 }
 
@@ -1411,6 +1531,7 @@ void MainWindow::ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
     if(iteracniIndex<texty.length())
     {
         ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
+        ledZarovnejPretecenyRadek(ui->labelSideBottomRow);
 
         //  iteracniIndex++;
 
@@ -1541,7 +1662,7 @@ int MainWindow::jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavk
 
 int MainWindow::jeVRozsahu(int index, int pocetHodnot)
 {
-    if(index<pocetHodnot)
+    if((index<pocetHodnot)&&(index>=0))
     {
 
         return 1;
@@ -1743,6 +1864,11 @@ void MainWindow::slotToggleFullscreen()
     }
     // hlavniAutoformat();
 
+    ledZmenVelikostPanelu();
+
+
+
+
 }
 
 
@@ -1755,7 +1881,7 @@ void MainWindow::hlavniAutoformat()
     velikostPiktogramPrestupDynamic=qFloor(velikostPiktogramPrestup*pomerPixelBod);
     //ui->wid
     //   QFont fontLabelu = ui->Lnacestna5->font();
-    qDebug()<<"pomerPixelBod stran vyska "<<ui->frame_hlavni->height()<<" sirka:"<<ui->frame_hlavni->width()<<" pomerPixelBod:"<<pomerPixelBod;
+    //   qDebug()<<"pomerPixelBod stran vyska "<<ui->frame_hlavni->height()<<" sirka:"<<ui->frame_hlavni->width()<<" pomerPixelBod:"<<pomerPixelBod;
     // fontLabelu.setPixelSize(qFloor(pomerPixelBod*100));
     //ui->Lnacestna5->setFont(fontLabelu);
 
@@ -1763,19 +1889,15 @@ void MainWindow::hlavniAutoformat()
     labelVykreslovani.labelNastavVelikost(ui->Lcil,velikostFontCil,pomerPixelBod ); //100
     labelVykreslovani.labelNastavVelikost(ui->label_nacestne,velikostFontNacestne,pomerPixelBod); //72
 
-
     labelVykreslovani.poleLabelNastavVelikost(seznamLabelNazevZastavky,velikostFontNasledujici,pomerPixelBod); //100
 
     labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupLinka,velikostFontPrestupLinka,pomerPixelBod); //48
     labelVykreslovani.poleLabelNastavSirku(seznamLabelPrestupLinka,pomerPixelBod*velikostPrestupRamecekSirka); //95
     labelVykreslovani.poleLabelNastavVysku(seznamLabelPrestupLinka,pomerPixelBod*velikostPrestupRamecekVyska); //65
 
-
     labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupCil,velikostFontPrestupCil,pomerPixelBod); //36
     labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupNastupiste,velikostFontPrestupCil,pomerPixelBod); //36
     labelVykreslovani.poleLabelNastavVelikost(seznamLabelPrestupOdjezd,velikostFontPrestupCil,pomerPixelBod); //36
-
-
 
     labelVykreslovani.labelNastavVelikost(ui->label_hodiny,80,pomerPixelBod); //80
     labelVykreslovani.labelNastavVelikost(ui->label_textPres,30,pomerPixelBod); //30
@@ -1788,13 +1910,7 @@ void MainWindow::hlavniAutoformat()
     */
     labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
-
-
 }
-
-
-
-
 
 void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
@@ -1812,9 +1928,94 @@ void MainWindow::slotParametryZarizeniDoConfigu()
 }
 
 
+void MainWindow::ledZmenVelikostOkna(QLabel * okno, int sirkaDot, int vyskaDot, float koeficient)
+{
+    //int koeficient = pomer pixel:pocetDotu
+    okno->setFixedHeight(float(vyskaDot)*koeficient);
+    okno->setFixedWidth(float(sirkaDot)*koeficient);
+}
+
+
+void MainWindow::ledZmenVelikostPanelu()
+{
+    qDebug()<<Q_FUNC_INFO;
+
+    const int cilSirka=108;
+    const int cilVyskaVelky=19;
+
+    const int vyskaHorniRadek=9;
+    const int vyskaDolniRadek=10;
+
+
+    const int linkaSirka=30;
+    const int linkaVyska=19;
+
+
+    const int linkaVnitrniSirka=22;
+    const int linkaVnitrniVyska=8;
+
+    const int vyskaVnitrniHorniRadek=8;
+    const int vyskaVnitrniDolniRadek=8;
+
+    const int sirkaVnitrniHorniRadek=113;
+    const int sirkaVnitrniDolniRadek=135;
+
+    const int cilBocniSirka=82;
+
+
+    int velikostFontu=font8.pointSize();
+    int vyskaLinky=ui->labelFrontLine->height();
+    float pomerFontuKvysce=float(velikostFontu)/float(vyskaLinky);
+
+    pomerPixelLed=ui->labelFrontSingle->width() /(float(cilSirka)); //A
+
+    float novaVyskaLinky=float(linkaVyska)*pomerPixelLed;
+    float staraVyskaLinky=78.0;
+
+    float novaVelikostFontu=65*(novaVyskaLinky/staraVyskaLinky);
+
+
+    ui->labelFrontSingle->setFixedHeight(float(cilVyskaVelky)*pomerPixelLed);
+
+    ui->labelFrontBottomRow->setFixedHeight(float(vyskaDolniRadek)*pomerPixelLed);
+    ui->labelFrontTopRow->setFixedHeight(float(vyskaHorniRadek)*pomerPixelLed);
+
+    ledZmenVelikostOkna(ui->labelFrontLine,linkaSirka,linkaVyska,pomerPixelLed);
+
+    ledZmenVelikostOkna(ui->labelSideLine,linkaSirka,linkaVyska,pomerPixelLed);
+    ledZmenVelikostOkna(ui->labelSideTopRow,cilBocniSirka,vyskaHorniRadek,pomerPixelLed);
+    ledZmenVelikostOkna(ui->labelSideBottomRow,cilBocniSirka,vyskaDolniRadek,pomerPixelLed);
+
+    ledZmenVelikostOkna(ui->labelRearLine,linkaSirka,linkaVyska,pomerPixelLed);
+
+    ledZmenVelikostOkna(ui->labelInnerLine,linkaVnitrniSirka,linkaVnitrniVyska,pomerPixelLed);
+
+    ledZmenVelikostOkna(ui->labelInnerTopRow,sirkaVnitrniHorniRadek,vyskaVnitrniHorniRadek,pomerPixelLed);
+    ledZmenVelikostOkna(ui->labelInnerBottomRow,sirkaVnitrniDolniRadek,vyskaVnitrniDolniRadek,pomerPixelLed);
 
 
 
 
+    qDebug()<<"pomer vysky: "<<pomerFontuKvysce; //pomer vysky:  0.833333
 
+    font1.setPointSize(novaVelikostFontu);
+    font3.setPointSize(novaVelikostFontu);
+    font5.setPointSize(novaVelikostFontu);
+    font8.setPointSize(novaVelikostFontu);
+    font10.setPointSize(novaVelikostFontu);
 
+    ledInicializujVirtualniPanely();
+}
+
+void MainWindow::vyskakovaciOkno(QString poznamka)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    QMessageBox msgBox;
+    msgBox.setText(poznamka);
+    QFont font;
+    //font.setBold(true);
+    font.setPointSize(30);
+    msgBox.setFont(font);
+    // msgBox.setStyleSheet("font-size: 30px;");
+    msgBox.exec();
+}

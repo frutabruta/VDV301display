@@ -34,7 +34,7 @@ void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel*> labely, int bod
         QFont fontLabelu =label->font();
 
         int pixelSize=qFloor(pomerBodu*bodovaVelikost*0.6);
-        qDebug()<<"label:"<<label->objectName()<<" pomer stran vyska pomer: "<<pomerBodu<<" pixelSize:"<<pixelSize;
+        //qDebug()<<"label:"<<label->objectName()<<" pomer stran vyska pomer: "<<pomerBodu<<" pixelSize:"<<pixelSize;
         fontLabelu.setPointSize(pixelSize);
         //fontLabelu.setPixelSize(pixelSize);
         label->setFont(fontLabelu);

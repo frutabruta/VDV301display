@@ -114,11 +114,17 @@ private:
 
     float pomerPixelBod=1080.0/1050.0;
 
+    float pomerPixelLed=4.105;
+
+
     //Fonty
 
     QFontDatabase fdb;
 
     //_LED fonty
+    QFont font1;
+    QFont font3;
+    QFont font5;
     QFont font8;
     QFont font10;
 
@@ -263,6 +269,11 @@ private:
     QString barva_Specialni_143_188_25 ="rgb(143,188,25)";
 
 
+    void vyskakovaciOkno(QString poznamka);
+    void ledZmenVelikostPanelu();
+    void ledZarovnejPretecenyRadek(QLabel *label);
+    void ledZapisLinku(QLabel *label, QString text);
+    void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
 private slots:
 
     void on_actiontestPolozka_triggered();

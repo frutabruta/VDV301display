@@ -9,3 +9,9 @@ Obsah souboru určuje, na jaké obrazovce se program spustí (1 na první obrazo
 
 Logování do souboru: 
 logování funguje, pokud existuje soubor E:/LogFile.log
+
+## Changelog
+- 20230608_1558
+    - přidána kompatibilita s VDV301 1.0
+    - volba verze CustomerInformationService přes nastaveni.ini
+    - automatické zvětšování virtuálních LED panelů

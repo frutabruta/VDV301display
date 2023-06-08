@@ -239,7 +239,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -3570,23 +3570,19 @@ border-radius: 30px;
        </layout>
       </widget>
       <widget class="QWidget" name="page_casovac">
-       <widget class="QWidget" name="verticalLayoutWidget_3">
+       <widget class="QGroupBox" name="groupBox">
         <property name="geometry">
          <rect>
-          <x>60</x>
-          <y>110</y>
-          <width>160</width>
-          <height>84</height>
+          <x>160</x>
+          <y>60</y>
+          <width>132</width>
+          <height>97</height>
          </rect>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Pole pro zadání intervalu</string>
-           </property>
-          </widget>
-         </item>
+        <property name="title">
+         <string>Zadání intervalu</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_19">
          <item>
           <widget class="QLineEdit" name="lineEdit"/>
          </item>
@@ -3599,23 +3595,19 @@ border-radius: 30px;
          </item>
         </layout>
        </widget>
-       <widget class="QWidget" name="verticalLayoutWidget">
+       <widget class="QGroupBox" name="groupBox_2">
         <property name="geometry">
          <rect>
-          <x>330</x>
-          <y>160</y>
-          <width>160</width>
-          <height>131</height>
+          <x>340</x>
+          <y>70</y>
+          <width>154</width>
+          <height>150</height>
          </rect>
         </property>
+        <property name="title">
+         <string>Zbývající čas (s)</string>
+        </property>
         <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label">
-           <property name="text">
-            <string>Zbývající čas (s)</string>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QLabel" name="labelZbyvajiciVteriny">
            <property name="font">
@@ -3625,6 +3617,28 @@ border-radius: 30px;
            </property>
            <property name="text">
             <string>xx s</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_3">
+        <property name="geometry">
+         <rect>
+          <x>590</x>
+          <y>260</y>
+          <width>73</width>
+          <height>59</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Odebíráno?</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_odebirano">
+           <property name="text">
+            <string>TextLabel</string>
            </property>
           </widget>
          </item>
@@ -3689,677 +3703,671 @@ border-radius: 30px;
        </layout>
       </widget>
       <widget class="QWidget" name="page_led">
-       <widget class="QWidget" name="verticalLayoutWidget_4">
-        <property name="geometry">
-         <rect>
-          <x>9</x>
-          <y>146</y>
-          <width>521</width>
-          <height>141</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="bocniTabloWrapper">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <item>
-          <widget class="QLabel" name="bocniTabloNazev">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Boční tablo</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="jenBocniTablo">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="labelSideLine">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>115</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>115</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="baseSize">
-              <size>
-               <width>115</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>21-PID 8</family>
-               <pointsize>65</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">*{color:orange;background-color:black;}</string>
-             </property>
-             <property name="text">
-              <string>123</string>
-             </property>
-             <property name="scaledContents">
-              <bool>false</bool>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <layout class="QVBoxLayout" name="pravplka">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="sizeConstraint">
-              <enum>QLayout::SetDefaultConstraint</enum>
-             </property>
-             <item>
-              <widget class="QLabel" name="labelSideTopRow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>344</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>344</width>
-                 <height>37</height>
-                </size>
-               </property>
-               <property name="baseSize">
-                <size>
-                 <width>344</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 1</family>
-                 <pointsize>65</pointsize>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:orange;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>DestinationSideName</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="labelSideBottomRow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>344</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>344</width>
-                 <height>41</height>
-                </size>
-               </property>
-               <property name="baseSize">
-                <size>
-                 <width>344</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 1</family>
-                 <pointsize>65</pointsize>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:orange;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>StopSideName</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_7">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>290</y>
-          <width>561</width>
-          <height>88</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="vnitrniTabloWraper">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="predniLabel_3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>vnitřní tablo</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_14">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout_10">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="sizeConstraint">
-              <enum>QLayout::SetDefaultConstraint</enum>
-             </property>
-             <item>
-              <widget class="QLabel" name="labelInnerLine">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>91</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>91</width>
-                 <height>33</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 3</family>
-                 <pointsize>65</pointsize>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:red;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>123</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="labelInnerTopRow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>464</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>464</width>
-                 <height>33</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 3</family>
-                 <pointsize>65</pointsize>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:red;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>DestinationSideName</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-               <property name="margin">
-                <number>0</number>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QLabel" name="labelInnerBottomRow">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>555</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>555</width>
-             <height>33</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>21-PID 3</family>
-             <pointsize>65</pointsize>
-            </font>
-           </property>
-           <property name="autoFillBackground">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">*{color:red;background-color:black;}</string>
-           </property>
-           <property name="text">
-            <string>StopSideName</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="verticalLayoutWidget_9">
-        <property name="geometry">
-         <rect>
-          <x>550</x>
-          <y>190</y>
-          <width>119</width>
-          <height>98</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="zadniTabloWrapper">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="predniLabel_4">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Zadní tablo</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_8">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <widget class="QLabel" name="labelRearLine">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>115</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>115</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>21-PID 8</family>
-               <pointsize>65</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">*{color:orange;background-color:black;}</string>
-             </property>
-             <property name="text">
-              <string>123</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QLabel" name="predniLabel">
-        <property name="geometry">
-         <rect>
-          <x>10</x>
-          <y>10</y>
-          <width>49</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Přední tablo</string>
-        </property>
-       </widget>
-       <widget class="QFrame" name="frame">
-        <property name="geometry">
-         <rect>
-          <x>180</x>
-          <y>150</y>
-          <width>120</width>
-          <height>80</height>
-         </rect>
-        </property>
-        <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-       </widget>
-       <widget class="QWidget" name="layoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>11</x>
-          <y>27</y>
-          <width>651</width>
-          <height>162</height>
-         </rect>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_6">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="labelFrontLine">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>115</width>
-             <height>78</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>115</width>
-             <height>78</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>21-PID 8</family>
-             <pointsize>65</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">*{color:orange;background-color:black;}</string>
-           </property>
-           <property name="text">
-            <string>123</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <property name="spacing">
-            <number>0</number>
-           </property>
-           <item>
-            <layout class="QVBoxLayout" name="layoutDvaRadky">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="labelFrontTopRow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>460</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>460</width>
-                 <height>37</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 3</family>
-                 <pointsize>65</pointsize>
-                 <bold>false</bold>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:orange;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>Dest.FrontNameTop</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="labelFrontBottomRow">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>460</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>460</width>
-                 <height>41</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>21-PID 3</family>
-                 <pointsize>65</pointsize>
-                </font>
-               </property>
-               <property name="autoFillBackground">
-                <bool>false</bool>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">*{color:orange;background-color:black;}</string>
-               </property>
-               <property name="text">
-                <string>Dest.FrontNameBtm</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <widget class="QLabel" name="labelFrontSingle">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>460</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>460</width>
-               <height>78</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>21-PID 5</family>
-               <pointsize>65</pointsize>
-              </font>
-             </property>
-             <property name="layoutDirection">
-              <enum>Qt::LeftToRight</enum>
-             </property>
-             <property name="autoFillBackground">
-              <bool>false</bool>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">*{color:orange;background-color:black;}</string>
-             </property>
-             <property name="text">
-              <string>DestinationFrontSingle</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignBottom|Qt::AlignHCenter</set>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="predniLabel">
+          <property name="text">
+           <string>Přední tablo</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="115,460">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="labelFrontLine">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>115</width>
+              <height>78</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>9999</width>
+              <height>78</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>21-PID 8</family>
+              <pointsize>65</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">*{color:orange;background-color:black;}</string>
+            </property>
+            <property name="text">
+             <string>123</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_7">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="layoutDvaRadky">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="labelFrontTopRow">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>460</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>9999</width>
+                  <height>37</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 3</family>
+                  <pointsize>65</pointsize>
+                  <bold>false</bold>
+                 </font>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:orange;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>Dest.FrontNameTop</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelFrontBottomRow">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>460</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>9999</width>
+                  <height>41</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 3</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:orange;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>Dest.FrontNameBtm</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QLabel" name="labelFrontSingle">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>460</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>9999</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>21-PID 5</family>
+                <pointsize>65</pointsize>
+               </font>
+              </property>
+              <property name="layoutDirection">
+               <enum>Qt::LeftToRight</enum>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*{color:orange;background-color:black;}</string>
+              </property>
+              <property name="text">
+               <string>DestinationFrontSingle</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="bocniTabloWrapper">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetDefaultConstraint</enum>
+          </property>
+          <item>
+           <widget class="QLabel" name="bocniTabloNazev">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Boční tablo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="jenBocniTablo">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="labelSideLine">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>115</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>9999</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="baseSize">
+               <size>
+                <width>115</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>21-PID 8</family>
+                <pointsize>65</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*{color:orange;background-color:black;}</string>
+              </property>
+              <property name="text">
+               <string>123</string>
+              </property>
+              <property name="scaledContents">
+               <bool>false</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="pravplka">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <item>
+               <widget class="QLabel" name="labelSideTopRow">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>9999</width>
+                  <height>37</height>
+                 </size>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 1</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:orange;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>DestinationSideName</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelSideBottomRow">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>9999</width>
+                  <height>41</height>
+                 </size>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 1</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:orange;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>StopSideName</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="zadniTabloWrapper">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="predniLabel_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Zadní tablo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="labelRearLine">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>115</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>9999</width>
+                <height>78</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>21-PID 8</family>
+                <pointsize>65</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*{color:orange;background-color:black;}</string>
+              </property>
+              <property name="text">
+               <string>123</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="vnitrniTabloWraper">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="predniLabel_3">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>vnitřní tablo</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_14">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="sizeConstraint">
+               <enum>QLayout::SetDefaultConstraint</enum>
+              </property>
+              <item>
+               <widget class="QLabel" name="labelInnerLine">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>91</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>91</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 3</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:red;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>123</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="labelInnerTopRow">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>464</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>464</width>
+                  <height>33</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 3</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:red;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>DestinationSideName</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+                <property name="margin">
+                 <number>0</number>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="horizontalSpacer_3">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>40</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="labelInnerBottomRow">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>555</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>555</width>
+                <height>33</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>21-PID 3</family>
+                <pointsize>65</pointsize>
+               </font>
+              </property>
+              <property name="autoFillBackground">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">*{color:red;background-color:black;}</string>
+              </property>
+              <property name="text">
+               <string>StopSideName</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
      </widget>
     </item>

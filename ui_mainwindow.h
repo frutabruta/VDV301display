@@ -15,6 +15,7 @@
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -261,21 +262,30 @@ public:
     QGridLayout *gridLayout_10;
     QTableWidget *tabulkaSubscriberu;
     QWidget *page_casovac;
-    QWidget *verticalLayoutWidget_3;
-    QVBoxLayout *verticalLayout_5;
-    QLabel *label_3;
+    QGroupBox *groupBox;
+    QVBoxLayout *verticalLayout_19;
     QLineEdit *lineEdit;
     QPushButton *tlacitkoNastavVteriny;
-    QWidget *verticalLayoutWidget;
+    QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout;
-    QLabel *label;
     QLabel *labelZbyvajiciVteriny;
+    QGroupBox *groupBox_3;
+    QVBoxLayout *verticalLayout_5;
+    QLabel *label_odebirano;
     QWidget *page_svg;
     QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout_6;
     QGraphicsView *graphicsView;
     QWidget *page_led;
-    QWidget *verticalLayoutWidget_4;
+    QVBoxLayout *verticalLayout_4;
+    QLabel *predniLabel;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *labelFrontLine;
+    QVBoxLayout *verticalLayout_7;
+    QVBoxLayout *layoutDvaRadky;
+    QLabel *labelFrontTopRow;
+    QLabel *labelFrontBottomRow;
+    QLabel *labelFrontSingle;
     QVBoxLayout *bocniTabloWrapper;
     QLabel *bocniTabloNazev;
     QHBoxLayout *jenBocniTablo;
@@ -284,30 +294,22 @@ public:
     QLabel *labelSideTopRow;
     QLabel *labelSideBottomRow;
     QSpacerItem *horizontalSpacer;
-    QWidget *verticalLayoutWidget_7;
+    QVBoxLayout *zadniTabloWrapper;
+    QLabel *predniLabel_4;
+    QHBoxLayout *horizontalLayout_8;
+    QLabel *labelRearLine;
+    QSpacerItem *horizontalSpacer_5;
     QVBoxLayout *vnitrniTabloWraper;
     QLabel *predniLabel_3;
     QVBoxLayout *verticalLayout_14;
     QHBoxLayout *horizontalLayout_10;
     QLabel *labelInnerLine;
     QLabel *labelInnerTopRow;
+    QSpacerItem *horizontalSpacer_3;
+    QHBoxLayout *horizontalLayout_2;
     QLabel *labelInnerBottomRow;
-    QWidget *verticalLayoutWidget_9;
-    QVBoxLayout *zadniTabloWrapper;
-    QLabel *predniLabel_4;
-    QHBoxLayout *horizontalLayout_8;
-    QLabel *labelRearLine;
-    QLabel *predniLabel;
-    QFrame *frame;
-    QWidget *layoutWidget;
-    QHBoxLayout *horizontalLayout_6;
-    QLabel *labelFrontLine;
-    QVBoxLayout *verticalLayout_7;
-    QVBoxLayout *layoutDvaRadky;
-    QLabel *labelFrontTopRow;
-    QLabel *labelFrontBottomRow;
-    QLabel *labelFrontSingle;
-    QSpacerItem *horizontalSpacer_2;
+    QSpacerItem *horizontalSpacer_4;
+    QSpacerItem *verticalSpacer;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
@@ -2154,49 +2156,49 @@ public:
         prepinadloStran->addWidget(page_seznamSluzeb);
         page_casovac = new QWidget();
         page_casovac->setObjectName(QString::fromUtf8("page_casovac"));
-        verticalLayoutWidget_3 = new QWidget(page_casovac);
-        verticalLayoutWidget_3->setObjectName(QString::fromUtf8("verticalLayoutWidget_3"));
-        verticalLayoutWidget_3->setGeometry(QRect(60, 110, 160, 84));
-        verticalLayout_5 = new QVBoxLayout(verticalLayoutWidget_3);
-        verticalLayout_5->setSpacing(6);
-        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_5->setContentsMargins(0, 0, 0, 0);
-        label_3 = new QLabel(verticalLayoutWidget_3);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-
-        verticalLayout_5->addWidget(label_3);
-
-        lineEdit = new QLineEdit(verticalLayoutWidget_3);
+        groupBox = new QGroupBox(page_casovac);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setGeometry(QRect(160, 60, 132, 97));
+        verticalLayout_19 = new QVBoxLayout(groupBox);
+        verticalLayout_19->setSpacing(6);
+        verticalLayout_19->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_19->setObjectName(QString::fromUtf8("verticalLayout_19"));
+        lineEdit = new QLineEdit(groupBox);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
 
-        verticalLayout_5->addWidget(lineEdit);
+        verticalLayout_19->addWidget(lineEdit);
 
-        tlacitkoNastavVteriny = new QPushButton(verticalLayoutWidget_3);
+        tlacitkoNastavVteriny = new QPushButton(groupBox);
         tlacitkoNastavVteriny->setObjectName(QString::fromUtf8("tlacitkoNastavVteriny"));
 
-        verticalLayout_5->addWidget(tlacitkoNastavVteriny);
+        verticalLayout_19->addWidget(tlacitkoNastavVteriny);
 
-        verticalLayoutWidget = new QWidget(page_casovac);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(330, 160, 160, 131));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        groupBox_2 = new QGroupBox(page_casovac);
+        groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
+        groupBox_2->setGeometry(QRect(340, 70, 154, 150));
+        verticalLayout = new QVBoxLayout(groupBox_2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(verticalLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        verticalLayout->addWidget(label);
-
-        labelZbyvajiciVteriny = new QLabel(verticalLayoutWidget);
+        labelZbyvajiciVteriny = new QLabel(groupBox_2);
         labelZbyvajiciVteriny->setObjectName(QString::fromUtf8("labelZbyvajiciVteriny"));
         QFont font16;
         font16.setPointSize(60);
         labelZbyvajiciVteriny->setFont(font16);
 
         verticalLayout->addWidget(labelZbyvajiciVteriny);
+
+        groupBox_3 = new QGroupBox(page_casovac);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setGeometry(QRect(590, 260, 73, 59));
+        verticalLayout_5 = new QVBoxLayout(groupBox_3);
+        verticalLayout_5->setSpacing(6);
+        verticalLayout_5->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
+        label_odebirano = new QLabel(groupBox_3);
+        label_odebirano->setObjectName(QString::fromUtf8("label_odebirano"));
+
+        verticalLayout_5->addWidget(label_odebirano);
 
         prepinadloStran->addWidget(page_casovac);
         page_svg = new QWidget();
@@ -2229,16 +2231,109 @@ public:
         prepinadloStran->addWidget(page_svg);
         page_led = new QWidget();
         page_led->setObjectName(QString::fromUtf8("page_led"));
-        verticalLayoutWidget_4 = new QWidget(page_led);
-        verticalLayoutWidget_4->setObjectName(QString::fromUtf8("verticalLayoutWidget_4"));
-        verticalLayoutWidget_4->setGeometry(QRect(9, 146, 521, 141));
-        bocniTabloWrapper = new QVBoxLayout(verticalLayoutWidget_4);
+        verticalLayout_4 = new QVBoxLayout(page_led);
+        verticalLayout_4->setSpacing(6);
+        verticalLayout_4->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
+        predniLabel = new QLabel(page_led);
+        predniLabel->setObjectName(QString::fromUtf8("predniLabel"));
+
+        verticalLayout_4->addWidget(predniLabel);
+
+        horizontalLayout_6 = new QHBoxLayout();
+        horizontalLayout_6->setSpacing(0);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        labelFrontLine = new QLabel(page_led);
+        labelFrontLine->setObjectName(QString::fromUtf8("labelFrontLine"));
+        sizePolicy10.setHeightForWidth(labelFrontLine->sizePolicy().hasHeightForWidth());
+        labelFrontLine->setSizePolicy(sizePolicy10);
+        labelFrontLine->setMinimumSize(QSize(115, 78));
+        labelFrontLine->setMaximumSize(QSize(9999, 78));
+        QFont font17;
+        font17.setFamily(QString::fromUtf8("21-PID 8"));
+        font17.setPointSize(65);
+        labelFrontLine->setFont(font17);
+        labelFrontLine->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
+        labelFrontLine->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
+
+        horizontalLayout_6->addWidget(labelFrontLine);
+
+        verticalLayout_7 = new QVBoxLayout();
+        verticalLayout_7->setSpacing(0);
+        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
+        layoutDvaRadky = new QVBoxLayout();
+        layoutDvaRadky->setSpacing(0);
+        layoutDvaRadky->setObjectName(QString::fromUtf8("layoutDvaRadky"));
+        labelFrontTopRow = new QLabel(page_led);
+        labelFrontTopRow->setObjectName(QString::fromUtf8("labelFrontTopRow"));
+        QSizePolicy sizePolicy11(QSizePolicy::Expanding, QSizePolicy::Minimum);
+        sizePolicy11.setHorizontalStretch(0);
+        sizePolicy11.setVerticalStretch(0);
+        sizePolicy11.setHeightForWidth(labelFrontTopRow->sizePolicy().hasHeightForWidth());
+        labelFrontTopRow->setSizePolicy(sizePolicy11);
+        labelFrontTopRow->setMinimumSize(QSize(460, 0));
+        labelFrontTopRow->setMaximumSize(QSize(9999, 37));
+        QFont font18;
+        font18.setFamily(QString::fromUtf8("21-PID 3"));
+        font18.setPointSize(65);
+        font18.setBold(false);
+        labelFrontTopRow->setFont(font18);
+        labelFrontTopRow->setAutoFillBackground(false);
+        labelFrontTopRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
+        labelFrontTopRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
+
+        layoutDvaRadky->addWidget(labelFrontTopRow);
+
+        labelFrontBottomRow = new QLabel(page_led);
+        labelFrontBottomRow->setObjectName(QString::fromUtf8("labelFrontBottomRow"));
+        sizePolicy11.setHeightForWidth(labelFrontBottomRow->sizePolicy().hasHeightForWidth());
+        labelFrontBottomRow->setSizePolicy(sizePolicy11);
+        labelFrontBottomRow->setMinimumSize(QSize(460, 0));
+        labelFrontBottomRow->setMaximumSize(QSize(9999, 41));
+        QFont font19;
+        font19.setFamily(QString::fromUtf8("21-PID 3"));
+        font19.setPointSize(65);
+        labelFrontBottomRow->setFont(font19);
+        labelFrontBottomRow->setAutoFillBackground(false);
+        labelFrontBottomRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
+        labelFrontBottomRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
+
+        layoutDvaRadky->addWidget(labelFrontBottomRow);
+
+
+        verticalLayout_7->addLayout(layoutDvaRadky);
+
+        labelFrontSingle = new QLabel(page_led);
+        labelFrontSingle->setObjectName(QString::fromUtf8("labelFrontSingle"));
+        labelFrontSingle->setEnabled(false);
+        sizePolicy11.setHeightForWidth(labelFrontSingle->sizePolicy().hasHeightForWidth());
+        labelFrontSingle->setSizePolicy(sizePolicy11);
+        labelFrontSingle->setMinimumSize(QSize(460, 0));
+        labelFrontSingle->setMaximumSize(QSize(9999, 78));
+        QFont font20;
+        font20.setFamily(QString::fromUtf8("21-PID 5"));
+        font20.setPointSize(65);
+        labelFrontSingle->setFont(font20);
+        labelFrontSingle->setLayoutDirection(Qt::LeftToRight);
+        labelFrontSingle->setAutoFillBackground(false);
+        labelFrontSingle->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
+        labelFrontSingle->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
+
+        verticalLayout_7->addWidget(labelFrontSingle);
+
+
+        horizontalLayout_6->addLayout(verticalLayout_7);
+
+        horizontalLayout_6->setStretch(0, 115);
+        horizontalLayout_6->setStretch(1, 460);
+
+        verticalLayout_4->addLayout(horizontalLayout_6);
+
+        bocniTabloWrapper = new QVBoxLayout();
         bocniTabloWrapper->setSpacing(0);
-        bocniTabloWrapper->setContentsMargins(11, 11, 11, 11);
         bocniTabloWrapper->setObjectName(QString::fromUtf8("bocniTabloWrapper"));
         bocniTabloWrapper->setSizeConstraint(QLayout::SetDefaultConstraint);
-        bocniTabloWrapper->setContentsMargins(0, 0, 0, 0);
-        bocniTabloNazev = new QLabel(verticalLayoutWidget_4);
+        bocniTabloNazev = new QLabel(page_led);
         bocniTabloNazev->setObjectName(QString::fromUtf8("bocniTabloNazev"));
         sizePolicy8.setHeightForWidth(bocniTabloNazev->sizePolicy().hasHeightForWidth());
         bocniTabloNazev->setSizePolicy(sizePolicy8);
@@ -2248,16 +2343,13 @@ public:
         jenBocniTablo = new QHBoxLayout();
         jenBocniTablo->setSpacing(0);
         jenBocniTablo->setObjectName(QString::fromUtf8("jenBocniTablo"));
-        labelSideLine = new QLabel(verticalLayoutWidget_4);
+        labelSideLine = new QLabel(page_led);
         labelSideLine->setObjectName(QString::fromUtf8("labelSideLine"));
         sizePolicy4.setHeightForWidth(labelSideLine->sizePolicy().hasHeightForWidth());
         labelSideLine->setSizePolicy(sizePolicy4);
         labelSideLine->setMinimumSize(QSize(115, 78));
-        labelSideLine->setMaximumSize(QSize(115, 78));
+        labelSideLine->setMaximumSize(QSize(9999, 78));
         labelSideLine->setBaseSize(QSize(115, 78));
-        QFont font17;
-        font17.setFamily(QString::fromUtf8("21-PID 8"));
-        font17.setPointSize(65);
         labelSideLine->setFont(font17);
         labelSideLine->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
         labelSideLine->setScaledContents(false);
@@ -2269,34 +2361,31 @@ public:
         pravplka->setSpacing(0);
         pravplka->setObjectName(QString::fromUtf8("pravplka"));
         pravplka->setSizeConstraint(QLayout::SetDefaultConstraint);
-        labelSideTopRow = new QLabel(verticalLayoutWidget_4);
+        labelSideTopRow = new QLabel(page_led);
         labelSideTopRow->setObjectName(QString::fromUtf8("labelSideTopRow"));
-        QSizePolicy sizePolicy11(QSizePolicy::Fixed, QSizePolicy::Minimum);
-        sizePolicy11.setHorizontalStretch(0);
-        sizePolicy11.setVerticalStretch(0);
         sizePolicy11.setHeightForWidth(labelSideTopRow->sizePolicy().hasHeightForWidth());
         labelSideTopRow->setSizePolicy(sizePolicy11);
         labelSideTopRow->setMinimumSize(QSize(344, 0));
-        labelSideTopRow->setMaximumSize(QSize(344, 37));
+        labelSideTopRow->setMaximumSize(QSize(9999, 37));
         labelSideTopRow->setBaseSize(QSize(344, 0));
-        QFont font18;
-        font18.setFamily(QString::fromUtf8("21-PID 1"));
-        font18.setPointSize(65);
-        labelSideTopRow->setFont(font18);
+        QFont font21;
+        font21.setFamily(QString::fromUtf8("21-PID 1"));
+        font21.setPointSize(65);
+        labelSideTopRow->setFont(font21);
         labelSideTopRow->setAutoFillBackground(false);
         labelSideTopRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelSideTopRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
+        labelSideTopRow->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
 
         pravplka->addWidget(labelSideTopRow);
 
-        labelSideBottomRow = new QLabel(verticalLayoutWidget_4);
+        labelSideBottomRow = new QLabel(page_led);
         labelSideBottomRow->setObjectName(QString::fromUtf8("labelSideBottomRow"));
         sizePolicy11.setHeightForWidth(labelSideBottomRow->sizePolicy().hasHeightForWidth());
         labelSideBottomRow->setSizePolicy(sizePolicy11);
         labelSideBottomRow->setMinimumSize(QSize(344, 0));
-        labelSideBottomRow->setMaximumSize(QSize(344, 41));
+        labelSideBottomRow->setMaximumSize(QSize(9999, 41));
         labelSideBottomRow->setBaseSize(QSize(344, 0));
-        labelSideBottomRow->setFont(font18);
+        labelSideBottomRow->setFont(font21);
         labelSideBottomRow->setAutoFillBackground(false);
         labelSideBottomRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
         labelSideBottomRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
@@ -2313,15 +2402,54 @@ public:
 
         bocniTabloWrapper->addLayout(jenBocniTablo);
 
-        verticalLayoutWidget_7 = new QWidget(page_led);
-        verticalLayoutWidget_7->setObjectName(QString::fromUtf8("verticalLayoutWidget_7"));
-        verticalLayoutWidget_7->setGeometry(QRect(10, 290, 561, 88));
-        vnitrniTabloWraper = new QVBoxLayout(verticalLayoutWidget_7);
+
+        verticalLayout_4->addLayout(bocniTabloWrapper);
+
+        zadniTabloWrapper = new QVBoxLayout();
+        zadniTabloWrapper->setSpacing(0);
+        zadniTabloWrapper->setObjectName(QString::fromUtf8("zadniTabloWrapper"));
+        predniLabel_4 = new QLabel(page_led);
+        predniLabel_4->setObjectName(QString::fromUtf8("predniLabel_4"));
+        QSizePolicy sizePolicy12(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        sizePolicy12.setHorizontalStretch(0);
+        sizePolicy12.setVerticalStretch(0);
+        sizePolicy12.setHeightForWidth(predniLabel_4->sizePolicy().hasHeightForWidth());
+        predniLabel_4->setSizePolicy(sizePolicy12);
+
+        zadniTabloWrapper->addWidget(predniLabel_4);
+
+        horizontalLayout_8 = new QHBoxLayout();
+        horizontalLayout_8->setSpacing(0);
+        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
+        labelRearLine = new QLabel(page_led);
+        labelRearLine->setObjectName(QString::fromUtf8("labelRearLine"));
+        QSizePolicy sizePolicy13(QSizePolicy::Minimum, QSizePolicy::Preferred);
+        sizePolicy13.setHorizontalStretch(0);
+        sizePolicy13.setVerticalStretch(0);
+        sizePolicy13.setHeightForWidth(labelRearLine->sizePolicy().hasHeightForWidth());
+        labelRearLine->setSizePolicy(sizePolicy13);
+        labelRearLine->setMinimumSize(QSize(115, 78));
+        labelRearLine->setMaximumSize(QSize(9999, 78));
+        labelRearLine->setFont(font17);
+        labelRearLine->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
+        labelRearLine->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
+
+        horizontalLayout_8->addWidget(labelRearLine);
+
+        horizontalSpacer_5 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_8->addItem(horizontalSpacer_5);
+
+
+        zadniTabloWrapper->addLayout(horizontalLayout_8);
+
+
+        verticalLayout_4->addLayout(zadniTabloWrapper);
+
+        vnitrniTabloWraper = new QVBoxLayout();
         vnitrniTabloWraper->setSpacing(0);
-        vnitrniTabloWraper->setContentsMargins(11, 11, 11, 11);
         vnitrniTabloWraper->setObjectName(QString::fromUtf8("vnitrniTabloWraper"));
-        vnitrniTabloWraper->setContentsMargins(0, 0, 0, 0);
-        predniLabel_3 = new QLabel(verticalLayoutWidget_7);
+        predniLabel_3 = new QLabel(page_led);
         predniLabel_3->setObjectName(QString::fromUtf8("predniLabel_3"));
         sizePolicy.setHeightForWidth(predniLabel_3->sizePolicy().hasHeightForWidth());
         predniLabel_3->setSizePolicy(sizePolicy);
@@ -2335,28 +2463,22 @@ public:
         horizontalLayout_10->setSpacing(0);
         horizontalLayout_10->setObjectName(QString::fromUtf8("horizontalLayout_10"));
         horizontalLayout_10->setSizeConstraint(QLayout::SetDefaultConstraint);
-        labelInnerLine = new QLabel(verticalLayoutWidget_7);
+        labelInnerLine = new QLabel(page_led);
         labelInnerLine->setObjectName(QString::fromUtf8("labelInnerLine"));
-        QSizePolicy sizePolicy12(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy12.setHorizontalStretch(0);
-        sizePolicy12.setVerticalStretch(0);
-        sizePolicy12.setHeightForWidth(labelInnerLine->sizePolicy().hasHeightForWidth());
-        labelInnerLine->setSizePolicy(sizePolicy12);
+        sizePolicy.setHeightForWidth(labelInnerLine->sizePolicy().hasHeightForWidth());
+        labelInnerLine->setSizePolicy(sizePolicy);
         labelInnerLine->setMinimumSize(QSize(91, 0));
         labelInnerLine->setMaximumSize(QSize(91, 33));
-        QFont font19;
-        font19.setFamily(QString::fromUtf8("21-PID 3"));
-        font19.setPointSize(65);
         labelInnerLine->setFont(font19);
         labelInnerLine->setStyleSheet(QString::fromUtf8("*{color:red;background-color:black;}"));
         labelInnerLine->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
 
         horizontalLayout_10->addWidget(labelInnerLine);
 
-        labelInnerTopRow = new QLabel(verticalLayoutWidget_7);
+        labelInnerTopRow = new QLabel(page_led);
         labelInnerTopRow->setObjectName(QString::fromUtf8("labelInnerTopRow"));
-        sizePolicy12.setHeightForWidth(labelInnerTopRow->sizePolicy().hasHeightForWidth());
-        labelInnerTopRow->setSizePolicy(sizePolicy12);
+        sizePolicy.setHeightForWidth(labelInnerTopRow->sizePolicy().hasHeightForWidth());
+        labelInnerTopRow->setSizePolicy(sizePolicy);
         labelInnerTopRow->setMinimumSize(QSize(464, 0));
         labelInnerTopRow->setMaximumSize(QSize(464, 33));
         labelInnerTopRow->setFont(font19);
@@ -2367,16 +2489,23 @@ public:
 
         horizontalLayout_10->addWidget(labelInnerTopRow);
 
+        horizontalSpacer_3 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_10->addItem(horizontalSpacer_3);
+
 
         verticalLayout_14->addLayout(horizontalLayout_10);
 
 
         vnitrniTabloWraper->addLayout(verticalLayout_14);
 
-        labelInnerBottomRow = new QLabel(verticalLayoutWidget_7);
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(0);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        labelInnerBottomRow = new QLabel(page_led);
         labelInnerBottomRow->setObjectName(QString::fromUtf8("labelInnerBottomRow"));
-        sizePolicy12.setHeightForWidth(labelInnerBottomRow->sizePolicy().hasHeightForWidth());
-        labelInnerBottomRow->setSizePolicy(sizePolicy12);
+        sizePolicy.setHeightForWidth(labelInnerBottomRow->sizePolicy().hasHeightForWidth());
+        labelInnerBottomRow->setSizePolicy(sizePolicy);
         labelInnerBottomRow->setMinimumSize(QSize(555, 0));
         labelInnerBottomRow->setMaximumSize(QSize(555, 33));
         labelInnerBottomRow->setFont(font19);
@@ -2384,138 +2513,21 @@ public:
         labelInnerBottomRow->setStyleSheet(QString::fromUtf8("*{color:red;background-color:black;}"));
         labelInnerBottomRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
 
-        vnitrniTabloWraper->addWidget(labelInnerBottomRow);
+        horizontalLayout_2->addWidget(labelInnerBottomRow);
 
-        verticalLayoutWidget_9 = new QWidget(page_led);
-        verticalLayoutWidget_9->setObjectName(QString::fromUtf8("verticalLayoutWidget_9"));
-        verticalLayoutWidget_9->setGeometry(QRect(550, 190, 119, 98));
-        zadniTabloWrapper = new QVBoxLayout(verticalLayoutWidget_9);
-        zadniTabloWrapper->setSpacing(0);
-        zadniTabloWrapper->setContentsMargins(11, 11, 11, 11);
-        zadniTabloWrapper->setObjectName(QString::fromUtf8("zadniTabloWrapper"));
-        zadniTabloWrapper->setContentsMargins(0, 0, 0, 0);
-        predniLabel_4 = new QLabel(verticalLayoutWidget_9);
-        predniLabel_4->setObjectName(QString::fromUtf8("predniLabel_4"));
-        QSizePolicy sizePolicy13(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        sizePolicy13.setHorizontalStretch(0);
-        sizePolicy13.setVerticalStretch(0);
-        sizePolicy13.setHeightForWidth(predniLabel_4->sizePolicy().hasHeightForWidth());
-        predniLabel_4->setSizePolicy(sizePolicy13);
+        horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        zadniTabloWrapper->addWidget(predniLabel_4);
-
-        horizontalLayout_8 = new QHBoxLayout();
-        horizontalLayout_8->setSpacing(0);
-        horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
-        labelRearLine = new QLabel(verticalLayoutWidget_9);
-        labelRearLine->setObjectName(QString::fromUtf8("labelRearLine"));
-        QSizePolicy sizePolicy14(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy14.setHorizontalStretch(0);
-        sizePolicy14.setVerticalStretch(0);
-        sizePolicy14.setHeightForWidth(labelRearLine->sizePolicy().hasHeightForWidth());
-        labelRearLine->setSizePolicy(sizePolicy14);
-        labelRearLine->setMinimumSize(QSize(115, 78));
-        labelRearLine->setMaximumSize(QSize(115, 78));
-        labelRearLine->setFont(font17);
-        labelRearLine->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelRearLine->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
-
-        horizontalLayout_8->addWidget(labelRearLine);
+        horizontalLayout_2->addItem(horizontalSpacer_4);
 
 
-        zadniTabloWrapper->addLayout(horizontalLayout_8);
+        vnitrniTabloWraper->addLayout(horizontalLayout_2);
 
-        predniLabel = new QLabel(page_led);
-        predniLabel->setObjectName(QString::fromUtf8("predniLabel"));
-        predniLabel->setGeometry(QRect(10, 10, 49, 16));
-        frame = new QFrame(page_led);
-        frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(180, 150, 120, 80));
-        frame->setFrameShape(QFrame::StyledPanel);
-        frame->setFrameShadow(QFrame::Raised);
-        layoutWidget = new QWidget(page_led);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(11, 27, 651, 162));
-        horizontalLayout_6 = new QHBoxLayout(layoutWidget);
-        horizontalLayout_6->setSpacing(0);
-        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
-        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
-        labelFrontLine = new QLabel(layoutWidget);
-        labelFrontLine->setObjectName(QString::fromUtf8("labelFrontLine"));
-        sizePolicy.setHeightForWidth(labelFrontLine->sizePolicy().hasHeightForWidth());
-        labelFrontLine->setSizePolicy(sizePolicy);
-        labelFrontLine->setMinimumSize(QSize(115, 78));
-        labelFrontLine->setMaximumSize(QSize(115, 78));
-        labelFrontLine->setFont(font17);
-        labelFrontLine->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelFrontLine->setAlignment(Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft);
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        horizontalLayout_6->addWidget(labelFrontLine);
-
-        verticalLayout_7 = new QVBoxLayout();
-        verticalLayout_7->setSpacing(0);
-        verticalLayout_7->setObjectName(QString::fromUtf8("verticalLayout_7"));
-        layoutDvaRadky = new QVBoxLayout();
-        layoutDvaRadky->setSpacing(0);
-        layoutDvaRadky->setObjectName(QString::fromUtf8("layoutDvaRadky"));
-        labelFrontTopRow = new QLabel(layoutWidget);
-        labelFrontTopRow->setObjectName(QString::fromUtf8("labelFrontTopRow"));
-        sizePolicy8.setHeightForWidth(labelFrontTopRow->sizePolicy().hasHeightForWidth());
-        labelFrontTopRow->setSizePolicy(sizePolicy8);
-        labelFrontTopRow->setMinimumSize(QSize(460, 0));
-        labelFrontTopRow->setMaximumSize(QSize(460, 37));
-        QFont font20;
-        font20.setFamily(QString::fromUtf8("21-PID 3"));
-        font20.setPointSize(65);
-        font20.setBold(false);
-        labelFrontTopRow->setFont(font20);
-        labelFrontTopRow->setAutoFillBackground(false);
-        labelFrontTopRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelFrontTopRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
-
-        layoutDvaRadky->addWidget(labelFrontTopRow);
-
-        labelFrontBottomRow = new QLabel(layoutWidget);
-        labelFrontBottomRow->setObjectName(QString::fromUtf8("labelFrontBottomRow"));
-        sizePolicy8.setHeightForWidth(labelFrontBottomRow->sizePolicy().hasHeightForWidth());
-        labelFrontBottomRow->setSizePolicy(sizePolicy8);
-        labelFrontBottomRow->setMinimumSize(QSize(460, 0));
-        labelFrontBottomRow->setMaximumSize(QSize(460, 41));
-        labelFrontBottomRow->setFont(font19);
-        labelFrontBottomRow->setAutoFillBackground(false);
-        labelFrontBottomRow->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelFrontBottomRow->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
-
-        layoutDvaRadky->addWidget(labelFrontBottomRow);
+        vnitrniTabloWraper->addItem(verticalSpacer);
 
 
-        verticalLayout_7->addLayout(layoutDvaRadky);
-
-        labelFrontSingle = new QLabel(layoutWidget);
-        labelFrontSingle->setObjectName(QString::fromUtf8("labelFrontSingle"));
-        labelFrontSingle->setEnabled(false);
-        sizePolicy8.setHeightForWidth(labelFrontSingle->sizePolicy().hasHeightForWidth());
-        labelFrontSingle->setSizePolicy(sizePolicy8);
-        labelFrontSingle->setMinimumSize(QSize(460, 0));
-        labelFrontSingle->setMaximumSize(QSize(460, 78));
-        QFont font21;
-        font21.setFamily(QString::fromUtf8("21-PID 5"));
-        font21.setPointSize(65);
-        labelFrontSingle->setFont(font21);
-        labelFrontSingle->setLayoutDirection(Qt::LeftToRight);
-        labelFrontSingle->setAutoFillBackground(false);
-        labelFrontSingle->setStyleSheet(QString::fromUtf8("*{color:orange;background-color:black;}"));
-        labelFrontSingle->setAlignment(Qt::AlignBottom|Qt::AlignHCenter);
-
-        verticalLayout_7->addWidget(labelFrontSingle);
-
-
-        horizontalLayout_6->addLayout(verticalLayout_7);
-
-        horizontalSpacer_2 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_6->addItem(horizontalSpacer_2);
+        verticalLayout_4->addLayout(vnitrniTabloWraper);
 
         prepinadloStran->addWidget(page_led);
 
@@ -2525,8 +2537,8 @@ public:
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         mainToolBar->setEnabled(true);
-        sizePolicy13.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
-        mainToolBar->setSizePolicy(sizePolicy13);
+        sizePolicy12.setHeightForWidth(mainToolBar->sizePolicy().hasHeightForWidth());
+        mainToolBar->setSizePolicy(sizePolicy12);
         mainToolBar->setMovable(false);
         mainToolBar->setFloatable(false);
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
@@ -2555,7 +2567,7 @@ public:
         retranslateUi(MainWindow);
 
         pushButton_menu_fullscreen->setDefault(false);
-        prepinadloStran->setCurrentIndex(0);
+        prepinadloStran->setCurrentIndex(2);
         stackedWidget_obrazovka->setCurrentIndex(0);
         stackedWidget_prostredek->setCurrentIndex(1);
 
@@ -2713,25 +2725,27 @@ public:
         ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "port", nullptr));
         QTableWidgetItem *___qtablewidgetitem4 = tabulkaSubscriberu->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QCoreApplication::translate("MainWindow", "host", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "Pole pro zad\303\241n\303\255 intervalu", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "Zad\303\241n\303\255 intervalu", nullptr));
         tlacitkoNastavVteriny->setText(QCoreApplication::translate("MainWindow", "Nastav interval", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));
+        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Zb\303\275vaj\303\255c\303\255 \304\215as (s)", nullptr));
         labelZbyvajiciVteriny->setText(QCoreApplication::translate("MainWindow", "xx s", nullptr));
-        bocniTabloNazev->setText(QCoreApplication::translate("MainWindow", "Bo\304\215n\303\255 tablo", nullptr));
-        labelSideLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
-        labelSideTopRow->setText(QCoreApplication::translate("MainWindow", "DestinationSideName", nullptr));
-        labelSideBottomRow->setText(QCoreApplication::translate("MainWindow", "StopSideName", nullptr));
-        predniLabel_3->setText(QCoreApplication::translate("MainWindow", "vnit\305\231n\303\255 tablo", nullptr));
-        labelInnerLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
-        labelInnerTopRow->setText(QCoreApplication::translate("MainWindow", "DestinationSideName", nullptr));
-        labelInnerBottomRow->setText(QCoreApplication::translate("MainWindow", "StopSideName", nullptr));
-        predniLabel_4->setText(QCoreApplication::translate("MainWindow", "Zadn\303\255 tablo", nullptr));
-        labelRearLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
+        groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "Odeb\303\255r\303\241no?", nullptr));
+        label_odebirano->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
         predniLabel->setText(QCoreApplication::translate("MainWindow", "P\305\231edn\303\255 tablo", nullptr));
         labelFrontLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
         labelFrontTopRow->setText(QCoreApplication::translate("MainWindow", "Dest.FrontNameTop", nullptr));
         labelFrontBottomRow->setText(QCoreApplication::translate("MainWindow", "Dest.FrontNameBtm", nullptr));
         labelFrontSingle->setText(QCoreApplication::translate("MainWindow", "DestinationFrontSingle", nullptr));
+        bocniTabloNazev->setText(QCoreApplication::translate("MainWindow", "Bo\304\215n\303\255 tablo", nullptr));
+        labelSideLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
+        labelSideTopRow->setText(QCoreApplication::translate("MainWindow", "DestinationSideName", nullptr));
+        labelSideBottomRow->setText(QCoreApplication::translate("MainWindow", "StopSideName", nullptr));
+        predniLabel_4->setText(QCoreApplication::translate("MainWindow", "Zadn\303\255 tablo", nullptr));
+        labelRearLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
+        predniLabel_3->setText(QCoreApplication::translate("MainWindow", "vnit\305\231n\303\255 tablo", nullptr));
+        labelInnerLine->setText(QCoreApplication::translate("MainWindow", "123", nullptr));
+        labelInnerTopRow->setText(QCoreApplication::translate("MainWindow", "DestinationSideName", nullptr));
+        labelInnerBottomRow->setText(QCoreApplication::translate("MainWindow", "StopSideName", nullptr));
         menunacti->setTitle(QCoreApplication::translate("MainWindow", "nacti", nullptr));
         menukonec->setTitle(QCoreApplication::translate("MainWindow", "konec", nullptr));
     } // retranslateUi
