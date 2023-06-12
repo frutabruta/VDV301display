@@ -64,7 +64,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //klávesové zkratky menu
     keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
-    keyCtrlF->setKey(Qt::CTRL + Qt::Key_F); // Set the key code
+    keyCtrlF->setKey(Qt::CTRL | Qt::Key_F); // Set the key code
 
     keyF1 = new QShortcut(this);
     keyF1->setKey(Qt::Key_F1);
@@ -1294,6 +1294,8 @@ bool MainWindow::svgOpenFile(const QString &fileName)
     // resetTransform();
 
     m_svgItem = svgItem.take();
+
+    //m_svgItem = svgItem.take();
     m_svgItem->setFlags(QGraphicsItem::ItemClipsToShape);
     m_svgItem->setCacheMode(QGraphicsItem::NoCache);
     m_svgItem->setZValue(0);
@@ -1353,7 +1355,7 @@ void MainWindow::ledZarovnejPretecenyRadek(QLabel* label)
     qDebug() <<  Q_FUNC_INFO;
     QFontMetrics metrics(label->font());
 
-    if(metrics.width(label->text())> label->width())
+    if(metrics.horizontalAdvance(label->text())> label->width())
     {
         label->setAlignment(Qt::AlignLeading|Qt::AlignBottom);
     }
@@ -1426,23 +1428,36 @@ void MainWindow::ledInicializujVirtualniPanely()
     ledNaplnRear("789");
     ledNaplnInner("123","vnitřní cíl", "vnitřní nácesty");
 */
-    ui->labelFrontLine->setFont(font8);
+
     ui->labelFrontSingle->setFont(font5);
 
 
     ui->labelFrontTopRow->setFont(font1);
     ui->labelFrontBottomRow->setFont(font1);
 
-    ui->labelSideLine->setFont(font8);
+
     ui->labelSideTopRow->setFont(font1);
     ui->labelSideBottomRow->setFont(font1);
 
 
-    ui->labelRearLine->setFont(font8);
+
 
     ui->labelInnerLine->setFont(font3);
     ui->labelInnerBottomRow->setFont(font1);
     ui->labelInnerTopRow->setFont(font1);
+
+    if(ui->labelFrontLine->text().length()>3)
+    {
+        ui->labelFrontLine->setFont(font10);
+        ui->labelSideLine->setFont(font10);
+        ui->labelRearLine->setFont(font10);
+    }
+    else
+    {
+        ui->labelFrontLine->setFont(font8);
+        ui->labelSideLine->setFont(font8);
+        ui->labelRearLine->setFont(font8);
+    }
 
 }
 

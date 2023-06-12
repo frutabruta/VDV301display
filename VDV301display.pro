@@ -11,12 +11,15 @@ QT += httpserver
 QT += svg
 
 
+
 #DEFINES+= QZEROCONF_STATIC
 
 #include(qtzeroconf/qtzeroconf.pri)
 
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+greaterThan(QT_MAJOR_VERSION, 5): QT += svgwidgets
 
 TARGET = VDV301display
 TEMPLATE = app

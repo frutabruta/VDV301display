@@ -11,6 +11,8 @@ Logování do souboru:
 logování funguje, pokud existuje soubor E:/LogFile.log
 
 ## Changelog
+- 20230612_1129
+    - po opravách lze zkompilovat s Qt 6.5.0
 - 20230608_1558
     - přidána kompatibilita s VDV301 1.0
     - volba verze CustomerInformationService přes nastaveni.ini
