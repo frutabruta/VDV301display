@@ -43,6 +43,7 @@ target.files=VDV301displayNew
 INSTALLS+=target
 
 SOURCES += \
+    VDV301publisher/colordisplayrules.cpp \
     VDV301publisher/customerinformationservice.cpp \
     VDV301publisher/devicemanagementservice.cpp\
     VDV301publisher/httpsluzba.cpp \
@@ -56,8 +57,9 @@ SOURCES += \
     VDV301subscriber/cissubscriber.cpp \
     VDV301subscriber/devmgmtpublisherstruct.cpp \
     VDV301subscriber/devmgmtsubscriber.cpp \
-    VDV301subscriber/httpserversubscriber.cpp \    
-    VDV301subscriber/ibisipsubscriber.cpp \    
+    VDV301subscriber/httpserversubscriber.cpp \
+    VDV301subscriber/ibisipsubscriber.cpp \
+    inlineformatparser.cpp \
     VDV301subscriber/ibisipsubscriberonepublisher.cpp \
     labelvykreslovani.cpp \
         main.cpp \
@@ -74,9 +76,11 @@ SOURCES += \
     VDV301struktury/spoj.cpp \
     VDV301struktury/zastavka.cpp \
     VDV301struktury/zastavkacil.cpp \
-    VDV301struktury/specialnihlaseni.cpp
+    VDV301struktury/specialnihlaseni.cpp \
+    barvylinek.cpp
 
 HEADERS += \
+    VDV301publisher/colordisplayrules.h \
     VDV301publisher/customerinformationservice.h \
     VDV301publisher/devicemanagementservice.h \
     VDV301publisher/httpsluzba.h \
@@ -87,12 +91,13 @@ HEADERS += \
     VDV301publisher/xmlcustomerinformationservice.h \
     VDV301publisher/xmldevicemanagementservice.h \
     VDV301publisher/xmlticketvalidationservice.h \
-    VDV301subscriber/cissubscriber.h \    
+    VDV301subscriber/cissubscriber.h \
     VDV301subscriber/devmgmtpublisherstruct.h \
     VDV301subscriber/devmgmtsubscriber.h \
     VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
     VDV301subscriber/ibisipsubscriberonepublisher.h \
+    inlineformatparser.h \
     labelvykreslovani.h \
     mainwindow.h \
     pasmovedvojicelcd.h \
@@ -107,7 +112,8 @@ HEADERS += \
     VDV301struktury/specialnihlaseni.h \
     VDV301struktury/spoj.h \
     VDV301struktury/zastavka.h \
-    VDV301struktury/zastavkacil.h
+    VDV301struktury/zastavkacil.h \
+    barvylinek.h
 
 FORMS += \
         mainwindow.ui

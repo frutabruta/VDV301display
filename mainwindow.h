@@ -13,6 +13,8 @@
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
 #include "labelvykreslovani.h"
+#include "barvylinek.h"
+
 
 #include <QApplication>
 //#include <QtDebug>
@@ -55,6 +57,8 @@ public:
     ~MainWindow();
 
 
+
+
 private:
 
     //instance trid
@@ -67,9 +71,12 @@ private:
     DeviceManagementService deviceManagementService1_0;
     QSettings settings;
 
+
     //datoveStruktury jizda
     QVector<ZastavkaCil> globalniSeznamZastavek;
     QVector<ZastavkaCil> globalniSeznamZastavekNavaznehoSpoje;
+
+
     //QVector<Prestup> prestupy;
     QString nazevLinky="";
     QString nazevCile="";
@@ -78,6 +85,8 @@ private:
     QString additionalTextMessageText="";
     QVector<Pasmo> pasmaZ;
     QVector<Pasmo> pasmaDo;
+
+    BarvyLinek barvyLinek;
 
     //stavove promenne
     bool zmenaPasma=false;
@@ -90,6 +99,8 @@ private:
     //konstanty
     int posunRotovani=0;
     int pocetVykreslovanychZastavek=5;
+
+
 
     const int intervalBocniPanel=2000;
     const int intervalPosunuNacest=20;
@@ -115,6 +126,9 @@ private:
     float pomerPixelBod=1080.0/1050.0;
 
     float pomerPixelLed=4.105;
+
+
+    //ostatni promenne
 
 
     //Fonty
@@ -145,10 +159,10 @@ private:
     int doplneniPromennych ();
     void prepniObrazovku(int vstup);
     int formatZobrazeni();
-    void naplnMapBarev();
+
     QString textVerze();
     int vykresleniPrijatychDat();
-    void vymazTabulkuSubscriberu(QTableWidget *tableWidget);
+    void vymazTabulku(QTableWidget *tableWidget);
     void vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb);
     void vsechnyConnecty();
 
@@ -164,12 +178,13 @@ private:
     void hlavniVykresliNacestne();
     void hlavniVykresliNazevCile(QString alias);
     void hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu);
-    int  hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny);
+    void hlavniVykresliSkupinuZastavekNew(QVector<ZastavkaCil> zastavky, QVector<ZastavkaCil> zastavkyNavazny, int index);
     void hlavniVykresliZastavkyiPasma(QVector<ZastavkaCil> aktZastavky, QVector<ZastavkaCil> navazZastavky);
     void hlavniVymazObrazovku();
     void hlavniZobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
     void hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
     void naplnPoleLinky(QString subMode, Linka line, QLabel *label, int velikostPiktogramu, bool prestup);
+    void naplnPoleLinky2_4(QString subMode, Linka line, QLabel *label, int velikostPiktogramu, bool prestup);
 
     QVector<QWidget*> strankyKeStridani;
 
@@ -186,6 +201,15 @@ private:
     void ledNaplnSide(QString linka, QString horniRadek, QString dolniRadek);
     void ledNaplnRear(QString linka);
     void ledVymazPanely();
+
+    void ledZmenVelikostPanelu();
+    void ledZarovnejPretecenyRadek(QLabel *label);
+    void ledZapisLinku(QLabel *label, QString text);
+    void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
+
+
+
+    void slotPublisherDoTabulky(QZeroConfService zcs);
 
     QVector<QString> textyBocniPanelkIteraci;
     QVector<QString> textyVnitrniPanelkIteraci;
@@ -236,44 +260,18 @@ private:
     QVector<QLabel*> seznamLabelPrestupOdjezd;
     QVector<QLabel*> seznamLabelPrestupNastupiste;
 
-    //nezarazeno
-    QMap<QString, QString> barvaTextu;
-    QMap<QString, QString> barvaPozadi;
-    //definice barev
-
-    QString barva_PozadiA_25_25_25 ="rgb(25,25,25)";
-    QString barva_PozadiB_50_50_50 ="rgb(50,50,50)"; //tmave seda
-    QString barva_PozadiC_100_100_100 ="rgb(100,100,100)";
-    QString barva_PozadiD_150_150_150 ="rgb(150,150,150)"; //Pozadí D
-    QString barva_Zastavka_180_180_180 ="rgb(180,180,180)"; //Zastávka
-    QString barva_bila_255_255_255 ="rgb(255,255,255)"; //bila
-    QString barva_cerna_0_0_0 ="rgb(0,0,0);"; //bila
-
-    QString barva_Vyluky_255_170_30 ="rgb(255,170,30)";
-    QString barva_Cervena_200_0_20 ="rgb(200,0,20)";
-    QString barva_CervenaTexty_220_40_40 ="rgb(220,40,40)";
-    QString barva_Zelena_210_215_15 ="rgb(210,215,15)";
-
-    QString barva_MetroA_0_165_98 ="rgb(0,165,98)";
-    QString barva_MetroB_248_179_34 ="rgb(248,179,34)";
-    QString barva_MetroC_207_0_61 ="rgb(207,0,61)";
-    QString barva_MetroD_0_140_190 ="rgb(0,140,190)";
-    QString barva_Tramvaj_120_2_0 ="rgb(120,2,0)";
-    QString barva_Trolejbus_128_22_111 ="rgb(128,22,111)";
-    QString barva_Autobus_0_120_160 ="rgb(0,120,160)";
-    QString barva_Vlak_15_30_65 ="rgb(15,30,65)";
-    QString barva_Lanovka_201_208_34 ="rgb(201,208,34)";
-    QString barva_Privoz_0_164_167 ="rgb(0,164,167)";
-    QString barva_Nocni_9_0_62 ="rgb(9,0,62)";
-    QString barva_Letiste_155_203_234 ="rgb(155,203,234)";
-    QString barva_Specialni_143_188_25 ="rgb(143,188,25)";
-
 
     void vyskakovaciOkno(QString poznamka);
-    void ledZmenVelikostPanelu();
-    void ledZarovnejPretecenyRadek(QLabel *label);
-    void ledZapisLinku(QLabel *label, QString text);
-    void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
+
+
+    QString nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka);
+    void zastavkaCilDoTabulky(ZastavkaCil zastavkaCil, bool navazny);
+    void vsechnyZastavkyDoTabulky(QVector<ZastavkaCil> seznamZastavek, bool navazny);
+    void inicializaceFontu();
+    void inicializaceKlavesovychZkratek();
+    void jednaZastavkaCilDoLabelu(ZastavkaCil aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
+    QVector<ZastavkaCil> vektorZastavkaCilZahoditZacatek(QVector<ZastavkaCil> vstup, int zacatek);
+
 private slots:
 
     void on_actiontestPolozka_triggered();

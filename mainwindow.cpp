@@ -1,9 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-
-
-
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -22,85 +19,20 @@ MainWindow::MainWindow(QWidget *parent) :
     QNetworkProxyFactory::setUseSystemConfiguration(false);
 
 
+    labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
 
+    inicializaceFontu();
 
-    // fonty
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/pid-3v.ttf");
-
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
-
-
-    font1.setFamily("21-PID 1");
-    font1.setPointSize(65);
-
-    font3.setFamily("21-PID 3");
-    font3.setPointSize(65);
-
-    font5.setFamily("21-PID 5");
-    font5.setPointSize(65);
-
-    font8.setFamily("21-PID 8");
-    font8.setPointSize(65);
-
-    font10.setFamily("21-PID 10");
-    font10.setPointSize(65);
-
-    //LCD fonty
-    fontPasmoVelke.setPointSize(36);
-    fontPasmoVelke.setFamily("Roboto");
-    fontPasmoVelke.setBold(true);
-
-    fontPasmoMale.setPointSize(20);
-    fontPasmoMale.setFamily("Roboto");
-    fontPasmoMale.setBold(true);
-
-    //klávesové zkratky menu
-    keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
-    keyCtrlF->setKey(Qt::CTRL | Qt::Key_F); // Set the key code
-
-    keyF1 = new QShortcut(this);
-    keyF1->setKey(Qt::Key_F1);
-
-    keyF2 = new QShortcut(this);
-    keyF2->setKey(Qt::Key_F2);
-
-    keyF3 = new QShortcut(this);
-    keyF3->setKey(Qt::Key_F3);
-
-    keyF4 = new QShortcut(this);
-    keyF4->setKey(Qt::Key_F4);
-
-    keyF5 = new QShortcut(this);
-    keyF5->setKey(Qt::Key_F5);
-
-    keyF6 = new QShortcut(this);
-    keyF6->setKey(Qt::Key_F6);
-
-    keyF7 = new QShortcut(this);
-    keyF7->setKey(Qt::Key_F7);
-
-    keyF8 = new QShortcut(this);
-    keyF8->setKey(Qt::Key_F8);
-
-    vsechnyConnecty();
-
-
+    inicializaceKlavesovychZkratek();
 
     natahniKonstanty();
 
+    vsechnyConnecty();
 
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     hlavniNaplnPoleLabelu(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
-    naplnMapBarev();
+
 
     formatZobrazeni();
     hlavniAutoformat();
@@ -154,6 +86,80 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
+void MainWindow::inicializaceFontu()
+{
+
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/pid-3v.ttf");
+
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
+    fdb.addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
+
+
+    font1.setFamily("21-PID 1");
+    font1.setPointSize(65);
+
+    font3.setFamily("21-PID 3");
+    font3.setPointSize(65);
+
+    font5.setFamily("21-PID 5");
+    font5.setPointSize(65);
+
+    font8.setFamily("21-PID 8");
+    font8.setPointSize(65);
+
+    font10.setFamily("21-PID 10");
+    font10.setPointSize(65);
+
+    //LCD fonty
+    fontPasmoVelke.setPointSize(36);
+    fontPasmoVelke.setFamily("Roboto");
+    fontPasmoVelke.setBold(true);
+
+    fontPasmoMale.setPointSize(20);
+    fontPasmoMale.setFamily("Roboto");
+    fontPasmoMale.setBold(true);
+
+}
+
+void MainWindow::inicializaceKlavesovychZkratek()
+{
+    //klávesové zkratky menu
+    keyCtrlF = new QShortcut(this); // Initialize the object Zdroj: https://evileg.com/en/post/75/
+    keyCtrlF->setKey(Qt::CTRL | Qt::Key_F); // Set the key code
+
+    keyF1 = new QShortcut(this);
+    keyF1->setKey(Qt::Key_F1);
+
+    keyF2 = new QShortcut(this);
+    keyF2->setKey(Qt::Key_F2);
+
+    keyF3 = new QShortcut(this);
+    keyF3->setKey(Qt::Key_F3);
+
+    keyF4 = new QShortcut(this);
+    keyF4->setKey(Qt::Key_F4);
+
+    keyF5 = new QShortcut(this);
+    keyF5->setKey(Qt::Key_F5);
+
+    keyF6 = new QShortcut(this);
+    keyF6->setKey(Qt::Key_F6);
+
+    keyF7 = new QShortcut(this);
+    keyF7->setKey(Qt::Key_F7);
+
+    keyF8 = new QShortcut(this);
+    keyF8->setKey(Qt::Key_F8);
+
+}
+
 void MainWindow::natahniKonstanty()
 {
     deviceManagementService1_0.setDeviceName(settings.value("deviceManagementService1_0/deviceName").toString());
@@ -168,7 +174,20 @@ void MainWindow::natahniKonstanty()
     deviceManagementService1_0.slotAktualizaceDat();
     deviceManagementService1_0.slotStartServer();
 
-    cisSubscriber.setVerze(settings.value("cisSubscriber/verze").toString());
+    QString verzeVdv301=settings.value("cisSubscriber/verze").toString();
+    QStringList podporovaneVerze;
+    podporovaneVerze<<"1.0";
+    podporovaneVerze<<"2.2CZ1.0";
+    podporovaneVerze<<"2.4";
+
+    if(podporovaneVerze.contains(verzeVdv301))
+    {
+        cisSubscriber.setVerze(verzeVdv301);
+    }
+    else
+    {
+        vyskakovaciOkno("verze "+verzeVdv301+" neni podporována!");
+    }
     cisSubscriber.setCisloPortu(settings.value("cisSubscriber/port").toUInt());
 
     prepniObrazovku(settings.value("konstanty/defaultniObrazovka").toInt());
@@ -223,6 +242,8 @@ void MainWindow::vsechnyConnecty()
     connect(&cisSubscriber,&IbisIpSubscriber::signalAktualizaceSeznamu,this,&MainWindow::slotAktualizaceTabulkySluzeb);
     connect(cisSubscriber.timer,&QTimer::timeout ,this,&MainWindow::vyprselCasovacSluzby);
     connect(&cisSubscriber,&IbisIpSubscriber::signalZtrataOdberu ,this,&MainWindow::slotZtrataOdberu);
+    connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalUspesnySubscribe,this,&MainWindow::slotPublisherDoTabulky);
+
 
     connect(&deviceManagementService1_0,&DeviceManagementService::signalZmenaParametruVen,this,&MainWindow::slotParametryZarizeniDoConfigu);
 
@@ -284,6 +305,7 @@ int MainWindow::slotKazdouVterinu()
 void MainWindow::slotZtrataOdberu()
 {
     qDebug() <<  Q_FUNC_INFO;
+    vymazTabulku(ui->tableWidget_odebirano);
     vymazObrazovku();
 }
 
@@ -303,7 +325,7 @@ void MainWindow::slotPosunNacestnych()
     if (abs(posunRotovani)>delkaTextu)
     {
         posunRotovani=0;
-        labelVykreslovani.vykresliNacestneForce(globalniSeznamZastavek,stavSystemu,ui->label_nacestne);
+        labelVykreslovani.vykresliNacestneForce(globalniSeznamZastavek,stavSystemu,ui->label_nacestne,cisSubscriber.verze());
     }
 
     else
@@ -418,115 +440,6 @@ void MainWindow::hlavniNaplnPoleLabelu()
     */
 }
 
-void MainWindow::naplnMapBarev()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    //dd1 Metro, nahrazuje se piktogramem
-    barvaTextu["metro"]=barva_cerna_0_0_0;
-    barvaPozadi["metro"]=barva_bila_255_255_255;
-
-    //dd2 Denní tramvaj
-    barvaTextu["localTram"]=barva_Tramvaj_120_2_0;
-    barvaPozadi["localTram"]=barva_bila_255_255_255;
-
-    barvaTextu["localTramDiversion"]=barva_Tramvaj_120_2_0;
-    barvaPozadi["localTramDiversion"]=barva_Vyluky_255_170_30;
-
-    //dd3 Denní městská autobusová linka
-    barvaTextu["localBus"]=barva_Autobus_0_120_160;
-    barvaPozadi["localBus"]=barva_bila_255_255_255;
-
-    barvaTextu["localBusDiversion"]=barva_Autobus_0_120_160;
-    barvaPozadi["localBusDiversion"]=barva_Vyluky_255_170_30;
-
-
-    //dd4 Denní příměstská nebo regionální linka
-    barvaTextu["regionalBus"]=barva_cerna_0_0_0;
-    barvaPozadi["regionalBus"]=barva_bila_255_255_255;
-
-
-    barvaTextu["regionalBusDiversion"]=barva_cerna_0_0_0;
-    barvaPozadi["regionalBusDiversion"]=barva_Vyluky_255_170_30;
-
-    //dd5 Noční městská autobusová linka
-    barvaTextu["localBusNight"]=barva_bila_255_255_255;
-    barvaPozadi["localBusNight"]=barva_Autobus_0_120_160;
-
-
-    barvaTextu["localBusNightDiversion"]=barva_Vyluky_255_170_30;
-    barvaPozadi["localBusNightDiversion"]=barva_Autobus_0_120_160;
-
-    //dd6 Noční tramvaj
-
-    barvaTextu["localTramNight"]=barva_bila_255_255_255;
-    barvaPozadi["localTramNight"]=barva_Tramvaj_120_2_0;
-
-    barvaTextu["localTramNightDiversion"]=barva_Vyluky_255_170_30;
-    barvaPozadi["localTramNightDiversion"]=barva_Tramvaj_120_2_0;
-
-    //dd7 Linka náhradní dopravy, městský autobus
-    barvaTextu["localBusReplacement"]=barva_Vyluky_255_170_30;
-    barvaPozadi["localBusReplacement"]=barva_bila_255_255_255;
-
-    //dd8 Lanovka
-    barvaTextu["funicular"]=barva_Lanovka_201_208_34;
-    barvaPozadi["funicular"]=barva_bila_255_255_255;
-    //dd9 Školní linka
-    barvaTextu["schoolBus"]=barva_Autobus_0_120_160;
-    barvaPozadi["schoolBus"]=barva_bila_255_255_255;
-    //dd10 Invalidní
-    barvaTextu["specialNeedsBus"]=barva_Specialni_143_188_25;
-    barvaPozadi["specialNeedsBus"]=barva_bila_255_255_255;
-    //dd11 Smluvni
-    barvaTextu["localBusSpecial"]=barva_Specialni_143_188_25;
-    barvaPozadi["localBusSpecial"]=barva_bila_255_255_255;
-    //dd12 Přívoz
-    barvaTextu["localPassengerFerry"]=barva_Privoz_0_164_167;
-    barvaPozadi["localPassengerFerry"]=barva_bila_255_255_255;
-    //dd13 Vlaky PID – linky S nebo R
-    barvaTextu["regionalRail"]=barva_bila_255_255_255;
-    barvaPozadi["regionalRail"]=barva_Vlak_15_30_65;
-    //dd14 Linka náhradní dopravy, NAD za vlak
-    barvaTextu["railReplacementBus"]=barva_Vyluky_255_170_30;
-    barvaPozadi["railReplacementBus"]=barva_bila_255_255_255;
-
-    barvaTextu["railReplacementBusReplacement"]=barva_Vyluky_255_170_30;
-    barvaPozadi["railReplacementBusReplacement"]=barva_bila_255_255_255;
-
-
-
-    //dd15 Linka náhradní dopravy, Tram
-    barvaTextu["localTramReplacement"]=barva_Vyluky_255_170_30;
-    barvaPozadi["localTramReplacement"]=barva_bila_255_255_255;
-    //dd16 Noční příměstská nebo regionální linka
-    barvaTextu["regionalBusNight"]=barva_bila_255_255_255;
-    barvaPozadi["regionalBusNight"]=barva_Nocni_9_0_62;
-
-    barvaTextu["regionalBusNightDiversion"]=barva_Vyluky_255_170_30;
-    barvaPozadi["regionalBusNightDiversion"]=barva_Nocni_9_0_62;
-
-    //dd17 Linka mimo systém PID (3 znaky)
-    //  barvaTextu[""]=barva_PozadiD_150_150_150;
-    //  barvaPozadi[""]=barva_bila_255_255_255;
-    barvaTextu["unknown"]=barva_PozadiD_150_150_150;
-    barvaPozadi["unknown"]=barva_bila_255_255_255;
-    barvaTextu["undefined"]=barva_PozadiD_150_150_150;
-    barvaPozadi["undefined"]=barva_bila_255_255_255;
-    //dd18 Denní trolejbusová linka
-    barvaTextu["localTrolleybus"]=barva_Trolejbus_128_22_111;
-    barvaPozadi["localTrolleybus"]=barva_bila_255_255_255;
-
-
-    /*
-    barvaTextu[""]=barva;
-    barvaPozadi[""]=barva;
-
-    barvaTextu[""]=barva;
-    barvaPozadi[""]=barva;
-
-*/
-
-}
 
 
 
@@ -547,7 +460,7 @@ void MainWindow::hlavniVymazObrazovku()
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->Lcil->setText("");
-    ui->Llinka->setText("");
+    ui->label_linka->setText("");
     ui->label_nacestne->setText("");
 
     ui->frame_navaznySpoj->hide();
@@ -572,6 +485,7 @@ int MainWindow::vykresleniPrijatychDat()
     qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+    vymazTabulku(ui->tableWidget_zastavky);
 
     hlavniVymazObrazovku();
     ui->label_locationState->setText(stavSystemu.locationState);
@@ -672,7 +586,23 @@ int MainWindow::vykresleniPrijatychDat()
     indexAktualniStridaneStranky=0;
     timerStridejStranky->start();
 
+    vsechnyZastavkyDoTabulky(globalniSeznamZastavek,false);
+    vsechnyZastavkyDoTabulky(globalniSeznamZastavekNavaznehoSpoje,true);
+
     return 1;
+}
+
+void MainWindow::vsechnyZastavkyDoTabulky(QVector<ZastavkaCil> seznamZastavek,bool navazny)
+{
+    if(!navazny)
+    {
+        vymazTabulku(ui->tableWidget_zastavky);
+    }
+
+    foreach(ZastavkaCil polozka, seznamZastavek)
+    {
+        zastavkaCilDoTabulky(polozka,navazny);
+    }
 }
 
 
@@ -685,7 +615,16 @@ void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMod
     //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
     qDebug()<<"vypis linky:"<<aktZastavka.cil.NameLcd<<" "<<aktZastavka.linka.LineName<<" vylukova:"<<aktZastavka.linka.isDiversion ;
 
-    naplnPoleLinky(subMode,aktZastavka.linka,ui->Llinka, qFloor(pomerPixelBod*200),false);
+    if(cisSubscriber.verze()=="2.4")
+    {
+        naplnPoleLinky2_4(subMode,aktZastavka.linka,ui->label_linka, qFloor(pomerPixelBod*200),false);
+
+    }
+    else
+    {
+        naplnPoleLinky(subMode,aktZastavka.linka,ui->label_linka, qFloor(pomerPixelBod*200),false);
+
+    }
     //  labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
 
 }
@@ -693,206 +632,149 @@ void MainWindow::hlavniVykresliCisloLinky(ZastavkaCil aktZastavka,QString subMod
 void MainWindow::hlavniVykresliNazevCile(QString nazev)
 {
     qDebug() <<  Q_FUNC_INFO;
-    labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
-}
 
-/*
-void MainWindow::hlavniVykresliNasledne()
-{
-    qDebug()<<"MainWindow::hlavniVykresliNasledne()";
-    if(indexZastavky<globalniSeznamZastavek.size())
+labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
+   /* if(cisSubscriber.verze()=="2.4")
     {
-
-
-
-
-
-        ui->Lnacestna1->setText(globalniSeznamZastavek[indexZastavky].zastavka.NameLcd);
-        if ((indexZastavky+1)<pocetZastavek)
-        {
-            ui->Lnacestna2->setText(globalniSeznamZastavek[indexZastavky+1].zastavka.NameLcd);
-        }
-        else
-        {
-            ui->Lnacestna2->setText(" ");
-        }
-
-        if ((indexZastavky+2)<pocetZastavek)
-        {
-            ui->Lnacestna3->setText(globalniSeznamZastavek[indexZastavky+2].zastavka.NameLcd);
-        }
-        else
-        {
-            ui->Lnacestna3->setText(" ");
-        }
-
-        if ((indexZastavky+3)<pocetZastavek)
-        {
-            ui->Lnacestna4->setText(globalniSeznamZastavek[indexZastavky+3].zastavka.NameLcd);
-        }
-        else
-        {
-            ui->Lnacestna4->setText(" ");
-
-        }
-
-        if ((indexZastavky+4)<pocetZastavek)
-        {
-            ui->Lnacestna5->setText(globalniSeznamZastavek[indexZastavky+4].zastavka.NameLcd);
-        }
-        else
-        {
-            ui->Lnacestna5->setText(" ");
-
-        }
+       labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
 
     }
     else
     {
-        qDebug()<<"indexZastavky je"<<QString::number(indexZastavky)<<" velikost globSezZast="<<QString::number(globalniSeznamZastavek.size());
+
     }
-}
 */
+}
+
 
 
 void MainWindow::hlavniVykresliZastavkyiPasma(QVector<ZastavkaCil>aktZastavky, QVector<ZastavkaCil>navazZastavky )
 {
     qDebug() <<  Q_FUNC_INFO;
-    int offset=0;
-    offset=hlavniVykresliSkupinuZastavek(0,pocetVykreslovanychZastavek,aktZastavky,false);
-    hlavniVykresliSkupinuZastavek(offset,pocetVykreslovanychZastavek,navazZastavky,true);
+
+    //
+    hlavniVykresliSkupinuZastavekNew(aktZastavky,navazZastavky,stavSystemu.indexAktZastavky);
+
 }
 
-int MainWindow::hlavniVykresliSkupinuZastavek(int offset, int pocetPoli, QVector<ZastavkaCil> zastavky, bool navazny)
+
+
+
+
+void MainWindow::hlavniVykresliSkupinuZastavekNew(QVector<ZastavkaCil> zastavky,QVector<ZastavkaCil> zastavkyNavazny, int index)
 {
     qDebug() <<  Q_FUNC_INFO;
+    //stavSystemu.indexAktZastavky;
+    int pocetPoli=seznamLabelNazevZastavky.count();
     if(zastavky.isEmpty())
     {
-        return 0;
+        return ;
     }
 
+    //   zastavky=vektorZastavkaCilZahoditZacatek(zastavky,index);
 
-    int vysledek=0;
+    zastavky.remove(0,index);
 
-    int posunIndexuZastavky=0;
-    if(!navazny)
+
+
+    for(int i=0;i<pocetPoli;i++)
     {
-        posunIndexuZastavky=stavSystemu.indexAktZastavky;
-    }
-    int konec=labelVykreslovani.minimum(zastavky.length()-posunIndexuZastavky,pocetPoli);
-
-
-
-    int counterNavazny=0;
-    for(int i=offset;i<konec ; i++)
-    {
-
-
-        int pomocnyIndex=0;
-
-        qDebug()<<"zpracovavam label i="<<i<<" pomocnyIndex="<<pomocnyIndex<<" offset="<<offset<<" pocetZastavek="<<zastavky.count()<<" "<<navazny;
-
-
-        Zastavka aktualniZastavka;
-
-        if(navazny==false)
+        ZastavkaCil aktualniZastavka;
+        bool navaznySpoj=false;
+        if(!zastavky.isEmpty())
         {
-            pomocnyIndex=indexZastavky+i;
-            aktualniZastavka=zastavky.at(pomocnyIndex).zastavka;
+            aktualniZastavka=zastavky.takeFirst();
         }
         else
         {
-            aktualniZastavka=zastavky.at(counterNavazny).zastavka;
-            pomocnyIndex=i;
-        }
-
-
-
-        PasmoveDvojiceLcd pasmoveDvojiceLcd;
-        pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.seznamPasem);
-
-
-        seznamLabelNazevZastavky.at(i)->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu,seznamLabelNazevZastavky.at(i)->font().pixelSize() )));
-
-
-        //if(navazny==true)
-        if(stavSystemu.locationState=="AtStop")
-        {
-            //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
-            // seznamPasem1.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
-            // seznamPasem2.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100);
-        }
-        else
-        {
-            //    seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
-            //   seznamPasem1.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
-            // seznamPasem2.at(i)->setStyleSheet("color:"+barva_bila_255_255_255);
-        }
-
-
-        // ui->Lnacestna5->setText(globalniSeznamZastavek[indexZastavky+4].zastavka.NameLcd);
-
-        if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
-        {
-            seznamLabelPasmoDolni.at(i)->setText("");
-
-        }
-        else
-        {
-            QString pasmaString1=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
-            QString zkratkaSystemuDvojtecka="";
-            if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
+            if(!zastavkyNavazny.isEmpty())
             {
-
-                zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
+                navaznySpoj=true;
+                aktualniZastavka=zastavkyNavazny.takeFirst();
             }
-            seznamLabelPasmoDolni.at(i)->setText(zkratkaSystemuDvojtecka+pasmaString1);
-            seznamLabelPasmoDolni.at(i)->setFont(fontPasmoVelke);
+            else
+            {
+                qDebug()<<"pro label "<<i<<" uz nezbyly zastavky";
+
+                return;
+            }
         }
+        jednaZastavkaCilDoLabelu(aktualniZastavka,navaznySpoj,seznamLabelNazevZastavky.at(i),seznamLabelPasmoDolni.at(i),seznamLabelPasmoHorni.at(i));
 
-        if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
-        {
-            seznamLabelPasmoHorni.at(i)->hide();
-            seznamLabelPasmoHorni.at(i)->setFont(fontPasmoVelke);
-        }
-        else
-        {
-            QString pasmaString2=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
-            seznamLabelPasmoHorni.at(i)->show();
-
-            seznamLabelPasmoHorni.at(i)->setFont(fontPasmoMale );
-            seznamLabelPasmoDolni.at(i)->setFont(fontPasmoMale );
-
-            seznamLabelPasmoHorni.at(i)->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
-        }
-
-        if(navazny==false)
-        {
-            seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
-            seznamLabelPasmoHorni.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
-            seznamLabelPasmoDolni.at(i)->setStyleSheet("color:"+barva_bila_255_255_255+";");
-        }
-        else
-        {
-            seznamLabelNazevZastavky.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
-            seznamLabelPasmoHorni.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
-            seznamLabelPasmoDolni.at(i)->setStyleSheet("color:"+barva_PozadiC_100_100_100+";");
-        }
-
-
-
-        //  qDebug()<<"label pasma "<<i<<" "<<stavSystemu.indexAktZastavky<<" p1:"<<pasmaString1<<" p2:"<<pasmaString2<<" "<<"pomocnyIndex";
-
-        counterNavazny++;
-        vysledek=i;
     }
 
-    return (vysledek+1);
+
+
 }
 
 
+void MainWindow::jednaZastavkaCilDoLabelu(ZastavkaCil aktualniZastavka, bool navazny, QLabel* nazevZastavky, QLabel* dolniPasmo, QLabel* horniPasmo)
+{
+    PasmoveDvojiceLcd pasmoveDvojiceLcd;
+    pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.zastavka.seznamPasem);
+
+    if(cisSubscriber.verze()=="2.4")
+    {
+        //   QString nahradIconPiktogramem(QString vstup);
+        //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.zastavka.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
+        nazevZastavky->setText(labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.zastavka.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
+    }
+    else
+    {
+        nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.zastavka.NameLcd,aktualniZastavka.zastavka.seznamPiktogramu,nazevZastavky->font().pixelSize() )));
+
+    }
 
 
+    if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
+    {
+        dolniPasmo->setText("");
+
+    }
+    else
+    {
+        QString pasmaString1=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
+        QString zkratkaSystemuDvojtecka="";
+        if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
+        {
+
+            zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
+        }
+        dolniPasmo->setText(zkratkaSystemuDvojtecka+pasmaString1);
+        dolniPasmo->setFont(fontPasmoVelke);
+    }
+
+    if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
+    {
+        horniPasmo->hide();
+        horniPasmo->setFont(fontPasmoVelke);
+    }
+    else
+    {
+        QString pasmaString2=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
+        horniPasmo->show();
+
+        horniPasmo->setFont(fontPasmoMale );
+        dolniPasmo->setFont(fontPasmoMale );
+
+        horniPasmo->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+    }
+
+    if(navazny==false)
+    {
+        nazevZastavky->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        horniPasmo->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        dolniPasmo->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+    }
+    else
+    {
+        nazevZastavky->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        horniPasmo->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        dolniPasmo->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+    }
+
+
+}
 
 
 
@@ -907,7 +789,10 @@ void MainWindow::hlavniVykresliNacestne()
         return;
     }
 
-    QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky, ui->label_nacestne->font().pixelSize());
+    QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky, ui->label_nacestne->font().pixelSize(),cisSubscriber.verze());
+
+
+
     if(ui->label_nacestne->text()!=novyVstup)
     {
         timerNacestneZastavky->start(intervalPosunuNacest);
@@ -928,8 +813,19 @@ int MainWindow::doplneniPromennych()
     if ((globalniSeznamZastavek.size()>indexZastavky)&&(indexZastavky>=0))
     {
         ZastavkaCil aktualniZastavka=globalniSeznamZastavek.at(indexZastavky);
-        nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu,ui->Lcil->font().pixelSize()));
         nazevLinky=aktualniZastavka.linka.LineName;
+
+        if(cisSubscriber.verze()=="2.4")
+        {
+            //nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem(aktualniZastavka.cil.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu));
+            nazevCile=labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.cil.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+        }
+        else
+        {
+            nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.cil.NameLcd,aktualniZastavka.cil.seznamPiktogramu,ui->Lcil->font().pixelSize()));
+            nazevLinky=aktualniZastavka.linka.LineName;
+        }
+
     }
     else
     {
@@ -947,11 +843,11 @@ int MainWindow::formatZobrazeni()
 
     if (stavSystemu.locationState=="AtStop" )
     {
-        obarviPozadiPristi(barva_PozadiB_50_50_50,barva_Zastavka_180_180_180 );
+        obarviPozadiPristi(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
     }
     else
     {
-        obarviPozadiPristi(barva_bila_255_255_255,barva_PozadiB_50_50_50);
+        obarviPozadiPristi(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
     }
 
     // hlavniAutoformat();
@@ -970,16 +866,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actiontestPolozka_triggered()
 {
     qDebug() <<  Q_FUNC_INFO;
-    /*
-    instanceXMLparser.VytvorSeznamZastavek(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, stavSystemu.indexAktZastavky, pocetZastavek);
-    instanceXMLparser.nactiVehicleGroup(stavSystemu,instanceXMLparser.dokument);
-    qInfo()<<indexZastavky;
-    qInfo()<<"CIl:"<<nazevCile;
-    DoplneniPromennych();
-    VykresleniPrijatychDat();
-    FormatZobrazeni();
-    qInfo()<<"CIl:"<<nazevCile;
-    */
+
     slotToggleFullscreen();
 }
 
@@ -994,10 +881,6 @@ nejsem autorem
 
 
 */
-
-
-
-
 
 
 
@@ -1017,7 +900,7 @@ void MainWindow::on_pushButton_menu_refreh_clicked()
 }
 
 
-void MainWindow::vymazTabulkuSubscriberu(QTableWidget *tableWidget)
+void MainWindow::vymazTabulku(QTableWidget *tableWidget)
 {
     qDebug() <<  Q_FUNC_INFO;
     //  https://stackoverflow.com/a/31564541
@@ -1038,7 +921,7 @@ void MainWindow::vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb)
 {
     qDebug() <<  Q_FUNC_INFO;
     // ui->tabulkaSubscriberu->setRowCount(0);
-    vymazTabulkuSubscriberu(ui->tabulkaSubscriberu);
+    vymazTabulku(ui->tabulkaSubscriberu);
 
 
     foreach(QZeroConfService sluzba, seznamSluzeb)
@@ -1089,6 +972,95 @@ void MainWindow::slotSluzbaDoTabulky(QZeroConfService zcs)
 
 }
 
+
+void MainWindow::slotPublisherDoTabulky(QZeroConfService zcs)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    vymazTabulku(ui->tableWidget_odebirano);
+    qint32 row;
+    QTableWidgetItem *cell;
+
+    QString nazev=zcs->name();
+    QString ipadresa=zcs->ip().toString();
+    QString host=zcs->host();
+    QString verze=zcs.data()->txt().value("ver");
+    int port=zcs->port();
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+
+    row = ui->tableWidget_odebirano->rowCount();
+    ui->tableWidget_odebirano->insertRow(row);
+    cell = new QTableWidgetItem(nazev);
+    ui->tableWidget_odebirano->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(verze);
+    ui->tableWidget_odebirano->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(ipadresa);
+    ui->tableWidget_odebirano->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(QString::number(port));
+    ui->tableWidget_odebirano->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(host);
+    ui->tableWidget_odebirano->setItem(row, 4, cell);
+
+
+    ui->tableWidget_odebirano->resizeColumnsToContents();
+
+
+    qDebug()<<"sluzbaDoTabulky_konec";
+
+}
+
+void MainWindow::zastavkaCilDoTabulky(ZastavkaCil zastavkaCil, bool navazny)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
+
+
+
+
+
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+
+    row = ui->tableWidget_zastavky->rowCount();
+    ui->tableWidget_zastavky->insertRow(row);
+
+    cell = new QTableWidgetItem(zastavkaCil.zastavka.NameLcd);
+
+    if(navazny)
+    {
+        cell->setBackground(QColor(240,240,240));
+    }
+    ui->tableWidget_zastavky->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(zastavkaCil.linka.LineName);
+    ui->tableWidget_zastavky->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(zastavkaCil.cil.NameLcd);
+    ui->tableWidget_zastavky->setItem(row, 2, cell);
+
+
+
+
+
+
+
+
+    ui->tableWidget_zastavky->resizeColumnsToContents();
+
+
+    qDebug()<<"sluzbaDoTabulky_konec";
+
+}
+
 void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -1119,7 +1091,10 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     }
     else if(cisSubscriber.verze()=="2.4")
     {
-
+        if(!instanceXMLparser.VytvorSeznamZastavek2_4(globalniSeznamZastavek,globalniSeznamZastavekNavaznehoSpoje, indexZastavky, pocetZastavek))
+        {
+            vymazObrazovku();
+        }
     }
     else
     {
@@ -1186,14 +1161,6 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
 
 
-
-
-/*
-void MainWindow::on_prepinaciOkno_currentChanged()
-{
-
-}
-*/
 
 void MainWindow::on_pushButton_menu_sluzby_clicked()
 {
@@ -1503,10 +1470,10 @@ QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZasta
     Zastavka nacesta;
     QVector<QString> textyNaBocniPanel;
     textyNaBocniPanel.append("přes:");
-    foreach (nacesta,aktualniZastavka.nacestneZastavky)
+        foreach (nacesta,aktualniZastavka.nacestneZastavky)
     {
         textyNaBocniPanel.append(nacesta.NameSide);
-        qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
+        // qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
     }
     return textyNaBocniPanel;
 
@@ -1518,7 +1485,7 @@ QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZas
     Zastavka nacesta;
     QVector<QString> textyNaVnitrniPanel;
     textyNaVnitrniPanel.append("přes:");
-    foreach (nacesta,aktualniZastavka.nacestneZastavky)
+        foreach (nacesta,aktualniZastavka.nacestneZastavky)
     {
         textyNaVnitrniPanel.append(nacesta.NameInner);
         qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
@@ -1574,17 +1541,6 @@ void MainWindow::ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniInde
     }
 }
 
-
-
-
-
-/*
-void MainWindow::naplnZmenaLabel(QString vstup)
-{
-    qDebug()<<"MainWindow::naplnZmenaLabel";
-    ui->label_zmena->setText(vstup);
-}
-*/
 
 
 
@@ -1732,13 +1688,26 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 
 
 
+
+
     for (int i=0;i<labelVykreslovani.minimum(seznamPrestupu.count(), seznamLabelPrestupCil.count()) ; i++)
     {
         Prestup aktualniPrestup=seznamPrestupu.at(i);
         seznamLabelPrestupCil.at(i)->setText(aktualniPrestup.destinationName);
         seznamLabelPrestupCil.at(i)->show();
 
-        naplnPoleLinky(aktualniPrestup.subMode,aktualniPrestup.line, seznamLabelPrestupLinka.at(i),velikostPiktogramPrestupDynamic,true);
+
+
+        if(cisSubscriber.verze()=="2.4")
+        {
+            naplnPoleLinky2_4(aktualniPrestup.subMode,aktualniPrestup.line, seznamLabelPrestupLinka.at(i), velikostPiktogramPrestupDynamic,true);
+
+        }
+        else
+        {
+            naplnPoleLinky(aktualniPrestup.subMode,aktualniPrestup.line, seznamLabelPrestupLinka.at(i),velikostPiktogramPrestupDynamic,true);
+        }
+
 
         seznamLabelPrestupNastupiste.at(i)->setText(aktualniPrestup.platform );
         seznamLabelPrestupNastupiste.at(i)->show();
@@ -1751,7 +1720,7 @@ void MainWindow::hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu)
 
 void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int velikostPiktogramu,bool prestup)
 {
-    qDebug()<<"MainWindow::naplnPoleLinky";
+    qDebug()<<Q_FUNC_INFO;
     QString linkaStyleSheetStandard="font-weight: bold;";
 
     if(prestup)
@@ -1767,56 +1736,64 @@ void MainWindow::naplnPoleLinky( QString subMode, Linka line, QLabel* label, int
     QString nahrazeno=labelVykreslovani.nahradMetro(line.LineName,subMode,velikostPiktogramu);
 
     //defaultni seda barva na bile pozadi, neznama kombinace
-    QString pozadi="background-color:"+barva_bila_255_255_255+";";
-    QString text="color:"+barva_PozadiD_150_150_150+";";
+
+    StylLinkyOld stylLinky;
+
+
+
+    stylLinky.pozadi="background-color:"+barvyLinek.barva_bila_255_255_255+";";
+
+
+    stylLinky.text="color:"+barvyLinek.barva_PozadiD_150_150_150+";";
+
+
+
+
     if(nahrazeno==line.LineName)
     {
-        if(line.isNight==true)
-        {
-            subMode=subMode+"Night";
-        }
+        stylLinky=barvyLinek.linkaDoStylu(subMode,line);
 
-        if(line.isDiversion)
-        {
-            subMode=subMode+"Diversion";
-            //  pozadi="background-color:"+barva_Vyluky_255_170_30+";";
-            qDebug()<<"linka je vylukova";
-        }
-        if(line.isReplacement)
-        {
-            subMode=subMode+"Replacement";
-        }
-        if(line.isSpecial)
-        {
-            subMode=subMode+"Special";
-        }
-
-
-        if(barvaPozadi.contains(subMode))
-        {
-            pozadi="background-color:"+barvaPozadi[subMode]+";";
-
-
-        }
-        if(barvaTextu.contains(subMode))
-        {
-            text="color:"+barvaTextu[subMode]+";";
-        }
-        qDebug()<<"linka "<<line.LineName<<" submode "<<subMode;
-
-        label->setStyleSheet(linkaStyleSheetStandard+text+pozadi);
+        label->setStyleSheet(linkaStyleSheetStandard+stylLinky.text+stylLinky.pozadi);
         label->setText(line.LineName);
     }
     else
     {
         label->setStyleSheet(linkaStyleSheetPiktogram);
         label->setText(nahrazeno);
-        qDebug()<<"nahrazeny retezec metra:"<<nahrazeno;
+        //   qDebug()<<"nahrazeny retezec metra:"<<nahrazeno;
     }
+
 
 
     label->show();
 }
+
+void MainWindow::naplnPoleLinky2_4( QString subMode, Linka line, QLabel* label, int velikostPiktogramu,bool prestup)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+
+    QString linkaStyleSheetStandard="font-weight: bold; background-color:#ffffff; padding: 0px; margin: 0px; ";
+
+    if(prestup)
+    {
+        linkaStyleSheetStandard+="border-radius:6px;padding: 0px; ";
+    }
+
+
+    QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
+
+
+    label->setStyleSheet(linkaStyleSheetStandard);
+
+    QString vyslednyText= labelVykreslovani.inlineFormatParser.vyparsujText(line.LineName, label->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+    label->setText( vyslednyText);
+
+
+    qDebug().noquote()<<"obsah pole linky: "<<vyslednyText;
+    label->show();
+}
+
 
 
 void MainWindow::slotHlavniStridejStranky()
@@ -1894,11 +1871,6 @@ void MainWindow::hlavniAutoformat()
     pomerPixelBod=ui->frame_hlavni->height()/1050.0;
 
     velikostPiktogramPrestupDynamic=qFloor(velikostPiktogramPrestup*pomerPixelBod);
-    //ui->wid
-    //   QFont fontLabelu = ui->Lnacestna5->font();
-    //   qDebug()<<"pomerPixelBod stran vyska "<<ui->frame_hlavni->height()<<" sirka:"<<ui->frame_hlavni->width()<<" pomerPixelBod:"<<pomerPixelBod;
-    // fontLabelu.setPixelSize(qFloor(pomerPixelBod*100));
-    //ui->Lnacestna5->setFont(fontLabelu);
 
 
     labelVykreslovani.labelNastavVelikost(ui->Lcil,velikostFontCil,pomerPixelBod ); //100
@@ -1923,7 +1895,7 @@ void MainWindow::hlavniAutoformat()
     labelVykreslovani.labelNastavVelikost(,,);
     labelVykreslovani.labelNastavVelikost(,,);
     */
-    labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
+    labelVykreslovani.zmensiCisloLinkyLabel(ui->label_linka);
 
 }
 
@@ -2033,4 +2005,21 @@ void MainWindow::vyskakovaciOkno(QString poznamka)
     msgBox.setFont(font);
     // msgBox.setStyleSheet("font-size: 30px;");
     msgBox.exec();
+}
+
+
+QVector<ZastavkaCil> MainWindow::vektorZastavkaCilZahoditZacatek(QVector<ZastavkaCil> vstup, int zacatek)
+{
+    QVector<ZastavkaCil> vystup;
+    for(int i=zacatek;i<vstup.count();i++)
+    {
+        if(i>zacatek)
+        {
+            vystup.push_back(vstup.at(i));
+            // qDebug()<<"orez zastavek:"<<vstup.at(i).zastavka.NameLcd;
+        }
+
+    }
+    return vystup;
+
 }

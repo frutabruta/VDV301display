@@ -8,7 +8,7 @@
 
 SvgVykreslovani::SvgVykreslovani(QString cesta)
 {
-interniCestaSlozkaSvg=cesta;
+    interniCestaSlozkaSvg=cesta;
 }
 
 
@@ -92,17 +92,16 @@ bool SvgVykreslovani::svgReplaceName(QString souborVstup, QString souborVystup,Q
 
 bool SvgVykreslovani::individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota)
 {
-    qDebug()<<"SvgVykreslovani::individualniNahrazeni "<<hledaneId<<" "<<novaHodnota;
-    QDomElement root=xmlDocument.firstChildElement();
-    QString idElementu="terminal_station";
+    qDebug()<<Q_FUNC_INFO<<" "<<hledaneId<<" "<<novaHodnota;
+
     QDomNodeList texty = xmlDocument.elementsByTagName("text");
 
     for (int i=0;i<texty.length();i++)
     {
         QString idAktElementu=texty.at(i).toElement().attribute("id");
-        QString obsah=   texty.at(i).firstChild().firstChild().nodeValue() ;
+
         //firstChildElement().nodeValue()
-      //  qDebug()<<"nalezeny element "<<idAktElementu<<"nodeValue "<<obsah;
+        //  qDebug()<<"nalezeny element "<<idAktElementu<<"nodeValue "<<obsah;
         if (idAktElementu==hledaneId)
         {
             qDebug()<<"menim obsah";
@@ -229,15 +228,15 @@ void SvgVykreslovani::vymazObrazovku()
 
 
 
-            QString celaCesta=interniCestaSlozkaSvg+"/hlavni.svg";
+    QString celaCesta=interniCestaSlozkaSvg+"/hlavni.svg";
 
-            QDomDocument xmlko = this->souborDoQDomDocument(celaCesta);
-            if (xmlko.isNull())
-            {
-                qDebug()<<"soubor SVG se nenacetl";
-            }
-            xmlko=vymazZastavky(xmlko);
-            qDomDocumentDoSouboru(interniCestaSlozkaSvg+"/vystup.svg",xmlko);
+    QDomDocument xmlko = this->souborDoQDomDocument(celaCesta);
+    if (xmlko.isNull())
+    {
+        qDebug()<<"soubor SVG se nenacetl";
+    }
+    xmlko=vymazZastavky(xmlko);
+    qDomDocumentDoSouboru(interniCestaSlozkaSvg+"/vystup.svg",xmlko);
 }
 
 

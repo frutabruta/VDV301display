@@ -16,6 +16,9 @@ public:
     // void nactiXML(QByteArray vstup);
     int linka=0;
     QString cil="";
+
+    QMap<int,ZastavkaCil> globalniSeznamZastavek2_4;
+
     // SeznamZastavek docasnySeznamZastavek[] ;
     //SeznamZastavek* docasnySeznamZastavek = new SeznamZastavek[MAX_ZAST2];
 
@@ -46,8 +49,13 @@ public:
     int tripDoSeznamuZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
     QVector<Zastavka> vyparsujNacestneZastavky1_0(QDomElement zastavka);
     QVector<Pasmo> vyparsujPasma_1_0(QDomElement zastavka);
+
+    int tripDoSeznamuZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
+    int VytvorSeznamZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek);
+
 private:
     QVector<Zastavka> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
+    QVector<Zastavka> vyparsujNacestneZastavky2_4(QDomNode displayContent);
     QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);
     QString stareXml="";
 };
