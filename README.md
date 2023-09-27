@@ -11,6 +11,10 @@ Logování do souboru:
 logování funguje, pokud existuje soubor E:/LogFile.log
 
 ## Changelog
+- 20230925_1035
+    - change of configuration by launching the program from console using --config FILEPATH parameter
+    - deleted function LabelVykreslovani::zpracujIconNew 
+    - last version with source code in Czech
 - 20230907_1753
    
     - BarvyLinek

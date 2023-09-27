@@ -9,6 +9,7 @@ QT += xml
 QT += core gui network
 QT += httpserver
 QT += svg
+#CONFIG   += console
 
 
 

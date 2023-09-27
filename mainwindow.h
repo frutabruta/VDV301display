@@ -17,6 +17,7 @@
 
 
 #include <QApplication>
+#include <QCoreApplication>
 //#include <QtDebug>
 #include <QFile>
 #include <QFontDatabase>
@@ -28,6 +29,7 @@
 #include <QTableWidget>
 #include <QTextStream>
 #include <QUrl>
+
 
 //#include <QWidget>
 
@@ -52,7 +54,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QString cestaKonfiguraku, QWidget *parent = nullptr);
     Ui::MainWindow *ui;
     ~MainWindow();
 
@@ -60,6 +62,8 @@ public:
 
 
 private:
+
+    QCommandLineParser qCommandLineParser;
 
     //instance trid
     XmlParser instanceXMLparser;

@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QString cestaKonfiguraku, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
-    settings(QCoreApplication::applicationDirPath()+"/nastaveni.ini", QSettings::IniFormat)
+    settings(cestaKonfiguraku, QSettings::IniFormat)
 {
 
     ui->setupUi(this);
@@ -17,6 +17,32 @@ MainWindow::MainWindow(QWidget *parent) :
    * https://bugreports.qt.io/browse/QTBUG-10106
    */
     QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+    /*
+
+    qCommandLineParser.addOption(QCommandLineOption("config", "Input file path", "file"));
+    qCommandLineParser.process(arguments);
+
+    QString inputFilePath =  qCommandLineParser.value("config");
+
+
+
+    if(!qCommandLineParser.value("config").isEmpty())
+    {
+        QUrl cesta=QUrl::fromLocalFile(qCommandLineParser.value("config"));
+        settings.setPath(QSettings::IniFormat,QSettings::UserScope,"nastaveni2.ini");
+      //  settings.setPath(QSettings::IniFormat,QSettings::SystemScope,"nastaveni2.ini");
+        qDebug()<<"XX parametr startu input: "<<cesta.toString()<<settings.value("deviceManagementService1_0/deviceName");
+    }
+    else
+    {
+     //   settings.setPath(QSettings::IniFormat,QSettings::SystemScope,QCoreApplication::applicationDirPath()+"/nastaveni.ini");
+        settings.setPath(QSettings::IniFormat,QSettings::UserScope,QCoreApplication::applicationDirPath()+"/nastaveni.ini");
+
+    }
+
+
+*/
 
 
     labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
@@ -83,6 +109,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     vymazObrazovku();
     timerOpozdenyStart->start();
+
+    QStringList seznamParametru = qCommandLineParser.optionNames();
+
+
+
 
 }
 
@@ -633,8 +664,8 @@ void MainWindow::hlavniVykresliNazevCile(QString nazev)
 {
     qDebug() <<  Q_FUNC_INFO;
 
-labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
-   /* if(cisSubscriber.verze()=="2.4")
+    labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
+    /* if(cisSubscriber.verze()=="2.4")
     {
        labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
 

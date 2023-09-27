@@ -298,38 +298,3 @@ QString LabelVykreslovani::nahradIconPiktogramem(QString vstup, int vyskaObrazku
     return vystup;
 }
 
-
-QDomNode LabelVykreslovani::zpracujIconNew(QDomNode vstup, int vyskaObrazku, QString slozka)
-{
-    qDebug() << Q_FUNC_INFO;
-
-    QDomDocument dokumentVystup;
-    QDomNode vystup;
-    QString iconType = vstup.attributes().namedItem("type").nodeValue();
-    QString alternativniText = vstup.firstChild().nodeValue();
-    QString cesta = slozka + "/" + iconType + ".svg";
-
-    qDebug() << iconType;
-
-
-    qDebug() << "cesta k souboru:" << cesta;
-
-    if (QFile::exists(cesta))
-    {
-
-        QDomElement img = dokumentVystup.createElement("img");
-        img.setAttribute("src", cesta);
-        img.setAttribute("height", QString::number(vyskaObrazku));
-
-        qDebug() << "resource existuje";
-    }
-    else
-    {
-        vystup = dokumentVystup.createTextNode(alternativniText);
-        qDebug() << "resource neexistuje";
-    }
-
-    // <icon type="c_RequestStop" >ŕ</icon>
-
-    return vystup;
-}
