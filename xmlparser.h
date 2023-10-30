@@ -1,14 +1,15 @@
 #ifndef XMLPARSER_H
 #define XMLPARSER_H
-#define MAX_ZAST2 10
+//#define MAX_ZAST2 10
 
 #include <QMainWindow>
 #include <QObject>
 #include <QtXml>
-#include "VDV301struktury/zastavka.h"
-#include "VDV301struktury/zastavkacil.h"
-#include "VDV301struktury/cestaudaje.h"
-#include "VDV301struktury/prestup.h"
+#include "VDV301DataStructures/stoppoint.h"
+#include "VDV301DataStructures/stoppointdestination.h"
+#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301DataStructures/farezone.h"
+
 class XmlParser
 {
 public:
@@ -17,7 +18,7 @@ public:
     int linka=0;
     QString cil="";
 
-    QMap<int,ZastavkaCil> globalniSeznamZastavek2_4;
+    QMap<int,StopPointDestination> globalniSeznamZastavek2_4;
 
     // SeznamZastavek docasnySeznamZastavek[] ;
     //SeznamZastavek* docasnySeznamZastavek = new SeznamZastavek[MAX_ZAST2];
@@ -27,17 +28,17 @@ public:
 
     void nactiXML(QString vstup);
 
-    int nactiVehicleGroup(CestaUdaje &stav, QDomDocument xmlko);
-    int VytvorSeznamZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZst, QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek);
-    int nactiFareZoneChange(QDomDocument xmlko, QVector<Pasmo> &pasmaZ, QVector<Pasmo> &pasmaNa);
+    int nactiVehicleGroup(VehicleState &stav, QDomDocument xmlko);
+    int VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
+    int nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa);
     int nactiAdditionalTextMessage(QDomDocument xmlko, QString &type, QString &headline, QString &text);
-    int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<Pasmo> &pasma);
+    int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<FareZone> &pasma);
     QVector<QString> naplnVektorPriznaku(QDomNode vstup, QString nazevElementu);
-    int tripDoSeznamuZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
-    int udajeNavaznehoSpoje(QVector<ZastavkaCil> &docasnySeznamZst, QString &linka, QString &cil);
-    int existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek);
-    QVector<Prestup> nactiPrestupy(QDomElement vstup);
-    Linka priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka);
+    int tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
+    int udajeNavaznehoSpoje(QVector<StopPointDestination> &docasnySeznamZst, QString &linka, QString &cil);
+    int existujeNavaznySpoj(QVector<StopPointDestination> seznamZastavek);
+    QVector<Connection> nactiPrestupy(QDomElement vstup);
+    Line priznakyDoLinky(QVector<QString> vstup, Line vstupniLinka);
 
     QDateTime vyparsujTimestamp(QDomDocument vstupniDokument);
 
@@ -45,18 +46,18 @@ public:
     static int minutDoOdjezdu(QDateTime aktCas, QDateTime casOdjezdu);
 
     //rozdelano
-    int VytvorSeznamZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek);
-    int tripDoSeznamuZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
-    QVector<Zastavka> vyparsujNacestneZastavky1_0(QDomElement zastavka);
-    QVector<Pasmo> vyparsujPasma_1_0(QDomElement zastavka);
+    int VytvorSeznamZastavek1_0(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
+    int tripDoSeznamuZastavek1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
+    QVector<StopPoint> vyparsujNacestneZastavky1_0(QDomElement zastavka);
+    QVector<FareZone> vyparsujPasma_1_0(QDomElement zastavka);
 
-    int tripDoSeznamuZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek);
-    int VytvorSeznamZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek);
+    int tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
+    int VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
 
 private:
-    QVector<Zastavka> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
-    QVector<Zastavka> vyparsujNacestneZastavky2_4(QDomNode displayContent);
-    QVector<Pasmo> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);
+    QVector<StopPoint> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
+    QVector<StopPoint> vyparsujNacestneZastavky2_4(QDomNode displayContent);
+    QVector<FareZone> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);
     QString stareXml="";
 };
 

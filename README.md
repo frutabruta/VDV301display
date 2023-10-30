@@ -1,16 +1,38 @@
 # VDV301display
 
-
 Ctrl+F fullscreen mode
-F1-F8 přepínání položek v menu
+F1-F8 menu switching
 
-Pokud existuje soubor fullscreen.txt, spustí se aplikace v režimu celé obrazovky.
-Obsah souboru určuje, na jaké obrazovce se program spustí (1 na první obrazovce apod.)
+Setting are in file nastaveni.ini
 
-Logování do souboru: 
-logování funguje, pokud existuje soubor E:/LogFile.log
+
+Logging to file: 
+Debug logs are stored in  E:/LogFile.log, if the file exists.
+
+Program can be launched with parameter to change settings location.
+
+--config FILEPATH parameter
 
 ## Changelog
+- 20231030_1914
+    - VDV301publisher
+        - GetDeviceConfiguration fix
+        - partial translation of main classes to english
+
+- 20231018_1106
+    - VDV301subscriber
+        - translated to english
+        - empty IP fix
+        - using QZeroConf::serviceUpdated
+    - VDV301publisher
+        - translated to english
+    - VDV301DataStructures
+        - translated to english
+    - XmlParser
+        - removal of unused functions parameters
+    - partial translation of other classes
+     
+
 - 20230925_1035
     - change of configuration by launching the program from console using --config FILEPATH parameter
     - deleted function LabelVykreslovani::zpracujIconNew 

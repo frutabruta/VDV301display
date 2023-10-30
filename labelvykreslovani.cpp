@@ -13,7 +13,7 @@ void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel *stitek)
     stitek->setText(vstup);
 }
 
-QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma)
+QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {
     qDebug() << "LabelVykreslovani::vyrobTextZmenyPasma";
     QString vysledek = "";
@@ -145,7 +145,7 @@ QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska
     return vysledek;
 }
 
-QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky, int velikostPiktogramu, QString verze)
+QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze)
 {
     qDebug() << "MainWindow::vykresliNacestneZastavkyText";
     if (nacestneZastavky.count() == 0)
@@ -164,7 +164,7 @@ QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<Zastavka> nacest
         }
         else
         {
-            nacestyString += " – " + doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).seznamPiktogramu, velikostPiktogramu);
+            nacestyString += " – " + doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).iconList, velikostPiktogramu);
         }
     }
 
@@ -223,7 +223,7 @@ int LabelVykreslovani::minimum(int cislo1, int cislo2)
     return cislo2;
 }
 
-void LabelVykreslovani::vykresliNacestneForce(QVector<ZastavkaCil> globalniSeznamZastavek, CestaUdaje stavSystemu, QLabel *label, QString verze)
+void LabelVykreslovani::vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -236,7 +236,7 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<ZastavkaCil> globalniSezna
 
     label->setText(" ");
     int velikostTextu = label->font().pixelSize();
-    QString novyVstup = vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).nacestneZastavky, velikostTextu, verze);
+    QString novyVstup = vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.currentStopIndex0).viaPoints, velikostTextu, verze);
     label->setText(novyVstup);
 }
 

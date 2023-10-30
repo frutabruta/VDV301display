@@ -117,7 +117,7 @@ void BarvyLinek::naplnMapBarev()
 }
 
 
-StylLinkyOld BarvyLinek::linkaDoStylu(QString &subMode, Linka linka )
+StylLinkyOld BarvyLinek::linkaDoStylu(QString &subMode, Line linka )
 {
     qDebug()<<Q_FUNC_INFO;
     StylLinkyOld vystup;
@@ -152,7 +152,7 @@ StylLinkyOld BarvyLinek::linkaDoStylu(QString &subMode, Linka linka )
     {
         vystup.text="color:"+barvaTextu[subMode]+";";
     }
-    qDebug()<<"linka "<<linka.LineName<<" submode "<<subMode;
+    qDebug()<<"linka "<<linka.lineName<<" submode "<<subMode;
 
     return vystup;
 

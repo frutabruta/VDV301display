@@ -4,7 +4,7 @@
 #include <QMap>
 #include <QString>
 #include <QDebug>
-#include "VDV301struktury/linka.h"
+#include "VDV301DataStructures/line.h"
 
 
 
@@ -56,7 +56,7 @@ public:
     QString barva_Letiste_155_203_234 ="rgb(155,203,234)";
     QString barva_Specialni_143_188_25 ="rgb(143,188,25)";
 
-    StylLinkyOld linkaDoStylu(QString &subMode, Linka linka);
+    StylLinkyOld linkaDoStylu(QString &subMode, Line linka);
 
 };
 

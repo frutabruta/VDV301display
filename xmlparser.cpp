@@ -1,7 +1,7 @@
 #include "xmlparser.h"
-#include "VDV301struktury/zastavka.h"
-#include "VDV301struktury/cestaudaje.h"
-#include  "VDV301struktury/pasmo.h"
+#include "VDV301DataStructures/stoppoint.h"
+#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301DataStructures/farezone.h"
 #include <QDebug>
 #include <QMainWindow>
 
@@ -33,7 +33,7 @@ void XmlParser::nactiXML(QString vstup)
 
 }
 
-int XmlParser::VytvorSeznamZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst,QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
+int XmlParser::VytvorSeznamZastavek1_0(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
@@ -51,7 +51,7 @@ int XmlParser::VytvorSeznamZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst,QV
     docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt()-1; //převod indexování od 1 (VDV301) na indexování od 0 ( C++ pole)
 
     QDomNodeList tripInformationList=root.elementsByTagName("TripInformation");
-    int pocetZastNavazSpoje=0;
+
 
     switch(tripInformationList.count())
     {
@@ -61,23 +61,23 @@ int XmlParser::VytvorSeznamZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst,QV
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation);
         break ;
     case 2:
         qDebug()<<"existuje jeden navazny spoj";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek1_0(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     default:
         qDebug()<<"moc navaznych spoju";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek1_0(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
@@ -88,7 +88,7 @@ int XmlParser::VytvorSeznamZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst,QV
     return 1;
 }
 
-int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZst,QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
+int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
@@ -106,7 +106,7 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZ
     docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt()-1; //převod indexování od 1 (VDV301) na indexování od 0 ( C++ pole)
 
     QDomNodeList tripInformationList=root.elementsByTagName("TripInformation");
-    int pocetZastNavazSpoje=0;
+
 
     switch(tripInformationList.count())
     {
@@ -116,23 +116,23 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZ
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
         break ;
     case 2:
         qDebug()<<"existuje jeden navazny spoj";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     default:
         qDebug()<<"moc navaznych spoju";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
@@ -145,7 +145,7 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZ
 
 
 
-int XmlParser::VytvorSeznamZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst,QVector<ZastavkaCil> &docasnySeznamZstNavazny, int &docasnyIndexZastavky, int &docasnyPocetZastavek)
+int XmlParser::VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
@@ -163,7 +163,7 @@ int XmlParser::VytvorSeznamZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst,QV
     docasnyIndexZastavky=root.elementsByTagName("CurrentStopIndex").at(0).firstChildElement().text().toInt()-1; //převod indexování od 1 (VDV301) na indexování od 0 ( C++ pole)
 
     QDomNodeList tripInformationList=root.elementsByTagName("TripInformation");
-    int pocetZastNavazSpoje=0;
+
 
     switch(tripInformationList.count())
     {
@@ -173,28 +173,27 @@ int XmlParser::VytvorSeznamZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst,QV
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
         break ;
     case 2:
         qDebug()<<"existuje jeden navazny spoj";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     default:
         qDebug()<<"moc navaznych spoju";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation,docasnyPocetZastavek);
+        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2,pocetZastNavazSpoje);
+        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     }
-
 
 
     return 1;
@@ -203,8 +202,6 @@ QDateTime XmlParser::vyparsujTimestamp(QDomDocument vstupniDokument)
 {
     qDebug()<<Q_FUNC_INFO;
 
-
-
     QDateTime timestamp =  QDateTime::fromString(vstupniDokument.firstChildElement("CustomerInformationService.GetAllDataResponse").firstChildElement("AllData").firstChildElement("TimeStamp").firstChildElement("Value").firstChild().nodeValue() ,Qt::ISODate);
 
     return timestamp;
@@ -212,40 +209,40 @@ QDateTime XmlParser::vyparsujTimestamp(QDomDocument vstupniDokument)
 }
 
 
-int XmlParser::udajeNavaznehoSpoje(QVector<ZastavkaCil> &docasnySeznamZst, QString &linka, QString &cil)
+int XmlParser::udajeNavaznehoSpoje(QVector<StopPointDestination> &docasnySeznamZst, QString &linka, QString &cil)
 {
     if (docasnySeznamZst.isEmpty())
     {
         return 0;
     }
-    linka=docasnySeznamZst.first().linka.LineName;
-    cil=docasnySeznamZst.first().cil.NameLcd;
+    linka=docasnySeznamZst.first().line.lineName;
+    cil=docasnySeznamZst.first().destination.NameLcd;
 
 
     return 1;
 }
 
 
-int XmlParser::tripDoSeznamuZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek)
+int XmlParser::tripDoSeznamuZastavek1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 
     QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
 
-    docasnyPocetZastavek= nodes.count();
+
     for (int i=0; i<nodes.count();i++)
     {
 
-        ZastavkaCil docasnaZastavka;
+        StopPointDestination docasnaZastavka;
         QDomElement aktZastavkaDOM=nodes.at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        docasnaZastavka.zastavka.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.linka.LineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
+        docasnaZastavka.stopPoint.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
         QVector<QString> priznakyStringy;
 
@@ -258,37 +255,37 @@ int XmlParser::tripDoSeznamuZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, 
             priznakyStringy.push_back(priznak);
             // qDebug()<<"parsuju priznaky:"<<priznak;
         }
-        docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
+        docasnaZastavka.line=priznakyDoLinky(priznakyStringy,docasnaZastavka.line);
 
-        docasnaZastavka.zastavka.StopIndex=i;
-        docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky1_0(aktZastavkaDOM);
-        docasnaZastavka.zastavka.seznamPrestupu=nactiPrestupy(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.StopIndex=i;
+        docasnaZastavka.viaPoints=vyparsujNacestneZastavky1_0(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.connectionList=nactiPrestupy(aktZastavkaDOM);
 
         QDomElement displayContent=aktZastavkaDOM.firstChildElement("DisplayContent");
         QDomElement dDestination=displayContent.firstChildElement("Destination");
-        docasnaZastavka.cil.StopName=dDestination.firstChildElement("DestinationName").text();
-        docasnaZastavka.cil.NameFront=dDestination.firstChildElement("DestinationName").firstChildElement().text();
-        docasnaZastavka.cil.seznamPiktogramu=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
+        docasnaZastavka.destination.StopName=dDestination.firstChildElement("DestinationName").text();
+        docasnaZastavka.destination.NameFront=dDestination.firstChildElement("DestinationName").firstChildElement().text();
+        docasnaZastavka.destination.iconList=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
 
         QDomNodeList nazvyCelniPanel=dDestination.elementsByTagName("DestinationName");
         if (nazvyCelniPanel.length()>0)
         {
-            docasnaZastavka.cil.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
+            docasnaZastavka.destination.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
         }
         if (nazvyCelniPanel.length()>1)
         {
-            docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
+            docasnaZastavka.destination.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
         }
-        docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.stopPoint.iconList= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 
 
-        docasnaZastavka.cil.NameSide=dDestination.firstChildElement("DestinationName").firstChildElement().text();
-        docasnaZastavka.cil.NameRear=dDestination.firstChildElement("DestinationName").firstChildElement().text();
-        docasnaZastavka.cil.NameInner=dDestination.firstChildElement("DestinationName").firstChildElement().text();
-        docasnaZastavka.cil.NameLcd=dDestination.firstChildElement("DestinationName").firstChildElement().text();
+        docasnaZastavka.destination.NameSide=dDestination.firstChildElement("DestinationName").firstChildElement().text();
+        docasnaZastavka.destination.NameRear=dDestination.firstChildElement("DestinationName").firstChildElement().text();
+        docasnaZastavka.destination.NameInner=dDestination.firstChildElement("DestinationName").firstChildElement().text();
+        docasnaZastavka.destination.NameLcd=dDestination.firstChildElement("DestinationName").firstChildElement().text();
 
-        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
-        docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_1_0(aktZastavkaDOM);
+        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
+        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
     }
     if (docasnySeznamZst.size() ==0)
@@ -299,26 +296,26 @@ int XmlParser::tripDoSeznamuZastavek1_0(QVector<ZastavkaCil> &docasnySeznamZst, 
     return 1;
 }
 
-int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek)
+int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 
     QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
 
-    docasnyPocetZastavek= nodes.count();
+
     for (int i=0; i<nodes.count();i++)
     {
 
-        ZastavkaCil docasnaZastavka;
+        StopPointDestination docasnaZastavka;
         QDomElement aktZastavkaDOM=nodes.at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        docasnaZastavka.zastavka.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameFront=aktZastavkaDOM.firstChildElement("StopFrontName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameSide=aktZastavkaDOM.firstChildElement("StopSideName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameRear=aktZastavkaDOM.firstChildElement("StopRearName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameInner=aktZastavkaDOM.firstChildElement("StopInnerName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.firstChildElement("StopLcdName").firstChildElement().text();
-        docasnaZastavka.linka.LineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
+        docasnaZastavka.stopPoint.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameFront=aktZastavkaDOM.firstChildElement("StopFrontName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameSide=aktZastavkaDOM.firstChildElement("StopSideName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameRear=aktZastavkaDOM.firstChildElement("StopRearName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameInner=aktZastavkaDOM.firstChildElement("StopInnerName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopLcdName").firstChildElement().text();
+        docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
         QVector<QString> priznakyStringy;
 
@@ -331,37 +328,37 @@ int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznam
             priznakyStringy.push_back(priznak);
             // qDebug()<<"parsuju priznaky:"<<priznak;
         }
-        docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
+        docasnaZastavka.line=priznakyDoLinky(priznakyStringy,docasnaZastavka.line);
 
-        docasnaZastavka.zastavka.StopIndex=i;
-        docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky2_2CZ1_0(aktZastavkaDOM);
-        docasnaZastavka.zastavka.seznamPrestupu=nactiPrestupy(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.StopIndex=i;
+        docasnaZastavka.viaPoints=vyparsujNacestneZastavky2_2CZ1_0(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.connectionList=nactiPrestupy(aktZastavkaDOM);
 
         QDomElement displayContent=aktZastavkaDOM.firstChildElement("DisplayContent");
         QDomElement dDestination=displayContent.firstChildElement("Destination");
-        docasnaZastavka.cil.StopName=dDestination.firstChildElement("DestinationName").text();
-        docasnaZastavka.cil.NameFront=dDestination.firstChildElement("DestinationFrontName").firstChildElement().text();
-        docasnaZastavka.cil.seznamPiktogramu=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
+        docasnaZastavka.destination.StopName=dDestination.firstChildElement("DestinationName").text();
+        docasnaZastavka.destination.NameFront=dDestination.firstChildElement("DestinationFrontName").firstChildElement().text();
+        docasnaZastavka.destination.iconList=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
 
         QDomNodeList nazvyCelniPanel=dDestination.elementsByTagName("DestinationFrontName");
         if (nazvyCelniPanel.length()>0)
         {
-            docasnaZastavka.cil.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
+            docasnaZastavka.destination.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
         }
         if (nazvyCelniPanel.length()>1)
         {
-            docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
+            docasnaZastavka.destination.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
         }
-        docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.stopPoint.iconList= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 
 
-        docasnaZastavka.cil.NameSide=dDestination.firstChildElement("DestinationSideName").firstChildElement().text();
-        docasnaZastavka.cil.NameRear=dDestination.firstChildElement("DestinationRearName").firstChildElement().text();
-        docasnaZastavka.cil.NameInner=dDestination.firstChildElement("DestinationInnerName").firstChildElement().text();
-        docasnaZastavka.cil.NameLcd=dDestination.firstChildElement("DestinationLcdName").firstChildElement().text();
+        docasnaZastavka.destination.NameSide=dDestination.firstChildElement("DestinationSideName").firstChildElement().text();
+        docasnaZastavka.destination.NameRear=dDestination.firstChildElement("DestinationRearName").firstChildElement().text();
+        docasnaZastavka.destination.NameInner=dDestination.firstChildElement("DestinationInnerName").firstChildElement().text();
+        docasnaZastavka.destination.NameLcd=dDestination.firstChildElement("DestinationLcdName").firstChildElement().text();
 
-        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
-        docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
+        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
+        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
     }
     if (docasnySeznamZst.size() ==0)
@@ -374,26 +371,26 @@ int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<ZastavkaCil> &docasnySeznam
 
 
 
-int XmlParser::tripDoSeznamuZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, QDomElement vstup, int &docasnyPocetZastavek)
+int XmlParser::tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 
+
     QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
 
-    docasnyPocetZastavek= nodes.count();
     for (int i=0; i<nodes.count();i++)
     {
 
-        ZastavkaCil docasnaZastavka;
+        StopPointDestination docasnaZastavka;
         QDomElement aktZastavkaDOM=nodes.at(i).toElement();
         int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        docasnaZastavka.zastavka.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.zastavka.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.linka.LineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
+        docasnaZastavka.stopPoint.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
         QVector<QString> priznakyStringy;
 
@@ -406,10 +403,8 @@ int XmlParser::tripDoSeznamuZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, 
             priznakyStringy.push_back(priznak);
             // qDebug()<<"parsuju priznaky:"<<priznak;
         }
-        docasnaZastavka.linka=priznakyDoLinky(priznakyStringy,docasnaZastavka.linka);
 
-
-
+        docasnaZastavka.line=priznakyDoLinky(priznakyStringy,docasnaZastavka.line);
 
         QDomNodeList displayContentArray=aktZastavkaDOM.elementsByTagName("DisplayContent");
 
@@ -420,69 +415,67 @@ int XmlParser::tripDoSeznamuZastavek2_4(QVector<ZastavkaCil> &docasnySeznamZst, 
             QString ref=aktualniDisplayContent.firstChildElement("DisplayContentRef").firstChildElement("Value").firstChild().nodeValue();
             if(ref=="Front")
             {
-                docasnaZastavka.cil.NameFront=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+                docasnaZastavka.destination.NameFront=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
 
             }
             if(ref=="Side")
             {
-                docasnaZastavka.cil.NameSide=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+                docasnaZastavka.destination.NameSide=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
 
             }
             if(ref=="Rear")
             {
-                docasnaZastavka.cil.NameRear=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+                docasnaZastavka.destination.NameRear=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
 
             }
             if(ref=="Lcd")
             {
-                docasnaZastavka.cil.NameLcd=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-                docasnaZastavka.nacestneZastavky=vyparsujNacestneZastavky2_4(aktualniDisplayContent);
-                //   docasnaZastavka.cil.StopName =polozka.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement().text();
+                docasnaZastavka.destination.NameLcd=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+                docasnaZastavka.viaPoints=vyparsujNacestneZastavky2_4(aktualniDisplayContent);
+                //   docasnaZastavka.destination.StopName =polozka.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement().text();
 
             }
 
 
         }
 
+        docasnaZastavka.stopPoint.StopIndex=i;
 
 
-        docasnaZastavka.zastavka.StopIndex=i;
+        docasnaZastavka.stopPoint.connectionList=nactiPrestupy(aktZastavkaDOM);
 
-
-        docasnaZastavka.zastavka.seznamPrestupu=nactiPrestupy(aktZastavkaDOM);
-
-        docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.stopPoint.iconList= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 
         // QDomElement displayContent=aktZastavkaDOM.firstChildElement("DisplayContent");
         // QDomElement dDestination=displayContent.firstChildElement("Destination");
-        //   docasnaZastavka.cil.StopName=dDestination.firstChildElement("DestinationName").text();
-        //     docasnaZastavka.cil.NameFront=dDestination.firstChildElement("DestinationFrontName").firstChildElement().text();
+        //   docasnaZastavka.destination.StopName=dDestination.firstChildElement("DestinationName").text();
+        //     docasnaZastavka.destination.NameFront=dDestination.firstChildElement("DestinationFrontName").firstChildElement().text();
 
-        // XXXXX   docasnaZastavka.cil.seznamPiktogramu=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
+        // XXXXX   docasnaZastavka.destination.seznamPiktogramu=naplnVektorPriznaku(displayContent.elementsByTagName("Destination").at(0),"Destination");
 
         /*
         QDomNodeList nazvyCelniPanel=dDestination.elementsByTagName("DestinationFrontName");
         if (nazvyCelniPanel.length()>0)
         {
-            docasnaZastavka.cil.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
+            docasnaZastavka.destination.NameFront=nazvyCelniPanel.at(0).firstChildElement().text();
         }
         if (nazvyCelniPanel.length()>1)
         {
-            docasnaZastavka.cil.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
+            docasnaZastavka.destination.NameFront2=nazvyCelniPanel.at(1).firstChildElement().text();
         }
-        docasnaZastavka.zastavka.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.stopPoint.seznamPiktogramu= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
 */
 
         /*
-        docasnaZastavka.cil.NameSide=dDestination.firstChildElement("DestinationSideName").firstChildElement().text();
-        docasnaZastavka.cil.NameRear=dDestination.firstChildElement("DestinationRearName").firstChildElement().text();
-        docasnaZastavka.cil.NameInner=dDestination.firstChildElement("DestinationInnerName").firstChildElement().text();
-        docasnaZastavka.cil.NameLcd=dDestination.firstChildElement("DestinationLcdName").firstChildElement().text();
+        docasnaZastavka.destination.NameSide=dDestination.firstChildElement("DestinationSideName").firstChildElement().text();
+        docasnaZastavka.destination.NameRear=dDestination.firstChildElement("DestinationRearName").firstChildElement().text();
+        docasnaZastavka.destination.NameInner=dDestination.firstChildElement("DestinationInnerName").firstChildElement().text();
+        docasnaZastavka.destination.NameLcd=dDestination.firstChildElement("DestinationLcdName").firstChildElement().text();
 */
 
 
-        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.zastavka.StopName<<"cil"<<docasnaZastavka.cil.NameLcd<<"linka "<<docasnaZastavka.linka.LineName<<" nocni "<<docasnaZastavka.linka.isNight ;
-        docasnaZastavka.zastavka.seznamPasem=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
+        //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
+        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
         globalniSeznamZastavek2_4.insert(poradiZastavky,docasnaZastavka);
     }
@@ -499,7 +492,7 @@ QVector<QString> XmlParser::naplnVektorPriznaku(QDomNode vstup,QString nazevElem
     // qDebug()<<"XmlParser::naplnVektorPriznaku";
     QVector<QString> vystup;
 
-    Zastavka nacesta;
+    StopPoint nacesta;
     QDomNodeList priznaky=vstup.toElement().elementsByTagName(nazevElementu+"Property");
     // qDebug()<<"naplnVektor Zastavka ma tolik priznaku:"<<priznaky.count();
 
@@ -517,14 +510,14 @@ QVector<QString> XmlParser::naplnVektorPriznaku(QDomNode vstup,QString nazevElem
 
 
 
-QVector<Zastavka> XmlParser::vyparsujNacestneZastavky1_0(QDomElement zastavka)
+QVector<StopPoint> XmlParser::vyparsujNacestneZastavky1_0(QDomElement zastavka)
 {
     qDebug()<<Q_FUNC_INFO;
     QDomNodeList nacesty = zastavka.elementsByTagName("ViaPoint");
-    QVector<Zastavka> vectorNacesty;
+    QVector<StopPoint> vectorNacesty;
     for (int i=0;i<nacesty.count();i++)
     {
-        Zastavka nacesta;
+        StopPoint nacesta;
         // QDomNodeList priznaky=nacesty.at(i).toElement().elementsByTagName("ViaPointProperty");
         QDomElement aktNacesta=nacesty.at(i).toElement();
         nacesta.NameLcd=aktNacesta.firstChildElement("PlaceName").firstChildElement("Value").firstChild().nodeValue();
@@ -553,14 +546,14 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky1_0(QDomElement zastavka)
 }
 
 
-QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka)
+QVector<StopPoint> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka)
 {
     qDebug()<<Q_FUNC_INFO;
     QDomNodeList nacesty = zastavka.elementsByTagName("ViaPoint");
-    QVector<Zastavka> vectorNacesty;
+    QVector<StopPoint> vectorNacesty;
     for (int i=0;i<nacesty.count();i++)
     {
-        Zastavka nacesta;
+        StopPoint nacesta;
         QDomNodeList priznaky=nacesty.at(i).toElement().elementsByTagName("ViaPointProperty");
         QDomElement aktNacesta=nacesty.at(i).toElement();
         nacesta.NameLcd=aktNacesta.firstChildElement("PlaceLcdName").firstChildElement("Value").firstChild().nodeValue();
@@ -569,7 +562,7 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastav
         nacesta.StopName=nacesta.NameLcd;
 
 
-        nacesta.seznamPiktogramu= naplnVektorPriznaku(aktNacesta,"ViaPoint");
+        nacesta.iconList= naplnVektorPriznaku(aktNacesta,"ViaPoint");
         for (int j=0;j<priznaky.count();j++)
         {
             QString hodnotaPriznaku=priznaky.at(j).firstChild().nodeValue();
@@ -578,7 +571,7 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastav
 
             if(hodnotaPriznaku=="RequestStop")
             {
-                nacesta.naZnameni=true;
+                nacesta.onRequest=true;
             }
         }
 
@@ -589,16 +582,16 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastav
 }
 
 
-QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_4(QDomNode displayContent)
+QVector<StopPoint> XmlParser::vyparsujNacestneZastavky2_4(QDomNode displayContent)
 {
     qDebug()<<Q_FUNC_INFO;
     QDomNodeList nacesty = displayContent.toElement().elementsByTagName("ViaPoint");
-    QVector<Zastavka> vectorNacesty;
+    QVector<StopPoint> vectorNacesty;
     for (int i=0;i<nacesty.count();i++)
     {
 
 
-        Zastavka nacesta;
+        StopPoint nacesta;
         QDomElement aktNacesta=nacesty.at(i).toElement();
         nacesta.NameLcd=aktNacesta.firstChildElement("PlaceName").firstChildElement("Value").firstChild().nodeValue();
         nacesta.NameInner=aktNacesta.firstChildElement("PlaceName").firstChildElement("Value").firstChild().nodeValue();
@@ -627,18 +620,18 @@ QVector<Zastavka> XmlParser::vyparsujNacestneZastavky2_4(QDomNode displayContent
     return vectorNacesty;
 }
 
-QVector<Pasmo> XmlParser::vyparsujPasma_1_0(QDomElement zastavka)
+QVector<FareZone> XmlParser::vyparsujPasma_1_0(QDomElement zastavka)
 {
     qDebug()<<Q_FUNC_INFO;
-    QVector<Pasmo> vystupniVektorPasmo;
+    QVector<FareZone> vystupniVektorPasmo;
 
     QDomNodeList domPasma = zastavka.elementsByTagName("FareZone");
 
     for (int i=0;i<domPasma.count();i++)
     {
-        Pasmo aktPasmo;
+        FareZone aktPasmo;
         aktPasmo.system="";
-        aktPasmo.nazev=domPasma.at(i).firstChildElement("Value").firstChild().nodeValue();
+        aktPasmo.name=domPasma.at(i).firstChildElement("Value").firstChild().nodeValue();
         vystupniVektorPasmo.append(aktPasmo);
 
     }
@@ -646,37 +639,37 @@ QVector<Pasmo> XmlParser::vyparsujPasma_1_0(QDomElement zastavka)
     return vystupniVektorPasmo;
 }
 
-QVector<Pasmo> XmlParser::vyparsujPasma_2_2CZ1_0(QDomElement zastavka)
+QVector<FareZone> XmlParser::vyparsujPasma_2_2CZ1_0(QDomElement zastavka)
 {
     qDebug()<<Q_FUNC_INFO;
-    QVector<Pasmo> vystupniVektorPasmo;
+    QVector<FareZone> vystupniVektorPasmo;
 
     QDomNodeList domPasma = zastavka.elementsByTagName("FareZone");
 
     for (int i=0;i<domPasma.count();i++)
     {
-        Pasmo aktPasmo;
+        FareZone aktPasmo;
         aktPasmo.system=domPasma.at(i).firstChildElement("FareZoneType").firstChildElement("FareZoneTypeName").firstChildElement("Value").firstChild().nodeValue();
-        aktPasmo.nazev=domPasma.at(i).firstChildElement("FareZoneLongName").firstChildElement("Value").firstChild().nodeValue();
+        aktPasmo.name=domPasma.at(i).firstChildElement("FareZoneLongName").firstChildElement("Value").firstChild().nodeValue();
         vystupniVektorPasmo.append(aktPasmo);
 
     }
 
     return vystupniVektorPasmo;
 }
-int XmlParser::nactiVehicleGroup(CestaUdaje &stav,QDomDocument xmlko )
+int XmlParser::nactiVehicleGroup(VehicleState &stav,QDomDocument xmlko )
 {
     qDebug()<<Q_FUNC_INFO;
     QDomElement root = xmlko.firstChildElement();
     qDebug()<<"root name "<<root.nodeName();
     QDomElement allData=root.firstChildElement("AllData");
     qDebug()<<"alldata name "<<allData.nodeName();
-    stav.indexAktZastavky=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1; //-1
-    stav.VehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+    stav.currentStopIndex0=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1; //-1
+    stav.isVehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
     stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
     stav.vehicleMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
     stav.vehicleSubMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement(stav.vehicleMode).firstChild().nodeValue();
-    qDebug()<<"stopIndex "<<QString::number(stav.indexAktZastavky)<<"stopRequested "<<stav.VehicleStopRequested<<" locState "<<stav.locationState;
+    qDebug()<<"stopIndex "<<QString::number(stav.currentStopIndex0)<<"stopRequested "<<stav.isVehicleStopRequested<<" locState "<<stav.locationState;
 
     return 1;
 }
@@ -726,7 +719,7 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &type ,QSt
     return 1;
 }
 
-int XmlParser::nactiFareZoneChange(QDomDocument xmlko, QVector<Pasmo> &pasmaZ, QVector<Pasmo> &pasmaNa )
+int XmlParser::nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa )
 {
     //rozepsano
     qDebug()<<Q_FUNC_INFO;
@@ -761,7 +754,7 @@ void XmlParser::Test()
 
 
 
-int XmlParser::existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek)
+int XmlParser::existujeNavaznySpoj(QVector<StopPointDestination> seznamZastavek)
 {
     if (seznamZastavek.isEmpty())
     {
@@ -776,17 +769,17 @@ int XmlParser::existujeNavaznySpoj(QVector<ZastavkaCil> seznamZastavek)
 
 
 
-QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
+QVector<Connection> XmlParser::nactiPrestupy(QDomElement vstup)
 {
     //rozepsano
     qDebug()<<Q_FUNC_INFO;
-    QVector<Prestup> vystup;
+    QVector<Connection> vystup;
 
     QDomNodeList elementyPrestupu=vstup.elementsByTagName("Connection") ;
 
     for (int i=0;i<elementyPrestupu.count();i++)
     {
-        Prestup aktualniPrestup;
+        Connection aktualniPrestup;
         QDomElement aktualniElement=elementyPrestupu.at(i).toElement();
         aktualniPrestup.connectionProperty=aktualniElement.firstChildElement("ConnectionProperty").firstChild().nodeValue();
 
@@ -795,8 +788,8 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
         QDomElement displayContent=aktualniElement.firstChildElement("DisplayContent");
         QDomElement lineInformation=displayContent.firstChildElement("LineInformation");
 
-        aktualniPrestup.line.LineName=lineInformation.firstChildElement("LineName").firstChildElement("Value").firstChild().nodeValue();
-        aktualniPrestup.line.LineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.line.lineName=lineInformation.firstChildElement("LineName").firstChildElement("Value").firstChild().nodeValue();
+        aktualniPrestup.line.lineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
 
         aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
         aktualniPrestup.expectedDepartureTime=QDateTime::fromString( aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
@@ -836,7 +829,7 @@ QVector<Prestup> XmlParser::nactiPrestupy(QDomElement vstup)
 }
 
 
-Linka XmlParser::priznakyDoLinky(QVector<QString> vstup, Linka vstupniLinka)
+Line XmlParser::priznakyDoLinky(QVector<QString> vstup, Line vstupniLinka)
 {
     qDebug()<<Q_FUNC_INFO;
     // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;

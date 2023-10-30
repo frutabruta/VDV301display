@@ -2,9 +2,10 @@
 #define SVGVYKRESLOVANI_H
 #include <QWidget>
 #include <QDomDocument>
-#include <VDV301struktury/zastavka.h>
-#include <VDV301struktury/zastavkacil.h>
-#include "VDV301struktury/cestaudaje.h"
+
+#include "VDV301DataStructures/stoppoint.h"
+#include "VDV301DataStructures/stoppointdestination.h"
+#include "VDV301DataStructures/vehiclestate.h"
 
 class SvgVykreslovani
 {
@@ -13,26 +14,26 @@ public:
     QString interniCestaSlozkaSvg="";
     bool svgReplaceName(QString souborVstup, QString souborVystup, QString cil, QString zst0, QString zst1, QString zst2);
     bool individualniNahrazeni(QDomDocument &xmlDocument, QString hledaneId, QString novaHodnota);
-    QVector<ZastavkaCil> vytvorNasledujiciZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index, int limit);
+    QVector<StopPointDestination> vytvorNasledujiciZastavky(QVector<StopPointDestination> vsechnyZastavky, int index, int limit);
     QDomDocument vymazZastavky(QDomDocument xmlDocument);
-    QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<ZastavkaCil> nasledujiciZastavky);
-    int aktualizujVse(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
+    QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<StopPointDestination> nasledujiciZastavky);
+    int aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
-   // QVector<ZastavkaCil> vytvorNacestneZastavky(QVector<ZastavkaCil> vsechnyZastavky, int index);
-    static QString pasmaDoStringu(QVector<Pasmo> seznamPasem);
+   // QVector<StopPointDestination> vytvorNacestneZastavky(QVector<StopPointDestination> vsechnyZastavky, int index);
+    static QString pasmaDoStringu(QVector<FareZone> seznamPasem);
 
 
-    QString vykresliNacestneZastavkyText(QVector<Zastavka> nacestneZastavky);
-    void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
+    QString vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky);
+    void zobrazZmenuPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
     void vymazObrazovku();
     void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);
-    QDomDocument vykresliCil(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);
-    QDomDocument vykresliLinku(QDomDocument xmlDocument, QVector<ZastavkaCil> globalniZastavky, CestaUdaje stav);
-    QDomDocument vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<Zastavka> nacestneZastavky);
+    QDomDocument vykresliCil(QDomDocument xmlDocument, QVector<StopPointDestination> globalniZastavky, VehicleState stav);
+    QDomDocument vykresliLinku(QDomDocument xmlDocument, QVector<StopPointDestination> globalniZastavky, VehicleState stav);
+    QDomDocument vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<StopPoint> nacestneZastavky);
 
 };
 

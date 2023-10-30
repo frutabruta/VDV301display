@@ -10,7 +10,7 @@ PasmoveDvojiceLcd::PasmoveDvojiceLcd()
 
 
 
-int PasmoveDvojiceLcd::roztridPasma(QVector<Pasmo> vstup)
+int PasmoveDvojiceLcd::roztridPasma(QVector<FareZone> vstup)
 {
     pasmaSystemu1.clear();
     pasmaSystemu2.clear();
@@ -26,7 +26,7 @@ int PasmoveDvojiceLcd::roztridPasma(QVector<Pasmo> vstup)
     QString prvniPasmoTyp=prvniPasmo.system;
     QString druhePasmoTyp="";
 
-    foreach(Pasmo pasmo,vstup)
+    foreach(FareZone pasmo,vstup)
     {
         if (pasmo.system==prvniPasmoTyp)
         {

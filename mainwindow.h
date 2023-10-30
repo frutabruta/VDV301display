@@ -7,9 +7,12 @@
 
 #include "VDV301publisher/devicemanagementservice.h"
 #include "VDV301subscriber/cissubscriber.h"
-#include "VDV301struktury/cestaudaje.h"
-#include "VDV301struktury/zastavkacil.h"
-#include "VDV301struktury/prestup.h"
+
+
+#include "VDV301DataStructures/stoppointdestination.h"
+#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301DataStructures/connection.h"
+
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
 #include "labelvykreslovani.h"
@@ -54,7 +57,7 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QString cestaKonfiguraku, QWidget *parent = nullptr);
+    explicit MainWindow(QString configurationFilePath, QWidget *parent = nullptr);
     Ui::MainWindow *ui;
     ~MainWindow();
 
@@ -66,8 +69,8 @@ private:
     QCommandLineParser qCommandLineParser;
 
     //instance trid
-    XmlParser instanceXMLparser;
-    CestaUdaje stavSystemu;
+    XmlParser xmlParser;
+    VehicleState vehicleState;
     LabelVykreslovani labelVykreslovani;
 
     CisSubscriber cisSubscriber;
@@ -77,59 +80,59 @@ private:
 
 
     //datoveStruktury jizda
-    QVector<ZastavkaCil> globalniSeznamZastavek;
-    QVector<ZastavkaCil> globalniSeznamZastavekNavaznehoSpoje;
+    QVector<StopPointDestination> currentDestinationPointList;
+    QVector<StopPointDestination> nextDestinationPointList;
 
 
     //QVector<Prestup> prestupy;
-    QString nazevLinky="";
+   // QString nazevLinky="";
     QString nazevCile="";
     QString additionalTextMessageType="";
     QString additionalTextMessageHeadline="";
     QString additionalTextMessageText="";
-    QVector<Pasmo> pasmaZ;
-    QVector<Pasmo> pasmaDo;
+    QVector<FareZone> fareZoneChangeFrom;
+    QVector<FareZone> fareZoneChangeTo;
 
     BarvyLinek barvyLinek;
 
     //stavove promenne
-    bool zmenaPasma=false;
-    int indexZastavky=0;
-    int pocetZastavek=0;
-    int cyklovaniIndex=0;
-    int indexAktualniStridaneStranky =0;
-    bool zobrazDvojtecku=0;
+    bool isFareZone=false;
+    int stopIndex=0;
+
+    int currentPageIndexLed=0;
+    int currentPageIndex =0;
+    bool showTimeColon=0;
 
     //konstanty
     int posunRotovani=0;
-    int pocetVykreslovanychZastavek=5;
+    // int pocetVykreslovanychZastavek=5;
 
 
 
-    const int intervalBocniPanel=2000;
-    const int intervalPosunuNacest=20;
-    const int intervalStridaniStranek=10000;
+    const int intervalSideDisplay=2000;
+    const int intervalScrollingText=20;
+    const int intervalSwitchPages=10000;
     const int intervalOpozdeniStartu=500;
 
     //velikosti fontu v bodech
     //const int velikostFontLinka=200;
-    const int velikostFontCil=100;
-    const int velikostFontNacestne=72;
-    const int velikostFontNasledujici=100;
+    const int sizeFontDestination=100;
+    const int sizeFontViaPoints=72;
+    const int sizeFontFollowing=100;
 
-    const int velikostFontPrestupLinka=48;
-    const int velikostFontPrestupCil=36;
+    const int sizeFontTransferLine=48;
+    const int sizeFontTransferDestination=36;
 
-    const int velikostPiktogramPrestup=65;
-    int velikostPiktogramPrestupDynamic=20;
+    const int sizeIconConnection=65;
+    int sizeIconConnectionDynamic=20;
     const int velikostPrestupRamecekSirka=95;
     const int velikostPrestupRamecekVyska=65;
 
     //velikosti oken
 
-    float pomerPixelBod=1080.0/1050.0;
+    float ratioPixelPoint=1080.0/1050.0;
 
-    float pomerPixelLed=4.105;
+    float ratioPixelLed=4.105;
 
 
     //ostatni promenne
@@ -140,64 +143,66 @@ private:
     QFontDatabase fdb;
 
     //_LED fonty
-    QFont font1;
-    QFont font3;
-    QFont font5;
-    QFont font8;
-    QFont font10;
+    QFont fontLed1;
+    QFont fontLed3;
+    QFont fontLed5;
+    QFont fontLed8;
+    QFont fontLed10;
 
 
     //_LCD fonty
 
-    QFont fontPasmoVelke;
-    QFont fontPasmoMale;
+    QFont fontLabelFareZoneLarge;
+    QFont fontLabelFareZoneSmall;
 
     //casovace
-    QTimer *timerBocniPanel = new QTimer(this);
-    QTimer *timerNacestneZastavky = new QTimer(this);
-    QTimer *timer = new QTimer(this);
-    QTimer *timerStridejStranky = new QTimer(this);
-    QTimer *timerOpozdenyStart = new QTimer(this);
+    QTimer *timerLedSideCycleViaPoints = new QTimer(this);
+    QTimer *timerScrollingText = new QTimer(this);
+    QTimer *timerUpdateSeconds = new QTimer(this);
+    QTimer *timerLabelPageSwitch = new QTimer(this);
+    QTimer *timerDelayedStart = new QTimer(this);
 
     //funkce spolecne (vsem typum zobrazeni)
     int doplneniPromennych ();
-    void prepniObrazovku(int vstup);
+    void switchTabs(int tabNumber);
     int formatZobrazeni();
 
-    QString textVerze();
-    int vykresleniPrijatychDat();
-    void vymazTabulku(QTableWidget *tableWidget);
-    void vykresliSluzbyDoTabulky(QVector<QZeroConfService> seznamSluzeb);
-    void vsechnyConnecty();
+    QString createProgramVersionString();
+    int showReceivedData();
+    void eraseTable(QTableWidget *tableWidget);
+
+    void serviceListToTable(QVector<QZeroConfService> seznamSluzeb);
+
+    void allConnects();
 
 
     //funkce pomocne
 
-    int jeVRozsahu(int index, int pocetHodnot); //nepouzito
+    int isInRange(int index, int pocetHodnot); //nepouzito
 
     //funkce hlavni
     void hlavniAutoformat();
-    void hlavniNaplnPoleLabelu();
-    void hlavniVykresliCisloLinky(ZastavkaCil aktZastavka, QString subMode);
-    void hlavniVykresliNacestne();
-    void hlavniVykresliNazevCile(QString alias);
-    void hlavniVykresliPrestupy(QVector<Prestup> seznamPrestupu);
-    void hlavniVykresliSkupinuZastavekNew(QVector<ZastavkaCil> zastavky, QVector<ZastavkaCil> zastavkyNavazny, int index);
-    void hlavniVykresliZastavkyiPasma(QVector<ZastavkaCil> aktZastavky, QVector<ZastavkaCil> navazZastavky);
-    void hlavniVymazObrazovku();
-    void hlavniZobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
-    void hlavniZobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
-    void naplnPoleLinky(QString subMode, Linka line, QLabel *label, int velikostPiktogramu, bool prestup);
-    void naplnPoleLinky2_4(QString subMode, Linka line, QLabel *label, int velikostPiktogramu, bool prestup);
+    void displayLabelFillArray();
+    void displayLabelLineName(StopPointDestination aktZastavka, QString subMode);
+    void displayLabelViaPoints();
+    void displayLabelDestination(QString alias);
+    void displayLabelConnectionList(QVector<Connection> seznamPrestupu);
+    void displayLabelStopList(QVector<StopPointDestination> zastavky, QVector<StopPointDestination> zastavkyNavazny, int index);
+    void displayLabelStopFareZone(QVector<StopPointDestination> aktZastavky, QVector<StopPointDestination> navazZastavky);
+    void displayLabelEraseInformation();
+    void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
+    void displayLabelShowFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
+    void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
+    void displayLabelDrawLineNumber2_4(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
 
-    QVector<QWidget*> strankyKeStridani;
+    QVector<QWidget*> pageCycleList;
 
     //funkce led
-    void ledAktualizujZobrazeniVirtualnichPanelu(QVector<ZastavkaCil> zastavky, CestaUdaje stav);
+    void ledUpdateDisplayedInformation(QVector<StopPointDestination> zastavky, VehicleState stav);
     void ledNaplnFront(QString linka, QString horniRadek, QString dolniRadek);
     void ledNaplnInner(QString linka, QString horniRadek, QString dolniRadek);
-    QVector<QString> ledNaplnNacestyBocniPanel(ZastavkaCil aktualniZastavka);
-    QVector<QString> ledNaplnNacestyVnitrniPanel(ZastavkaCil aktualniZastavka);
+    QVector<QString> ledNaplnNacestyBocniPanel(StopPointDestination aktualniZastavka);
+    QVector<QString> ledNaplnNacestyVnitrniPanel(StopPointDestination aktualniZastavka);
     void ledInicializujVirtualniPanely();
     void ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex);
     void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
@@ -222,31 +227,31 @@ private:
     bool svgOpenFile(const QString &fileName);
 
     //obecne Udalosti
-    int jeVozidloNaKonecne(CestaUdaje stav, QVector<ZastavkaCil> zastavky);
-    void navratJizda();
-    void natahniKonstanty();
+    int isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestination> zastavky);
+    void displayLabelReturnToStopList();
+    void loadConstants();
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
     void skryjAnnouncement(); //nepouzito
     void skryjZmenuPasma(); //nepouzito
 
-    void vyprselCasovacSluzby();
-    void vymazObrazovku();
 
-    void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
-    void zobrazZmenuPasma(QVector<Pasmo> zPasem, QVector<Pasmo> naPasma);
-    void zobrazKonecnou();
+    void eraseDisplayedInformation();
+
+    void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
+    void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
+    void displayLabelShowPageFinalStop();
 
     //klávesové zkratky
-    QShortcut *keyCtrlF;  // Entity of Ctrl + D hotkeys
-    QShortcut  *keyF1;
-    QShortcut  *keyF2;
-    QShortcut  *keyF3;
-    QShortcut  *keyF4;
-    QShortcut  *keyF5;
-    QShortcut  *keyF6;
-    QShortcut  *keyF7;
-    QShortcut  *keyF8;
+    QShortcut *keyCtrlF; // Entity of Ctrl + D hotkeys
+    QShortcut *keyF1;
+    QShortcut *keyF2;
+    QShortcut *keyF3;
+    QShortcut *keyF4;
+    QShortcut *keyF5;
+    QShortcut *keyF6;
+    QShortcut *keyF7;
+    QShortcut *keyF8;
 
     //polozky potrebne pro vykresleni svg
     QGraphicsScene scene;
@@ -255,50 +260,56 @@ private:
     bool svgVykresleni();
 
     //vektory Labelu Hlavni
-    QVector<QLabel*> seznamLabelNazevZastavky;
-    QVector<QLabel*> seznamLabelPasmoDolni;
-    QVector<QLabel*> seznamLabelPasmoHorni;
+    QVector<QLabel*> labelListStopPointName;
+    QVector<QLabel*> labelListFareZoneUpper;
+    QVector<QLabel*> labelListFareZoneLower;
 
-    QVector<QLabel*> seznamLabelPrestupLinka;
-    QVector<QLabel*> seznamLabelPrestupCil;
-    QVector<QLabel*> seznamLabelPrestupOdjezd;
-    QVector<QLabel*> seznamLabelPrestupNastupiste;
+    QVector<QLabel*> labelListConnectionLine;
+    QVector<QLabel*> labelListConnectionDestination;
+    QVector<QLabel*> labelListConnectionDeparture;
+    QVector<QLabel*> labelListConnectionPlatform;
 
 
-    void vyskakovaciOkno(QString poznamka);
+    void popUpWindow(QString poznamka);
 
 
     QString nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka);
-    void zastavkaCilDoTabulky(ZastavkaCil zastavkaCil, bool navazny);
-    void vsechnyZastavkyDoTabulky(QVector<ZastavkaCil> seznamZastavek, bool navazny);
-    void inicializaceFontu();
-    void inicializaceKlavesovychZkratek();
-    void jednaZastavkaCilDoLabelu(ZastavkaCil aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
-    QVector<ZastavkaCil> vektorZastavkaCilZahoditZacatek(QVector<ZastavkaCil> vstup, int zacatek);
+    void zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool navazny);
+    void vsechnyZastavkyDoTabulky(QVector<StopPointDestination> seznamZastavek, bool navazny);
+    void initilializeFonts();
+    void initilializeShortcuts();
+    void displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
+    QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);
 
 private slots:
 
     void on_actiontestPolozka_triggered();
     //tlacitka
     void on_pushButton_menu_refreh_clicked();
-    void on_pushButton_menu_sluzby_clicked();
-    void on_pushButton_menu_hlavni_clicked();
-    void on_pushButton_menu_casovac_clicked();
+    void on_pushButton_menuServices_clicked();
+
+
+    void on_pushButton_menu_timer_clicked();
     void on_pushButton_menu_quit_clicked();
     void on_pushButton_menu_svg_clicked();
-    void on_pushButton_menu_led_clicked();
-    void on_pushButton_menu_fullscreen_clicked();
+    void on_pushButton_menuDisplayLabel_clicked();
+    void on_pushButton_menuDisplayLed_clicked();
+    void on_pushButton_menuFullscreen_clicked();
+
 
     //sloty
-    int slotKazdouVterinu();
-    void slotPosunNacestnych();
+    int slotEverySecond();
+    void slotMoveScrollingText();
     void slotHlavniStridejStranky();
     void slotToggleFullscreen();
     void slotXmlDoPromenne(QString vstupniXml);
     void slotSluzbaDoTabulky(QZeroConfService zcs);
-    void slotOpozdenyStart();
-    void slotAktualizaceTabulkySluzeb();
-    void slotZtrataOdberu();
+    void slotDelayedStartup();
+    void slotUpdateServiceTable();
+    void slotSubscriptionLost();
+
+    void slotHeartbeatTimeout();
+
 
 
 public slots:

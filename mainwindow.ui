@@ -82,7 +82,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton_menu_hlavni">
+        <widget class="QPushButton" name="pushButton_menuDisplayLabel">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -122,7 +122,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menu_led">
+        <widget class="QPushButton" name="pushButton_menuDisplayLed">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -140,7 +140,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menu_sluzby">
+        <widget class="QPushButton" name="pushButton_menuServices">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -159,7 +159,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menu_casovac">
+        <widget class="QPushButton" name="pushButton_menu_timer">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -177,7 +177,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menu_fullscreen">
+        <widget class="QPushButton" name="pushButton_menuFullscreen">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -239,7 +239,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -273,102 +273,6 @@
         <property name="spacing">
          <number>0</number>
         </property>
-        <item row="4" column="0">
-         <widget class="QFrame" name="frame_debug">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="frameShape">
-           <enum>QFrame::StyledPanel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Raised</enum>
-          </property>
-          <property name="lineWidth">
-           <number>3</number>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="4">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>LocationState</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="5">
-            <widget class="QLabel" name="label_locationState">
-             <property name="text">
-              <string>unknown</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>verze:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="label_currentStopIndex">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_build">
-             <property name="text">
-              <string>verze</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_announcement">
-             <property name="text">
-              <string>announcement</string>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_zmena">
-             <property name="text">
-              <string>zmena</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>CurrentStopIndex</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="6">
-            <widget class="QLabel" name="label_6">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>STOP</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
         <item row="0" column="0" colspan="2">
          <widget class="QStackedWidget" name="stackedWidget_obrazovka">
           <property name="sizePolicy">
@@ -855,7 +759,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3534,11 +3438,173 @@ border-radius: 30px;
           </widget>
          </widget>
         </item>
+        <item row="4" column="0" colspan="2">
+         <widget class="QFrame" name="frame_debug">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="lineWidth">
+           <number>3</number>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>LocationState</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_locationState">
+             <property name="text">
+              <string>unknown</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>verze:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_currentStopIndex">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_build">
+             <property name="text">
+              <string>verze</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_announcement">
+             <property name="text">
+              <string>announcement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_zmena">
+             <property name="text">
+              <string>zmena</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>CurrentStopIndex</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>STOP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QLabel" name="label_subscribedVersion">
+             <property name="text">
+              <string>subscribedVersion</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_seznamSluzeb">
-       <layout class="QGridLayout" name="gridLayout_10">
+       <layout class="QGridLayout" name="gridLayout_10"/>
+      </widget>
+      <widget class="QWidget" name="page_casovac">
+       <layout class="QGridLayout" name="gridLayout_9">
         <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox">
+          <property name="title">
+           <string>Zadání intervalu</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_19">
+           <item>
+            <widget class="QLineEdit" name="lineEdit"/>
+           </item>
+           <item>
+            <widget class="QPushButton" name="tlacitkoNastavVteriny">
+             <property name="text">
+              <string>Nastav interval</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Zbývající čas (s)</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="labelZbyvajiciVteriny">
+             <property name="font">
+              <font>
+               <pointsize>40</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>xx s</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="2">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Odebíráno?</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_odebirano">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="0" colspan="3">
          <widget class="QTableWidget" name="tabulkaSubscriberu">
           <column>
            <property name="text">
@@ -3567,161 +3633,73 @@ border-radius: 30px;
           </column>
          </widget>
         </item>
+        <item row="2" column="0" colspan="3">
+         <widget class="QGroupBox" name="groupBox_5">
+          <property name="title">
+           <string>Vybraný publisher</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_23">
+           <item>
+            <widget class="QTableWidget" name="tableWidget_odebirano">
+             <column>
+              <property name="text">
+               <string>Název služby</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Verze</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>IP Adresa</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>port</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>host</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="0" colspan="3">
+         <widget class="QGroupBox" name="groupBox_4">
+          <property name="title">
+           <string>Seznam zastávek</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_22">
+           <item>
+            <widget class="QTableWidget" name="tableWidget_zastavky">
+             <column>
+              <property name="text">
+               <string>nazev zastavky</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>linka</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>cil</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="page_casovac">
-       <widget class="QGroupBox" name="groupBox">
-        <property name="geometry">
-         <rect>
-          <x>160</x>
-          <y>60</y>
-          <width>132</width>
-          <height>97</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Zadání intervalu</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_19">
-         <item>
-          <widget class="QLineEdit" name="lineEdit"/>
-         </item>
-         <item>
-          <widget class="QPushButton" name="tlacitkoNastavVteriny">
-           <property name="text">
-            <string>Nastav interval</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_2">
-        <property name="geometry">
-         <rect>
-          <x>340</x>
-          <y>70</y>
-          <width>154</width>
-          <height>150</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Zbývající čas (s)</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="labelZbyvajiciVteriny">
-           <property name="font">
-            <font>
-             <pointsize>60</pointsize>
-            </font>
-           </property>
-           <property name="text">
-            <string>xx s</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_3">
-        <property name="geometry">
-         <rect>
-          <x>610</x>
-          <y>60</y>
-          <width>73</width>
-          <height>59</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Odebíráno?</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_5">
-         <item>
-          <widget class="QLabel" name="label_odebirano">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_4">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>390</y>
-          <width>791</width>
-          <height>235</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Seznam zastávek</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_22">
-         <item>
-          <widget class="QTableWidget" name="tableWidget_zastavky">
-           <column>
-            <property name="text">
-             <string>nazev zastavky</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>linka</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>cil</string>
-            </property>
-           </column>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QGroupBox" name="groupBox_5">
-        <property name="geometry">
-         <rect>
-          <x>60</x>
-          <y>230</y>
-          <width>811</width>
-          <height>151</height>
-         </rect>
-        </property>
-        <property name="title">
-         <string>Vybraný publisher</string>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout_23">
-         <item>
-          <widget class="QTableWidget" name="tableWidget_odebirano">
-           <column>
-            <property name="text">
-             <string>Název služby</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>Verze</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>IP Adresa</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>port</string>
-            </property>
-           </column>
-           <column>
-            <property name="text">
-             <string>host</string>
-            </property>
-           </column>
-          </widget>
-         </item>
-        </layout>
-       </widget>
       </widget>
       <widget class="QWidget" name="page_svg">
        <layout class="QGridLayout" name="gridLayout">

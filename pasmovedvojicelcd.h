@@ -1,20 +1,22 @@
 #ifndef PASMOVEDVOJICELCD_H
 #define PASMOVEDVOJICELCD_H
 #include <QObject>
-#include "VDV301struktury/pasmo.h"
+
+
+#include "VDV301DataStructures/farezone.h"
 
 
 class PasmoveDvojiceLcd
 {
 public:
     PasmoveDvojiceLcd();
-    Pasmo prvniPasmo;
+    FareZone prvniPasmo;
 
-    QVector<Pasmo> pasmaSystemu1;
-    QVector<Pasmo> pasmaSystemu2;
+    QVector<FareZone> pasmaSystemu1;
+    QVector<FareZone> pasmaSystemu2;
 
 
-    int roztridPasma(QVector<Pasmo> vstup);
+    int roztridPasma(QVector<FareZone> vstup);
 
 };
 
