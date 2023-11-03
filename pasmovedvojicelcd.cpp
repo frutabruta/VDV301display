@@ -58,3 +58,26 @@ int PasmoveDvojiceLcd::roztridPasma(QVector<FareZone> vstup)
 
     return 1;
 }
+
+
+int PasmoveDvojiceLcd::roztridPasma2_3(QVector<FareZone> vstup)
+{
+    pasmaSystemu1.clear();
+    pasmaSystemu2.clear();
+
+
+    if(vstup.isEmpty())
+    {
+        return 0;
+    }
+
+
+    pasmaSystemu1.append(vstup.first());
+    if(vstup.count()>1)
+    {
+        pasmaSystemu2.append(vstup.at(1));
+    }
+
+
+    return 1;
+}

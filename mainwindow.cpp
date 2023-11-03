@@ -111,7 +111,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     eraseDisplayedInformation();
     timerDelayedStart->start();
 
- //   QStringList seznamParametru = qCommandLineParser.optionNames();
+    //   QStringList seznamParametru = qCommandLineParser.optionNames();
 
 
 
@@ -731,6 +731,7 @@ void MainWindow::displayLabelStopList(QVector<StopPointDestination> zastavky,QVe
                 return;
             }
         }
+
         displayLabelStopPoint(aktualniZastavka,navaznySpoj,labelListStopPointName.at(i),labelListFareZoneUpper.at(i),labelListFareZoneLower.at(i));
 
     }
@@ -743,16 +744,18 @@ void MainWindow::displayLabelStopList(QVector<StopPointDestination> zastavky,QVe
 void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel* nazevZastavky, QLabel* dolniPasmo, QLabel* horniPasmo)
 {
     PasmoveDvojiceLcd pasmoveDvojiceLcd;
-    pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.stopPoint.fareZoneList);
+
 
     if(cisSubscriber.version()=="2.4")
     {
         //   QString nahradIconPiktogramem(QString vstup);
         //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
+        pasmoveDvojiceLcd.roztridPasma2_3(aktualniZastavka.stopPoint.fareZoneList);
         nazevZastavky->setText(labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
     }
     else
     {
+        pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.stopPoint.fareZoneList);
         nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.stopPoint.NameLcd,aktualniZastavka.stopPoint.iconList,nazevZastavky->font().pixelSize() )));
 
     }
@@ -855,7 +858,7 @@ int MainWindow::doplneniPromennych()
         else
         {
             nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.destination.NameLcd,aktualniZastavka.destination.iconList,ui->Lcil->font().pixelSize()));
-           // nazevLinky=aktualniZastavka.line.lineName;
+            // nazevLinky=aktualniZastavka.line.lineName;
         }
 
     }

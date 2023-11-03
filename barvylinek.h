@@ -35,7 +35,7 @@ public:
     QString barva_PozadiD_150_150_150 ="rgb(150,150,150)"; //Pozadí D
     QString barva_Zastavka_180_180_180 ="rgb(180,180,180)"; //Zastávka
     QString barva_bila_255_255_255 ="rgb(255,255,255)"; //bila
-    QString barva_cerna_0_0_0 ="rgb(0,0,0);"; //bila
+    QString barva_cerna_0_0_0 ="rgb(0,0,0);"; //cerna
 
     QString barva_Vyluky_255_170_30 ="rgb(255,170,30)";
     QString barva_Cervena_200_0_20 ="rgb(200,0,20)";

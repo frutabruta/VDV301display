@@ -14,6 +14,14 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20231103_1633
+    - VDV301publisher
+        - new version
+    - VDV301subscriber
+        - mServiceName fix
+    - fixed default color of line to black on white background
+    - parsing of 1.0 FareZones
+
 - 20231030_1914
     - VDV301publisher
         - GetDeviceConfiguration fix

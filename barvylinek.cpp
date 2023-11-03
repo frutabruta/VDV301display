@@ -148,9 +148,17 @@ StylLinkyOld BarvyLinek::linkaDoStylu(QString &subMode, Line linka )
     {
         vystup.pozadi="background-color:"+barvaPozadi[subMode]+";";
     }
+    else
+    {
+        vystup.pozadi="background-color:"+barva_bila_255_255_255+";";
+    }
     if(barvaTextu.contains(subMode))
     {
         vystup.text="color:"+barvaTextu[subMode]+";";
+    }
+    else
+    {
+        vystup.text="color:"+barva_cerna_0_0_0+";";
     }
     qDebug()<<"linka "<<linka.lineName<<" submode "<<subMode;
 

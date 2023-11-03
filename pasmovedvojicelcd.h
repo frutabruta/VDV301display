@@ -18,6 +18,7 @@ public:
 
     int roztridPasma(QVector<FareZone> vstup);
 
+    int roztridPasma2_3(QVector<FareZone> vstup);
 };
 
 #endif // PASMOVEDVOJICELCD_H

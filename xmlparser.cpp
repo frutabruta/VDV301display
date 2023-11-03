@@ -42,7 +42,7 @@ int XmlParser::VytvorSeznamZastavek1_0(QVector<StopPointDestination> &docasnySez
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-        return 0;
+            return 0;
     }
 
 
@@ -97,7 +97,7 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docas
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-        return 0;
+            return 0;
     }
 
 
@@ -154,7 +154,7 @@ int XmlParser::VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySez
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-        return 0;
+            return 0;
     }
 
 
@@ -475,7 +475,7 @@ int XmlParser::tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySe
 
 
         //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
-        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_3(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
         globalniSeznamZastavek2_4.insert(poradiZastavky,docasnaZastavka);
     }
@@ -651,6 +651,25 @@ QVector<FareZone> XmlParser::vyparsujPasma_2_2CZ1_0(QDomElement zastavka)
         FareZone aktPasmo;
         aktPasmo.system=domPasma.at(i).firstChildElement("FareZoneType").firstChildElement("FareZoneTypeName").firstChildElement("Value").firstChild().nodeValue();
         aktPasmo.name=domPasma.at(i).firstChildElement("FareZoneLongName").firstChildElement("Value").firstChild().nodeValue();
+        vystupniVektorPasmo.append(aktPasmo);
+
+    }
+
+    return vystupniVektorPasmo;
+}
+
+QVector<FareZone> XmlParser::vyparsujPasma_2_3(QDomElement zastavka)
+{
+    qDebug()<<Q_FUNC_INFO;
+    QVector<FareZone> vystupniVektorPasmo;
+
+    QDomNodeList domPasma = zastavka.elementsByTagName("FareZone");
+
+    for (int i=0;i<domPasma.count();i++)
+    {
+        FareZone aktPasmo;
+        //  aktPasmo.system=domPasma.at(i).firstChildElement("Value").firstChildElement("FareZoneTypeName").firstChildElement("Value").firstChild().nodeValue();
+        aktPasmo.name=domPasma.at(i).firstChildElement("Value").firstChild().nodeValue();
         vystupniVektorPasmo.append(aktPasmo);
 
     }
@@ -835,7 +854,7 @@ Line XmlParser::priznakyDoLinky(QVector<QString> vstup, Line vstupniLinka)
     // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;
     foreach(QString textPriznak,vstup)
     {
-      //  qDebug()<<"priznakLinky: "<<textPriznak;
+        //  qDebug()<<"priznakLinky: "<<textPriznak;
         if(textPriznak=="Night")
         {
             vstupniLinka.isNight=true;

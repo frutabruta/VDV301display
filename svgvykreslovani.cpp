@@ -14,7 +14,7 @@ SvgVykreslovani::SvgVykreslovani(QString cesta)
 
 QDomDocument SvgVykreslovani::souborDoQDomDocument(QString cesta)
 {
-    qDebug()<<"SvgVykreslovani::souborDoQDomDocument";
+    qDebug()<<Q_FUNC_INFO;
 
     QDomDocument xmlDocument;
     QFile f(cesta);
@@ -32,7 +32,7 @@ QDomDocument SvgVykreslovani::souborDoQDomDocument(QString cesta)
 
 int SvgVykreslovani::qDomDocumentDoSouboru(QString cestaVystupnihoSouboru,QDomDocument vstupniDom)
 {
-    qDebug()<<"SvgVykreslovani::qDomDocumentDoSouboru";
+    qDebug()<<Q_FUNC_INFO;
 
 
 
@@ -51,7 +51,7 @@ int SvgVykreslovani::qDomDocumentDoSouboru(QString cestaVystupnihoSouboru,QDomDo
 
 bool SvgVykreslovani::svgReplaceName(QString souborVstup, QString souborVystup,QString cil, QString zst0, QString zst1, QString zst2)
 {
-    qDebug()<<"SvgVykreslovani::svgReplaceName";
+    qDebug()<<Q_FUNC_INFO;
     QDomDocument xmlDocument;
     QFile f(souborVstup);
     if(!f.open(QIODevice::ReadOnly))
@@ -111,7 +111,7 @@ bool SvgVykreslovani::individualniNahrazeni(QDomDocument &xmlDocument, QString h
 
 QVector<StopPointDestination> SvgVykreslovani::vytvorNasledujiciZastavky(QVector<StopPointDestination> vsechnyZastavky, int index, int limit)
 {
-    qDebug()<<"SvgVykreslovani::vytvorNasledujiciZastavky";
+    qDebug()<<Q_FUNC_INFO;
     QVector<StopPointDestination> vyslednySeznam;
 
 
@@ -150,7 +150,7 @@ QDomDocument SvgVykreslovani::vymazZastavky(QDomDocument xmlDocument)
 
 QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector<StopPointDestination> nasledujiciZastavky)
 {
-    qDebug()<<"SvgVykreslovani::vykresliZastavky";
+    qDebug()<<Q_FUNC_INFO;
 
     for (int i=0;i<5;i++)
     {
@@ -178,7 +178,7 @@ QDomDocument SvgVykreslovani::vykresliZastavky(QDomDocument xmlDocument, QVector
 
 QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument, QVector<StopPoint> nacestneZastavky)
 {
-    qDebug()<<"SvgVykreslovani::vykresliNacestneZastavky";
+    qDebug()<<Q_FUNC_INFO;
     if (nacestneZastavky.count()==0)
     {
         return xmlDocument;
@@ -200,7 +200,7 @@ QDomDocument SvgVykreslovani::vykresliNacestneZastavky(QDomDocument xmlDocument,
 
 QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<StopPoint> nacestneZastavky)
 {
-    qDebug()<<"SvgVykreslovani::vykresliNacestneZastavkyText";
+    qDebug()<<Q_FUNC_INFO;
     if (nacestneZastavky.count()==0)
     {
         return "";
@@ -221,7 +221,7 @@ QString SvgVykreslovani::vykresliNacestneZastavkyText( QVector<StopPoint> nacest
 
 void SvgVykreslovani::vymazObrazovku()
 {
-    qDebug()<<"SvgVykreslovani::vymazObrazovku()";
+    qDebug()<<Q_FUNC_INFO;
 
 
 
@@ -243,7 +243,7 @@ void SvgVykreslovani::vymazObrazovku()
 
 QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<StopPointDestination> globalniZastavky, VehicleState stav)
 {
-    qDebug()<<"SvgVykreslovani::vykresliCil";
+    qDebug()<<Q_FUNC_INFO;
 
     if (stav.currentStopIndex0<globalniZastavky.count())
     {
@@ -258,7 +258,7 @@ QDomDocument SvgVykreslovani::vykresliCil(QDomDocument xmlDocument, QVector<Stop
 
 QDomDocument SvgVykreslovani::vykresliLinku(QDomDocument xmlDocument, QVector<StopPointDestination> globalniZastavky, VehicleState stav)
 {
-    qDebug()<<"SvgVykreslovani::vykresliLinku";
+    qDebug()<<Q_FUNC_INFO;
 
     if (stav.currentStopIndex0<globalniZastavky.count())
     {
@@ -273,7 +273,7 @@ QDomDocument SvgVykreslovani::vykresliLinku(QDomDocument xmlDocument, QVector<St
 
 QString SvgVykreslovani::pasmaDoStringu(QVector<FareZone> seznamPasem)
 {
-    qDebug()<<"SvgVykreslovani::pasmaDoStringu";
+    qDebug()<<Q_FUNC_INFO;
     QString vysledek;
     if (seznamPasem.size()>0)
     {
@@ -310,20 +310,20 @@ int SvgVykreslovani::aktualizujVse(QVector<StopPointDestination> zastavky, Vehic
 
 void SvgVykreslovani::zobrazZmenuPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {
-    qDebug()<<"SvgVykreslovani::zobrazZmenuPasma";
+    qDebug()<<Q_FUNC_INFO;
 }
 
 
 void SvgVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
 {
-    qDebug()<<"SvgVykreslovani::obarviPozadiPristi";
+    qDebug()<<Q_FUNC_INFO;
 
 }
 
 
 void SvgVykreslovani::zobrazAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
-    qDebug()<<"SvgVykreslovani::hlavniZobrazAnnoucement";
+    qDebug()<<Q_FUNC_INFO;
 
 
 }

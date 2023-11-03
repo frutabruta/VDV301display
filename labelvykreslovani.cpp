@@ -9,13 +9,13 @@ LabelVykreslovani::LabelVykreslovani()
 
 void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel *stitek)
 {
-    qDebug() << "LabelVykreslovani::naplnZmenaLabel";
+    qDebug()<<Q_FUNC_INFO;
     stitek->setText(vstup);
 }
 
 QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {
-    qDebug() << "LabelVykreslovani::vyrobTextZmenyPasma";
+    qDebug()<<Q_FUNC_INFO;
     QString vysledek = "";
     vysledek += "prosím pozor! Změna tarifního pásma: " + SvgVykreslovani::pasmaDoStringu(zPasem) + "->" + SvgVykreslovani::pasmaDoStringu(naPasma);
 
@@ -48,7 +48,7 @@ void LabelVykreslovani::labelNastavVelikost(QLabel *label, int bodovaVelikost, f
 
 void LabelVykreslovani::zmensiCisloLinkyLabel(QLabel *label)
 {
-    qDebug() << "LabelVykreslovani::naplnCisloLinkyLabel";
+    qDebug()<<Q_FUNC_INFO;
 
     QFont puvodniFont = label->font();
     puvodniFont.setPixelSize(label->height());
@@ -91,25 +91,21 @@ void LabelVykreslovani::zmensiCisloLinkyLabel(QLabel *label)
 
 void LabelVykreslovani::naplnNazevCileLabel(QString vstup, QLabel *label)
 {
-    qDebug() << "LabelVykreslovani::naplnNazevCileLabel";
-
-
-
-
+    qDebug()<<Q_FUNC_INFO;
 
     label->setText(vstup);
 }
 
 void LabelVykreslovani::naplnAnouncementLabel(QString vstup, QLabel *label)
 {
-    qDebug() << "LabelVykreslovani::naplnAnouncementLabel";
+    qDebug()<<Q_FUNC_INFO;
     label->setText(vstup);
     //ui->label_announcement->setText(vstup);
 }
 
 void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe)
 {
-    qDebug() << "LabelVykreslovani::obarviPozadiPristi";
+    qDebug()<<Q_FUNC_INFO;
     //
     qframe->setStyleSheet("background-color :" + barvaPozadi + " ; color : " + barvaPisma + "; ");
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
@@ -147,7 +143,7 @@ QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska
 
 QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze)
 {
-    qDebug() << "MainWindow::vykresliNacestneZastavkyText";
+    qDebug()<<Q_FUNC_INFO;
     if (nacestneZastavky.count() == 0)
     {
         return "";
