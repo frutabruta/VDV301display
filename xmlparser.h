@@ -18,7 +18,7 @@ public:
     int linka=0;
     QString cil="";
 
-    QMap<int,StopPointDestination> globalniSeznamZastavek2_4;
+    QMap<int,StopPointDestination> globalStopList2_3;
 
     // SeznamZastavek docasnySeznamZastavek[] ;
     //SeznamZastavek* docasnySeznamZastavek = new SeznamZastavek[MAX_ZAST2];
@@ -51,13 +51,13 @@ public:
     QVector<StopPoint> vyparsujNacestneZastavky1_0(QDomElement zastavka);
     QVector<FareZone> vyparsujPasma_1_0(QDomElement zastavka);
 
-    int tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
-    int VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
+    int tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
+    int VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
 
 
 private:
     QVector<StopPoint> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
-    QVector<StopPoint> vyparsujNacestneZastavky2_4(QDomNode displayContent);
+    QVector<StopPoint> vyparsujNacestneZastavky2_3(QDomNode displayContent);
     QVector<FareZone> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);
     QVector<FareZone> vyparsujPasma_2_3(QDomElement zastavka);
     QString stareXml="";

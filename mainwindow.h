@@ -281,6 +281,10 @@ private:
     void displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
     QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);
 
+    void notOnLine();
+    void displayAbnormalStateScreen(QString displayState);
+    void displayNormalOnLineState();
+    void receivedDataVariablesReset();
 private slots:
 
     void on_actiontestPolozka_triggered();

@@ -55,13 +55,18 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     allConnects();
 
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+
+
+    //ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+
     displayLabelFillArray(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
 
 
     formatZobrazeni();
     hlavniAutoformat();
+
+    displayAbnormalStateScreen("NO SUBSCRIPTION");
+
 
 
     cisSubscriber.isSubscriptionActive=false ;
@@ -96,6 +101,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     */
 
     ui->label_build->setText(createProgramVersionString());
+    ui->label_lcd_version->setText(createProgramVersionString());
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
     //
@@ -210,7 +216,7 @@ void MainWindow::loadConstants()
     QStringList podporovaneVerze;
     podporovaneVerze<<"1.0";
     podporovaneVerze<<"2.2CZ1.0";
-    podporovaneVerze<<"2.4";
+    podporovaneVerze<<"2.3";
 
     if(podporovaneVerze.contains(verzeVdv301))
     {
@@ -338,7 +344,8 @@ void MainWindow::slotSubscriptionLost()
 {
     qDebug() <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_odebirano);
-    eraseDisplayedInformation();
+    receivedDataVariablesReset();
+    displayAbnormalStateScreen("NO SUBSCRIPTION");
 }
 
 void MainWindow::slotMoveScrollingText()
@@ -480,17 +487,21 @@ void MainWindow::displayLabelFillArray()
 void MainWindow::eraseDisplayedInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
     displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
     ledVymazPanely();
-
-
 }
 
 
 void MainWindow::displayLabelEraseInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
+
+
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+
     ui->Lcil->setText("");
     ui->label_linka->setText("");
     ui->label_nacestne->setText("");
@@ -536,10 +547,6 @@ int MainWindow::showReceivedData()
     displayLabelViaPoints();
 
     pageCycleList.clear();
-
-
-
-
 
     //strankyKeStridani.push_back(ui->page_hlavni_2);
 
@@ -601,15 +608,11 @@ int MainWindow::showReceivedData()
 
     }
 
-
     if(!currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList.isEmpty())
     {
         pageCycleList.push_back(ui->page_prestupy);
         displayLabelConnectionList(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList);
-
-
     }
-
 
     //   hlavniVykresliNasledne();
 
@@ -647,7 +650,7 @@ void MainWindow::displayLabelLineName(StopPointDestination aktZastavka,QString s
     //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
     qDebug()<<"vypis linky:"<<aktZastavka.destination.NameLcd<<" "<<aktZastavka.line.lineName<<" vylukova:"<<aktZastavka.line.isDiversion ;
 
-    if(cisSubscriber.version()=="2.4")
+    if(cisSubscriber.version()=="2.3")
     {
         displayLabelDrawLineNumber2_4(subMode,aktZastavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
 
@@ -666,7 +669,7 @@ void MainWindow::displayLabelDestination(QString nazev)
     qDebug() <<  Q_FUNC_INFO;
 
     labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
-    /* if(cisSubscriber.verze()=="2.4")
+    /* if(cisSubscriber.verze()=="2.3")
     {
        labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
 
@@ -746,7 +749,7 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
     PasmoveDvojiceLcd pasmoveDvojiceLcd;
 
 
-    if(cisSubscriber.version()=="2.4")
+    if(cisSubscriber.version()=="2.3")
     {
         //   QString nahradIconPiktogramem(QString vstup);
         //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
@@ -757,7 +760,6 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
     {
         pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.stopPoint.fareZoneList);
         nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.stopPoint.NameLcd,aktualniZastavka.stopPoint.iconList,nazevZastavky->font().pixelSize() )));
-
     }
 
 
@@ -773,7 +775,11 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
         if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
         {
 
-            zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
+            if(!pasmoveDvojiceLcd.pasmaSystemu1.first().system.isEmpty())
+            {
+                zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
+            }
+
         }
         dolniPasmo->setText(zkratkaSystemuDvojtecka+pasmaString1);
         dolniPasmo->setFont(fontLabelFareZoneLarge);
@@ -792,7 +798,15 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
         horniPasmo->setFont(fontLabelFareZoneSmall );
         dolniPasmo->setFont(fontLabelFareZoneSmall );
 
-        horniPasmo->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+        if(!pasmoveDvojiceLcd.pasmaSystemu2.first().system.isEmpty())
+        {
+            horniPasmo->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+        }
+        else
+        {
+            horniPasmo->setText(pasmaString2);
+        }
+
     }
 
     if(navazny==false)
@@ -850,7 +864,7 @@ int MainWindow::doplneniPromennych()
         StopPointDestination aktualniZastavka=currentDestinationPointList.at(stopIndex);
         //nazevLinky=aktualniZastavka.line.lineName;
 
-        if(cisSubscriber.version()=="2.4")
+        if(cisSubscriber.version()=="2.3")
         {
             //nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu));
             nazevCile=labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
@@ -1104,8 +1118,8 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     xmlParser.nactiXML(vstupniXml);
 
 
-    currentDestinationPointList.clear();
-    nextDestinationPointList.clear();
+    receivedDataVariablesReset();
+
 
     qDebug()<<"timestamp:"<<xmlParser.vyparsujTimestamp(xmlParser.dokument).toString(Qt::ISODate);
 
@@ -1114,26 +1128,30 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     {
         if(!xmlParser.VytvorSeznamZastavek1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            eraseDisplayedInformation();
+            notOnLine();
+            return;
         }
     }
     else if(cisSubscriber.version()=="2.2CZ1.0")
     {
         if(!xmlParser.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            eraseDisplayedInformation();
+            notOnLine();
+            return;
         }
     }
-    else if(cisSubscriber.version()=="2.4")
+    else if(cisSubscriber.version()=="2.3")
     {
-        if(!xmlParser.VytvorSeznamZastavek2_4(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            eraseDisplayedInformation();
+            notOnLine();
+            return;
         }
     }
     else
     {
-        qDebug()<<"neznámá verze";
+        displayAbnormalStateScreen("INCORRECT SUBSCRIBER VERSION");
+        return;
     }
 
 
@@ -1159,6 +1177,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         {
             if(isInRange(stopIndex,currentDestinationPointList.count()))
             {
+                displayNormalOnLineState();
                 doplneniPromennych();
                 showReceivedData();
                 formatZobrazeni();
@@ -1169,7 +1188,8 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
             else
             {
                 //vyskakovaciOkno("index zastávky: "+QString::number(indexZastavky));
-                qDebug()<<"index zastavky je 0";
+
+                displayAbnormalStateScreen("STOP INDEX OUT OF RANGE");
 
             }
 
@@ -1177,13 +1197,13 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         }
         else
         {
-            eraseDisplayedInformation();
-            qDebug()<<"nepodarilo se vyparsovat zastavky";
+            displayAbnormalStateScreen("COULDNT PARSE STOPS");
+
         }
     }
     else
     {
-        eraseDisplayedInformation();
+        displayAbnormalStateScreen("STOP INDEX <0");
     }
 
 
@@ -1193,6 +1213,35 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     //NetworkCleanup();
 
 }
+
+void MainWindow::receivedDataVariablesReset()
+{
+    currentDestinationPointList.clear();
+    nextDestinationPointList.clear();
+    vsechnyZastavkyDoTabulky(currentDestinationPointList,0);
+}
+
+
+void MainWindow::displayAbnormalStateScreen(QString displayState)
+{
+    qDebug()<<Q_FUNC_INFO<<" "<<displayState;
+    ui->label_lcd_state->setText(displayState);
+    eraseDisplayedInformation();
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
+
+}
+
+void MainWindow::notOnLine()
+{
+    displayAbnormalStateScreen("EMPTY STOP LIST");
+}
+
+void MainWindow::displayNormalOnLineState()
+{
+
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+}
+
 
 
 
@@ -1733,7 +1782,7 @@ void MainWindow::displayLabelConnectionList(QVector<Connection> seznamPrestupu)
 
 
 
-        if(cisSubscriber.version()=="2.4")
+        if(cisSubscriber.version()=="2.3")
         {
             displayLabelDrawLineNumber2_4(aktualniPrestup.subMode,aktualniPrestup.line, labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
 

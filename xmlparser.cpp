@@ -145,7 +145,7 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docas
 
 
 
-int XmlParser::VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
+int XmlParser::VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
@@ -173,23 +173,23 @@ int XmlParser::VytvorSeznamZastavek2_4(QVector<StopPointDestination> &docasnySez
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
+        tripDoSeznamuZastavek2_3(docasnySeznamZst,tripInformation);
         break ;
     case 2:
         qDebug()<<"existuje jeden navazny spoj";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
+        tripDoSeznamuZastavek2_3(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2);
+        tripDoSeznamuZastavek2_3(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     default:
         qDebug()<<"moc navaznych spoju";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZst,tripInformation);
+        tripDoSeznamuZastavek2_3(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_4(docasnySeznamZstNavazny,tripInformation2);
+        tripDoSeznamuZastavek2_3(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
@@ -371,7 +371,7 @@ int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &doca
 
 
 
-int XmlParser::tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
+int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 
@@ -431,7 +431,7 @@ int XmlParser::tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySe
             if(ref=="Lcd")
             {
                 docasnaZastavka.destination.NameLcd=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-                docasnaZastavka.viaPoints=vyparsujNacestneZastavky2_4(aktualniDisplayContent);
+                docasnaZastavka.viaPoints=vyparsujNacestneZastavky2_3(aktualniDisplayContent);
                 //   docasnaZastavka.destination.StopName =polozka.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement().text();
 
             }
@@ -477,7 +477,7 @@ int XmlParser::tripDoSeznamuZastavek2_4(QVector<StopPointDestination> &docasnySe
         //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
         docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_3(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
-        globalniSeznamZastavek2_4.insert(poradiZastavky,docasnaZastavka);
+        globalStopList2_3.insert(poradiZastavky,docasnaZastavka);
     }
     if (docasnySeznamZst.size()==0)
     {
@@ -582,7 +582,7 @@ QVector<StopPoint> XmlParser::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zasta
 }
 
 
-QVector<StopPoint> XmlParser::vyparsujNacestneZastavky2_4(QDomNode displayContent)
+QVector<StopPoint> XmlParser::vyparsujNacestneZastavky2_3(QDomNode displayContent)
 {
     qDebug()<<Q_FUNC_INFO;
     QDomNodeList nacesty = displayContent.toElement().elementsByTagName("ViaPoint");

@@ -14,6 +14,16 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20231108_0022
+    - VDV301publisher
+        - 2.4 functions renamed to 2.3
+    - VDV301subscriber
+        - 2.4 functions renamed to 2.3
+        - fix of DNS-SD service name update (leading to unsuccessful subscription)
+    - new Out of Service screen
+        - display system status when not on line
+    - default config nastaveni.ini
+        - added available options to select CIS version
 - 20231103_1633
     - VDV301publisher
         - new version

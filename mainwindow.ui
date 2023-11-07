@@ -286,7 +286,7 @@
 QLabel{color:#FFFFFF}</string>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page_hlavni">
            <property name="sizePolicy">
@@ -3224,7 +3224,7 @@ border-radius: 30px;
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_verze">
+          <widget class="QWidget" name="page_version">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -3235,7 +3235,7 @@ border-radius: 30px;
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="label_lcd_state">
                 <property name="font">
                  <font>
                   <family>roboto</family>
@@ -3243,7 +3243,7 @@ border-radius: 30px;
                  </font>
                 </property>
                 <property name="text">
-                 <string>PID</string>
+                 <string>NO DATA</string>
                 </property>
                </widget>
               </item>
@@ -3311,7 +3311,7 @@ border-radius: 30px;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_12">
+                 <widget class="QLabel" name="label_lcd_version">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                     <horstretch>0</horstretch>

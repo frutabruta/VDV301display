@@ -152,15 +152,24 @@ QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<StopPoint> naces
     QString nacestyString = "";
 
     //  nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
+    QString separator=" ";
     for (int i = 0; i < nacestneZastavky.count(); i++)
     {
-        if (verze == "2.4")
+        if(i==0)
         {
-            nacestyString += " – " + nahradIconPiktogramem(nacestneZastavky.at(i).NameLcd, velikostPiktogramu, slozkaPiktogramu);
+            separator="";
         }
         else
         {
-            nacestyString += " – " + doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).iconList, velikostPiktogramu);
+            separator=" - ";
+        }
+        if (verze == "2.3")
+        {
+            nacestyString += separator + nahradIconPiktogramem(nacestneZastavky.at(i).NameLcd, velikostPiktogramu, slozkaPiktogramu);
+        }
+        else
+        {
+            nacestyString += separator + doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).iconList, velikostPiktogramu);
         }
     }
 
