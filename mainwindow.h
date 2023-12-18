@@ -145,6 +145,7 @@ private:
     //_LED fonty
     QFont fontLed1;
     QFont fontLed3;
+    QFont fontLed3v;
     QFont fontLed5;
     QFont fontLed8;
     QFont fontLed10;
@@ -315,6 +316,8 @@ private slots:
     void slotHeartbeatTimeout();
 
 
+
+    void on_pushButton_unsubscribe_clicked();
 
 public slots:
 

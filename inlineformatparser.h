@@ -29,6 +29,7 @@ public:
     InlineFormatParser();
 
     QString vyparsujText(QString vstup, int vyskaObrazku, QString slozka);
+    QString vyparsujTextLed(QString vstup);
 private:
     QDomNode iconToQDomNode(Icon vstup, int vyskaObrazku, QString slozka);
     QDomNode colorToQDomNode(Color input);

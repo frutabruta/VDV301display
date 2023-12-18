@@ -46,6 +46,7 @@ public:
     QString nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka);
 
 
+    QString replaceIconOuterDisplays(QString vstup);
 signals:
 
 };

@@ -141,14 +141,16 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_menuServices">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
          <property name="font">
           <font>
            <pointsize>20</pointsize>
           </font>
          </property>
          <property name="text">
-          <string>F4 Seznam 
- služeb</string>
+          <string>F4 xxxx</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -166,7 +168,7 @@
           </font>
          </property>
          <property name="text">
-          <string>F5 Časovač</string>
+          <string>F5 DEBUG</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -239,7 +241,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -286,7 +288,7 @@
 QLabel{color:#FFFFFF}</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_hlavni">
            <property name="sizePolicy">
@@ -548,8 +550,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>712</width>
-                      <height>79</height>
+                      <width>170</width>
+                      <height>58</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -759,7 +761,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3640,7 +3642,14 @@ border-radius: 30px;
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_23">
            <item>
-            <widget class="QTableWidget" name="tableWidget_odebirano">
+            <widget class="QPushButton" name="pushButton_unsubscribe">
+             <property name="text">
+              <string>Unsubscribe</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QTableWidget" name="tableWidget_selectedSubscriber">
              <column>
               <property name="text">
                <string>Název služby</string>
@@ -3768,14 +3777,14 @@ border-radius: 30px;
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="115,460">
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="115,460,0">
           <property name="spacing">
            <number>0</number>
           </property>
           <item>
            <widget class="QLabel" name="labelFrontLine">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+             <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3949,6 +3958,19 @@ border-radius: 30px;
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_2">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>

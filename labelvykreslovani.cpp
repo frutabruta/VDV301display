@@ -303,3 +303,39 @@ QString LabelVykreslovani::nahradIconPiktogramem(QString vstup, int vyskaObrazku
     return vystup;
 }
 
+QString LabelVykreslovani::replaceIconOuterDisplays(QString vstup)
+{
+    // bude nahrazeno v inlineformatparser, jen kvuli nacestnym zastavkam
+    qDebug() << Q_FUNC_INFO;
+    QString vystup = "";
+
+    QDomDocument dokument;
+    dokument.setContent("<wrapper>" + vstup + "</wrapper>");
+
+    QDomNodeList seznamIkon = dokument.firstChildElement().elementsByTagName("icon");
+    qDebug() << dokument.toByteArray();
+
+    qDebug() << "pocet ikon: " << seznamIkon.count();
+
+    QString jenNazev = dokument.firstChildElement().firstChild().nodeValue();
+    vystup = jenNazev;
+
+    /*
+    labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.NameLcd,aktualniZastavka.seznamPiktogramu,seznamLabelNazevZastavky.at(i)->font().pixelSize() ))
+*/
+    for (int i = 0; i < seznamIkon.length(); i++)
+    {
+        QDomNode ikona = seznamIkon.at(i);
+        QString nazev = ikona.attributes().namedItem("type").firstChild().nodeValue();
+        QString alternativniText = ikona.firstChild().nodeValue();
+        qDebug() << nazev;
+        vystup += alternativniText;
+
+    }
+
+    // <icon type="c_RequestStop" >ŕ</icon>
+
+    return vystup;
+}
+
+

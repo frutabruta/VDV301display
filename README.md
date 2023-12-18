@@ -14,6 +14,17 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20231214_1723
+    - VDV301publisher
+        - cancel subscription
+    - VDV301subscriber
+        - cancel subscription
+        - setPortNumber fix
+    - InlineFormatParser
+        - parser for LED screens
+    - added unsubscribe button
+
+
 - 20231108_0022
     - VDV301publisher
         - 2.4 functions renamed to 2.3

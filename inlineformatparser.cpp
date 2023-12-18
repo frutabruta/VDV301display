@@ -139,6 +139,143 @@ QString InlineFormatParser::vyparsujText(QString vstup, int vyskaObrazku, QStrin
     return vystupString;
 }
 
+QString InlineFormatParser::vyparsujTextLed(QString vstup)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+
+    QDomDocument vystup;
+
+    QDomElement html=vystup.createElement("html");
+    QDomElement body=vystup.createElement("body");
+
+    vstup="<wrapper>"+vstup+"</wrapper>";
+    QXmlStreamReader xmlReader(vstup);
+
+
+    QString openElement="";
+
+    QString prostyText="";
+
+
+    Color barva;
+    Icon ikona;
+
+    QString vystupText2="";
+
+
+    while (!xmlReader.atEnd()) {
+        xmlReader.readNext();
+
+        if (xmlReader.isStartElement()) {
+            prostyText="";
+            // Handle element start tag
+            QString elementName = xmlReader.name().toString();
+            // Process attributes if needed
+            QXmlStreamAttributes attributes = xmlReader.attributes();
+            while (!attributes.isEmpty()) {
+                QString attributeName = attributes.front().name().toString();
+                QString attributeValue = attributes.front().value().toString();
+                // Process attribute
+
+                if(attributeName=="bg")
+                {
+                    barva.bg=attributeValue;
+                }
+                else if(attributeName=="fg")
+                {
+                    barva.fg=attributeValue;
+                }
+                else if(attributeName=="type")
+                {
+                    ikona.type=attributeValue;
+                }
+
+
+                attributes.pop_front();
+            }
+
+
+            if(elementName=="color")
+            {
+
+            }
+            else if(elementName=="icon")
+            {
+
+            }
+
+            openElement=elementName;
+        }
+        else if (xmlReader.isCharacters())
+        {
+            // Handle text content
+            QString textContent = xmlReader.text().toString();
+
+            if((openElement=="")||(openElement=="wrapper"))
+            {
+                body.appendChild(vystup.createTextNode(textContent ));
+                vystupText2+=textContent;
+            }
+            else if(openElement=="color")
+            {
+                barva.content=textContent;
+            }
+            else if(openElement=="icon")
+            {
+                ikona.alternative=textContent;
+            }
+
+
+
+            // Process text content
+        }
+        else if (xmlReader.isEndElement())
+        {
+            // Handle element end tag
+            QString elementName = xmlReader.name().toString();
+
+
+            if(openElement=="")
+            {
+
+            }
+            else if(openElement=="color")
+            {
+                body.appendChild(colorToQDomNode(barva));
+                vystupText2+=barva.content;
+            }
+            else if(openElement=="icon")
+            {
+                body.appendChild(iconToQDomNode(ikona,1,"xx"));
+                vystupText2+=ikona.alternative;
+
+                ikona.alternative="";
+                ikona.type="";
+            }
+
+
+
+
+            openElement="";
+
+        }
+    }
+
+    if (xmlReader.hasError()) {
+        // Handle XML parsing error
+    }
+
+
+    html.appendChild(body);
+    vystup.appendChild(html);
+
+    QString vystupString=vystup.toString();
+    qDebug()<<"vystup formatovani: "<<vystupString;
+    return vystupText2;
+    //return vystupString;
+}
+
 
 QDomNode InlineFormatParser::iconToQDomNode(Icon vstup, int vyskaObrazku, QString slozka)
 {

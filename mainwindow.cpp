@@ -134,6 +134,7 @@ void MainWindow::initilializeFonts()
     fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
     fdb.addApplicationFont(":/fonts/fonty/pid-3v.ttf");
 
+
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
     fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
@@ -145,6 +146,9 @@ void MainWindow::initilializeFonts()
 
     fontLed3.setFamily("21-PID 3");
     fontLed3.setPointSize(65);
+
+    fontLed3v.setFamily("pid 3v");
+    fontLed3v.setPointSize(65);
 
     fontLed5.setFamily("21-PID 5");
     fontLed5.setPointSize(65);
@@ -343,7 +347,7 @@ int MainWindow::slotEverySecond()
 void MainWindow::slotSubscriptionLost()
 {
     qDebug() <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_odebirano);
+    eraseTable(ui->tableWidget_selectedSubscriber);
     receivedDataVariablesReset();
     displayAbnormalStateScreen("NO SUBSCRIPTION");
 }
@@ -1025,7 +1029,7 @@ void MainWindow::slotSluzbaDoTabulky(QZeroConfService zcs)
 void MainWindow::slotPublisherDoTabulky(QZeroConfService zcs)
 {
     qDebug() <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_odebirano);
+    eraseTable(ui->tableWidget_selectedSubscriber);
     qint32 row;
     QTableWidgetItem *cell;
 
@@ -1039,25 +1043,25 @@ void MainWindow::slotPublisherDoTabulky(QZeroConfService zcs)
 
  */
 
-    row = ui->tableWidget_odebirano->rowCount();
-    ui->tableWidget_odebirano->insertRow(row);
+    row = ui->tableWidget_selectedSubscriber->rowCount();
+    ui->tableWidget_selectedSubscriber->insertRow(row);
     cell = new QTableWidgetItem(nazev);
-    ui->tableWidget_odebirano->setItem(row, 0, cell);
+    ui->tableWidget_selectedSubscriber->setItem(row, 0, cell);
 
     cell = new QTableWidgetItem(verze);
-    ui->tableWidget_odebirano->setItem(row, 1, cell);
+    ui->tableWidget_selectedSubscriber->setItem(row, 1, cell);
 
     cell = new QTableWidgetItem(ipadresa);
-    ui->tableWidget_odebirano->setItem(row, 2, cell);
+    ui->tableWidget_selectedSubscriber->setItem(row, 2, cell);
 
     cell = new QTableWidgetItem(QString::number(port));
-    ui->tableWidget_odebirano->setItem(row, 3, cell);
+    ui->tableWidget_selectedSubscriber->setItem(row, 3, cell);
 
     cell = new QTableWidgetItem(host);
-    ui->tableWidget_odebirano->setItem(row, 4, cell);
+    ui->tableWidget_selectedSubscriber->setItem(row, 4, cell);
 
 
-    ui->tableWidget_odebirano->resizeColumnsToContents();
+    ui->tableWidget_selectedSubscriber->resizeColumnsToContents();
 
 
     qDebug()<<"sluzbaDoTabulky_konec";
@@ -1379,6 +1383,7 @@ void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRad
 {
     qDebug() <<  Q_FUNC_INFO;
 
+
     if (dolniRadek!="")
     {
         ui->labelFrontSingle->setVisible(false);
@@ -1424,6 +1429,7 @@ void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRade
 
 
     ui->labelSideTopRow->setText(horniRadek);
+
     ledZarovnejPretecenyRadek(ui->labelSideTopRow);
 
 
@@ -1482,20 +1488,19 @@ void MainWindow::ledInicializujVirtualniPanely()
 
     ui->labelFrontSingle->setFont(fontLed5);
 
-
-    ui->labelFrontTopRow->setFont(fontLed1);
-    ui->labelFrontBottomRow->setFont(fontLed1);
-
+    ui->labelFrontTopRow->setFont(fontLed3);
+    ui->labelFrontBottomRow->setFont(fontLed3);
 
     ui->labelSideTopRow->setFont(fontLed1);
     ui->labelSideBottomRow->setFont(fontLed1);
 
-
-
-
     ui->labelInnerLine->setFont(fontLed3);
     ui->labelInnerBottomRow->setFont(fontLed1);
     ui->labelInnerTopRow->setFont(fontLed1);
+    /* font 3v is not size optimised at the moment
+    ui->labelInnerBottomRow->setFont(fontLed3v);
+    ui->labelInnerTopRow->setFont(fontLed3v);
+    */
 
     if(ui->labelFrontLine->text().length()>3)
     {
@@ -1533,15 +1538,29 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
 
     StopPointDestination aktZast=zastavky.at(stav.currentStopIndex0);
 
-    ledNaplnFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
 
-    //ledNaplnSide(aktZast.line.LineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
-    ledNaplnSide(aktZast.line.lineName,aktZast.destination.NameSide,"" );
+    if(cisSubscriber.version()=="2.3")
+    {
+        ledNaplnFront(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameFront2));
+        ledNaplnSide(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameSide),"" );
+        ledNaplnRear(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName));
+        ledNaplnInner(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.stopPoint.NameInner));
+
+        textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
+        textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+
+    }
+    else
+    {
+
+    ledNaplnFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
+    ledNaplnSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
     ledNaplnRear(aktZast.line.lineName);
     ledNaplnInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
 
     textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
     textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+    }
 
     ledZmenVelikostPanelu();
 
@@ -2107,3 +2126,12 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
     return vystup;
 
 }
+
+void MainWindow::on_pushButton_unsubscribe_clicked()
+{
+    cisSubscriber.unsubscribe();
+
+    slotSubscriptionLost();
+
+}
+

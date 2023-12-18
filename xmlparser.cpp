@@ -415,8 +415,19 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
             QString ref=aktualniDisplayContent.firstChildElement("DisplayContentRef").firstChildElement("Value").firstChild().nodeValue();
             if(ref=="Front")
             {
-                docasnaZastavka.destination.NameFront=aktualniDisplayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
 
+                QDomNodeList destinationNameList=aktualniDisplayContent.toElement().firstChildElement("Destination").elementsByTagName("DestinationName");
+
+                if(destinationNameList.count()>0)
+                {
+                   docasnaZastavka.destination.NameFront=destinationNameList.at(0).firstChildElement("Value").firstChild().nodeValue();
+
+                }
+                if(destinationNameList.count()>1)
+                {
+                    docasnaZastavka.destination.NameFront2=destinationNameList.at(1).firstChildElement("Value").firstChild().nodeValue();
+
+                }
             }
             if(ref=="Side")
             {
@@ -697,16 +708,10 @@ int XmlParser::nactiVehicleGroup(VehicleState &stav,QDomDocument xmlko )
 int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &type ,QString &headline,QString &text )
 {
     qDebug()<<Q_FUNC_INFO;
-
-
-
     QDomElement root = xmlko.firstChildElement();
-
-
 
     qDebug()<<"root name "<<root.nodeName();
     QDomElement allData=root.firstChildElement("AllData");
-
 
     if (allData.isNull())
     {
@@ -714,23 +719,14 @@ int XmlParser::nactiAdditionalTextMessage(QDomDocument xmlko, QString &type ,QSt
         return 0;
     }
 
-
-
     qDebug()<<"alldata name "<<allData.nodeName();
 
-
-
     QDomElement tripInformation=allData.firstChildElement("TripInformation");
-
-
 
     QDomElement additionalTextMessage=tripInformation.firstChildElement("AdditionalTextMessage");
     type=additionalTextMessage.firstChildElement("AdditionalTextMessageType").firstChildElement("Value").firstChild().nodeValue();
     headline=additionalTextMessage.firstChildElement("AdditionalTextMessageHeadline").firstChildElement("Value").firstChild().nodeValue();
     text=additionalTextMessage.firstChildElement("AdditionalTextMessageText").firstChildElement("Value").firstChild().nodeValue();
-
-
-
 
     qDebug()<<"additional text je "<<type<<" "<<headline<<" "<<text;
 
@@ -783,8 +779,6 @@ int XmlParser::existujeNavaznySpoj(QVector<StopPointDestination> seznamZastavek)
 
 
 }
-
-
 
 
 
