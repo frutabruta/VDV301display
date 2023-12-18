@@ -45,6 +45,26 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 */
 
 
+    QTranslator translator;
+    //settings.setValue("General/language","en");
+    QString selectedLanguage=settings.value("app/language").toString();
+
+    qDebug()<<"new language:"<<selectedLanguage;
+    if (selectedLanguage=="en")
+    {
+        qApp->removeTranslator(&translator);
+        translator.load(":/lang_en.qm");
+        qApp->installTranslator(&translator);
+    }
+    else if ((selectedLanguage=="cs")||(selectedLanguage=="cz"))
+    {
+        qApp->removeTranslator(&translator);
+        translator.load(":/lang_cs.qm");
+        qApp->installTranslator(&translator);
+    }
+    ui->retranslateUi(this);
+
+
     labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
 
     initilializeFonts();
@@ -327,7 +347,7 @@ QString MainWindow::createProgramVersionString()
 int MainWindow::slotEverySecond()
 {
 
-    ui->labelZbyvajiciVteriny->setText(QString::number(cisSubscriber.timerHeartbeatCheck.remainingTime()/1000) );
+    ui->label_remainingSeconds->setText(QString::number(cisSubscriber.timerHeartbeatCheck.remainingTime()/1000) );
     ui->label_odebirano->setText(QString::number(cisSubscriber.isSubscriptionActive));
 
     if(showTimeColon==true)
@@ -628,6 +648,8 @@ int MainWindow::showReceivedData()
     vsechnyZastavkyDoTabulky(currentDestinationPointList,false);
     vsechnyZastavkyDoTabulky(nextDestinationPointList,true);
 
+    connectionListToTable(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList,ui->tableWidget_connections);
+
     return 1;
 }
 
@@ -758,7 +780,7 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
         //   QString nahradIconPiktogramem(QString vstup);
         //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
         pasmoveDvojiceLcd.roztridPasma2_3(aktualniZastavka.stopPoint.fareZoneList);
-        nazevZastavky->setText(labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
+        nazevZastavky->setText(labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
     }
     else
     {
@@ -871,7 +893,7 @@ int MainWindow::doplneniPromennych()
         if(cisSubscriber.version()=="2.3")
         {
             //nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu));
-            nazevCile=labelVykreslovani.inlineFormatParser.vyparsujText(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+            nazevCile=labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
         }
         else
         {
@@ -1075,9 +1097,6 @@ void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool nav
     QTableWidgetItem *cell;
 
 
-
-
-
     /*
     qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
@@ -1086,7 +1105,7 @@ void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool nav
     row = ui->tableWidget_zastavky->rowCount();
     ui->tableWidget_zastavky->insertRow(row);
 
-    cell = new QTableWidgetItem(zastavkaCil.stopPoint.NameLcd);
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.stopPoint.NameLcd));
 
     if(navazny)
     {
@@ -1094,23 +1113,57 @@ void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool nav
     }
     ui->tableWidget_zastavky->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(zastavkaCil.line.lineName);
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.line.lineName));
     ui->tableWidget_zastavky->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(zastavkaCil.destination.NameLcd);
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.destination.NameLcd));
     ui->tableWidget_zastavky->setItem(row, 2, cell);
-
-
-
-
-
-
-
 
     ui->tableWidget_zastavky->resizeColumnsToContents();
 
-
     qDebug()<<"sluzbaDoTabulky_konec";
+}
+
+void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTableWidget* tableWidget)
+{
+
+        eraseTable(tableWidget);
+
+
+    foreach(Connection connection, connectionList)
+    {
+        connectionToTable(connection,tableWidget);
+    }
+}
+void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWidget)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
+
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+
+    row = tableWidget->rowCount();
+   tableWidget->insertRow(row);
+
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed( connection.line.lineName));
+
+    tableWidget->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(connection.destinationName);
+    tableWidget->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
+    tableWidget->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
+    tableWidget->setItem(row, 3, cell);
+
+    tableWidget->resizeColumnsToContents();
+
 
 }
 
@@ -1541,10 +1594,10 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
 
     if(cisSubscriber.version()=="2.3")
     {
-        ledNaplnFront(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameFront2));
-        ledNaplnSide(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.destination.NameSide),"" );
-        ledNaplnRear(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName));
-        ledNaplnInner(labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.vyparsujTextLed(aktZast.stopPoint.NameInner));
+        ledNaplnFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
+        ledNaplnSide(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
+        ledNaplnRear(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName));
+        ledNaplnInner(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.stopPoint.NameInner));
 
         textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
         textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
@@ -1757,13 +1810,7 @@ int MainWindow::isInRange(int index, int pocetHodnot)
 void MainWindow::displayLabelConnectionList(QVector<Connection> seznamPrestupu)
 {
     qDebug() <<  Q_FUNC_INFO;
-    //ui->stackedWidget_prostredek->setCurrentWidget(ui->page_prestupy);
 
-    /*
-    foreach(QFrame* ramec,seznamFramePrestup)
-    {
-        // ramec->hide();
-    }*/
     foreach(QFrame* label,labelListConnectionDestination)
     {
         label->hide();
@@ -1889,7 +1936,7 @@ void MainWindow::displayLabelDrawLineNumber2_4( QString subMode, Line line, QLab
 
     label->setStyleSheet(linkaStyleSheetStandard);
 
-    QString vyslednyText= labelVykreslovani.inlineFormatParser.vyparsujText(line.lineName, label->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+    QString vyslednyText= labelVykreslovani.inlineFormatParser.parseTextLcd(line.lineName, label->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
     label->setText( vyslednyText);
 
 
@@ -2132,6 +2179,18 @@ void MainWindow::on_pushButton_unsubscribe_clicked()
     cisSubscriber.unsubscribe();
 
     slotSubscriptionLost();
+
+}
+
+
+void MainWindow::on_tlacitkoNastavVteriny_clicked()
+{
+
+}
+
+
+void MainWindow::on_pushButton_menu_refresh_clicked()
+{
 
 }
 

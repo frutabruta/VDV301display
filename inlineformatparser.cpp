@@ -7,7 +7,7 @@ InlineFormatParser::InlineFormatParser()
 
 
 
-QString InlineFormatParser::vyparsujText(QString vstup, int vyskaObrazku, QString slozka)
+QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QString slozka)
 {
     qDebug()<<Q_FUNC_INFO;
 
@@ -139,7 +139,7 @@ QString InlineFormatParser::vyparsujText(QString vstup, int vyskaObrazku, QStrin
     return vystupString;
 }
 
-QString InlineFormatParser::vyparsujTextLed(QString vstup)
+QString InlineFormatParser::parseTextLed(QString vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 

@@ -64,6 +64,7 @@ public:
 
 
 
+
 private:
 
     QCommandLineParser qCommandLineParser;
@@ -242,6 +243,7 @@ private:
     void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
     void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
     void displayLabelShowPageFinalStop();
+     void notOnLine();
 
     //klávesové zkratky
     QShortcut *keyCtrlF; // Entity of Ctrl + D hotkeys
@@ -282,10 +284,12 @@ private:
     void displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
     QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);
 
-    void notOnLine();
+
     void displayAbnormalStateScreen(QString displayState);
     void displayNormalOnLineState();
     void receivedDataVariablesReset();
+    void connectionToTable(Connection connection, QTableWidget *tableWidget);
+    void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
 private slots:
 
     void on_actiontestPolozka_triggered();
@@ -318,6 +322,10 @@ private slots:
 
 
     void on_pushButton_unsubscribe_clicked();
+
+    void on_tlacitkoNastavVteriny_clicked();
+
+    void on_pushButton_menu_refresh_clicked();
 
 public slots:
 

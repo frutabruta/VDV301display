@@ -14,6 +14,21 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20231218_1910
+    - translations
+        -
+        - added option to change UI language in nastaveni.ini
+        - added translation files in resources
+        - default language in MainWindow editor is now English
+    - InlineFormatParser::vyparsujText renamed to InlineFormatParser::parseTextLcd
+    - InlineFormatParser::vyparsujTextLed renamed to InlineFormatParser::parseTextLed
+    - XmlParser
+        - added import of scheduledDepartureTime to connections
+    - UI
+        - added list of downloaded connections
+    
+  
+
 - 20231214_1723
     - VDV301publisher
         - cancel subscription

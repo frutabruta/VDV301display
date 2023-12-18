@@ -807,6 +807,8 @@ QVector<Connection> XmlParser::nactiPrestupy(QDomElement vstup)
         aktualniPrestup.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
         aktualniPrestup.expectedDepartureTime=QDateTime::fromString( aktualniElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
 
+        aktualniPrestup.scheduledDepartureTime=QDateTime::fromString( aktualniElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
+
         QDateTime timestamp = aktualniPrestup.expectedDepartureTime;
         // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
         //  timestamp = timestamp.toLocalTime(); // convert to local time

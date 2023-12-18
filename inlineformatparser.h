@@ -28,11 +28,11 @@ class InlineFormatParser : public QObject
 public:
     InlineFormatParser();
 
-    QString vyparsujText(QString vstup, int vyskaObrazku, QString slozka);
-    QString vyparsujTextLed(QString vstup);
+    static QString parseTextLcd(QString vstup, int vyskaObrazku, QString slozka);
+    static QString parseTextLed(QString vstup);
 private:
-    QDomNode iconToQDomNode(Icon vstup, int vyskaObrazku, QString slozka);
-    QDomNode colorToQDomNode(Color input);
+    static QDomNode iconToQDomNode(Icon vstup, int vyskaObrazku, QString slozka);
+    static QDomNode colorToQDomNode(Color input);
 };
 
 #endif // INLINEFORMATPARSER_H

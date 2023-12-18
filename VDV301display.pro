@@ -122,4 +122,14 @@ FORMS += \
         mainwindow.ui
 
 RESOURCES += \
+    lang.qrc \
     resources.qrc
+
+
+TRANSLATIONS += \
+    lang_en.ts\
+    lang_cs.ts
+
+
+RESOURCES += \
+    lang.qrc
