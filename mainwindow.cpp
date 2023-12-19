@@ -1340,7 +1340,22 @@ void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
 void MainWindow::on_pushButton_menu_quit_clicked()
 {
     qDebug() <<  Q_FUNC_INFO;
-    MainWindow::close();
+
+    connect(&cisSubscriber,&CisSubscriber::signalIsUnsubscriptionSuccesful,this,&MainWindow::slotShutdownReady);
+    cisSubscriber.unsubscribe();
+ //   connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
+}
+
+void MainWindow::slotShutdownReady(bool isReady)
+{
+    if(isReady)
+    {
+        MainWindow::close();
+    }
+    else
+    {
+        popUpWindow(tr("unsubscripiton was unsuccessful"));
+    }
 }
 
 

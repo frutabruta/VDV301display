@@ -14,9 +14,12 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20231218_2011
+    - VDV301subscriber
+        - now reacts to successful/unsuccessful Unsubscription
+    - QUIT button now performs Unsubscription and closes application only if Unsubscription is successful
 - 20231218_1910
     - translations
-        -
         - added option to change UI language in nastaveni.ini
         - added translation files in resources
         - default language in MainWindow editor is now English
@@ -26,7 +29,6 @@ Program can be launched with parameter to change settings location.
         - added import of scheduledDepartureTime to connections
     - UI
         - added list of downloaded connections
-    
   
 
 - 20231214_1723

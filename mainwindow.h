@@ -327,6 +327,7 @@ private slots:
 
     void on_pushButton_menu_refresh_clicked();
 
+    void slotShutdownReady(bool isReady);
 public slots:
 
     void slotParametryZarizeniDoConfigu();
