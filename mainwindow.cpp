@@ -1354,7 +1354,7 @@ void MainWindow::slotShutdownReady(bool isReady)
     }
     else
     {
-        popUpWindow(tr("unsubscripiton was unsuccessful"));
+        popUpWindow(tr("unsubscription was unsuccessful"));
     }
 }
 

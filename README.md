@@ -14,6 +14,12 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240104_1657
+    - VDV301subscriber
+        - unsubscription fix
+        - HTTP status check
+    - VDV301publisher
+        - unsubscription fix
 - 20231218_2011
     - VDV301subscriber
         - now reacts to successful/unsuccessful Unsubscription
