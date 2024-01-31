@@ -6,6 +6,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     ui(new Ui::MainWindow),
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
+
     deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
     settings(configurationFilePath, QSettings::IniFormat)
 {
@@ -85,6 +86,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     formatZobrazeni();
     hlavniAutoformat();
 
+    stopRequestedDectivated();
+
     displayAbnormalStateScreen("NO SUBSCRIPTION");
 
 
@@ -147,18 +150,18 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 void MainWindow::initilializeFonts()
 {
 
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/pid-3v.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/21-pid-1.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/21-pid-3.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/21-pid-5.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/21-pid-8.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/21-pid-10.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/pid-3v.ttf");
 
 
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
-    fdb.addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/Roboto-Regular.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/Roboto-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/Roboto-Black.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
 
 
     fontLed1.setFamily("21-PID 1");
@@ -528,7 +531,7 @@ void MainWindow::displayLabelEraseInformation()
 
     ui->Lcil->setText("");
     ui->label_linka->setText("");
-    ui->label_nacestne->setText("");
+ //   ui->label_nacestne->setText("");
 
     ui->frame_navaznySpoj->hide();
 
@@ -556,7 +559,17 @@ int MainWindow::showReceivedData()
 
     displayLabelEraseInformation();
     ui->label_locationState->setText(vehicleState.locationState);
+
+    if(vehicleState.isVehicleStopRequested)
+    {
+        stopRequestedActivated();
+    }
+    else
+    {
+        stopRequestedDectivated();
+    }
     ui->label_currentStopIndex->setText(QString::number(vehicleState.currentStopIndex0+1));
+
 
     if(vehicleState.currentStopIndex0<0 )
     {
@@ -666,7 +679,18 @@ void MainWindow::vsechnyZastavkyDoTabulky(QVector<StopPointDestination> seznamZa
     }
 }
 
+void MainWindow::stopRequestedActivated()
+{
+    ui->label_stopRequested->setText("<b>STOP</b>");
 
+    ui->label_stopRequestedSymbol->show();
+}
+
+void MainWindow::stopRequestedDectivated()
+{
+    ui->label_stopRequested->setText("STOP");
+    ui->label_stopRequestedSymbol->hide();
+}
 
 
 
@@ -858,20 +882,31 @@ void MainWindow::displayLabelViaPoints()
 {
     qDebug() <<  Q_FUNC_INFO;
 
+    /*
     if(currentDestinationPointList.isEmpty())
     {
         ui->label_nacestne->setText("");
         return;
     }
+    */
 
-    QString novyVstup=labelVykreslovani.vykresliNacestneZastavkyText(currentDestinationPointList.at(vehicleState.currentStopIndex0).viaPoints, ui->label_nacestne->font().pixelSize(),cisSubscriber.version());
+    QString newViapointString=labelVykreslovani.vykresliNacestneZastavkyText(currentDestinationPointList.at(vehicleState.currentStopIndex0).viaPoints, ui->label_nacestne->font().pixelSize(),cisSubscriber.version());
 
 
 
-    if(ui->label_nacestne->text()!=novyVstup)
+    if(oldViapointString!=newViapointString)
     {
-        timerScrollingText->start(intervalScrollingText);
-        ui->label_nacestne->setText( novyVstup);
+        ui->label_nacestne->setText( newViapointString);
+        timerScrollingText->start(intervalScrollingText);        
+        oldViapointString=newViapointString;
+    }
+    else
+    {
+        if(ui->label_nacestne->text()=="")
+        {
+           ui->label_nacestne->setText( newViapointString);
+        }
+
     }
 
 
@@ -2207,5 +2242,40 @@ void MainWindow::on_tlacitkoNastavVteriny_clicked()
 void MainWindow::on_pushButton_menu_refresh_clicked()
 {
 
+}
+
+
+void MainWindow::on_radioButton_stateDefective_clicked()
+{
+    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateDefective);
+    deviceManagementService1_0.slotDataUpdate();
+}
+
+
+void MainWindow::on_radioButton_stateWarning_clicked()
+{
+    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateWarning);
+    deviceManagementService1_0.slotDataUpdate();
+}
+
+
+void MainWindow::on_radioButton_stateNotAvailable_clicked()
+{
+    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateNotavailable);
+    deviceManagementService1_0.slotDataUpdate();
+}
+
+
+void MainWindow::on_radioButton_stateRunning_clicked()
+{
+    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateRunning);
+    deviceManagementService1_0.slotDataUpdate();
+}
+
+
+void MainWindow::on_radioButton_stateReadyForShutdown_clicked()
+{
+    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateReadyForShutdown);
+    deviceManagementService1_0.slotDataUpdate();
 }
 

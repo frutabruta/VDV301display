@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1088</width>
-    <height>888</height>
+    <width>1332</width>
+    <height>965</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -553,8 +553,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>712</width>
-                      <height>79</height>
+                      <width>898</width>
+                      <height>83</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -764,7 +764,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3089,7 +3089,7 @@ border-radius: 30px;
                    <number>0</number>
                   </property>
                   <item row="0" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,1,0,0">
                     <property name="spacing">
                      <number>0</number>
                     </property>
@@ -3216,6 +3216,13 @@ border-radius: 30px;
                       </property>
                       <property name="scaledContents">
                        <bool>false</bool>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLabel" name="label_stopRequestedSymbol">
+                      <property name="text">
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt;STOP&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt; REQUESTED&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                      </widget>
                     </item>
@@ -3524,7 +3531,7 @@ border-radius: 30px;
             </widget>
            </item>
            <item row="0" column="6">
-            <widget class="QLabel" name="label_6">
+            <widget class="QLabel" name="label_stopRequested">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
                <horstretch>0</horstretch>
@@ -3553,6 +3560,27 @@ border-radius: 30px;
       </widget>
       <widget class="QWidget" name="page_casovac">
        <layout class="QGridLayout" name="gridLayout_9">
+        <item row="0" column="1">
+         <widget class="QGroupBox" name="groupBox_2">
+          <property name="title">
+           <string>Remaining time (s)</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_remainingSeconds">
+             <property name="font">
+              <font>
+               <pointsize>40</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>xx s</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
         <item row="0" column="0">
          <widget class="QGroupBox" name="groupBox">
           <property name="title">
@@ -3575,44 +3603,72 @@ border-radius: 30px;
           </layout>
          </widget>
         </item>
-        <item row="0" column="2">
-         <widget class="QGroupBox" name="groupBox_3">
-          <property name="title">
-           <string>Subscribed?</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QLabel" name="label_odebirano">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
+        <item row="4" column="0" colspan="3">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string>Stop list</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_22">
+             <item>
+              <widget class="QTableWidget" name="tableWidget_zastavky">
+               <column>
+                <property name="text">
+                 <string>Stop name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Line name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>DestinationName</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="title">
+             <string>Connections</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_24">
+             <item>
+              <widget class="QTableWidget" name="tableWidget_connections">
+               <column>
+                <property name="text">
+                 <string>line</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>destination</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>est. time</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>real time</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </item>
-        <item row="0" column="1">
-         <widget class="QGroupBox" name="groupBox_2">
-          <property name="title">
-           <string>Remaining time (s)</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QLabel" name="label_remainingSeconds">
-             <property name="font">
-              <font>
-               <pointsize>40</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>xx s</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
-        <item row="1" column="0" colspan="3">
+        <item row="1" column="0" colspan="2">
          <widget class="QTableWidget" name="tabulkaSubscriberu">
           <column>
            <property name="text">
@@ -3698,70 +3754,68 @@ border-radius: 30px;
           </layout>
          </widget>
         </item>
-        <item row="4" column="0" colspan="3">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QGroupBox" name="groupBox_4">
-            <property name="title">
-             <string>Stop list</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_22">
-             <item>
-              <widget class="QTableWidget" name="tableWidget_zastavky">
-               <column>
-                <property name="text">
-                 <string>Stop name</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Line name</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>DestinationName</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_6">
-            <property name="title">
-             <string>Connections</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_24">
-             <item>
-              <widget class="QTableWidget" name="tableWidget_connections">
-               <column>
-                <property name="text">
-                 <string>line</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>destination</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>est. time</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>real time</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+        <item row="0" column="2">
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Subscribed?</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_odebirano">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="1" column="2">
+         <widget class="QGroupBox" name="groupBox_7">
+          <property name="title">
+           <string>DeviceState</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_25">
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateDefective">
+             <property name="text">
+              <string>defective</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateWarning">
+             <property name="text">
+              <string>warning</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateNotAvailable">
+             <property name="text">
+              <string>notavailable</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateRunning">
+             <property name="text">
+              <string>running</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateReadyForShutdown">
+             <property name="text">
+              <string>readyForShutdown</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -4545,8 +4599,8 @@ border-radius: 30px;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1088</width>
-     <height>21</height>
+     <width>1332</width>
+     <height>25</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

@@ -10,6 +10,8 @@
 #include "VDV301DataStructures/vehiclestate.h"
 #include "VDV301DataStructures/farezone.h"
 
+#include "VDV301DataStructures/vdv301stoppoint.h"
+
 class XmlParser
 {
 public:
@@ -19,6 +21,7 @@ public:
     QString cil="";
 
     QMap<int,StopPointDestination> globalStopList2_3;
+
 
     // SeznamZastavek docasnySeznamZastavek[] ;
     //SeznamZastavek* docasnySeznamZastavek = new SeznamZastavek[MAX_ZAST2];
@@ -55,6 +58,7 @@ public:
     int VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
 
 
+    Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
 private:
     QVector<StopPoint> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
     QVector<StopPoint> vyparsujNacestneZastavky2_3(QDomNode displayContent);

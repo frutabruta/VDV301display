@@ -42,7 +42,7 @@ int XmlParser::VytvorSeznamZastavek1_0(QVector<StopPointDestination> &docasnySez
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-            return 0;
+        return 0;
     }
 
 
@@ -97,7 +97,7 @@ int XmlParser::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docas
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-            return 0;
+        return 0;
     }
 
 
@@ -154,7 +154,7 @@ int XmlParser::VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasnySez
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {
         qDebug()<<"vadné XML";
-            return 0;
+        return 0;
     }
 
 
@@ -392,6 +392,76 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
         docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
         docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
+//////////////////////////////////////////////////
+        //new approach
+        Vdv301StopPoint temporaryStopPoint;
+
+
+        temporaryStopPoint.stopIndex=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
+        temporaryStopPoint.stopRef=aktZastavkaDOM.firstChildElement("StopRef").firstChildElement().text();
+        QDomNodeList stopPointNameListDom=aktZastavkaDOM.elementsByTagName("StopName");
+        for(int j=0;j<stopPointNameListDom.count();j++)
+        {
+            temporaryStopPoint.stopNameList<<qDomNodeToVdv301InternationalText(stopPointNameListDom.at(j));
+        }
+
+
+        //displayContentApproach
+        QDomNodeList displayContentsDom=aktZastavkaDOM.elementsByTagName("DisplayContent");
+        for(int j=0;j<displayContentsDom.count();j++)
+        {
+            QDomElement selectedDisplayContentDom=displayContentsDom.at(j).toElement();
+            Vdv301DisplayContent temporaryDisplayContent;
+            temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
+
+            //QStringList temporaryDestinationList;
+            QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
+            Vdv301Line temporaryLine;
+            temporaryLine.lineRef=lineInformationDom.firstChildElement("LineRef").firstChildElement("Value").text();
+
+            QDomNodeList lineNameListDom=lineInformationDom.elementsByTagName("LineName");
+            for(int k=0;k<lineNameListDom.count();k++)
+            {
+                Vdv301InternationalText temporaryLineName = qDomNodeToVdv301InternationalText(lineNameListDom.at(k));
+                temporaryLine.lineNameList.append(temporaryLineName);
+            }
+            temporaryLine.lineNumber=lineInformationDom.firstChildElement("LineNumber").firstChildElement("Value").text();
+
+
+            temporaryDisplayContent.lineInformation=temporaryLine;
+
+
+            QDomNode destinationDom=selectedDisplayContentDom.firstChildElement("Destination");
+            Vdv301Destination temporaryDestination;
+            temporaryDestination.DestinationRef=destinationDom.firstChildElement("DestinationRef").text();
+
+            QDomNodeList destinationNameListDom=selectedDisplayContentDom.elementsByTagName("DestinationName");
+
+            for(int k=0;k<destinationNameListDom.count();k++)
+            {
+                QDomElement temporaryDestinationName=destinationNameListDom.at(k).toElement();
+                temporaryDestination.destinationNameList<<qDomNodeToVdv301InternationalText(destinationNameListDom.at(k));
+            }
+            temporaryDisplayContent.destination=temporaryDestination;
+
+             temporaryStopPoint.displayContentList<<temporaryDisplayContent;
+
+        }
+
+
+
+
+        temporaryStopPoint.departureScheduled=aktZastavkaDOM.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text();
+        temporaryStopPoint.departureExpected=aktZastavkaDOM.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text();
+
+        QDomNodeList temporaryFareZoneList=aktZastavkaDOM.elementsByTagName("FareZone");
+        for(int l=0;l<temporaryFareZoneList.count();l++)
+        {
+            temporaryStopPoint.fareZoneList<<temporaryFareZoneList.at(l).firstChildElement("Value").text();
+        }
+
+/////////////////////////////////////////////
+
         QVector<QString> priznakyStringy;
 
         QDomNodeList seznamPriznakuElements=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").elementsByTagName("LineProperty");
@@ -420,7 +490,7 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
 
                 if(destinationNameList.count()>0)
                 {
-                   docasnaZastavka.destination.NameFront=destinationNameList.at(0).firstChildElement("Value").firstChild().nodeValue();
+                    docasnaZastavka.destination.NameFront=destinationNameList.at(0).firstChildElement("Value").firstChild().nodeValue();
 
                 }
                 if(destinationNameList.count()>1)
@@ -496,6 +566,21 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
         return 0;
     }
     return 1;
+}
+
+/*
+Vdv301Destination XmlParser::qDomNodeListToVdv301Destination(QDomNodeList input)
+{
+
+}
+*/
+Vdv301InternationalText XmlParser::qDomNodeToVdv301InternationalText(QDomNode domNode)
+{
+    Vdv301InternationalText output;
+    output.text=domNode.firstChildElement("Value").text();
+    output.language=domNode.firstChildElement("Language").text();
+
+    return output;
 }
 
 QVector<QString> XmlParser::naplnVektorPriznaku(QDomNode vstup,QString nazevElementu)

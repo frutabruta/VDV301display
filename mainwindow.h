@@ -108,6 +108,8 @@ private:
     int posunRotovani=0;
     // int pocetVykreslovanychZastavek=5;
 
+    QString oldViapointString="";
+
 
 
     const int intervalSideDisplay=2000;
@@ -141,7 +143,7 @@ private:
 
     //Fonty
 
-    QFontDatabase fdb;
+    //QFontDatabase fdb;
 
     //_LED fonty
     QFont fontLed1;
@@ -290,6 +292,8 @@ private:
     void receivedDataVariablesReset();
     void connectionToTable(Connection connection, QTableWidget *tableWidget);
     void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
+    void stopRequestedActivated();
+    void stopRequestedDectivated();
 private slots:
 
     void on_actiontestPolozka_triggered();
@@ -328,6 +332,16 @@ private slots:
     void on_pushButton_menu_refresh_clicked();
 
     void slotShutdownReady(bool isReady);
+    void on_radioButton_stateDefective_clicked();
+
+    void on_radioButton_stateWarning_clicked();
+
+    void on_radioButton_stateNotAvailable_clicked();
+
+    void on_radioButton_stateRunning_clicked();
+
+    void on_radioButton_stateReadyForShutdown_clicked();
+
 public slots:
 
     void slotParametryZarizeniDoConfigu();

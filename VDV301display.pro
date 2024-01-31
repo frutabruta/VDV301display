@@ -53,6 +53,12 @@ SOURCES += \
     VDV301DataStructures/stoppoint.cpp \
     VDV301DataStructures/stoppointdestination.cpp \
     VDV301DataStructures/trip.cpp \
+    VDV301DataStructures/vdv301destination.cpp \
+    VDV301DataStructures/vdv301displaycontent.cpp \
+    VDV301DataStructures/vdv301internationaltext.cpp \
+    VDV301DataStructures/vdv301line.cpp \
+    VDV301DataStructures/vdv301stoppoint.cpp \
+    VDV301DataStructures/vdv301viapoint.cpp \
     VDV301DataStructures/vehiclerun.cpp \
     VDV301DataStructures/vehiclestate.cpp \
     VDV301publisher/colordisplayrules.cpp \
@@ -91,6 +97,12 @@ HEADERS += \
     VDV301DataStructures/stoppoint.h \
     VDV301DataStructures/stoppointdestination.h \
     VDV301DataStructures/trip.h \
+    VDV301DataStructures/vdv301destination.h \
+    VDV301DataStructures/vdv301displaycontent.h \
+    VDV301DataStructures/vdv301internationaltext.h \
+    VDV301DataStructures/vdv301line.h \
+    VDV301DataStructures/vdv301stoppoint.h \
+    VDV301DataStructures/vdv301viapoint.h \
     VDV301DataStructures/vehiclerun.h \
     VDV301DataStructures/vehiclestate.h \
     VDV301publisher/colordisplayrules.h \

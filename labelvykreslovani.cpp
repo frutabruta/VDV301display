@@ -239,10 +239,19 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<StopPointDestination> glob
         return;
     }
 
+    /*
+    QString oldInput=label->text();
+    if(newInput!=oldInput )
+    {
+
+    }*/
+
     label->setText(" ");
     int velikostTextu = label->font().pixelSize();
-    QString novyVstup = vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.currentStopIndex0).viaPoints, velikostTextu, verze);
-    label->setText(novyVstup);
+    QString newInput = vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.currentStopIndex0).viaPoints, velikostTextu, verze);
+
+    label->setText(newInput);
+
 }
 
 void LabelVykreslovani::vymazPoleLabelu(QVector<QLabel *> vstup)
