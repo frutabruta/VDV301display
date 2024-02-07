@@ -65,7 +65,7 @@ public:
 
 
 
-private:
+  private:
 
     QCommandLineParser qCommandLineParser;
 
@@ -82,6 +82,7 @@ private:
 
     //datoveStruktury jizda
     QVector<StopPointDestination> currentDestinationPointList;
+    QVector<Vdv301StopPoint> currenVdv301StopPointList;
     QVector<StopPointDestination> nextDestinationPointList;
 
 
@@ -220,6 +221,13 @@ private:
     void ledZapisLinku(QLabel *label, QString text);
     void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
 
+    void ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
+    void ledLabelInitialize2_3();
+
+    LedLabelDisplay frontDisplay;
+    LedLabelDisplay sideDisplay;
+    LedLabelDisplay rearDisplay;
+
 
 
     void slotPublisherDoTabulky(QZeroConfService zcs);
@@ -275,7 +283,7 @@ private:
     QVector<QLabel*> labelListConnectionPlatform;
 
 
-    void popUpWindow(QString poznamka);
+    void popUpMessage(QString poznamka);
 
 
     QString nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka);
@@ -294,6 +302,11 @@ private:
     void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
     void stopRequestedActivated();
     void stopRequestedDectivated();
+
+
+
+    void tickLedPanels2_3();
+    void retranslateUi(QString language);
 private slots:
 
     void on_actiontestPolozka_triggered();

@@ -58,6 +58,7 @@ SOURCES += \
     VDV301DataStructures/vdv301internationaltext.cpp \
     VDV301DataStructures/vdv301line.cpp \
     VDV301DataStructures/vdv301stoppoint.cpp \
+    VDV301DataStructures/vdv301trip.cpp \
     VDV301DataStructures/vdv301viapoint.cpp \
     VDV301DataStructures/vehiclerun.cpp \
     VDV301DataStructures/vehiclestate.cpp \
@@ -102,6 +103,7 @@ HEADERS += \
     VDV301DataStructures/vdv301internationaltext.h \
     VDV301DataStructures/vdv301line.h \
     VDV301DataStructures/vdv301stoppoint.h \
+    VDV301DataStructures/vdv301trip.h \
     VDV301DataStructures/vdv301viapoint.h \
     VDV301DataStructures/vehiclerun.h \
     VDV301DataStructures/vehiclestate.h \

@@ -19,31 +19,6 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
    */
     QNetworkProxyFactory::setUseSystemConfiguration(false);
 
-    /*
-
-    qCommandLineParser.addOption(QCommandLineOption("config", "Input file path", "file"));
-    qCommandLineParser.process(arguments);
-
-    QString inputFilePath =  qCommandLineParser.value("config");
-
-
-
-    if(!qCommandLineParser.value("config").isEmpty())
-    {
-        QUrl cesta=QUrl::fromLocalFile(qCommandLineParser.value("config"));
-        settings.setPath(QSettings::IniFormat,QSettings::UserScope,"nastaveni2.ini");
-      //  settings.setPath(QSettings::IniFormat,QSettings::SystemScope,"nastaveni2.ini");
-        qDebug()<<"XX parametr startu input: "<<cesta.toString()<<settings.value("deviceManagementService1_0/deviceName");
-    }
-    else
-    {
-     //   settings.setPath(QSettings::IniFormat,QSettings::SystemScope,QCoreApplication::applicationDirPath()+"/nastaveni.ini");
-        settings.setPath(QSettings::IniFormat,QSettings::UserScope,QCoreApplication::applicationDirPath()+"/nastaveni.ini");
-
-    }
-
-
-*/
 
 
     QTranslator translator;
@@ -51,7 +26,9 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     QString selectedLanguage=settings.value("app/language").toString();
 
     qDebug()<<"new language:"<<selectedLanguage;
-    if (selectedLanguage=="en")
+
+    retranslateUi(selectedLanguage);
+    /* if (selectedLanguage=="en")
     {
         qApp->removeTranslator(&translator);
         translator.load(":/lang_en.qm");
@@ -64,6 +41,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
         qApp->installTranslator(&translator);
     }
     ui->retranslateUi(this);
+*/
 
 
     labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
@@ -81,6 +59,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     //ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
 
     displayLabelFillArray(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
+    ledLabelInitialize2_3();
 
 
     formatZobrazeni();
@@ -147,6 +126,25 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 }
 
+
+void MainWindow::retranslateUi(QString language)
+{
+    QTranslator translator;
+
+    qApp->removeTranslator(&translator);
+    if(translator.load(":/lang_"+language+".qm"))
+    {
+        qApp->installTranslator(&translator);
+        qDebug()<<"zmena jazyka";
+        ui->retranslateUi(this);
+    }
+    else
+    {
+        popUpMessage(tr("language file not found"));
+    }
+}
+
+
 void MainWindow::initilializeFonts()
 {
 
@@ -192,6 +190,29 @@ void MainWindow::initilializeFonts()
     fontLabelFareZoneSmall.setBold(true);
 
 }
+
+void MainWindow::ledLabelInitialize2_3()
+{
+    frontDisplay.lineLabel=ui->labelFrontLine;
+    frontDisplay.destinationLabel=ui->labelFrontSingle;
+    frontDisplay.destination1Label=ui->labelFrontTopRow;
+    frontDisplay.destination2Label=ui->labelFrontBottomRow;
+    frontDisplay.ticker=0;
+
+    sideDisplay.lineLabel=ui->labelSideLine;
+    sideDisplay.destinationLabel=NULL;//ui->labelSideSingle;
+    sideDisplay.destination1Label=ui->labelSideTopRow;
+    sideDisplay.destination2Label=ui->labelSideBottomRow;
+    sideDisplay.ticker=0;
+
+    rearDisplay.lineLabel=ui->labelRearLine;
+    rearDisplay.destinationLabel=NULL;
+    rearDisplay.destination1Label=NULL;
+    rearDisplay.destination2Label=NULL;
+    rearDisplay.ticker=0;
+}
+
+
 
 void MainWindow::initilializeShortcuts()
 {
@@ -251,7 +272,7 @@ void MainWindow::loadConstants()
     }
     else
     {
-        popUpWindow("verze "+verzeVdv301+" neni podporována!");
+        popUpMessage("verze "+verzeVdv301+" neni podporována!");
     }
     cisSubscriber.setPortNumber(settings.value("cisSubscriber/port").toUInt());
 
@@ -315,7 +336,27 @@ void MainWindow::allConnects()
 
     connect(timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
 
-    connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::ledIterujVsechnyPanely);
+
+    if(cisSubscriber.version()=="2.3")
+    {
+        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::tickLedPanels2_3);
+    }
+    else
+    {
+        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::ledIterujVsechnyPanely);
+    }
+
+
+
+
+    labelVykreslovani.ledDisplaySetDisplayContent(frontDisplay);
+    labelVykreslovani.ledDisplaySetDisplayContent(sideDisplay);
+
+
+
+
+
+
     connect(timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
     connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
     connect(timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
@@ -531,7 +572,7 @@ void MainWindow::displayLabelEraseInformation()
 
     ui->Lcil->setText("");
     ui->label_linka->setText("");
- //   ui->label_nacestne->setText("");
+    //   ui->label_nacestne->setText("");
 
     ui->frame_navaznySpoj->hide();
 
@@ -573,7 +614,7 @@ int MainWindow::showReceivedData()
 
     if(vehicleState.currentStopIndex0<0 )
     {
-        popUpWindow("index zastavky je mensi nez 0");
+        popUpMessage("index zastavky je mensi nez 0");
         return 0;
     }
 
@@ -904,7 +945,7 @@ void MainWindow::displayLabelViaPoints()
     {
         if(ui->label_nacestne->text()=="")
         {
-           ui->label_nacestne->setText( newViapointString);
+            ui->label_nacestne->setText( newViapointString);
         }
 
     }
@@ -1162,7 +1203,7 @@ void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool nav
 void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTableWidget* tableWidget)
 {
 
-        eraseTable(tableWidget);
+    eraseTable(tableWidget);
 
 
     foreach(Connection connection, connectionList)
@@ -1182,7 +1223,7 @@ void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWid
  */
 
     row = tableWidget->rowCount();
-   tableWidget->insertRow(row);
+    tableWidget->insertRow(row);
 
     cell = new QTableWidgetItem(InlineFormatParser::parseTextLed( connection.line.lineName));
 
@@ -1234,11 +1275,16 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     }
     else if(cisSubscriber.version()=="2.3")
     {
+
+        xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
+
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             notOnLine();
             return;
         }
+
+
     }
     else
     {
@@ -1273,7 +1319,18 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
                 doplneniPromennych();
                 showReceivedData();
                 formatZobrazeni();
-                this->ledUpdateDisplayedInformation(currentDestinationPointList,vehicleState);
+
+                if(cisSubscriber.version()=="2.3")
+                {
+                    this->ledUpdateDisplayedInformation2_3(currenVdv301StopPointList,vehicleState);
+
+                }
+                else
+                {
+                    this->ledUpdateDisplayedInformation(currentDestinationPointList,vehicleState);
+                }
+
+
                 this->svgVykresleni();
                 qInfo()<<"CIl:"<<nazevCile;
             }
@@ -1378,7 +1435,7 @@ void MainWindow::on_pushButton_menu_quit_clicked()
 
     connect(&cisSubscriber,&CisSubscriber::signalIsUnsubscriptionSuccesful,this,&MainWindow::slotShutdownReady);
     cisSubscriber.unsubscribe();
- //   connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
+    //   connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
 }
 
 void MainWindow::slotShutdownReady(bool isReady)
@@ -1389,7 +1446,7 @@ void MainWindow::slotShutdownReady(bool isReady)
     }
     else
     {
-        popUpWindow(tr("unsubscription was unsuccessful"));
+        popUpMessage(tr("unsubscription was unsuccessful"));
     }
 }
 
@@ -1644,6 +1701,7 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
 
     if(cisSubscriber.version()=="2.3")
     {
+
         ledNaplnFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
         ledNaplnSide(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
         ledNaplnRear(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName));
@@ -1652,17 +1710,20 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
         textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
         textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
 
+
+
+
     }
     else
     {
 
-    ledNaplnFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
-    ledNaplnSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
-    ledNaplnRear(aktZast.line.lineName);
-    ledNaplnInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
+        ledNaplnFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
+        ledNaplnSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
+        ledNaplnRear(aktZast.line.lineName);
+        ledNaplnInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
 
-    textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
-    textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+        textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
+        textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
     }
 
     ledZmenVelikostPanelu();
@@ -1670,13 +1731,95 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
 
 }
 
+
+void MainWindow::ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav )
+{
+    //new approach to display viapoint from DisplayContent
+    qDebug() <<  Q_FUNC_INFO;
+    if(!isInRange(stav.currentStopIndex0,zastavky.count()))
+    {
+        return;
+    }
+
+    Vdv301StopPoint aktZast=zastavky.at(stav.currentStopIndex0);
+
+
+    QVector<Vdv301DisplayContent> displayContentListFront;
+    QVector<Vdv301DisplayContent> displayContentListSide;
+    QVector<Vdv301DisplayContent> displayContentListRear;
+    QVector<Vdv301DisplayContent> displayContentListInner;
+    QVector<Vdv301DisplayContent> displayContentListLcd; //might be replaced with Inner
+
+    foreach(Vdv301DisplayContent selectedDisplayContent, aktZast.displayContentList)
+    {
+        switch(selectedDisplayContent.displayContentType)
+        {
+        case DisplayContentFront:
+            displayContentListFront.append(selectedDisplayContent);
+            break;
+        case DisplayContentSide:
+            displayContentListSide.append(selectedDisplayContent);
+            break;
+        case DisplayContentRear:
+            displayContentListRear.append(selectedDisplayContent);
+            break;
+        case DisplayContentLcd:
+            displayContentListLcd.append(selectedDisplayContent);
+            break;
+        case DisplayContentInner:
+            displayContentListInner.append(selectedDisplayContent);
+            break;
+        case DisplayContentUndefined:
+            qDebug()<<"undefined displayContent";
+            break;
+        default:
+            break;
+
+
+        }
+
+    }
+
+    frontDisplay.displayContentList=displayContentListFront;
+    sideDisplay.displayContentList=displayContentListSide;
+    rearDisplay.displayContentList=displayContentListRear;
+
+
+    ledZmenVelikostPanelu();
+
+    frontDisplay.ticker=0;
+    sideDisplay.ticker=0;
+    rearDisplay.ticker=0;
+
+
+    tickLedPanels2_3();
+    timerLedSideCycleViaPoints->start();
+}
+
+void MainWindow::tickLedPanels2_3()
+{
+
+    labelVykreslovani.ledDisplaySetDisplayContent(frontDisplay);
+    labelVykreslovani.ledDisplaySetDisplayContent(sideDisplay);
+    labelVykreslovani.ledDisplaySetDisplayContent(rearDisplay);
+
+
+}
+/*
+void MainWindow::ledCycleDisplayContents()
+{
+
+}
+*/
+
+
 QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(StopPointDestination aktualniZastavka)
 {
     qDebug() <<  Q_FUNC_INFO;
     StopPoint nacesta;
     QVector<QString> textyNaBocniPanel;
     textyNaBocniPanel.append("přes:");
-        foreach (nacesta,aktualniZastavka.viaPoints)
+    foreach (nacesta,aktualniZastavka.viaPoints)
     {
         textyNaBocniPanel.append(nacesta.NameSide);
         // qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
@@ -1691,7 +1834,7 @@ QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(StopPointDestination ak
     StopPoint nacesta;
     QVector<QString> textyNaVnitrniPanel;
     textyNaVnitrniPanel.append("přes:");
-        foreach (nacesta,aktualniZastavka.viaPoints)
+    foreach (nacesta,aktualniZastavka.viaPoints)
     {
         textyNaVnitrniPanel.append(nacesta.NameInner);
         qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
@@ -2194,7 +2337,7 @@ void MainWindow::ledZmenVelikostPanelu()
     ledInicializujVirtualniPanely();
 }
 
-void MainWindow::popUpWindow(QString poznamka)
+void MainWindow::popUpMessage(QString poznamka)
 {
     qDebug() <<  Q_FUNC_INFO;
     QMessageBox msgBox;

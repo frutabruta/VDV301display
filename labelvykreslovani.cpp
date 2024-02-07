@@ -1,9 +1,10 @@
 #include "labelvykreslovani.h"
 
 
+
 LabelVykreslovani::LabelVykreslovani()
 {
-//    nahradIkonyFormat("", velikostPiktogramu,slozkaPiktogramu);
+    //    nahradIkonyFormat("", velikostPiktogramu,slozkaPiktogramu);
 
 }
 
@@ -12,6 +13,123 @@ void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel *stitek)
     qDebug()<<Q_FUNC_INFO;
     stitek->setText(vstup);
 }
+
+
+void LabelVykreslovani::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
+{
+
+    if(selectedDisplay.displayContentList.isEmpty())
+    {
+        return; //display clear
+    }
+    else
+    {
+        if(selectedDisplay.ticker<selectedDisplay.displayContentList.length())
+        {
+            Vdv301DisplayContent selectedDisplayContent=selectedDisplay.displayContentList.at(selectedDisplay.ticker);
+            QString lineText="";
+            QString destinationTopRow="";
+            QString destinationBottomRow="";
+
+            if(selectedDisplayContent.lineInformation.lineNameList.isEmpty())
+            {
+                lineText="";
+            }
+            else
+            {
+                lineText=selectedDisplayContent.lineInformation.lineNameList.first().text;
+            }
+
+            switch (selectedDisplayContent.destination.destinationNameList.count()) {
+            case 0:
+
+                break;
+            case 1:
+                destinationTopRow=selectedDisplayContent.destination.destinationNameList.first().text;
+                break;
+            case 2:
+                destinationTopRow=selectedDisplayContent.destination.destinationNameList.at(0).text;
+                destinationBottomRow=selectedDisplayContent.destination.destinationNameList.at(1).text;
+                break;
+
+            default:
+                break;
+            }
+
+
+            ledWriteToDisplay(selectedDisplay,lineText,destinationTopRow,destinationBottomRow);
+            selectedDisplay.ticker++;
+        }
+        else
+        {
+            selectedDisplay.ticker=0;
+            qDebug()<<"displayContent out of range";
+        }
+    }
+
+}
+
+
+void LabelVykreslovani::ledWriteToDisplay(LedLabelDisplay display,QString linka,QString horniRadek,QString dolniRadek)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+    linka=InlineFormatParser::parseTextLed(linka);
+    horniRadek=InlineFormatParser::parseTextLed(horniRadek);
+    dolniRadek=InlineFormatParser::parseTextLed(dolniRadek);
+
+    if (dolniRadek!="")
+    {
+        if(display.destinationLabel!=NULL)
+        {
+            display.destinationLabel->setVisible(false);
+        }
+        if(display.destination2Label!=NULL)
+        {
+            display.destination2Label->setVisible(true);
+        }
+        if(display.destination1Label!=NULL)
+        {
+            display.destination1Label->setVisible(true);
+        }
+
+    }
+    else
+    {
+        if(display.destinationLabel!=NULL)
+        {
+            display.destinationLabel->setVisible(true);
+        }
+        if(display.destination2Label!=NULL)
+        {
+            display.destination2Label->setVisible(false);
+        }
+        if(display.destination1Label!=NULL)
+        {
+            display.destination1Label->setVisible(false);
+        }
+
+    }
+
+    if(display.lineLabel!=NULL)
+    {
+        display.lineLabel->setText(linka);
+    }
+    if(display.destinationLabel!=NULL)
+    {
+        display.destinationLabel->setText(horniRadek);
+    }
+    if(display.destination1Label!=NULL)
+    {
+        display.destination1Label->setText(horniRadek);
+    }
+    if(display.destination2Label!=NULL)
+    {
+        display.destination2Label->setText(dolniRadek);
+    }
+
+}
+
 
 QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {

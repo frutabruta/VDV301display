@@ -10,9 +10,22 @@
 #include <QtMath>
 
 #include "VDV301DataStructures/farezone.h"
+#include "VDV301DataStructures/vdv301displaycontent.h"
 #include "svgvykreslovani.h"
 #include "inlineformatparser.h"
 
+class LedLabelDisplay
+{
+public:
+    QLabel* lineLabel=NULL;
+    QLabel* destination1Label=NULL;
+    QLabel* destination2Label=NULL;
+    QLabel* destinationLabel=NULL;
+
+    int ticker=0;
+    QVector<Vdv301DisplayContent> displayContentList;
+private:
+};
 
 class LabelVykreslovani
 {
@@ -47,7 +60,11 @@ public:
 
 
     QString replaceIconOuterDisplays(QString vstup);
+    void ledWriteToDisplay(LedLabelDisplay display, QString linka, QString horniRadek, QString dolniRadek);
+    void ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay);
 signals:
+
+private:
 
 };
 

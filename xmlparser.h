@@ -11,6 +11,7 @@
 #include "VDV301DataStructures/farezone.h"
 
 #include "VDV301DataStructures/vdv301stoppoint.h"
+#include "VDV301DataStructures/vdv301trip.h"
 
 class XmlParser
 {
@@ -59,6 +60,9 @@ public:
 
 
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
+    QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
+    Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
+    void parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
 private:
     QVector<StopPoint> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
     QVector<StopPoint> vyparsujNacestneZastavky2_3(QDomNode displayContent);

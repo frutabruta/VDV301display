@@ -2,6 +2,7 @@
 #include "VDV301DataStructures/stoppoint.h"
 #include "VDV301DataStructures/vehiclestate.h"
 #include "VDV301DataStructures/farezone.h"
+
 #include <QDebug>
 #include <QMainWindow>
 
@@ -370,29 +371,49 @@ int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &doca
 }
 
 
-
-int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
+void XmlParser::parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList)
 {
+    QDomElement root = input.firstChildElement();
+    QDomElement domAllData=root.firstChildElement("AllData");
+    QDomNodeList domTripList=domAllData.elementsByTagName("TripInformation");
+    QVector<Vdv301Trip> tripList;
+    QString vehicleRef=domAllData.firstChildElement("VehicleRef").firstChildElement("Value").text();
+
+    for(int i=0;i<domTripList.count();i++)
+    {
+        tripList.append(domTripInformationToVdv301Trip(domTripList.at(i).toElement()));
+    }
+    if(!tripList.isEmpty())
+    {
+        testStopList=tripList.first().stopPointList;
+    }
+
+
+}
+
+Vdv301Trip XmlParser::domTripInformationToVdv301Trip( QDomElement input)
+{
+    Vdv301Trip trip;
+    trip.tripRef=input.firstChildElement("TripRef").text();
+    trip.stopPointList=domStopListToVdv301TripStopList(input);
+    trip.locationState=input.firstChildElement("LocationState").text();
+    return trip;
+}
+
+QVector<Vdv301StopPoint> XmlParser::domStopListToVdv301TripStopList( QDomElement domTrip)
+{
+
     qDebug()<<Q_FUNC_INFO;
+    QVector<Vdv301StopPoint> tripStopPointList;
 
 
-    QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
+    QDomNodeList nodes = domTrip.elementsByTagName("StopPoint");
 
     for (int i=0; i<nodes.count();i++)
     {
-
-        StopPointDestination docasnaZastavka;
         QDomElement aktZastavkaDOM=nodes.at(i).toElement();
-        int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        docasnaZastavka.stopPoint.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.stopPoint.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.stopPoint.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.stopPoint.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.stopPoint.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
-        docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
 
-//////////////////////////////////////////////////
+        //////////////////////////////////////////////////
         //new approach
         Vdv301StopPoint temporaryStopPoint;
 
@@ -413,7 +434,7 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
             QDomElement selectedDisplayContentDom=displayContentsDom.at(j).toElement();
             Vdv301DisplayContent temporaryDisplayContent;
             temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
-
+            temporaryDisplayContent.displayContentType=Vdv301DisplayContent::qStringToDisplayContentClass(selectedDisplayContentDom.firstChildElement("DisplayContentRef").text());
             //QStringList temporaryDestinationList;
             QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
             Vdv301Line temporaryLine;
@@ -444,7 +465,7 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
             }
             temporaryDisplayContent.destination=temporaryDestination;
 
-             temporaryStopPoint.displayContentList<<temporaryDisplayContent;
+            temporaryStopPoint.displayContentList<<temporaryDisplayContent;
 
         }
 
@@ -460,7 +481,42 @@ int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySe
             temporaryStopPoint.fareZoneList<<temporaryFareZoneList.at(l).firstChildElement("Value").text();
         }
 
-/////////////////////////////////////////////
+        tripStopPointList<<temporaryStopPoint;
+        /////////////////////////////////////////////
+
+
+    }
+    if (tripStopPointList.size()==0)
+    {
+        qDebug()<<"no stop points have been parsed";
+    }
+    return tripStopPointList;
+
+}
+
+
+
+int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+
+    QDomNodeList nodes = vstup.elementsByTagName("StopPoint");
+
+    for (int i=0; i<nodes.count();i++)
+    {
+
+        StopPointDestination docasnaZastavka;
+        QDomElement aktZastavkaDOM=nodes.at(i).toElement();
+        int poradiZastavky=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
+        docasnaZastavka.stopPoint.StopName=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameFront=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameSide=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameRear=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameInner=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.stopPoint.NameLcd=aktZastavkaDOM.firstChildElement("StopName").firstChildElement().text();
+        docasnaZastavka.line.lineName=aktZastavkaDOM.firstChildElement("DisplayContent").firstChildElement("LineInformation").firstChildElement("LineName").firstChildElement().text();
+
 
         QVector<QString> priznakyStringy;
 

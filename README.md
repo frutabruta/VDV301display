@@ -22,13 +22,12 @@ Program can be launched with parameter to change settings location.
         - device status changeable
         - unsubscribe response false
     - LabelVykreslovani
-        - viapoint now dont stop scrolling again on every new message if the content of scrolling viapoints is the same
+        - viapoint now don't stop scrolling again on every new message if the content of scrolling viapoints is the same
     - MainWindow
         - QFontDatabase now uses static functions (older approach is now depracated in Qt6)
         - stopButton state reading and display
         - radiobuttons to set device state (running, warning, defective etc.)
         - Connections list in debug menu
-
 
 
 - 20240104_1657
