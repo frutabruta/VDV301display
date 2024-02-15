@@ -14,6 +14,25 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240215_1208
+    - new settings window, saving selected options to settings file
+        - new functions
+            - constantsToSettingsPage
+            - settingsWindowToSettingsFile
+            - deviceManagementServiceInternalVariablesToSettingFile
+        - slot slotParametryZarizeniDoConfigu renamed to slotDeviceParametersToConfigFile
+        - content of DeviceId changes automatically after receiving setId request
+    - ui language change in one click
+    - menu ui elements rename
+- 
+    - VDV301DataStructures
+        - Vdv301Trip added
+        - default value for vehicleState fixed
+    - VDV301publisher
+        - 2.3 out of service fix
+    - VDV301subscriber
+        - deviceManagementService v2.2 subscriber
+
 - 20240131_1615
     -   VDV301DataStructures
         -   Vdv301 specific structures (required by XmlPArser)
@@ -28,7 +47,6 @@ Program can be launched with parameter to change settings location.
         - stopButton state reading and display
         - radiobuttons to set device state (running, warning, defective etc.)
         - Connections list in debug menu
-
 
 - 20240104_1657
     - VDV301subscriber

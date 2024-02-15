@@ -82,7 +82,7 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QPushButton" name="pushButton_menuDisplayLabel">
+        <widget class="QPushButton" name="pushButton_menu_displayLabel">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -122,7 +122,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menuDisplayLed">
+        <widget class="QPushButton" name="pushButton_menu_displayLed">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -140,9 +140,9 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menuServices">
+        <widget class="QPushButton" name="pushButton_menu_services">
          <property name="enabled">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
          <property name="font">
           <font>
@@ -150,7 +150,7 @@
           </font>
          </property>
          <property name="text">
-          <string>F4 xxxx</string>
+          <string>F4 settings</string>
          </property>
          <property name="checkable">
           <bool>true</bool>
@@ -179,7 +179,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_menuFullscreen">
+        <widget class="QPushButton" name="pushButton_menu_fullscreen">
          <property name="font">
           <font>
            <pointsize>20</pointsize>
@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -553,8 +553,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>898</width>
-                      <height>88</height>
+                      <width>170</width>
+                      <height>58</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -764,7 +764,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3475,37 +3475,17 @@ border-radius: 30px;
              </property>
             </widget>
            </item>
-           <item row="0" column="5">
-            <widget class="QLabel" name="label_locationState">
+           <item row="0" column="7">
+            <widget class="QLabel" name="label">
              <property name="text">
-              <string>unknown</string>
+              <string>DeviceID:</string>
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="2" column="6">
+            <widget class="QLabel" name="label_subscribedVersion">
              <property name="text">
-              <string>version:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLabel" name="label_currentStopIndex">
-             <property name="text">
-              <string>0</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLabel" name="label_build">
-             <property name="text">
-              <string>verze</string>
+              <string>subscribedVersion</string>
              </property>
             </widget>
            </item>
@@ -3513,6 +3493,13 @@ border-radius: 30px;
             <widget class="QLabel" name="label_announcement">
              <property name="text">
               <string>announcement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_build">
+             <property name="text">
+              <string>verze</string>
              </property>
             </widget>
            </item>
@@ -3530,6 +3517,33 @@ border-radius: 30px;
              </property>
             </widget>
            </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_currentStopIndex">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_10">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>version:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_locationState">
+             <property name="text">
+              <string>unknown</string>
+             </property>
+            </widget>
+           </item>
            <item row="0" column="6">
             <widget class="QLabel" name="label_stopRequested">
              <property name="sizePolicy">
@@ -3543,10 +3557,24 @@ border-radius: 30px;
              </property>
             </widget>
            </item>
-           <item row="2" column="6">
-            <widget class="QLabel" name="label_subscribedVersion">
+           <item row="0" column="8">
+            <widget class="QLabel" name="label_deviceID">
              <property name="text">
-              <string>subscribedVersion</string>
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>DeviceClass:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="8">
+            <widget class="QLabel" name="label_deviceClass">
+             <property name="text">
+              <string>TextLabel</string>
              </property>
             </widget>
            </item>
@@ -3556,7 +3584,135 @@ border-radius: 30px;
        </layout>
       </widget>
       <widget class="QWidget" name="page_seznamSluzeb">
-       <layout class="QGridLayout" name="gridLayout_10"/>
+       <widget class="QWidget" name="gridLayoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>120</y>
+          <width>501</width>
+          <height>302</height>
+         </rect>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_settings">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>DeviceName</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>DeviceSerialNumber</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>DeviceClass</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="text">
+            <string>DeviceManufacturer</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit_settings_deviceName"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_23">
+           <property name="text">
+            <string>DeviceId</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="pushButton_settings_save">
+           <property name="text">
+            <string>Save Settings</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="lineEdit_settings_deviceManufacturer"/>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="lineEdit_settings_deviceSerialNumber"/>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="lineEdit_settings_deviceClass"/>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="lineEdit_settings_deviceId"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_8">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>115</width>
+          <height>93</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Language select</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_26">
+         <item>
+          <widget class="QRadioButton" name="radioButton_settings_languageCs">
+           <property name="text">
+            <string>cs</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="radioButton_settings_languageEn">
+           <property name="text">
+            <string>en</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QCheckBox" name="checkBox_settings_startFullscreen">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>80</y>
+          <width>171</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Boot to fullscreen</string>
+        </property>
+       </widget>
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="geometry">
+         <rect>
+          <x>150</x>
+          <y>10</y>
+          <width>141</width>
+          <height>68</height>
+         </rect>
+        </property>
+        <property name="title">
+         <string>Default screen</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_27">
+         <item>
+          <widget class="QSpinBox" name="spinBox_defaultScreen"/>
+         </item>
+        </layout>
+       </widget>
       </widget>
       <widget class="QWidget" name="page_casovac">
        <layout class="QGridLayout" name="gridLayout_9">
@@ -3581,94 +3737,54 @@ border-radius: 30px;
           </layout>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QGroupBox" name="groupBox">
+        <item row="4" column="2">
+         <widget class="QGroupBox" name="groupBox_7">
           <property name="title">
-           <string>timeout interval setting</string>
+           <string>DeviceState</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_19">
+          <layout class="QVBoxLayout" name="verticalLayout_25">
            <item>
-            <widget class="QLineEdit" name="lineEdit_setTimeout"/>
+            <widget class="QRadioButton" name="radioButton_stateDefective">
+             <property name="text">
+              <string>defective</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="pushButton_setTimeoutInterval">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+            <widget class="QRadioButton" name="radioButton_stateWarning">
              <property name="text">
-              <string>set interval</string>
+              <string>warning</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateNotAvailable">
+             <property name="text">
+              <string>notavailable</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateRunning">
+             <property name="text">
+              <string>running</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_stateReadyForShutdown">
+             <property name="text">
+              <string>readyForShutdown</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
         </item>
-        <item row="4" column="0" colspan="3">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QGroupBox" name="groupBox_4">
-            <property name="title">
-             <string>Stop list</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_22">
-             <item>
-              <widget class="QTableWidget" name="tableWidget_zastavky">
-               <column>
-                <property name="text">
-                 <string>Stop name</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>Line name</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>DestinationName</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QGroupBox" name="groupBox_6">
-            <property name="title">
-             <string>Connections</string>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_24">
-             <item>
-              <widget class="QTableWidget" name="tableWidget_connections">
-               <column>
-                <property name="text">
-                 <string>line</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>destination</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>est. time</string>
-                </property>
-               </column>
-               <column>
-                <property name="text">
-                 <string>real time</string>
-                </property>
-               </column>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="1" column="0" colspan="2">
+        <item row="4" column="0">
          <widget class="QTableWidget" name="tabulkaSubscriberu">
           <column>
            <property name="text">
@@ -3697,7 +3813,7 @@ border-radius: 30px;
           </column>
          </widget>
         </item>
-        <item row="2" column="0" colspan="3">
+        <item row="5" column="0" colspan="3">
          <widget class="QGroupBox" name="groupBox_5">
           <property name="title">
            <string>Selected publisher</string>
@@ -3770,52 +3886,92 @@ border-radius: 30px;
           </layout>
          </widget>
         </item>
-        <item row="1" column="2">
-         <widget class="QGroupBox" name="groupBox_7">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox">
           <property name="title">
-           <string>DeviceState</string>
+           <string>timeout interval setting</string>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_25">
+          <layout class="QVBoxLayout" name="verticalLayout_19">
            <item>
-            <widget class="QRadioButton" name="radioButton_stateDefective">
-             <property name="text">
-              <string>defective</string>
-             </property>
-            </widget>
+            <widget class="QLineEdit" name="lineEdit_setTimeout"/>
            </item>
            <item>
-            <widget class="QRadioButton" name="radioButton_stateWarning">
-             <property name="text">
-              <string>warning</string>
+            <widget class="QPushButton" name="pushButton_setTimeoutInterval">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioButton_stateNotAvailable">
              <property name="text">
-              <string>notavailable</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioButton_stateRunning">
-             <property name="text">
-              <string>running</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QRadioButton" name="radioButton_stateReadyForShutdown">
-             <property name="text">
-              <string>readyForShutdown</string>
+              <string>set interval</string>
              </property>
             </widget>
            </item>
           </layout>
          </widget>
+        </item>
+        <item row="7" column="0" colspan="3">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QGroupBox" name="groupBox_4">
+            <property name="title">
+             <string>Stop list</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_22">
+             <item>
+              <widget class="QTableWidget" name="tableWidget_zastavky">
+               <column>
+                <property name="text">
+                 <string>Stop name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>Line name</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>DestinationName</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_6">
+            <property name="title">
+             <string>Connections</string>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_24">
+             <item>
+              <widget class="QTableWidget" name="tableWidget_connections">
+               <column>
+                <property name="text">
+                 <string>line</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>destination</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>est. time</string>
+                </property>
+               </column>
+               <column>
+                <property name="text">
+                 <string>real time</string>
+                </property>
+               </column>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>

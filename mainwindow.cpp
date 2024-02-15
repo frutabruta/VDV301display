@@ -51,7 +51,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     initilializeShortcuts();
 
     loadConstants();
-
+    constantsToSettingsPage();
     allConnects();
 
 
@@ -143,6 +143,61 @@ void MainWindow::retranslateUi(QString language)
         popUpMessage(tr("language file not found"));
     }
 }
+
+
+void MainWindow::constantsToSettingsPage()
+{
+    ui->lineEdit_settings_deviceName->setText(deviceManagementService1_0.deviceName());
+    ui->lineEdit_settings_deviceManufacturer->setText(deviceManagementService1_0.deviceManufacturer());
+    ui->lineEdit_settings_deviceSerialNumber->setText(deviceManagementService1_0.deviceSerialNumber());
+    ui->lineEdit_settings_deviceClass->setText(deviceManagementService1_0.deviceClass());
+    ui->lineEdit_settings_deviceId->setText(deviceManagementService1_0.deviceId());
+
+    QString language=settings.value("app/language").toString();
+    if(language=="cs")
+    {
+        ui->radioButton_settings_languageCs->setChecked(true);
+        ui->radioButton_settings_languageEn->setChecked(false);
+    }
+    else if(language=="en")
+    {
+        ui->radioButton_settings_languageCs->setChecked(false);
+        ui->radioButton_settings_languageEn->setChecked(true);
+    }
+    else
+    {
+        ui->radioButton_settings_languageCs->setChecked(false);
+        ui->radioButton_settings_languageEn->setChecked(false);
+    }
+
+
+    ui->checkBox_settings_startFullscreen->setChecked(settings.value("window/fullscreen").toBool());
+    ui->spinBox_defaultScreen->setValue(settings.value("window/defaultScreen").toInt());
+}
+
+void MainWindow::settingsWindowToSettingsFile()
+{
+
+    if(ui->radioButton_settings_languageCs->isChecked())
+    {
+        settings.setValue("app/language","cs");
+    }
+    if(ui->radioButton_settings_languageEn->isChecked())
+    {
+        settings.setValue("app/language","en");
+    }
+
+
+    settings.setValue("window/defaultScreen",ui->spinBox_defaultScreen->value());
+    settings.setValue("window/fullscreen",ui->checkBox_settings_startFullscreen->isChecked());
+    settings.setValue("deviceManagementService1_0/deviceName",ui->lineEdit_settings_deviceName->text());
+    settings.setValue("deviceManagementService1_0/deviceManufacturer",ui->lineEdit_settings_deviceManufacturer->text());
+    settings.setValue("deviceManagementService1_0/deviceSerialNumber",ui->lineEdit_settings_deviceSerialNumber->text());
+    settings.setValue("deviceManagementService1_0/deviceClass",ui->lineEdit_settings_deviceClass->text());
+    settings.setValue("deviceManagementService1_0/deviceId",ui->lineEdit_settings_deviceId->text());
+
+}
+
 
 
 void MainWindow::initilializeFonts()
@@ -276,8 +331,8 @@ void MainWindow::loadConstants()
     }
     cisSubscriber.setPortNumber(settings.value("cisSubscriber/port").toUInt());
 
-    switchTabs(settings.value("konstanty/defaultniObrazovka").toInt());
-    if(settings.value("konstanty/fullscreen").toBool()==true)
+    switchTabs(settings.value("window/defaultScreen").toInt());
+    if(settings.value("window/fullscreen").toBool()==true)
     {
         slotToggleFullscreen();
     }
@@ -303,18 +358,18 @@ void MainWindow::switchTabs(int tabNumber)
         break;
 
     case 1:
-        on_pushButton_menuDisplayLabel_clicked();
+        on_pushButton_menu_displayLabel_clicked();
         break;
 
     case 2:
         on_pushButton_menu_svg_clicked();
         break;
     case 3:
-        on_pushButton_menuDisplayLed_clicked();
+        on_pushButton_menu_displayLed_clicked();
 
         break;
     case 4:
-        on_pushButton_menuServices_clicked();
+        on_pushButton_menu_services_clicked();
         break;
     }
 }
@@ -331,7 +386,7 @@ void MainWindow::allConnects()
     connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotPublisherDoTabulky);
 
 
-    connect(&deviceManagementService1_0,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotParametryZarizeniDoConfigu);
+    connect(&deviceManagementService1_0,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
 
 
     connect(timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
@@ -352,11 +407,6 @@ void MainWindow::allConnects()
     labelVykreslovani.ledDisplaySetDisplayContent(frontDisplay);
     labelVykreslovani.ledDisplaySetDisplayContent(sideDisplay);
 
-
-
-
-
-
     connect(timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
     connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
     connect(timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
@@ -367,13 +417,13 @@ void MainWindow::allConnects()
     //klávesové zkratky
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
-    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menuDisplayLabel_clicked);
+    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_displayLabel_clicked);
     connect(keyF2, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_svg_clicked );
-    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menuDisplayLed_clicked);
-    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menuServices_clicked);
+    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_displayLed_clicked);
+    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_services_clicked);
     connect(keyF5, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_timer_clicked );
     connect(keyF6, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
-    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refreh_clicked);
+    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refresh_clicked);
     connect(keyF8, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_quit_clicked);
 }
 
@@ -1035,21 +1085,6 @@ nejsem autorem
 
 
 
-void MainWindow::on_pushButton_menu_refreh_clicked()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    //  CustomerInformationServiceSubscriber.odebirano=false ;
-    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-    this->eraseDisplayedInformation();
-    slotUpdateServiceTable();
-    //xmlDoPromenne(1);
-
-
-    eraseDisplayedInformation();
-    cisSubscriber.newSubscribeRequest();
-}
-
 
 void MainWindow::eraseTable(QTableWidget *tableWidget)
 {
@@ -1395,12 +1430,12 @@ void MainWindow::displayNormalOnLineState()
 
 
 
-void MainWindow::on_pushButton_menuServices_clicked()
+void MainWindow::on_pushButton_menu_services_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_seznamSluzeb);
 }
 
-void MainWindow::on_pushButton_menuDisplayLabel_clicked()
+void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     formatZobrazeni();
@@ -1532,7 +1567,7 @@ bool MainWindow::svgOpenFile(const QString &fileName)
     return true;
 }
 
-void MainWindow::on_pushButton_menuDisplayLed_clicked()
+void MainWindow::on_pushButton_menu_displayLed_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_led);
     ui->labelFrontBottomRow->setText("");
@@ -2242,19 +2277,27 @@ void MainWindow::hlavniAutoformat()
 
 }
 
-void MainWindow::on_pushButton_menuFullscreen_clicked()
+void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
     slotToggleFullscreen();
 }
 
-void MainWindow::slotParametryZarizeniDoConfigu()
+void MainWindow::slotDeviceParametersToConfigFile()
 {
     qDebug()<<Q_FUNC_INFO;
+
+    deviceManagementServiceInternalVariablesToSettingFile();
+    constantsToSettingsPage();
+}
+
+void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
+{
     settings.setValue("deviceManagementService1_0/deviceName",deviceManagementService1_0.deviceName());
     settings.setValue("deviceManagementService1_0/deviceManufacturer",deviceManagementService1_0.deviceManufacturer());
     settings.setValue("deviceManagementService1_0/deviceSerialNumber",deviceManagementService1_0.deviceSerialNumber());
     settings.setValue("deviceManagementService1_0/deviceClass",deviceManagementService1_0.deviceClass());
     settings.setValue("deviceManagementService1_0/deviceId",deviceManagementService1_0.deviceId());
+
 }
 
 
@@ -2384,7 +2427,18 @@ void MainWindow::on_tlacitkoNastavVteriny_clicked()
 
 void MainWindow::on_pushButton_menu_refresh_clicked()
 {
+    //the button is disabled by default
+    qDebug() <<  Q_FUNC_INFO;
 
+    //  CustomerInformationServiceSubscriber.odebirano=false ;
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+    this->eraseDisplayedInformation();
+    slotUpdateServiceTable();
+    //xmlDoPromenne(1);
+
+
+    eraseDisplayedInformation();
+    cisSubscriber.newSubscribeRequest();
 }
 
 
@@ -2420,5 +2474,23 @@ void MainWindow::on_radioButton_stateReadyForShutdown_clicked()
 {
     deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateReadyForShutdown);
     deviceManagementService1_0.slotDataUpdate();
+}
+
+
+void MainWindow::on_pushButton_settings_save_clicked()
+{
+    settingsWindowToSettingsFile();
+}
+
+
+void MainWindow::on_radioButton_settings_languageCs_clicked()
+{
+    retranslateUi("cs");
+}
+
+
+void MainWindow::on_radioButton_settings_languageEn_clicked()
+{
+    retranslateUi("en");
 }
 

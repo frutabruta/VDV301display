@@ -65,7 +65,7 @@ public:
 
 
 
-  private:
+private:
 
     QCommandLineParser qCommandLineParser;
 
@@ -87,7 +87,7 @@ public:
 
 
     //QVector<Prestup> prestupy;
-   // QString nazevLinky="";
+    // QString nazevLinky="";
     QString nazevCile="";
     QString additionalTextMessageType="";
     QString additionalTextMessageHeadline="";
@@ -241,7 +241,13 @@ public:
     //obecne Udalosti
     int isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestination> zastavky);
     void displayLabelReturnToStopList();
+
     void loadConstants();
+    void constantsToSettingsPage();
+    void settingsWindowToSettingsFile();
+    void deviceManagementServiceInternalVariablesToSettingFile();
+
+
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
 
     void skryjAnnouncement(); //nepouzito
@@ -253,7 +259,7 @@ public:
     void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
     void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
     void displayLabelShowPageFinalStop();
-     void notOnLine();
+    void notOnLine();
 
     //klávesové zkratky
     QShortcut *keyCtrlF; // Entity of Ctrl + D hotkeys
@@ -303,24 +309,25 @@ public:
     void stopRequestedActivated();
     void stopRequestedDectivated();
 
-
-
     void tickLedPanels2_3();
     void retranslateUi(QString language);
+
+
 private slots:
 
     void on_actiontestPolozka_triggered();
     //tlacitka
-    void on_pushButton_menu_refreh_clicked();
-    void on_pushButton_menuServices_clicked();
+
+    void on_pushButton_menu_services_clicked();
 
 
     void on_pushButton_menu_timer_clicked();
     void on_pushButton_menu_quit_clicked();
     void on_pushButton_menu_svg_clicked();
-    void on_pushButton_menuDisplayLabel_clicked();
-    void on_pushButton_menuDisplayLed_clicked();
-    void on_pushButton_menuFullscreen_clicked();
+    void on_pushButton_menu_displayLabel_clicked();
+    void on_pushButton_menu_displayLed_clicked();
+    void on_pushButton_menu_fullscreen_clicked();
+    void on_pushButton_menu_refresh_clicked();
 
 
     //sloty
@@ -335,29 +342,30 @@ private slots:
     void slotSubscriptionLost();
 
     void slotHeartbeatTimeout();
-
-
+    void slotShutdownReady(bool isReady);
 
     void on_pushButton_unsubscribe_clicked();
 
     void on_tlacitkoNastavVteriny_clicked();
 
-    void on_pushButton_menu_refresh_clicked();
 
-    void slotShutdownReady(bool isReady);
+
+
+
     void on_radioButton_stateDefective_clicked();
-
     void on_radioButton_stateWarning_clicked();
-
     void on_radioButton_stateNotAvailable_clicked();
-
     void on_radioButton_stateRunning_clicked();
-
     void on_radioButton_stateReadyForShutdown_clicked();
+
+    void on_pushButton_settings_save_clicked();
+
+    void on_radioButton_settings_languageCs_clicked();
+    void on_radioButton_settings_languageEn_clicked();
 
 public slots:
 
-    void slotParametryZarizeniDoConfigu();
+    void slotDeviceParametersToConfigFile();
 };
 
 #endif // MAINWINDOW_H
