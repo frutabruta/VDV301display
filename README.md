@@ -14,6 +14,9 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240418_1443
+    - VDV301subscriber
+        - correct subscribe request address when multiple network interfaces are used 
 - 20240215_1208
     - new settings window, saving selected options to settings file
         - new functions

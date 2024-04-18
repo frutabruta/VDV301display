@@ -78,6 +78,8 @@ SOURCES += \
     VDV301subscriber/devmgmtsubscriber.cpp \
     VDV301subscriber/httpserversubscriber.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
+    VDV301subscriber/xmlgeneratorsubscriber.cpp \
+    VDV301subscriber/xmlparsersubscriber.cpp \
     inlineformatparser.cpp \
     VDV301subscriber/ibisipsubscriberonepublisher.cpp \
     labelvykreslovani.cpp \
@@ -124,6 +126,8 @@ HEADERS += \
     VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
     VDV301subscriber/ibisipsubscriberonepublisher.h \
+    VDV301subscriber/xmlgeneratorsubscriber.h \
+    VDV301subscriber/xmlparsersubscriber.h \
     inlineformatparser.h \
     labelvykreslovani.h \
     mainwindow.h \
