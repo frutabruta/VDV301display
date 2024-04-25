@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
 
 
     QString cesta="";
-    QApplication::applicationDirPath()+"/nastaveni.ini";
+    //QApplication::applicationDirPath()+"/settings.ini";
 
     if(!qCommandLineParser.value("config").isEmpty())
     {
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     }
     else
     {
-        cesta=QCoreApplication::applicationDirPath()+"/nastaveni.ini";
+        cesta=QCoreApplication::applicationDirPath()+"/settings.ini";
     }
 
     MainWindow w(cesta,nullptr);

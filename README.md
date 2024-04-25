@@ -14,6 +14,18 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+
+- 20240419_1854
+    - nastaveni.ini renamed to settings.ini
+    - deviceManagementService1_0 renamed to deviceManagementService
+    - VDV301publisher
+        - merge 2.3 display content fix, mVersion
+        - globalVersion renamed to mVersion
+    - MainWindow::updateMainScreenDebugLabels
+        - now contains all actions to update labels on the debug bar on the main screen
+    - MainWindow::eraseDisplayedInformation()
+        - display version screen fixed
+    
 - 20240418_1443
     - VDV301subscriber
         - correct subscribe request address when multiple network interfaces are used 

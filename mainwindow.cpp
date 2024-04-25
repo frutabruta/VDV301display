@@ -7,7 +7,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
     svgVykreslovani(QCoreApplication::applicationDirPath()),
 
-    deviceManagementService1_0("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
+    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
     settings(configurationFilePath, QSettings::IniFormat)
 {
 
@@ -19,7 +19,10 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
    */
     QNetworkProxyFactory::setUseSystemConfiguration(false);
 
-
+    if(!QFile::exists(configurationFilePath))
+    {
+        popUpMessage(tr("configuration file \n")+configurationFilePath+tr(" \ndoes not exist"));
+    }
 
     QTranslator translator;
     //settings.setValue("General/language","en");
@@ -52,6 +55,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     loadConstants();
     constantsToSettingsPage();
+    updateMainScreenDebugLabels();
+
     allConnects();
 
 
@@ -77,7 +82,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     cisSubscriber.newSubscribeRequest();
 
-    ui->label_subscribedVersion->setText(cisSubscriber.version());
+    updateMainScreenDebugLabels();
+
 
 
     this->ledInicializujVirtualniPanely();
@@ -107,7 +113,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 
     //
-
+    eraseDisplayedInformation();
 
     timerUpdateSeconds->start(1000); //refresh vterin
     timerLedSideCycleViaPoints->start(intervalSideDisplay);
@@ -116,7 +122,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     timerDelayedStart->setInterval(intervalOpozdeniStartu);
     timerDelayedStart->setSingleShot(true);
 
-    eraseDisplayedInformation();
+
     timerDelayedStart->start();
 
     //   QStringList seznamParametru = qCommandLineParser.optionNames();
@@ -126,7 +132,14 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 }
 
+void MainWindow::updateMainScreenDebugLabels()
+{
+    ui->label_subscribedVersion->setText(cisSubscriber.version());
+    ui->label_deviceClass->setText(deviceManagementService.deviceClass());
+    ui->label_deviceID->setText(deviceManagementService.deviceId());
 
+    ui->label_locationState->setText(vehicleState.locationState);
+}
 void MainWindow::retranslateUi(QString language)
 {
     QTranslator translator;
@@ -135,7 +148,7 @@ void MainWindow::retranslateUi(QString language)
     if(translator.load(":/lang_"+language+".qm"))
     {
         qApp->installTranslator(&translator);
-        qDebug()<<"zmena jazyka";
+        qDebug()<<"language change";
         ui->retranslateUi(this);
     }
     else
@@ -147,11 +160,11 @@ void MainWindow::retranslateUi(QString language)
 
 void MainWindow::constantsToSettingsPage()
 {
-    ui->lineEdit_settings_deviceName->setText(deviceManagementService1_0.deviceName());
-    ui->lineEdit_settings_deviceManufacturer->setText(deviceManagementService1_0.deviceManufacturer());
-    ui->lineEdit_settings_deviceSerialNumber->setText(deviceManagementService1_0.deviceSerialNumber());
-    ui->lineEdit_settings_deviceClass->setText(deviceManagementService1_0.deviceClass());
-    ui->lineEdit_settings_deviceId->setText(deviceManagementService1_0.deviceId());
+    ui->lineEdit_settings_deviceName->setText(deviceManagementService.deviceName());
+    ui->lineEdit_settings_deviceManufacturer->setText(deviceManagementService.deviceManufacturer());
+    ui->lineEdit_settings_deviceSerialNumber->setText(deviceManagementService.deviceSerialNumber());
+    ui->lineEdit_settings_deviceClass->setText(deviceManagementService.deviceClass());
+    ui->lineEdit_settings_deviceId->setText(deviceManagementService.deviceId());
 
     QString language=settings.value("app/language").toString();
     if(language=="cs")
@@ -190,11 +203,11 @@ void MainWindow::settingsWindowToSettingsFile()
 
     settings.setValue("window/defaultScreen",ui->spinBox_defaultScreen->value());
     settings.setValue("window/fullscreen",ui->checkBox_settings_startFullscreen->isChecked());
-    settings.setValue("deviceManagementService1_0/deviceName",ui->lineEdit_settings_deviceName->text());
-    settings.setValue("deviceManagementService1_0/deviceManufacturer",ui->lineEdit_settings_deviceManufacturer->text());
-    settings.setValue("deviceManagementService1_0/deviceSerialNumber",ui->lineEdit_settings_deviceSerialNumber->text());
-    settings.setValue("deviceManagementService1_0/deviceClass",ui->lineEdit_settings_deviceClass->text());
-    settings.setValue("deviceManagementService1_0/deviceId",ui->lineEdit_settings_deviceId->text());
+    settings.setValue("deviceManagementService/deviceName",ui->lineEdit_settings_deviceName->text());
+    settings.setValue("deviceManagementService/deviceManufacturer",ui->lineEdit_settings_deviceManufacturer->text());
+    settings.setValue("deviceManagementService/deviceSerialNumber",ui->lineEdit_settings_deviceSerialNumber->text());
+    settings.setValue("deviceManagementService/deviceClass",ui->lineEdit_settings_deviceClass->text());
+    settings.setValue("deviceManagementService/deviceId",ui->lineEdit_settings_deviceId->text());
 
 }
 
@@ -303,31 +316,31 @@ void MainWindow::initilializeShortcuts()
 
 void MainWindow::loadConstants()
 {
-    deviceManagementService1_0.setDeviceName(settings.value("deviceManagementService1_0/deviceName").toString());
-    deviceManagementService1_0.setDeviceManufacturer(settings.value("deviceManagementService1_0/deviceManufacturer").toString());
-    deviceManagementService1_0.setDeviceSerialNumber(settings.value("deviceManagementService1_0/deviceSerialNumber").toString());
-    deviceManagementService1_0.setDeviceClass(settings.value("deviceManagementService1_0/deviceClass").toString());
-    deviceManagementService1_0.setDeviceId(settings.value("deviceManagementService1_0/deviceId").toString());
-    deviceManagementService1_0.setSwVersion(createProgramVersionString());
-    deviceManagementService1_0.setPortNumber(settings.value("deviceManagementService1_0/port").toInt() ); //47477
+    deviceManagementService.setDeviceName(settings.value("deviceManagementService/deviceName").toString());
+    deviceManagementService.setDeviceManufacturer(settings.value("deviceManagementService/deviceManufacturer").toString());
+    deviceManagementService.setDeviceSerialNumber(settings.value("deviceManagementService/deviceSerialNumber").toString());
+    deviceManagementService.setDeviceClass(settings.value("deviceManagementService/deviceClass").toString());
+    deviceManagementService.setDeviceId(settings.value("deviceManagementService/deviceId").toString());
+    deviceManagementService.setSwVersion(createProgramVersionString());
+    deviceManagementService.setPortNumber(settings.value("deviceManagementService/port").toInt() ); //47477
+    deviceManagementService.setVersion(settings.value("deviceManagementService/version").toString());
 
+    deviceManagementService.slotDataUpdate();
+    deviceManagementService.slotStartServer();
 
-    deviceManagementService1_0.slotDataUpdate();
-    deviceManagementService1_0.slotStartServer();
+    QString vdv301version=settings.value("cisSubscriber/version").toString();
+    QStringList supportedVersionList;
+    supportedVersionList<<"1.0";
+    supportedVersionList<<"2.2CZ1.0";
+    supportedVersionList<<"2.3";
 
-    QString verzeVdv301=settings.value("cisSubscriber/verze").toString();
-    QStringList podporovaneVerze;
-    podporovaneVerze<<"1.0";
-    podporovaneVerze<<"2.2CZ1.0";
-    podporovaneVerze<<"2.3";
-
-    if(podporovaneVerze.contains(verzeVdv301))
+    if(supportedVersionList.contains(vdv301version))
     {
-        cisSubscriber.setVersion(verzeVdv301);
+        cisSubscriber.setVersion(vdv301version);
     }
     else
     {
-        popUpMessage("verze "+verzeVdv301+" neni podporována!");
+        popUpMessage(tr("version ")+vdv301version+tr(" is not supported!"));
     }
     cisSubscriber.setPortNumber(settings.value("cisSubscriber/port").toUInt());
 
@@ -386,7 +399,7 @@ void MainWindow::allConnects()
     connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotPublisherDoTabulky);
 
 
-    connect(&deviceManagementService1_0,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
+    connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
 
 
     connect(timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
@@ -617,8 +630,8 @@ void MainWindow::displayLabelEraseInformation()
     qDebug() <<  Q_FUNC_INFO;
 
 
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+ //   ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+//    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
     ui->Lcil->setText("");
     ui->label_linka->setText("");
@@ -649,7 +662,8 @@ int MainWindow::showReceivedData()
     eraseTable(ui->tableWidget_zastavky);
 
     displayLabelEraseInformation();
-    ui->label_locationState->setText(vehicleState.locationState);
+    updateMainScreenDebugLabels();
+
 
     if(vehicleState.isVehicleStopRequested)
     {
@@ -2288,15 +2302,17 @@ void MainWindow::slotDeviceParametersToConfigFile()
 
     deviceManagementServiceInternalVariablesToSettingFile();
     constantsToSettingsPage();
+    updateMainScreenDebugLabels();
 }
 
 void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
 {
-    settings.setValue("deviceManagementService1_0/deviceName",deviceManagementService1_0.deviceName());
-    settings.setValue("deviceManagementService1_0/deviceManufacturer",deviceManagementService1_0.deviceManufacturer());
-    settings.setValue("deviceManagementService1_0/deviceSerialNumber",deviceManagementService1_0.deviceSerialNumber());
-    settings.setValue("deviceManagementService1_0/deviceClass",deviceManagementService1_0.deviceClass());
-    settings.setValue("deviceManagementService1_0/deviceId",deviceManagementService1_0.deviceId());
+    settings.setValue("deviceManagementService/deviceName",deviceManagementService.deviceName());
+    settings.setValue("deviceManagementService/deviceManufacturer",deviceManagementService.deviceManufacturer());
+    settings.setValue("deviceManagementService/deviceSerialNumber",deviceManagementService.deviceSerialNumber());
+    settings.setValue("deviceManagementService/deviceClass",deviceManagementService.deviceClass());
+    settings.setValue("deviceManagementService/deviceId",deviceManagementService.deviceId());
+    settings.setValue("deviceManagementService/version",deviceManagementService.version());
 
 }
 
@@ -2444,36 +2460,36 @@ void MainWindow::on_pushButton_menu_refresh_clicked()
 
 void MainWindow::on_radioButton_stateDefective_clicked()
 {
-    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateDefective);
-    deviceManagementService1_0.slotDataUpdate();
+    deviceManagementService.setDeviceStatus(DeviceManagementService::StateDefective);
+    deviceManagementService.slotDataUpdate();
 }
 
 
 void MainWindow::on_radioButton_stateWarning_clicked()
 {
-    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateWarning);
-    deviceManagementService1_0.slotDataUpdate();
+    deviceManagementService.setDeviceStatus(DeviceManagementService::StateWarning);
+    deviceManagementService.slotDataUpdate();
 }
 
 
 void MainWindow::on_radioButton_stateNotAvailable_clicked()
 {
-    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateNotavailable);
-    deviceManagementService1_0.slotDataUpdate();
+    deviceManagementService.setDeviceStatus(DeviceManagementService::StateNotavailable);
+    deviceManagementService.slotDataUpdate();
 }
 
 
 void MainWindow::on_radioButton_stateRunning_clicked()
 {
-    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateRunning);
-    deviceManagementService1_0.slotDataUpdate();
+    deviceManagementService.setDeviceStatus(DeviceManagementService::StateRunning);
+    deviceManagementService.slotDataUpdate();
 }
 
 
 void MainWindow::on_radioButton_stateReadyForShutdown_clicked()
 {
-    deviceManagementService1_0.setDeviceStatus(DeviceManagementService::StateReadyForShutdown);
-    deviceManagementService1_0.slotDataUpdate();
+    deviceManagementService.setDeviceStatus(DeviceManagementService::StateReadyForShutdown);
+    deviceManagementService.slotDataUpdate();
 }
 
 

@@ -61,10 +61,6 @@ public:
     Ui::MainWindow *ui;
     ~MainWindow();
 
-
-
-
-
 private:
 
     QCommandLineParser qCommandLineParser;
@@ -76,7 +72,7 @@ private:
 
     CisSubscriber cisSubscriber;
     SvgVykreslovani svgVykreslovani;
-    DeviceManagementService deviceManagementService1_0;
+    DeviceManagementService deviceManagementService;
     QSettings settings;
 
 
@@ -313,6 +309,7 @@ private:
     void retranslateUi(QString language);
 
 
+    void updateMainScreenDebugLabels();
 private slots:
 
     void on_actiontestPolozka_triggered();
