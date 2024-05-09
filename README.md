@@ -14,6 +14,10 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240509_1530
+    - added icon
+    - VDV301publisher
+        - escape > fixed
 
 - 20240419_1854
     - nastaveni.ini renamed to settings.ini
