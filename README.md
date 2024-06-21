@@ -14,6 +14,12 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240617_1636
+    - VDV301DataStructures
+        - added arrivalTime
+        - VehicleState cleanup
+    - VDV301publisher 
+        - 2_3 removed ZoneChange from AllData to comply with the original VDV301 XSD
 - 20240607_1835
     - VDV301publisher
         - examples added
