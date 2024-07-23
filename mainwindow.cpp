@@ -2358,6 +2358,8 @@ void MainWindow::ledZmenVelikostPanelu()
 
     ratioPixelLed=ui->labelFrontSingle->width() /(float(cilSirka)); //A
 
+    ui->spinBox_frontSignWidth->setValue(ui->labelFrontSingle->width());
+
     float novaVyskaLinky=float(linkaVyska)*ratioPixelLed;
     float staraVyskaLinky=78.0;
 
@@ -2508,5 +2510,14 @@ void MainWindow::on_radioButton_settings_languageCs_clicked()
 void MainWindow::on_radioButton_settings_languageEn_clicked()
 {
     retranslateUi("en");
+}
+
+
+void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
+{
+    ui->labelFrontSingle->setFixedWidth(ui->spinBox_frontSignWidth->value());
+    ledZmenVelikostPanelu();
+
+     //  ui->spinBox_frontSignWidth->setValue(ui->labelFrontSingle->width());
 }
 

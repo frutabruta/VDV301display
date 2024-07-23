@@ -14,6 +14,10 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240621_1620
+    - hlavni.svg update
+    - new function MainWindow::on_spinBox_frontSignWidth_valueChanged
+        - the LED displays scale can be manually changed
 - 20240617_1636
     - VDV301DataStructures
         - added arrivalTime

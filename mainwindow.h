@@ -360,6 +360,8 @@ private slots:
     void on_radioButton_settings_languageCs_clicked();
     void on_radioButton_settings_languageEn_clicked();
 
+    void on_spinBox_frontSignWidth_valueChanged(int arg1);
+
 public slots:
 
     void slotDeviceParametersToConfigFile();
