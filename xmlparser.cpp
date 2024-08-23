@@ -1,7 +1,7 @@
 #include "xmlparser.h"
-#include "VDV301DataStructures/stoppoint.h"
-#include "VDV301DataStructures/vehiclestate.h"
-#include "VDV301DataStructures/farezone.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/farezone.h"
 
 #include <QDebug>
 #include <QMainWindow>
@@ -371,24 +371,58 @@ int XmlParser::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &doca
 }
 
 
-void XmlParser::parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList)
+Vdv301AllData XmlParser::parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList)
 {
     QDomElement root = input.firstChildElement();
     QDomElement domAllData=root.firstChildElement("AllData");
     QDomNodeList domTripList=domAllData.elementsByTagName("TripInformation");
     QVector<Vdv301Trip> tripList;
+    Vdv301AllData vdv301AllData;
+
     QString vehicleRef=domAllData.firstChildElement("VehicleRef").firstChildElement("Value").text();
+    vdv301AllData.vehicleRef=vehicleRef;
 
     for(int i=0;i<domTripList.count();i++)
     {
         tripList.append(domTripInformationToVdv301Trip(domTripList.at(i).toElement()));
     }
+
+    vdv301AllData.tripInformationList.append(tripList);
+
     if(!tripList.isEmpty())
     {
         testStopList=tripList.first().stopPointList;
     }
 
+    vdv301AllData.vehicleInformationGroup=domAllDataToVdv301VehicleInformationGroup(domAllData);
 
+
+    QDomNodeList displayContentsDom=input.elementsByTagName("GlobalDisplayContent");
+    for(int j=0;j<displayContentsDom.count();j++)
+    {
+        QDomElement selectedDisplayContentDom=displayContentsDom.at(j).toElement();
+        vdv301AllData.globalDisplayContentList<<domDisplayContentToVdv301DisplayContent(selectedDisplayContentDom);
+
+    }
+
+    return vdv301AllData;
+}
+
+Vdv301VehicleInformationGroup XmlParser::domAllDataToVdv301VehicleInformationGroup(QDomElement input)
+{
+    Vdv301VehicleInformationGroup output;
+
+    output.doorState=Vdv301Enumerations::DoorOpenStateEnumerationFromQString(input.firstChildElement("DoorState").text());
+    //output.tripState=
+    //output.exitSide=
+    //output.inPanic=
+    //output.routeDeviation
+    output.vehicleMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
+    output.vehicleSubMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement(output.vehicleMode).firstChild().nodeValue();
+    output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+
+
+    return output;
 }
 
 Vdv301Trip XmlParser::domTripInformationToVdv301Trip( QDomElement input)
@@ -396,7 +430,7 @@ Vdv301Trip XmlParser::domTripInformationToVdv301Trip( QDomElement input)
     Vdv301Trip trip;
     trip.tripRef=input.firstChildElement("TripRef").text();
     trip.stopPointList=domStopListToVdv301TripStopList(input);
-    trip.locationState=input.firstChildElement("LocationState").text();
+    trip.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(input.firstChildElement("LocationState").text());
     return trip;
 }
 
@@ -415,73 +449,7 @@ QVector<Vdv301StopPoint> XmlParser::domStopListToVdv301TripStopList( QDomElement
 
         //////////////////////////////////////////////////
         //new approach
-        Vdv301StopPoint temporaryStopPoint;
-
-
-        temporaryStopPoint.stopIndex=aktZastavkaDOM.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
-        temporaryStopPoint.stopRef=aktZastavkaDOM.firstChildElement("StopRef").firstChildElement().text();
-        QDomNodeList stopPointNameListDom=aktZastavkaDOM.elementsByTagName("StopName");
-        for(int j=0;j<stopPointNameListDom.count();j++)
-        {
-            temporaryStopPoint.stopNameList<<qDomNodeToVdv301InternationalText(stopPointNameListDom.at(j));
-        }
-
-
-        //displayContentApproach
-        QDomNodeList displayContentsDom=aktZastavkaDOM.elementsByTagName("DisplayContent");
-        for(int j=0;j<displayContentsDom.count();j++)
-        {
-            QDomElement selectedDisplayContentDom=displayContentsDom.at(j).toElement();
-            Vdv301DisplayContent temporaryDisplayContent;
-            temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
-            temporaryDisplayContent.displayContentType=Vdv301DisplayContent::qStringToDisplayContentClass(selectedDisplayContentDom.firstChildElement("DisplayContentRef").text());
-            //QStringList temporaryDestinationList;
-            QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
-            Vdv301Line temporaryLine;
-            temporaryLine.lineRef=lineInformationDom.firstChildElement("LineRef").firstChildElement("Value").text();
-
-            QDomNodeList lineNameListDom=lineInformationDom.elementsByTagName("LineName");
-            for(int k=0;k<lineNameListDom.count();k++)
-            {
-                Vdv301InternationalText temporaryLineName = qDomNodeToVdv301InternationalText(lineNameListDom.at(k));
-                temporaryLine.lineNameList.append(temporaryLineName);
-            }
-            temporaryLine.lineNumber=lineInformationDom.firstChildElement("LineNumber").firstChildElement("Value").text();
-
-
-            temporaryDisplayContent.lineInformation=temporaryLine;
-
-
-            QDomNode destinationDom=selectedDisplayContentDom.firstChildElement("Destination");
-            Vdv301Destination temporaryDestination;
-            temporaryDestination.DestinationRef=destinationDom.firstChildElement("DestinationRef").text();
-
-            QDomNodeList destinationNameListDom=selectedDisplayContentDom.elementsByTagName("DestinationName");
-
-            for(int k=0;k<destinationNameListDom.count();k++)
-            {
-                QDomElement temporaryDestinationName=destinationNameListDom.at(k).toElement();
-                temporaryDestination.destinationNameList<<qDomNodeToVdv301InternationalText(destinationNameListDom.at(k));
-            }
-            temporaryDisplayContent.destination=temporaryDestination;
-
-            temporaryStopPoint.displayContentList<<temporaryDisplayContent;
-
-        }
-
-
-
-
-        temporaryStopPoint.departureScheduled=aktZastavkaDOM.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text();
-        temporaryStopPoint.departureExpected=aktZastavkaDOM.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text();
-
-        QDomNodeList temporaryFareZoneList=aktZastavkaDOM.elementsByTagName("FareZone");
-        for(int l=0;l<temporaryFareZoneList.count();l++)
-        {
-            temporaryStopPoint.fareZoneList<<temporaryFareZoneList.at(l).firstChildElement("Value").text();
-        }
-
-        tripStopPointList<<temporaryStopPoint;
+        tripStopPointList<<domStopPointToVdv301StopPoint(aktZastavkaDOM);
         /////////////////////////////////////////////
 
 
@@ -494,6 +462,79 @@ QVector<Vdv301StopPoint> XmlParser::domStopListToVdv301TripStopList( QDomElement
 
 }
 
+
+Vdv301StopPoint XmlParser::domStopPointToVdv301StopPoint( QDomElement domStopPoint)
+{
+    Vdv301StopPoint temporaryStopPoint;
+    temporaryStopPoint.stopIndex=domStopPoint.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
+    temporaryStopPoint.stopRef=domStopPoint.firstChildElement("StopRef").firstChildElement().text();
+    QDomNodeList stopPointNameListDom=domStopPoint.elementsByTagName("StopName");
+    for(int j=0;j<stopPointNameListDom.count();j++)
+    {
+        temporaryStopPoint.stopNameList<<qDomNodeToVdv301InternationalText(stopPointNameListDom.at(j));
+    }
+
+
+    //displayContentApproach
+    QDomNodeList displayContentsDom=domStopPoint.elementsByTagName("DisplayContent");
+    for(int j=0;j<displayContentsDom.count();j++)
+    {
+        QDomElement selectedDisplayContentDom=displayContentsDom.at(j).toElement();
+
+
+        temporaryStopPoint.displayContentList<<domDisplayContentToVdv301DisplayContent(selectedDisplayContentDom);
+
+    }
+
+    temporaryStopPoint.departureScheduled=domStopPoint.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text();
+    temporaryStopPoint.departureExpected=domStopPoint.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text();
+
+    QDomNodeList temporaryFareZoneList=domStopPoint.elementsByTagName("FareZone");
+    for(int l=0;l<temporaryFareZoneList.count();l++)
+    {
+        temporaryStopPoint.fareZoneList<<temporaryFareZoneList.at(l).firstChildElement("Value").text();
+    }
+
+    return temporaryStopPoint;
+}
+
+Vdv301DisplayContent XmlParser::domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom)
+{
+    Vdv301DisplayContent temporaryDisplayContent;
+    temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
+    temporaryDisplayContent.displayContentType=Vdv301DisplayContent::qStringToDisplayContentClass(selectedDisplayContentDom.firstChildElement("DisplayContentRef").text());
+    //QStringList temporaryDestinationList;
+    QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
+    Vdv301Line temporaryLine;
+    temporaryLine.lineRef=lineInformationDom.firstChildElement("LineRef").firstChildElement("Value").text();
+
+    QDomNodeList lineNameListDom=lineInformationDom.elementsByTagName("LineName");
+    for(int k=0;k<lineNameListDom.count();k++)
+    {
+        Vdv301InternationalText temporaryLineName = qDomNodeToVdv301InternationalText(lineNameListDom.at(k));
+        temporaryLine.lineNameList.append(temporaryLineName);
+    }
+    temporaryLine.lineNumber=lineInformationDom.firstChildElement("LineNumber").firstChildElement("Value").text();
+
+
+    temporaryDisplayContent.lineInformation=temporaryLine;
+
+
+    QDomNode destinationDom=selectedDisplayContentDom.firstChildElement("Destination");
+    Vdv301Destination temporaryDestination;
+    temporaryDestination.destinationRef=destinationDom.firstChildElement("DestinationRef").text();
+
+    QDomNodeList destinationNameListDom=selectedDisplayContentDom.elementsByTagName("DestinationName");
+
+    for(int k=0;k<destinationNameListDom.count();k++)
+    {
+        QDomElement temporaryDestinationName=destinationNameListDom.at(k).toElement();
+        temporaryDestination.destinationNameList<<qDomNodeToVdv301InternationalText(destinationNameListDom.at(k));
+    }
+    temporaryDisplayContent.destination=temporaryDestination;
+
+    return temporaryDisplayContent;
+}
 
 
 int XmlParser::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
@@ -630,6 +671,8 @@ Vdv301Destination XmlParser::qDomNodeListToVdv301Destination(QDomNodeList input)
 
 }
 */
+
+
 Vdv301InternationalText XmlParser::qDomNodeToVdv301InternationalText(QDomNode domNode)
 {
     Vdv301InternationalText output;
@@ -837,7 +880,7 @@ int XmlParser::nactiVehicleGroup(VehicleState &stav,QDomDocument xmlko )
     qDebug()<<"alldata name "<<allData.nodeName();
     stav.currentStopIndex0=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1; //-1
     stav.isVehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
-    stav.locationState=allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue();
+    stav.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue());
     stav.vehicleMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
     stav.vehicleSubMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement(stav.vehicleMode).firstChild().nodeValue();
     qDebug()<<"stopIndex "<<QString::number(stav.currentStopIndex0)<<"stopRequested "<<stav.isVehicleStopRequested<<" locState "<<stav.locationState;

@@ -14,6 +14,51 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240823_1759
+    - GlobalDisplayContent basics
+    - removed submodule VDV301DataStructures, now used from Vdv301Subscriber
+    - XmlParser
+        - new functions
+            
+            - DomNodeToStopPointDestination
+            - domStopPointToVdv301StopPoint
+            - domDisplayContentToVdv301DisplayContent
+            - domAllDataToVdv301VehicleInformationGroup
+        - parseAllData2_3
+            - now returs Vdv301AllData 
+    - MainWindow
+        - changes to comply with type change of locationState from QString to Vdv301Enumerations
+        - new variable vdv301AllData
+
+        - ledLabelInitialize2_3()
+            - sideDisplay.destinationLabel fix
+        - 2.3CZ1.0 aded to supported versions
+        - MainWindow::allConnects()
+            - disabled ledDisplaySetDisplayContent to avoid unexpected LED display redraw
+        - MainWindow::displayLabelStopPoint
+            - adapted to version 2.3CZ1.0
+        - MainWindow::doplneniPromennych()
+            - adapted to version 2.3CZ1.0
+        - MainWindow::slotXmlDoPromenne
+            - adapted to version 2.3CZ1.0
+        - MainWindow::ledNaplnSide()
+            - added option for single line destination (new label added to UI)
+        - MainWindow::ledInicializujVirtualniPanely()
+            - labelSideSingle font 5
+        - MainWindow::ledUpdateDisplayedInformation
+            - adapted to version 2.3CZ1.0
+        - new function MainWindow::ledUpdateCurrentStopToDisplayContentList2_3 
+        - new function MainWindow::ledUpdateDisplayedInformationFromDisplayContentList2_3
+        - deleted function MainWindow::ledUpdateDisplayedInformation2_3
+    - UI
+        - added new label labelSideSingle
+    - VDV301publisher 
+        - added GlobalDisplayContent functions
+    - Vdv301subscriber
+        - Vdv301DataStructures
+            - DoorOpenStateEnumerationFromQString
+
+
 - 20240621_1620
     - hlavni.svg update
     - new function MainWindow::on_spinBox_frontSignWidth_valueChanged

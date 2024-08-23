@@ -3,9 +3,9 @@
 #include <QWidget>
 #include <QDomDocument>
 
-#include "VDV301DataStructures/stoppoint.h"
-#include "VDV301DataStructures/stoppointdestination.h"
-#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
 
 class SvgVykreslovani
 {

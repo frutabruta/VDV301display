@@ -9,8 +9,8 @@
 #include <QFile>
 #include <QtMath>
 
-#include "VDV301DataStructures/farezone.h"
-#include "VDV301DataStructures/vdv301displaycontent.h"
+#include "VDV301subscriber/VDV301DataStructures/farezone.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h"
 #include "svgvykreslovani.h"
 #include "inlineformatparser.h"
 

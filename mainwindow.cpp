@@ -138,7 +138,7 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_deviceClass->setText(deviceManagementService.deviceClass());
     ui->label_deviceID->setText(deviceManagementService.deviceId());
 
-    ui->label_locationState->setText(vehicleState.locationState);
+    ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vehicleState.locationState));
 }
 void MainWindow::retranslateUi(QString language)
 {
@@ -268,7 +268,7 @@ void MainWindow::ledLabelInitialize2_3()
     frontDisplay.ticker=0;
 
     sideDisplay.lineLabel=ui->labelSideLine;
-    sideDisplay.destinationLabel=NULL;//ui->labelSideSingle;
+    sideDisplay.destinationLabel=ui->labelSideSingle;
     sideDisplay.destination1Label=ui->labelSideTopRow;
     sideDisplay.destination2Label=ui->labelSideBottomRow;
     sideDisplay.ticker=0;
@@ -333,6 +333,7 @@ void MainWindow::loadConstants()
     supportedVersionList<<"1.0";
     supportedVersionList<<"2.2CZ1.0";
     supportedVersionList<<"2.3";
+    supportedVersionList<<"2.3CZ1.0";
 
     if(supportedVersionList.contains(vdv301version))
     {
@@ -415,10 +416,6 @@ void MainWindow::allConnects()
     }
 
 
-
-
-    labelVykreslovani.ledDisplaySetDisplayContent(frontDisplay);
-    labelVykreslovani.ledDisplaySetDisplayContent(sideDisplay);
 
     connect(timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
     connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
@@ -628,10 +625,6 @@ void MainWindow::eraseDisplayedInformation()
 void MainWindow::displayLabelEraseInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
-
-
- //   ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
-//    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
     ui->Lcil->setText("");
     ui->label_linka->setText("");
@@ -904,7 +897,7 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
     PasmoveDvojiceLcd pasmoveDvojiceLcd;
 
 
-    if(cisSubscriber.version()=="2.3")
+    if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
     {
         //   QString nahradIconPiktogramem(QString vstup);
         //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
@@ -1030,7 +1023,7 @@ int MainWindow::doplneniPromennych()
         StopPointDestination aktualniZastavka=currentDestinationPointList.at(stopIndex);
         //nazevLinky=aktualniZastavka.line.lineName;
 
-        if(cisSubscriber.version()=="2.3")
+        if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
         {
             //nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu));
             nazevCile=labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
@@ -1056,7 +1049,7 @@ int MainWindow::formatZobrazeni()
 
 
 
-    if (vehicleState.locationState=="AtStop" )
+    if (vehicleState.locationState==Vdv301Enumerations::LocationStateAtStop )
     {
         obarviPozadiPristi(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
     }
@@ -1325,11 +1318,27 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     else if(cisSubscriber.version()=="2.3")
     {
 
-        xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
+        vdv301AllData=xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
 
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             notOnLine();
+            ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+            return;
+        }
+
+
+    }
+
+    else if(cisSubscriber.version()=="2.3CZ1.0")
+    {
+
+        vdv301AllData=xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
+
+        if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        {
+            notOnLine();
+            ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
 
@@ -1371,7 +1380,12 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
                 if(cisSubscriber.version()=="2.3")
                 {
-                    this->ledUpdateDisplayedInformation2_3(currenVdv301StopPointList,vehicleState);
+                    ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
+
+                }
+                else if(cisSubscriber.version()=="2.3CZ1.0")
+                {
+                    ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
 
                 }
                 else
@@ -1402,6 +1416,13 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     else
     {
         displayAbnormalStateScreen("STOP INDEX <0");
+    }
+
+
+    if(cisSubscriber.version()=="2.3")
+    {
+
+
     }
 
 
@@ -1633,21 +1654,35 @@ void MainWindow::ledZarovnejPretecenyRadek(QLabel* label)
 void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRadek)
 {
     qDebug() <<  Q_FUNC_INFO;
+
+
+
+    if (dolniRadek!="")
+    {
+        ui->labelSideSingle->setVisible(false);
+        ui->labelSideBottomRow->setVisible(true);
+        ui->labelSideTopRow->setVisible(true);
+    }
+    else
+    {
+        ui->labelSideSingle->setVisible(true);
+        ui->labelSideBottomRow->setVisible(false);
+        ui->labelSideTopRow->setVisible(false);
+    }
+
     ui->labelSideLine->setText(linka);
 
 
+    ui->labelSideSingle->setText(horniRadek);
+    ledZarovnejPretecenyRadek(ui->labelSideSingle);
 
     ui->labelSideTopRow->setText(horniRadek);
-
     ledZarovnejPretecenyRadek(ui->labelSideTopRow);
 
-
-
     ui->labelSideBottomRow->setText(dolniRadek);
-
+    ledZarovnejPretecenyRadek(ui->labelSideBottomRow);
 
     ledZapisLinku(ui->labelSideLine,linka);
-
 
 }
 
@@ -1696,6 +1731,7 @@ void MainWindow::ledInicializujVirtualniPanely()
 */
 
     ui->labelFrontSingle->setFont(fontLed5);
+    ui->labelSideSingle->setFont(fontLed5);
 
     ui->labelFrontTopRow->setFont(fontLed3);
     ui->labelFrontBottomRow->setFont(fontLed3);
@@ -1748,7 +1784,7 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
     StopPointDestination aktZast=zastavky.at(stav.currentStopIndex0);
 
 
-    if(cisSubscriber.version()=="2.3")
+    if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
     {
 
         ledNaplnFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
@@ -1781,16 +1817,31 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
 }
 
 
-void MainWindow::ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav )
+QVector<Vdv301DisplayContent> MainWindow::ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav)
 {
     //new approach to display viapoint from DisplayContent
+    QVector<Vdv301DisplayContent> output;
     qDebug() <<  Q_FUNC_INFO;
     if(!isInRange(stav.currentStopIndex0,zastavky.count()))
     {
-        return;
+        return output;
     }
 
     Vdv301StopPoint aktZast=zastavky.at(stav.currentStopIndex0);
+
+
+
+    output=aktZast.displayContentList;
+
+    return output;
+
+    //   ledUpdateDisplayedInformationFromDisplayContentList2_3(displayContentListAll);
+}
+
+void MainWindow::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> displayContentListAll )
+{
+    //new approach to display viapoint from DisplayContent
+    qDebug() <<  Q_FUNC_INFO;
 
 
     QVector<Vdv301DisplayContent> displayContentListFront;
@@ -1799,7 +1850,7 @@ void MainWindow::ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zast
     QVector<Vdv301DisplayContent> displayContentListInner;
     QVector<Vdv301DisplayContent> displayContentListLcd; //might be replaced with Inner
 
-    foreach(Vdv301DisplayContent selectedDisplayContent, aktZast.displayContentList)
+    foreach(Vdv301DisplayContent selectedDisplayContent, displayContentListAll)
     {
         switch(selectedDisplayContent.displayContentType)
         {
@@ -1843,6 +1894,7 @@ void MainWindow::ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zast
 
     tickLedPanels2_3();
     timerLedSideCycleViaPoints->start();
+
 }
 
 void MainWindow::tickLedPanels2_3()
@@ -2021,7 +2073,7 @@ int MainWindow::isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestina
 {
 
     qDebug() <<  Q_FUNC_INFO;
-    if((stav.currentStopIndex0==(zastavky.count()-1))&&(stav.locationState=="AtStop"))
+    if((stav.currentStopIndex0==(zastavky.count()-1))&&(stav.locationState==Vdv301Enumerations::LocationStateAtStop))
     {
         return true;
     }
@@ -2517,7 +2569,5 @@ void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
 {
     ui->labelFrontSingle->setFixedWidth(ui->spinBox_frontSignWidth->value());
     ledZmenVelikostPanelu();
-
-     //  ui->spinBox_frontSignWidth->setValue(ui->labelFrontSingle->width());
 }
 

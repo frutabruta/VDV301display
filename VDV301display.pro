@@ -45,24 +45,28 @@ target.files=VDV301displayNew
 INSTALLS+=target
 
 SOURCES += \
-    VDV301DataStructures/connectionmpv.cpp \
-    VDV301DataStructures/additionalannoucement.cpp \
-    VDV301DataStructures/connection.cpp \
-    VDV301DataStructures/connectiongolemio.cpp \
-    VDV301DataStructures/farezone.cpp \
-    VDV301DataStructures/line.cpp \
-    VDV301DataStructures/stoppoint.cpp \
-    VDV301DataStructures/stoppointdestination.cpp \
-    VDV301DataStructures/trip.cpp \
-    VDV301DataStructures/vdv301destination.cpp \
-    VDV301DataStructures/vdv301displaycontent.cpp \
-    VDV301DataStructures/vdv301internationaltext.cpp \
-    VDV301DataStructures/vdv301line.cpp \
-    VDV301DataStructures/vdv301stoppoint.cpp \
-    VDV301DataStructures/vdv301trip.cpp \
-    VDV301DataStructures/vdv301viapoint.cpp \
-    VDV301DataStructures/vehiclerun.cpp \
-    VDV301DataStructures/vehiclestate.cpp \
+    VDV301subscriber/VDV301DataStructures/connectionmpv.cpp \
+    VDV301subscriber/VDV301DataStructures/additionalannoucement.cpp \
+    VDV301subscriber/VDV301DataStructures/connection.cpp \
+    VDV301subscriber/VDV301DataStructures/connectiongolemio.cpp \
+    VDV301subscriber/VDV301DataStructures/farezone.cpp \
+    VDV301subscriber/VDV301DataStructures/line.cpp \
+    VDV301subscriber/VDV301DataStructures/stoppoint.cpp \
+    VDV301subscriber/VDV301DataStructures/stoppointdestination.cpp \
+    VDV301subscriber/VDV301DataStructures/trip.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301alldata.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301connection.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301destination.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301displaycontent.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301enumerations.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301internationaltext.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301line.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301stoppoint.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301trip.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301viapoint.cpp \
+    VDV301subscriber/VDV301DataStructures/vehiclerun.cpp \
+    VDV301subscriber/VDV301DataStructures/vehiclestate.cpp \
     VDV301publisher/colordisplayrules.cpp \
     VDV301publisher/customerinformationservice.cpp \
     VDV301publisher/devicemanagementservice.cpp\
@@ -92,24 +96,28 @@ SOURCES += \
     barvylinek.cpp
 
 HEADERS += \
-    VDV301DataStructures/additionalannoucement.h \
-    VDV301DataStructures/connection.h \
-    VDV301DataStructures/connectiongolemio.h \
-    VDV301DataStructures/connectionmpv.h \
-    VDV301DataStructures/farezone.h \
-    VDV301DataStructures/line.h \
-    VDV301DataStructures/stoppoint.h \
-    VDV301DataStructures/stoppointdestination.h \
-    VDV301DataStructures/trip.h \
-    VDV301DataStructures/vdv301destination.h \
-    VDV301DataStructures/vdv301displaycontent.h \
-    VDV301DataStructures/vdv301internationaltext.h \
-    VDV301DataStructures/vdv301line.h \
-    VDV301DataStructures/vdv301stoppoint.h \
-    VDV301DataStructures/vdv301trip.h \
-    VDV301DataStructures/vdv301viapoint.h \
-    VDV301DataStructures/vehiclerun.h \
-    VDV301DataStructures/vehiclestate.h \
+    VDV301subscriber/VDV301DataStructures/additionalannoucement.h \
+    VDV301subscriber/VDV301DataStructures/connection.h \
+    VDV301subscriber/VDV301DataStructures/connectiongolemio.h \
+    VDV301subscriber/VDV301DataStructures/connectionmpv.h \
+    VDV301subscriber/VDV301DataStructures/farezone.h \
+    VDV301subscriber/VDV301DataStructures/line.h \
+    VDV301subscriber/VDV301DataStructures/stoppoint.h \
+    VDV301subscriber/VDV301DataStructures/stoppointdestination.h \
+    VDV301subscriber/VDV301DataStructures/trip.h \
+    VDV301subscriber/VDV301DataStructures/vdv301alldata.h \
+    VDV301subscriber/VDV301DataStructures/vdv301connection.h \
+    VDV301subscriber/VDV301DataStructures/vdv301destination.h \
+    VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h \
+    VDV301subscriber/VDV301DataStructures/vdv301enumerations.h \
+    VDV301subscriber/VDV301DataStructures/vdv301internationaltext.h \
+    VDV301subscriber/VDV301DataStructures/vdv301line.h \
+    VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h \
+    VDV301subscriber/VDV301DataStructures/vdv301trip.h \
+    VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h \
+    VDV301subscriber/VDV301DataStructures/vdv301viapoint.h \
+    VDV301subscriber/VDV301DataStructures/vehiclerun.h \
+    VDV301subscriber/VDV301DataStructures/vehiclestate.h \
     VDV301publisher/colordisplayrules.h \
     VDV301publisher/customerinformationservice.h \
     VDV301publisher/devicemanagementservice.h \

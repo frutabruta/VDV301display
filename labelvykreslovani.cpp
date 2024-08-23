@@ -17,6 +17,9 @@ void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel *stitek)
 
 void LabelVykreslovani::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
 {
+    qDebug()<<Q_FUNC_INFO<<" "<<" displayContentCount:"<<selectedDisplay.displayContentList.count();
+
+
 
     if(selectedDisplay.displayContentList.isEmpty())
     {

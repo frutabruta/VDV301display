@@ -4425,6 +4425,58 @@ border-radius: 30px;
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QLabel" name="labelSideSingle">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>9999</width>
+                  <height>78</height>
+                 </size>
+                </property>
+                <property name="baseSize">
+                 <size>
+                  <width>344</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>21-PID 5</family>
+                  <pointsize>65</pointsize>
+                 </font>
+                </property>
+                <property name="layoutDirection">
+                 <enum>Qt::LeftToRight</enum>
+                </property>
+                <property name="autoFillBackground">
+                 <bool>false</bool>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">*{color:orange;background-color:black;}</string>
+                </property>
+                <property name="text">
+                 <string>DestinationSideSingle</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>

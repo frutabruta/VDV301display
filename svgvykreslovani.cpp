@@ -3,8 +3,8 @@
 #include <QDebug>
 #include <QDomDocument>
 #include <QFile>
-#include "VDV301DataStructures/stoppoint.h"
-#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
 
 SvgVykreslovani::SvgVykreslovani(QString cesta)
 {

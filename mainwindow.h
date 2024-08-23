@@ -9,9 +9,9 @@
 #include "VDV301subscriber/cissubscriber.h"
 
 
-#include "VDV301DataStructures/stoppointdestination.h"
-#include "VDV301DataStructures/vehiclestate.h"
-#include "VDV301DataStructures/connection.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/connection.h"
 
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
@@ -61,6 +61,7 @@ public:
     Ui::MainWindow *ui;
     ~MainWindow();
 
+    void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
 private:
 
     QCommandLineParser qCommandLineParser;
@@ -69,6 +70,8 @@ private:
     XmlParser xmlParser;
     VehicleState vehicleState;
     LabelVykreslovani labelVykreslovani;
+
+    Vdv301AllData vdv301AllData;
 
     CisSubscriber cisSubscriber;
     SvgVykreslovani svgVykreslovani;
@@ -217,7 +220,7 @@ private:
     void ledZapisLinku(QLabel *label, QString text);
     void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
 
-    void ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
+    QVector<Vdv301DisplayContent> ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
     void ledLabelInitialize2_3();
 
     LedLabelDisplay frontDisplay;
