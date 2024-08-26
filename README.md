@@ -14,6 +14,9 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240826_1624
+    - MainWindow
+        - variables and function translation to English
 - 20240823_1759
     - GlobalDisplayContent basics
     - removed submodule VDV301DataStructures, now used from Vdv301Subscriber

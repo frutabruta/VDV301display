@@ -29,7 +29,7 @@ public:
     //SeznamZastavek* docasnySeznamZastavek = new SeznamZastavek[MAX_ZAST2];
 
     QDomDocument dokument;
-    void Test();
+    void Test(); //unused
 
     void nactiXML(QString vstup);
 
@@ -48,7 +48,7 @@ public:
     QDateTime vyparsujTimestamp(QDomDocument vstupniDokument);
 
     bool zmenaDat=false;
-    static int minutDoOdjezdu(QDateTime aktCas, QDateTime casOdjezdu);
+    static int minutDoOdjezdu(QDateTime aktCas, QDateTime casOdjezdu);  //unused
 
     //rozdelano
     int VytvorSeznamZastavek1_0(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
@@ -64,7 +64,7 @@ public:
     QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
     Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
-    Vdv301StopPoint qDomNodeToStopPointDestination(QDomNode input);
+    Vdv301StopPoint qDomNodeToStopPointDestination(QDomNode input); //unused
     Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);

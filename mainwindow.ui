@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -3917,7 +3917,7 @@ border-radius: 30px;
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_22">
              <item>
-              <widget class="QTableWidget" name="tableWidget_zastavky">
+              <widget class="QTableWidget" name="tableWidget_debugStopList">
                <column>
                 <property name="text">
                  <string>Stop name</string>

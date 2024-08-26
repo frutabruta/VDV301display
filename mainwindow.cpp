@@ -4,17 +4,18 @@
 MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
+    settings(configurationFilePath, QSettings::IniFormat),
     svgVykreslovani(QCoreApplication::applicationDirPath()),
+    cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
 
-    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0"), //49477
-    settings(configurationFilePath, QSettings::IniFormat)
+    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
+
 {
 
     ui->setupUi(this);
 
     /*
-   * oprava záseků při špatně nastavené IP adrese po HTTP POST
+   * fix of program freezes when IP address is not set properly while doing HTTP POST
    * https://bugreports.qt.io/browse/QTBUG-10106
    */
     QNetworkProxyFactory::setUseSystemConfiguration(false);
@@ -31,20 +32,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     qDebug()<<"new language:"<<selectedLanguage;
 
     retranslateUi(selectedLanguage);
-    /* if (selectedLanguage=="en")
-    {
-        qApp->removeTranslator(&translator);
-        translator.load(":/lang_en.qm");
-        qApp->installTranslator(&translator);
-    }
-    else if ((selectedLanguage=="cs")||(selectedLanguage=="cz"))
-    {
-        qApp->removeTranslator(&translator);
-        translator.load(":/lang_cs.qm");
-        qApp->installTranslator(&translator);
-    }
-    ui->retranslateUi(this);
-*/
+
 
 
     labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
@@ -67,8 +55,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     ledLabelInitialize2_3();
 
 
-    formatZobrazeni();
-    hlavniAutoformat();
+    labelUpdateFormat();
+    lcdResizeLabels();
 
     stopRequestedDectivated();
 
@@ -86,9 +74,9 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 
 
-    this->ledInicializujVirtualniPanely();
+    this->ledInitializeFormat();
 
-
+    /*
     bool dvaradky=true;
     if(dvaradky==true)
     {
@@ -102,15 +90,9 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
         ui->labelFrontBottomRow->setVisible(false);
         ui->labelFrontTopRow->setVisible(false);
     }
-    /*
-    auto    sw1 = new QSvgWidget(QString("vystupanim.svg"), this);
-    ui->verticalLayout_3->addWidget(sw1);
-    sw1->setGeometry(50, 50, rect().width(), rect().height());
     */
 
-    ui->label_build->setText(createProgramVersionString());
-    ui->label_lcd_version->setText(createProgramVersionString());
-    ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
+
 
     //
     eraseDisplayedInformation();
@@ -119,17 +101,10 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     timerLedSideCycleViaPoints->start(intervalSideDisplay);
 
     timerLabelPageSwitch->setInterval(intervalSwitchPages);
-    timerDelayedStart->setInterval(intervalOpozdeniStartu);
+
+    timerDelayedStart->setInterval(intervalDelayedStart);
     timerDelayedStart->setSingleShot(true);
-
-
     timerDelayedStart->start();
-
-    //   QStringList seznamParametru = qCommandLineParser.optionNames();
-
-
-
-
 }
 
 void MainWindow::updateMainScreenDebugLabels()
@@ -137,8 +112,11 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_subscribedVersion->setText(cisSubscriber.version());
     ui->label_deviceClass->setText(deviceManagementService.deviceClass());
     ui->label_deviceID->setText(deviceManagementService.deviceId());
-
     ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vehicleState.locationState));
+
+    ui->label_build->setText(createProgramVersionString());
+    ui->label_lcd_version->setText(createProgramVersionString());
+    ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
 void MainWindow::retranslateUi(QString language)
 {
@@ -248,7 +226,7 @@ void MainWindow::initilializeFonts()
     fontLed10.setFamily("21-PID 10");
     fontLed10.setPointSize(65);
 
-    //LCD fonty
+    //LCD fonts
     fontLabelFareZoneLarge.setPointSize(36);
     fontLabelFareZoneLarge.setFamily("Roboto");
     fontLabelFareZoneLarge.setBold(true);
@@ -397,7 +375,7 @@ void MainWindow::allConnects()
     connect(&cisSubscriber,&IbisIpSubscriber::signalUpdateDeviceList,this,&MainWindow::slotUpdateServiceTable);
     connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
     connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
-    connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotPublisherDoTabulky);
+    connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotDebugPublisherToTable);
 
 
     connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
@@ -412,19 +390,19 @@ void MainWindow::allConnects()
     }
     else
     {
-        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::ledIterujVsechnyPanely);
+        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::ledIterateAllDisplays);
     }
 
 
 
     connect(timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
-    connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotHlavniStridejStranky);
+    connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
     connect(timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
 
 
 
 
-    //klávesové zkratky
+    //keyboard shortcuts
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
     connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
     connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_displayLabel_clicked);
@@ -440,10 +418,10 @@ void MainWindow::allConnects()
 
 QString MainWindow::createProgramVersionString()
 {
-    QDate datumKompilace=QLocale("en_US").toDate(QString(__DATE__).simplified(), "MMM d yyyy");
-    QTime casKompilace=QTime::fromString(__TIME__,"hh:mm:ss");
-    qDebug()<<" date:"<<datumKompilace<<" time:"<<casKompilace;
-    QString verze=datumKompilace.toString("yyyyMMdd")+"_"+casKompilace.toString("hhmm");
+    QDate compilationDate=QLocale("en_US").toDate(QString(__DATE__).simplified(), "MMM d yyyy");
+    QTime compilationTime=QTime::fromString(__TIME__,"hh:mm:ss");
+    qDebug()<<" date:"<<compilationDate<<" time:"<<compilationTime;
+    QString verze=compilationDate.toString("yyyyMMdd")+"_"+compilationTime.toString("hhmm");
     return verze;
 }
 
@@ -478,27 +456,27 @@ void MainWindow::slotSubscriptionLost()
 
 void MainWindow::slotMoveScrollingText()
 {
-    int delkaTextu=ui->label_nacestne->width();
-    int krok=1;
+    int textWidthPixels=ui->label_nacestne->width();
+    int stepSize=1;
 
-    if(delkaTextu<ui->scrollArea->width() )
+    if(textWidthPixels<ui->scrollArea->width() )
     {
         return;
     }
     // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
 
-    posunRotovani-=krok;
+    textOffset-=stepSize;
 
-    if (abs(posunRotovani)>delkaTextu)
+    if (abs(textOffset)>textWidthPixels)
     {
-        posunRotovani=0;
+        textOffset=0;
         labelVykreslovani.vykresliNacestneForce(currentDestinationPointList,vehicleState,ui->label_nacestne,cisSubscriber.version());
     }
 
     else
 
     {
-        ui->scrollAreaWidgetContents->scroll(-krok,0);
+        ui->scrollAreaWidgetContents->scroll(-stepSize,0);
     }
 
 }
@@ -506,7 +484,7 @@ void MainWindow::slotMoveScrollingText()
 void MainWindow::slotUpdateServiceTable()
 {
     qDebug() <<  Q_FUNC_INFO;
-    serviceListToTable(cisSubscriber.serviceList);
+    debugServiceListToTable(cisSubscriber.serviceList);
 }
 
 void MainWindow::slotHeartbeatTimeout()
@@ -618,7 +596,7 @@ void MainWindow::eraseDisplayedInformation()
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
     displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
-    ledVymazPanely();
+    ledClearDisplays();
 }
 
 
@@ -652,7 +630,7 @@ int MainWindow::showReceivedData()
     qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
-    eraseTable(ui->tableWidget_zastavky);
+    eraseTable(ui->tableWidget_debugStopList);
 
     displayLabelEraseInformation();
     updateMainScreenDebugLabels();
@@ -751,29 +729,29 @@ int MainWindow::showReceivedData()
 
     //   hlavniVykresliNasledne();
 
-    formatZobrazeni();
-    hlavniAutoformat();
+    labelUpdateFormat();
+    lcdResizeLabels();
     currentPageIndex=0;
     timerLabelPageSwitch->start();
 
-    vsechnyZastavkyDoTabulky(currentDestinationPointList,false);
-    vsechnyZastavkyDoTabulky(nextDestinationPointList,true);
+    debugStopPointListToTable(currentDestinationPointList,false);
+    debugStopPointListToTable(nextDestinationPointList,true);
 
     connectionListToTable(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList,ui->tableWidget_connections);
 
     return 1;
 }
 
-void MainWindow::vsechnyZastavkyDoTabulky(QVector<StopPointDestination> seznamZastavek,bool navazny)
+void MainWindow::debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek,bool navazny)
 {
     if(!navazny)
     {
-        eraseTable(ui->tableWidget_zastavky);
+        eraseTable(ui->tableWidget_debugStopList);
     }
 
     foreach(StopPointDestination polozka, seznamZastavek)
     {
-        zastavkaCilDoTabulky(polozka,navazny);
+        debugStopPointToTable(polozka,navazny);
     }
 }
 
@@ -792,20 +770,20 @@ void MainWindow::stopRequestedDectivated()
 
 
 
-void MainWindow::displayLabelLineName(StopPointDestination aktZastavka,QString subMode)
+void MainWindow::displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka,QString subMode)
 {
     qDebug() <<  Q_FUNC_INFO;
     //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
-    qDebug()<<"vypis linky:"<<aktZastavka.destination.NameLcd<<" "<<aktZastavka.line.lineName<<" vylukova:"<<aktZastavka.line.isDiversion ;
+    qDebug()<<"vypis linky:"<<selectedStopPointDestinationstavka.destination.NameLcd<<" "<<selectedStopPointDestinationstavka.line.lineName<<" vylukova:"<<selectedStopPointDestinationstavka.line.isDiversion ;
 
     if(cisSubscriber.version()=="2.3")
     {
-        displayLabelDrawLineNumber2_4(subMode,aktZastavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
+        displayLabelDrawLineNumber2_4(subMode,selectedStopPointDestinationstavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
 
     }
     else
     {
-        displayLabelDrawLineNumber(subMode,aktZastavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
+        displayLabelDrawLineNumber(subMode,selectedStopPointDestinationstavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
 
     }
     //  labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
@@ -831,12 +809,12 @@ void MainWindow::displayLabelDestination(QString nazev)
 
 
 
-void MainWindow::displayLabelStopFareZone(QVector<StopPointDestination> aktZastavky, QVector<StopPointDestination> navazZastavky)
+void MainWindow::displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList)
 {
     qDebug() <<  Q_FUNC_INFO;
 
     //
-    displayLabelStopList(aktZastavky,navazZastavky,vehicleState.currentStopIndex0);
+    displayLabelStopList(thisStopPointDestinationList,nextStopPointDestinationList,vehicleState.currentStopIndex0);
 
 }
 
@@ -844,19 +822,19 @@ void MainWindow::displayLabelStopFareZone(QVector<StopPointDestination> aktZasta
 
 
 
-void MainWindow::displayLabelStopList(QVector<StopPointDestination> zastavky,QVector<StopPointDestination> zastavkyNavazny, int index)
+void MainWindow::displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList,QVector<StopPointDestination> nextStopPointDestinationList, int index)
 {
     qDebug() <<  Q_FUNC_INFO;
     //stavSystemu.indexAktZastavky;
     int pocetPoli=labelListStopPointName.count();
-    if(zastavky.isEmpty())
+    if(thisStopPointDestinationList.isEmpty())
     {
         return ;
     }
 
     //   zastavky=vektorZastavkaCilZahoditZacatek(zastavky,index);
 
-    zastavky.remove(0,index);
+    thisStopPointDestinationList.remove(0,index);
 
 
 
@@ -864,16 +842,16 @@ void MainWindow::displayLabelStopList(QVector<StopPointDestination> zastavky,QVe
     {
         StopPointDestination aktualniZastavka;
         bool navaznySpoj=false;
-        if(!zastavky.isEmpty())
+        if(!thisStopPointDestinationList.isEmpty())
         {
-            aktualniZastavka=zastavky.takeFirst();
+            aktualniZastavka=thisStopPointDestinationList.takeFirst();
         }
         else
         {
-            if(!zastavkyNavazny.isEmpty())
+            if(!nextStopPointDestinationList.isEmpty())
             {
                 navaznySpoj=true;
-                aktualniZastavka=zastavkyNavazny.takeFirst();
+                aktualniZastavka=nextStopPointDestinationList.takeFirst();
             }
             else
             {
@@ -892,7 +870,7 @@ void MainWindow::displayLabelStopList(QVector<StopPointDestination> zastavky,QVe
 }
 
 
-void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel* nazevZastavky, QLabel* dolniPasmo, QLabel* horniPasmo)
+void MainWindow::displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop)
 {
     PasmoveDvojiceLcd pasmoveDvojiceLcd;
 
@@ -901,19 +879,19 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
     {
         //   QString nahradIconPiktogramem(QString vstup);
         //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
-        pasmoveDvojiceLcd.roztridPasma2_3(aktualniZastavka.stopPoint.fareZoneList);
-        nazevZastavky->setText(labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
+        pasmoveDvojiceLcd.roztridPasma2_3(selectedStopPointDestination.stopPoint.fareZoneList);
+        labelStopName->setText(labelVykreslovani.inlineFormatParser.parseTextLcd(selectedStopPointDestination.stopPoint.NameLcd, labelStopName->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
     }
     else
     {
-        pasmoveDvojiceLcd.roztridPasma(aktualniZastavka.stopPoint.fareZoneList);
-        nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.stopPoint.NameLcd,aktualniZastavka.stopPoint.iconList,nazevZastavky->font().pixelSize() )));
+        pasmoveDvojiceLcd.roztridPasma(selectedStopPointDestination.stopPoint.fareZoneList);
+        labelStopName->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(selectedStopPointDestination.stopPoint.NameLcd,selectedStopPointDestination.stopPoint.iconList,labelStopName->font().pixelSize() )));
     }
 
 
     if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
     {
-        dolniPasmo->setText("");
+        labelFarezoneBottom->setText("");
 
     }
     else
@@ -929,45 +907,45 @@ void MainWindow::displayLabelStopPoint(StopPointDestination aktualniZastavka, bo
             }
 
         }
-        dolniPasmo->setText(zkratkaSystemuDvojtecka+pasmaString1);
-        dolniPasmo->setFont(fontLabelFareZoneLarge);
+        labelFarezoneBottom->setText(zkratkaSystemuDvojtecka+pasmaString1);
+        labelFarezoneBottom->setFont(fontLabelFareZoneLarge);
     }
 
     if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
     {
-        horniPasmo->hide();
-        horniPasmo->setFont(fontLabelFareZoneLarge);
+        labelFarezoneTop->hide();
+        labelFarezoneTop->setFont(fontLabelFareZoneLarge);
     }
     else
     {
         QString pasmaString2=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
-        horniPasmo->show();
+        labelFarezoneTop->show();
 
-        horniPasmo->setFont(fontLabelFareZoneSmall );
-        dolniPasmo->setFont(fontLabelFareZoneSmall );
+        labelFarezoneTop->setFont(fontLabelFareZoneSmall );
+        labelFarezoneBottom->setFont(fontLabelFareZoneSmall );
 
         if(!pasmoveDvojiceLcd.pasmaSystemu2.first().system.isEmpty())
         {
-            horniPasmo->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
+            labelFarezoneTop->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
         }
         else
         {
-            horniPasmo->setText(pasmaString2);
+            labelFarezoneTop->setText(pasmaString2);
         }
 
     }
 
-    if(navazny==false)
+    if(isFollowingTrip==false)
     {
-        nazevZastavky->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        horniPasmo->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        dolniPasmo->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelStopName->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
     }
     else
     {
-        nazevZastavky->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        horniPasmo->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        dolniPasmo->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelStopName->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
     }
 
 
@@ -1012,7 +990,7 @@ void MainWindow::displayLabelViaPoints()
 
 
 
-int MainWindow::doplneniPromennych()
+int MainWindow::setDestinationName()
 {
     qDebug() <<  Q_FUNC_INFO;
     // qInfo()<<"\n DoplneniPromennych";
@@ -1021,17 +999,14 @@ int MainWindow::doplneniPromennych()
     if ((currentDestinationPointList.size()>stopIndex)&&(stopIndex>=0))
     {
         StopPointDestination aktualniZastavka=currentDestinationPointList.at(stopIndex);
-        //nazevLinky=aktualniZastavka.line.lineName;
 
         if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
         {
-            //nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu));
-            nazevCile=labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+             nazevCile=labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
         }
         else
         {
             nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.destination.NameLcd,aktualniZastavka.destination.iconList,ui->Lcil->font().pixelSize()));
-            // nazevLinky=aktualniZastavka.line.lineName;
         }
 
     }
@@ -1043,7 +1018,7 @@ int MainWindow::doplneniPromennych()
     return 1;
 }
 
-int MainWindow::formatZobrazeni()
+int MainWindow::labelUpdateFormat()
 {
     qDebug() <<  Q_FUNC_INFO;
 
@@ -1051,11 +1026,11 @@ int MainWindow::formatZobrazeni()
 
     if (vehicleState.locationState==Vdv301Enumerations::LocationStateAtStop )
     {
-        obarviPozadiPristi(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
+        labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
     }
     else
     {
-        obarviPozadiPristi(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
+        labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
     }
 
     // hlavniAutoformat();
@@ -1112,20 +1087,20 @@ void MainWindow::eraseTable(QTableWidget *tableWidget)
 
 }
 
-void MainWindow::serviceListToTable(QVector<QZeroConfService> seznamSluzeb)
+void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 {
     qDebug() <<  Q_FUNC_INFO;
     eraseTable(ui->tabulkaSubscriberu);
 
 
-    foreach(QZeroConfService sluzba, seznamSluzeb)
+    foreach(QZeroConfService selectedService, serviceList)
     {
-        slotSluzbaDoTabulky(sluzba);
+        slotDebugServiceToTable(selectedService);
     }
 }
 
 
-void MainWindow::slotSluzbaDoTabulky(QZeroConfService zcs)
+void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
 {
     qDebug() <<  Q_FUNC_INFO;
     qint32 row;
@@ -1166,7 +1141,7 @@ void MainWindow::slotSluzbaDoTabulky(QZeroConfService zcs)
 }
 
 
-void MainWindow::slotPublisherDoTabulky(QZeroConfService zcs)
+void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
 {
     qDebug() <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_selectedSubscriber);
@@ -1208,7 +1183,7 @@ void MainWindow::slotPublisherDoTabulky(QZeroConfService zcs)
 
 }
 
-void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool navazny)
+void MainWindow::debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip)
 {
     qDebug() <<  Q_FUNC_INFO;
     qint32 row;
@@ -1220,24 +1195,24 @@ void MainWindow::zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool nav
 
  */
 
-    row = ui->tableWidget_zastavky->rowCount();
-    ui->tableWidget_zastavky->insertRow(row);
+    row = ui->tableWidget_debugStopList->rowCount();
+    ui->tableWidget_debugStopList->insertRow(row);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.stopPoint.NameLcd));
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.stopPoint.NameLcd));
 
-    if(navazny)
+    if(isFollowingTrip)
     {
         cell->setBackground(QColor(240,240,240));
     }
-    ui->tableWidget_zastavky->setItem(row, 0, cell);
+    ui->tableWidget_debugStopList->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.line.lineName));
-    ui->tableWidget_zastavky->setItem(row, 1, cell);
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.line.lineName));
+    ui->tableWidget_debugStopList->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(zastavkaCil.destination.NameLcd));
-    ui->tableWidget_zastavky->setItem(row, 2, cell);
+    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.destination.NameLcd));
+    ui->tableWidget_debugStopList->setItem(row, 2, cell);
 
-    ui->tableWidget_zastavky->resizeColumnsToContents();
+    ui->tableWidget_debugStopList->resizeColumnsToContents();
 
     qDebug()<<"sluzbaDoTabulky_konec";
 }
@@ -1285,6 +1260,8 @@ void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWid
 
 }
 
+
+// XXX FIX GlobalDisplayContent while Stop List is not empty!
 void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -1327,7 +1304,6 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
             return;
         }
 
-
     }
 
     else if(cisSubscriber.version()=="2.3CZ1.0")
@@ -1341,7 +1317,20 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
             ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
+        /*
+        else
+        {
+            if(vdv301AllData.globalDisplayContentList.isEmpty())
+            {
 
+            }
+            else
+            {
+                ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+                return;
+            }
+        }
+        */
 
     }
     else
@@ -1374,9 +1363,9 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
             if(isInRange(stopIndex,currentDestinationPointList.count()))
             {
                 displayNormalOnLineState();
-                doplneniPromennych();
+                setDestinationName();
                 showReceivedData();
-                formatZobrazeni();
+                labelUpdateFormat();
 
                 if(cisSubscriber.version()=="2.3")
                 {
@@ -1385,7 +1374,15 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
                 }
                 else if(cisSubscriber.version()=="2.3CZ1.0")
                 {
-                    ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
+                    if(vdv301AllData.globalDisplayContentList.isEmpty())
+                    {
+                        ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
+                    }
+                    else
+                    {
+                        ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+                        return;
+                    }
 
                 }
                 else
@@ -1437,7 +1434,7 @@ void MainWindow::receivedDataVariablesReset()
 {
     currentDestinationPointList.clear();
     nextDestinationPointList.clear();
-    vsechnyZastavkyDoTabulky(currentDestinationPointList,0);
+    debugStopPointListToTable(currentDestinationPointList,false);
 }
 
 
@@ -1473,8 +1470,8 @@ void MainWindow::on_pushButton_menu_services_clicked()
 void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
-    formatZobrazeni();
-    hlavniAutoformat();
+    labelUpdateFormat();
+    lcdResizeLabels();
 }
 
 void MainWindow::on_pushButton_menu_timer_clicked()
@@ -1482,7 +1479,7 @@ void MainWindow::on_pushButton_menu_timer_clicked()
     ui->prepinadloStran->setCurrentWidget(ui->page_casovac);
 }
 
-void MainWindow::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
+void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPozadi)
 {
     qDebug() <<  Q_FUNC_INFO;
     //
@@ -1609,12 +1606,12 @@ void MainWindow::on_pushButton_menu_displayLed_clicked()
 }
 
 
-void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRadek)
+void MainWindow::ledSetTextFront(QString line,QString destinationTop,QString destinationBottom)
 {
     qDebug() <<  Q_FUNC_INFO;
 
 
-    if (dolniRadek!="")
+    if (destinationBottom!="")
     {
         ui->labelFrontSingle->setVisible(false);
         ui->labelFrontBottomRow->setVisible(true);
@@ -1628,15 +1625,15 @@ void MainWindow::ledNaplnFront(QString linka,QString horniRadek,QString dolniRad
     }
 
 
-    ui->labelFrontTopRow->setText(horniRadek);
-    ui->labelFrontBottomRow->setText(dolniRadek);
-    ui->labelFrontSingle->setText(horniRadek);
+    ui->labelFrontTopRow->setText(destinationTop);
+    ui->labelFrontBottomRow->setText(destinationBottom);
+    ui->labelFrontSingle->setText(destinationTop);
 
-    ledZapisLinku(ui->labelFrontLine,linka);
+    ledSetLine(ui->labelFrontLine,line);
 }
 
 
-void MainWindow::ledZarovnejPretecenyRadek(QLabel* label)
+void MainWindow::ledAlignTextOverflow(QLabel* label)
 {
     qDebug() <<  Q_FUNC_INFO;
     QFontMetrics metrics(label->font());
@@ -1651,13 +1648,13 @@ void MainWindow::ledZarovnejPretecenyRadek(QLabel* label)
     }
 }
 
-void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRadek)
+void MainWindow::ledSetTextSide(QString line,QString destinationTop,QString destinationBottom)
 {
     qDebug() <<  Q_FUNC_INFO;
 
 
 
-    if (dolniRadek!="")
+    if (destinationBottom!="")
     {
         ui->labelSideSingle->setVisible(false);
         ui->labelSideBottomRow->setVisible(true);
@@ -1670,24 +1667,24 @@ void MainWindow::ledNaplnSide(QString linka,QString horniRadek,QString dolniRade
         ui->labelSideTopRow->setVisible(false);
     }
 
-    ui->labelSideLine->setText(linka);
+    ui->labelSideLine->setText(line);
 
 
-    ui->labelSideSingle->setText(horniRadek);
-    ledZarovnejPretecenyRadek(ui->labelSideSingle);
+    ui->labelSideSingle->setText(destinationTop);
+    ledAlignTextOverflow(ui->labelSideSingle);
 
-    ui->labelSideTopRow->setText(horniRadek);
-    ledZarovnejPretecenyRadek(ui->labelSideTopRow);
+    ui->labelSideTopRow->setText(destinationTop);
+    ledAlignTextOverflow(ui->labelSideTopRow);
 
-    ui->labelSideBottomRow->setText(dolniRadek);
-    ledZarovnejPretecenyRadek(ui->labelSideBottomRow);
+    ui->labelSideBottomRow->setText(destinationBottom);
+    ledAlignTextOverflow(ui->labelSideBottomRow);
 
-    ledZapisLinku(ui->labelSideLine,linka);
+    ledSetLine(ui->labelSideLine,line);
 
 }
 
 
-void MainWindow::ledZapisLinku(QLabel* label, QString text)
+void MainWindow::ledSetLine(QLabel* label, QString text)
 {
     qDebug()<<Q_FUNC_INFO;
     label->setText(text);
@@ -1700,27 +1697,27 @@ void MainWindow::ledZapisLinku(QLabel* label, QString text)
     {
         label->setFont(fontLed8);
     }
-    ledZarovnejPretecenyRadek(label);
+    ledAlignTextOverflow(label);
 }
 
-void MainWindow::ledNaplnRear(QString linka)
+void MainWindow::ledSetTextRear(QString line)
 {
     qDebug() <<  Q_FUNC_INFO;
 
-    ledZapisLinku(ui->labelRearLine,linka);
+    ledSetLine(ui->labelRearLine,line);
 
 }
 
-void MainWindow::ledNaplnInner(QString linka,QString horniRadek,QString dolniRadek)
+void MainWindow::ledSetTextInner(QString line,QString destinationTop,QString destinationBottom)
 {
     qDebug() <<  Q_FUNC_INFO;
-    ui->labelInnerLine->setText(linka);
-    ui->labelInnerTopRow->setText(horniRadek);
-    ui->labelInnerBottomRow->setText(dolniRadek);
+    ui->labelInnerLine->setText(line);
+    ui->labelInnerTopRow->setText(destinationTop);
+    ui->labelInnerBottomRow->setText(destinationBottom);
 }
 
 
-void MainWindow::ledInicializujVirtualniPanely()
+void MainWindow::ledInitializeFormat()
 {
     qDebug() <<  Q_FUNC_INFO;
     /*
@@ -1762,38 +1759,38 @@ void MainWindow::ledInicializujVirtualniPanely()
 
 }
 
-void MainWindow::ledVymazPanely()
+void MainWindow::ledClearDisplays()
 {
     qDebug() <<  Q_FUNC_INFO;
-    ledNaplnFront("","","");
-    ledNaplnSide("","","");
-    ledNaplnRear("");
-    ledNaplnInner("","", "");
+    ledSetTextFront("","","");
+    ledSetTextSide("","","");
+    ledSetTextRear("");
+    ledSetTextInner("","", "");
     textyBocniPanelkIteraci.clear();
     textyVnitrniPanelkIteraci.clear();
 }
 
-void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zastavky, VehicleState stav )
+void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> stopPointList, VehicleState vehicleState )
 {
     qDebug() <<  Q_FUNC_INFO;
-    if(!isInRange(stav.currentStopIndex0,zastavky.count()))
+    if(!isInRange(vehicleState.currentStopIndex0,stopPointList.count()))
     {
         return;
     }
 
-    StopPointDestination aktZast=zastavky.at(stav.currentStopIndex0);
+    StopPointDestination aktZast=stopPointList.at(vehicleState.currentStopIndex0);
 
 
     if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
     {
 
-        ledNaplnFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
-        ledNaplnSide(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
-        ledNaplnRear(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName));
-        ledNaplnInner(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.stopPoint.NameInner));
+        ledSetTextFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
+        ledSetTextSide(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
+        ledSetTextRear(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName));
+        ledSetTextInner(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.stopPoint.NameInner));
 
-        textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
-        textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
+        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
 
 
 
@@ -1802,16 +1799,16 @@ void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> zas
     else
     {
 
-        ledNaplnFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
-        ledNaplnSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
-        ledNaplnRear(aktZast.line.lineName);
-        ledNaplnInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
+        ledSetTextFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
+        ledSetTextSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
+        ledSetTextRear(aktZast.line.lineName);
+        ledSetTextInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
 
-        textyBocniPanelkIteraci=ledNaplnNacestyBocniPanel(aktZast);
-        textyVnitrniPanelkIteraci=ledNaplnNacestyVnitrniPanel(aktZast);
+        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
+        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
     }
 
-    ledZmenVelikostPanelu();
+    ledUpdateDisplaySizes();
 
 
 }
@@ -1885,7 +1882,7 @@ void MainWindow::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<
     rearDisplay.displayContentList=displayContentListRear;
 
 
-    ledZmenVelikostPanelu();
+    ledUpdateDisplaySizes();
 
     frontDisplay.ticker=0;
     sideDisplay.ticker=0;
@@ -1914,56 +1911,54 @@ void MainWindow::ledCycleDisplayContents()
 */
 
 
-QVector<QString> MainWindow::ledNaplnNacestyBocniPanel(StopPointDestination aktualniZastavka)
+QVector<QString> MainWindow::ledStopPointToViapointListSide(StopPointDestination selectedStopPointDestination)
 {
     qDebug() <<  Q_FUNC_INFO;
-    StopPoint nacesta;
-    QVector<QString> textyNaBocniPanel;
-    textyNaBocniPanel.append("přes:");
-    foreach (nacesta,aktualniZastavka.viaPoints)
+    QVector<QString> output;
+    output.append("přes:");
+    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
     {
-        textyNaBocniPanel.append(nacesta.NameSide);
+        output.append(viaPoint.NameSide);
         // qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
     }
-    return textyNaBocniPanel;
+    return output;
 
 }
 
-QVector<QString> MainWindow::ledNaplnNacestyVnitrniPanel(StopPointDestination aktualniZastavka)
+QVector<QString> MainWindow::ledStopPointToViapointListInner(StopPointDestination selectedStopPointDestination)
 {
     qDebug() <<  Q_FUNC_INFO;
-    StopPoint nacesta;
-    QVector<QString> textyNaVnitrniPanel;
-    textyNaVnitrniPanel.append("přes:");
-    foreach (nacesta,aktualniZastavka.viaPoints)
+    QVector<QString> output;
+    output.append("přes:");
+    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
     {
-        textyNaVnitrniPanel.append(nacesta.NameInner);
-        qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
+        output.append(viaPoint.NameInner);
+        qDebug()<<"pridavam nacestnou na bocni"<<viaPoint.NameSide;
     }
-    return textyNaVnitrniPanel;
+    return output;
 
 }
 
 
-void MainWindow::ledIterujVsechnyPanely()
+void MainWindow::ledIterateAllDisplays()
 {
     // qDebug()<<"MainWindow::iterujVsechnyPanely()";
-    ledIterujBocniPanel(textyBocniPanelkIteraci,currentPageIndexLed);
-    ledIterujVnitrniPanel(textyVnitrniPanelkIteraci,currentPageIndexLed);
+    ledIterateSide(textyBocniPanelkIteraci,currentPageIndexLed);
+    ledIterateInner(textyVnitrniPanelkIteraci,currentPageIndexLed);
 
 
 
 
 }
 
-void MainWindow::ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
+void MainWindow::ledIterateSide(QVector<QString> texty, int &iteracniIndex)
 {
     // qDebug()<<"MainWindow::iterujBocniPanel";
 
     if(iteracniIndex<texty.length())
     {
         ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
-        ledZarovnejPretecenyRadek(ui->labelSideBottomRow);
+        ledAlignTextOverflow(ui->labelSideBottomRow);
 
         //  iteracniIndex++;
 
@@ -1974,7 +1969,7 @@ void MainWindow::ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex)
     }
 }
 
-void MainWindow::ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex)
+void MainWindow::ledIterateInner(QVector<QString> texty, int &iteracniIndex)
 {
     // qDebug()<<"MainWindow::iterujBocniPanel";
 
@@ -2001,17 +1996,17 @@ void MainWindow::showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZo
     svgVykreslovani.zobrazZmenuPasma(zPasem,naPasma);
 }
 
-void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
+void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList)
 {
     qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
 
-    ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(zPasem,"PID")));
-    ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(naPasma,"PID")));
+    ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
+    ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(toFareZoneList,"PID")));
 
-    labelVykreslovani.naplnZmenaLabel(labelVykreslovani.vyrobTextZmenyPasma(zPasem,naPasma),ui->label_zmena);
+    labelVykreslovani.naplnZmenaLabel(labelVykreslovani.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
 }
 
 
@@ -2038,13 +2033,13 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
 
 
 
-void MainWindow::skryjAnnouncement()
+void MainWindow::hideAnnouncement()
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
 }
 
-void MainWindow::skryjZmenuPasma()
+void MainWindow::hideFareZoneChange()
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
@@ -2081,9 +2076,9 @@ int MainWindow::isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestina
 }
 
 
-int MainWindow::isInRange(int index, int pocetHodnot)
+int MainWindow::isInRange(int index, int limit)
 {
-    if((index<pocetHodnot)&&(index>=0))
+    if((index<limit)&&(index>=0))
     {
 
         return 1;
@@ -2091,9 +2086,11 @@ int MainWindow::isInRange(int index, int pocetHodnot)
     else
     {
         QMessageBox msgBox;
-        msgBox.setText("hodnota "+QString::number(index)+" je mimo rozsah "+ QString::number(pocetHodnot));
+        QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit);
+        msgBox.setText(errorMessage);
+        qDebug()<<" errorMessage";
         msgBox.exec();
-        qDebug()<<" hodnota mimo rozsah";
+
 
         return 0;
     }
@@ -2101,7 +2098,7 @@ int MainWindow::isInRange(int index, int pocetHodnot)
 }
 
 
-void MainWindow::displayLabelConnectionList(QVector<Connection> seznamPrestupu)
+void MainWindow::displayLabelConnectionList(QVector<Connection> connectionList)
 {
     qDebug() <<  Q_FUNC_INFO;
 
@@ -2134,9 +2131,9 @@ void MainWindow::displayLabelConnectionList(QVector<Connection> seznamPrestupu)
 
 
 
-    for (int i=0;i<labelVykreslovani.minimum(seznamPrestupu.count(), labelListConnectionDestination.count()) ; i++)
+    for (int i=0;i<labelVykreslovani.minimum(connectionList.count(), labelListConnectionDestination.count()) ; i++)
     {
-        Connection aktualniPrestup=seznamPrestupu.at(i);
+        Connection aktualniPrestup=connectionList.at(i);
         labelListConnectionDestination.at(i)->setText(aktualniPrestup.destinationName);
         labelListConnectionDestination.at(i)->show();
 
@@ -2162,12 +2159,12 @@ void MainWindow::displayLabelConnectionList(QVector<Connection> seznamPrestupu)
 }
 
 
-void MainWindow::displayLabelDrawLineNumber( QString subMode, Line line, QLabel* label, int velikostPiktogramu,bool prestup)
+void MainWindow::displayLabelDrawLineNumber( QString subMode, Line line, QLabel* label, int iconSize,bool isConnection)
 {
     qDebug()<<Q_FUNC_INFO;
     QString linkaStyleSheetStandard="font-weight: bold;";
 
-    if(prestup)
+    if(isConnection)
     {
         linkaStyleSheetStandard+="border-radius:6px;padding: 5px; ";
     }
@@ -2177,7 +2174,7 @@ void MainWindow::displayLabelDrawLineNumber( QString subMode, Line line, QLabel*
 
 
 
-    QString nahrazeno=labelVykreslovani.nahradMetro(line.lineName,subMode,velikostPiktogramu);
+    QString nahrazeno=labelVykreslovani.nahradMetro(line.lineName,subMode,iconSize);
 
     //defaultni seda barva na bile pozadi, neznama kombinace
 
@@ -2240,7 +2237,7 @@ void MainWindow::displayLabelDrawLineNumber2_4( QString subMode, Line line, QLab
 
 
 
-void MainWindow::slotHlavniStridejStranky()
+void MainWindow::slotDisplayLcdLabelCyclePages()
 {
     qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<currentPageIndex<<" v seznamu je "<<pageCycleList.count();
 
@@ -2300,7 +2297,7 @@ void MainWindow::slotToggleFullscreen()
     }
     // hlavniAutoformat();
 
-    ledZmenVelikostPanelu();
+    ledUpdateDisplaySizes();
 
 
 
@@ -2308,7 +2305,7 @@ void MainWindow::slotToggleFullscreen()
 }
 
 
-void MainWindow::hlavniAutoformat()
+void MainWindow::lcdResizeLabels()
 {
     qDebug() <<  Q_FUNC_INFO;
     this->show();
@@ -2323,8 +2320,8 @@ void MainWindow::hlavniAutoformat()
     labelVykreslovani.poleLabelNastavVelikost(labelListStopPointName,sizeFontFollowing,ratioPixelPoint); //100
 
     labelVykreslovani.poleLabelNastavVelikost(labelListConnectionLine,sizeFontTransferLine,ratioPixelPoint); //48
-    labelVykreslovani.poleLabelNastavSirku(labelListConnectionLine,ratioPixelPoint*velikostPrestupRamecekSirka); //95
-    labelVykreslovani.poleLabelNastavVysku(labelListConnectionLine,ratioPixelPoint*velikostPrestupRamecekVyska); //65
+    labelVykreslovani.poleLabelNastavSirku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameWidth); //95
+    labelVykreslovani.poleLabelNastavVysku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameHeight); //65
 
     labelVykreslovani.poleLabelNastavVelikost(labelListConnectionDestination,sizeFontTransferDestination,ratioPixelPoint); //36
     labelVykreslovani.poleLabelNastavVelikost(labelListConnectionPlatform,sizeFontTransferDestination,ratioPixelPoint); //36
@@ -2369,15 +2366,15 @@ void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
 }
 
 
-void MainWindow::ledZmenVelikostOkna(QLabel * okno, int sirkaDot, int vyskaDot, float koeficient)
+void MainWindow::ledSetWindowSizeDot(QLabel * label, int lengthDotCount, int heightDotCount, float coeficient)
 {
     //int koeficient = pomer pixel:pocetDotu
-    okno->setFixedHeight(float(vyskaDot)*koeficient);
-    okno->setFixedWidth(float(sirkaDot)*koeficient);
+    label->setFixedHeight(float(heightDotCount)*coeficient);
+    label->setFixedWidth(float(lengthDotCount)*coeficient);
 }
 
 
-void MainWindow::ledZmenVelikostPanelu()
+void MainWindow::ledUpdateDisplaySizes()
 {
     qDebug()<<Q_FUNC_INFO;
 
@@ -2423,18 +2420,18 @@ void MainWindow::ledZmenVelikostPanelu()
     ui->labelFrontBottomRow->setFixedHeight(float(vyskaDolniRadek)*ratioPixelLed);
     ui->labelFrontTopRow->setFixedHeight(float(vyskaHorniRadek)*ratioPixelLed);
 
-    ledZmenVelikostOkna(ui->labelFrontLine,linkaSirka,linkaVyska,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelFrontLine,linkaSirka,linkaVyska,ratioPixelLed);
 
-    ledZmenVelikostOkna(ui->labelSideLine,linkaSirka,linkaVyska,ratioPixelLed);
-    ledZmenVelikostOkna(ui->labelSideTopRow,cilBocniSirka,vyskaHorniRadek,ratioPixelLed);
-    ledZmenVelikostOkna(ui->labelSideBottomRow,cilBocniSirka,vyskaDolniRadek,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelSideLine,linkaSirka,linkaVyska,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelSideTopRow,cilBocniSirka,vyskaHorniRadek,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelSideBottomRow,cilBocniSirka,vyskaDolniRadek,ratioPixelLed);
 
-    ledZmenVelikostOkna(ui->labelRearLine,linkaSirka,linkaVyska,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelRearLine,linkaSirka,linkaVyska,ratioPixelLed);
 
-    ledZmenVelikostOkna(ui->labelInnerLine,linkaVnitrniSirka,linkaVnitrniVyska,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelInnerLine,linkaVnitrniSirka,linkaVnitrniVyska,ratioPixelLed);
 
-    ledZmenVelikostOkna(ui->labelInnerTopRow,sirkaVnitrniHorniRadek,vyskaVnitrniHorniRadek,ratioPixelLed);
-    ledZmenVelikostOkna(ui->labelInnerBottomRow,sirkaVnitrniDolniRadek,vyskaVnitrniDolniRadek,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelInnerTopRow,sirkaVnitrniHorniRadek,vyskaVnitrniHorniRadek,ratioPixelLed);
+    ledSetWindowSizeDot(ui->labelInnerBottomRow,sirkaVnitrniDolniRadek,vyskaVnitrniDolniRadek,ratioPixelLed);
 
 
 
@@ -2447,14 +2444,14 @@ void MainWindow::ledZmenVelikostPanelu()
     fontLed8.setPointSize(novaVelikostFontu);
     fontLed10.setPointSize(novaVelikostFontu);
 
-    ledInicializujVirtualniPanely();
+    ledInitializeFormat();
 }
 
-void MainWindow::popUpMessage(QString poznamka)
+void MainWindow::popUpMessage(QString messageContent)
 {
     qDebug() <<  Q_FUNC_INFO;
     QMessageBox msgBox;
-    msgBox.setText(poznamka);
+    msgBox.setText(messageContent);
     QFont font;
     //font.setBold(true);
     font.setPointSize(30);
@@ -2489,10 +2486,7 @@ void MainWindow::on_pushButton_unsubscribe_clicked()
 }
 
 
-void MainWindow::on_tlacitkoNastavVteriny_clicked()
-{
 
-}
 
 
 void MainWindow::on_pushButton_menu_refresh_clicked()
@@ -2568,6 +2562,6 @@ void MainWindow::on_radioButton_settings_languageEn_clicked()
 void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
 {
     ui->labelFrontSingle->setFixedWidth(ui->spinBox_frontSignWidth->value());
-    ledZmenVelikostPanelu();
+    ledUpdateDisplaySizes();
 }
 
