@@ -15,7 +15,9 @@
 
 #include "pasmovedvojicelcd.h"
 #include "svgvykreslovani.h"
-#include "labelvykreslovani.h"
+#include "displaylabelled.h"
+#include "displaylabellcd.h"
+
 #include "barvylinek.h"
 
 
@@ -62,6 +64,7 @@ public:
     ~MainWindow();
 
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
+
 private:
 
     QCommandLineParser qCommandLineParser;
@@ -71,7 +74,11 @@ private:
     XmlParser xmlParser;
 
 
-    LabelVykreslovani labelVykreslovani;
+    DisplayLabelLcd displayLabelLcd;
+
+    DisplayLabelLed displayLabelLed;
+
+
     SvgVykreslovani svgVykreslovani;
 
     CisSubscriber cisSubscriber;
@@ -101,40 +108,31 @@ private:
     bool isFareZone=false;
     int stopIndex=0;
 
-    int currentPageIndexLed=0;
-    int currentPageIndex =0;
+
+    int lcdLabelCurrentPageIndex =0;
+
     bool showTimeColon=0;
 
     //constants
-    int textOffset=0;
-    QString oldViapointString="";
+
+
 
 
 
     const int intervalSideDisplay=2000;
-    const int intervalScrollingText=20;
-    const int intervalSwitchPages=10000;
+
+
     const int intervalDelayedStart=500;
 
     //font sizes in points
     //const int velikostFontLinka=200;
-    const int sizeFontDestination=100;
-    const int sizeFontViaPoints=72;
-    const int sizeFontFollowing=100;
 
-    const int sizeFontTransferLine=48;
-    const int sizeFontTransferDestination=36;
-
-    const int sizeIconConnection=65;
-    int sizeIconConnectionDynamic=20;
-    const int sizeConnectionFrameWidth=95;
-    const int sizeConnectionFrameHeight=65;
 
     //velikosti oken
 
-    float ratioPixelPoint=1080.0/1050.0;
 
-    float ratioPixelLed=4.105;
+
+
 
 
     //other variables
@@ -142,24 +140,21 @@ private:
 
     //Fonty
 
-    //LED fonts
-    QFont fontLed1;
-    QFont fontLed3;
-    QFont fontLed3v;
-    QFont fontLed5;
-    QFont fontLed8;
-    QFont fontLed10;
 
-    //LCD fonts
-    QFont fontLabelFareZoneLarge;
-    QFont fontLabelFareZoneSmall;
+
+
 
     //timers
-    QTimer *timerLedSideCycleViaPoints = new QTimer(this);
-    QTimer *timerScrollingText = new QTimer(this);
-    QTimer *timerUpdateSeconds = new QTimer(this);
-    QTimer *timerLabelPageSwitch = new QTimer(this);
-    QTimer *timerDelayedStart = new QTimer(this);
+
+    // QTimer *timerScrollingText = new QTimer(this);
+    //  QTimer *timerUpdateSeconds = new QTimer(this);
+    //  QTimer *timerLabelPageSwitch = new QTimer(this);
+    //  QTimer *timerDelayedStart = new QTimer(this);
+
+
+    QTimer timerUpdateSeconds;
+
+    QTimer timerDelayedStart;
 
     //common functions
     int setDestinationName ();
@@ -188,55 +183,25 @@ private:
     void lcdResizeLabels();
     void displayLabelFillArray();
     void displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka, QString subMode);
-    void displayLabelViaPoints();
+    //void displayLabelViaPoints();
     void displayLabelDestination(QString alias);
-    void displayLabelConnectionList(QVector<Connection> connectionList);
+  //  void displayLabelConnectionList(QVector<Connection> connectionList);
     void displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, int index);
-    void displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList);
+  //  void displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList);
     void displayLabelEraseInformation();
     void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
     void displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList);
     void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
     void displayLabelDrawLineNumber2_4(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
 
-    QVector<QWidget*> pageCycleList;
+
 
     //funkce led
-    LedLabelDisplay frontDisplay;
-    LedLabelDisplay sideDisplay;
-    LedLabelDisplay rearDisplay;
-
-    void ledUpdateDisplayedInformation(QVector<StopPointDestination> stopPointList, VehicleState vehicleState);
-    void ledSetTextFront(QString line, QString destinationTop, QString destinationBottom);
-    void ledSetTextInner(QString line, QString destinationTop, QString destinationBottom);
-    void ledSetTextSide(QString line, QString destinationTop, QString destinationBottom);
-    void ledSetTextRear(QString line);
-
-    QVector<QString> ledStopPointToViapointListSide(StopPointDestination selectedStopPointDestination);
-    QVector<QString> ledStopPointToViapointListInner(StopPointDestination selectedStopPointDestination);
-
-    void ledInitializeFormat();
-    void ledIterateSide(QVector<QString> texty, int &iteracniIndex);
-    void ledIterateInner(QVector<QString> texty, int &iteracniIndex);
-    void ledIterateAllDisplays();
-
-    void ledClearDisplays();
-
-    void ledUpdateDisplaySizes();
-    void ledAlignTextOverflow(QLabel *label);
-    void ledSetLine(QLabel *label, QString text);
-    void ledSetWindowSizeDot(QLabel *label, int lengthDotCount, int heightDotCount, float coeficient);
-
-    void tickLedPanels2_3();
-
-    QVector<Vdv301DisplayContent> ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
-    void ledLabelInitialize2_3();
 
 
 
 
-    QVector<QString> textyBocniPanelkIteraci;
-    QVector<QString> textyVnitrniPanelkIteraci;
+
 
     //funkce SVG
     bool svgOpenFile(const QString &fileName);
@@ -257,7 +222,7 @@ private:
     void hideFareZoneChange(); //nepouzito
 
 
-    void eraseDisplayedInformation();
+    //void eraseDisplayedInformation();
 
     void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
     void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
@@ -281,15 +246,7 @@ private:
     QGraphicsRectItem *m_outlineItem;
     bool svgVykresleni();
 
-    //vektory Labelu Hlavni
-    QVector<QLabel*> labelListStopPointName;
-    QVector<QLabel*> labelListFareZoneUpper;
-    QVector<QLabel*> labelListFareZoneLower;
 
-    QVector<QLabel*> labelListConnectionLine;
-    QVector<QLabel*> labelListConnectionDestination;
-    QVector<QLabel*> labelListConnectionDeparture;
-    QVector<QLabel*> labelListConnectionPlatform;
 
 
 
@@ -298,7 +255,7 @@ private:
     void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
     void debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek, bool navazny);
 
-    void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
+   // void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
 
 
     QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);//unused
@@ -317,6 +274,9 @@ private:
 
 
     void updateMainScreenDebugLabels();
+    void ledLabelInitialize2_3();
+    void lcdLabelInitialize2_3();
+    void eraseDisplayedInformation();
 private slots:
 
     void on_actiontestPolozka_triggered();
@@ -364,7 +324,6 @@ private slots:
     void slotDebugPublisherToTable(QZeroConfService zcs);
 
     void slotDeviceParametersToConfigFile();
-
 public slots:
 
 

@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_hlavniObrazovka">
        <property name="sizePolicy">
@@ -553,8 +553,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>170</width>
-                      <height>58</height>
+                      <width>216</width>
+                      <height>72</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -4822,7 +4822,7 @@ border-radius: 30px;
      <x>0</x>
      <y>0</y>
      <width>1332</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

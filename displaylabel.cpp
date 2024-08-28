@@ -1,21 +1,23 @@
-#include "labelvykreslovani.h"
+#include "displaylabel.h"
 
 
+#include <QMessageBox>
 
-LabelVykreslovani::LabelVykreslovani()
+
+DisplayLabel::DisplayLabel()
 {
     //    nahradIkonyFormat("", velikostPiktogramu,slozkaPiktogramu);
 
 }
 
-void LabelVykreslovani::naplnZmenaLabel(QString vstup, QLabel *stitek)
+void DisplayLabel::naplnZmenaLabel(QString vstup, QLabel *stitek)
 {
     qDebug()<<Q_FUNC_INFO;
     stitek->setText(vstup);
 }
 
 
-void LabelVykreslovani::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
+void DisplayLabel::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
 {
     qDebug()<<Q_FUNC_INFO<<" "<<" displayContentCount:"<<selectedDisplay.displayContentList.count();
 
@@ -73,7 +75,7 @@ void LabelVykreslovani::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDis
 }
 
 
-void LabelVykreslovani::ledWriteToDisplay(LedLabelDisplay display,QString linka,QString horniRadek,QString dolniRadek)
+void DisplayLabel::ledWriteToDisplay(LedLabelDisplay display,QString linka,QString horniRadek,QString dolniRadek)
 {
     qDebug() <<  Q_FUNC_INFO;
 
@@ -134,7 +136,7 @@ void LabelVykreslovani::ledWriteToDisplay(LedLabelDisplay display,QString linka,
 }
 
 
-QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
+QString DisplayLabel::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {
     qDebug()<<Q_FUNC_INFO;
     QString vysledek = "";
@@ -143,7 +145,7 @@ QString LabelVykreslovani::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector
     return vysledek;
 }
 
-void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel *> labely, int bodovaVelikost, float pomerBodu)
+void DisplayLabel::poleLabelNastavVelikost(QVector<QLabel *> labely, int bodovaVelikost, float pomerBodu)
 {
     foreach (QLabel *label, labely)
     {
@@ -159,17 +161,31 @@ void LabelVykreslovani::poleLabelNastavVelikost(QVector<QLabel *> labely, int bo
     }
 }
 
-void LabelVykreslovani::labelNastavVelikost(QLabel *label, int bodovaVelikost, float pomerBodu)
+void DisplayLabel::labelNastavVelikost(QLabel *label, int bodovaVelikost, float pomerBodu)
 {
-    QFont fontLabelu = label->font();
-    // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
-    fontLabelu.setPointSize(qFloor(pomerBodu * bodovaVelikost * 0.6));
-    label->setFont(fontLabelu);
+    if(label!=NULL)
+    {
+        QFont fontLabelu = label->font();
+        // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
+        fontLabelu.setPointSize(qFloor(pomerBodu * bodovaVelikost * 0.6));
+        label->setFont(fontLabelu);
+    }
+    else
+    {
+        qDebug()<<"empty label pointer";
+        return;
+    }
+
 }
 
-void LabelVykreslovani::zmensiCisloLinkyLabel(QLabel *label)
+void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
 {
     qDebug()<<Q_FUNC_INFO;
+    if(label==NULL)
+    {
+        qDebug()<<"empty label pointer";
+        return;
+    }
 
     QFont puvodniFont = label->font();
     puvodniFont.setPixelSize(label->height());
@@ -210,21 +226,29 @@ void LabelVykreslovani::zmensiCisloLinkyLabel(QLabel *label)
     */
 }
 
-void LabelVykreslovani::naplnNazevCileLabel(QString vstup, QLabel *label)
+void DisplayLabel::naplnNazevCileLabel(QString vstup, QLabel *label)
 {
     qDebug()<<Q_FUNC_INFO;
 
-    label->setText(vstup);
+    if(label!=NULL)
+    {
+        label->setText(vstup);
+    }
+    else
+    {
+        qDebug()<<"label is not set";
+    }
+
 }
 
-void LabelVykreslovani::naplnAnouncementLabel(QString vstup, QLabel *label)
+void DisplayLabel::naplnAnouncementLabel(QString vstup, QLabel *label)
 {
     qDebug()<<Q_FUNC_INFO;
     label->setText(vstup);
     //ui->label_announcement->setText(vstup);
 }
 
-void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe)
+void DisplayLabel::obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe)
 {
     qDebug()<<Q_FUNC_INFO;
     //
@@ -232,7 +256,7 @@ void LabelVykreslovani::obarviPozadiPristi(QString barvaPisma, QString barvaPoza
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
 }
 
-void LabelVykreslovani::poleLabelNastavSirku(QVector<QLabel *> seznamLabelu, int sirka)
+void DisplayLabel::poleLabelNastavSirku(QVector<QLabel *> seznamLabelu, int sirka)
 {
     foreach (QLabel *label, seznamLabelu)
     {
@@ -240,7 +264,7 @@ void LabelVykreslovani::poleLabelNastavSirku(QVector<QLabel *> seznamLabelu, int
     }
 }
 
-void LabelVykreslovani::poleLabelNastavVysku(QVector<QLabel *> seznamLabelu, int vyska)
+void DisplayLabel::poleLabelNastavVysku(QVector<QLabel *> seznamLabelu, int vyska)
 {
     foreach (QLabel *label, seznamLabelu)
     {
@@ -248,7 +272,7 @@ void LabelVykreslovani::poleLabelNastavVysku(QVector<QLabel *> seznamLabelu, int
     }
 }
 
-QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska)
+QString DisplayLabel::nahradMetro(QString linka, QString submode, int vyska)
 {
     QString vysledek = linka;
 
@@ -262,7 +286,7 @@ QString LabelVykreslovani::nahradMetro(QString linka, QString submode, int vyska
     return vysledek;
 }
 
-QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze)
+QString DisplayLabel::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze)
 {
     qDebug()<<Q_FUNC_INFO;
     if (nacestneZastavky.count() == 0)
@@ -302,7 +326,7 @@ QString LabelVykreslovani::vykresliNacestneZastavkyText(QVector<StopPoint> naces
     return vysledek;
 }
 
-QString LabelVykreslovani::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu, int vyskaObrazku)
+QString DisplayLabel::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu, int vyskaObrazku)
 {
     QString vystup = "";
     // int vyskaObrazku=40; //konstanta v px, ovlivnuje vysku piktogramu
@@ -317,7 +341,7 @@ QString LabelVykreslovani::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky,
     return vystup;
 }
 
-QString LabelVykreslovani::textNaPiktogramOznameni(QString announcementType, int vyskaObrazku)
+QString DisplayLabel::textNaPiktogramOznameni(QString announcementType, int vyskaObrazku)
 {
     QString vystup = "";
     // int vyskaObrazku=40; //konstanta v px, ovlivnuje vysku piktogramu
@@ -335,12 +359,12 @@ QString LabelVykreslovani::textNaPiktogramOznameni(QString announcementType, int
     return vystup;
 }
 
-QString LabelVykreslovani::zabalHtmlDoZnacek(QString vstup)
+QString DisplayLabel::zabalHtmlDoZnacek(QString vstup)
 {
     return "<html><head/><body><p>" + vstup + "</p></body></html>";
 }
 
-int LabelVykreslovani::minimum(int cislo1, int cislo2)
+int DisplayLabel::minimum(int cislo1, int cislo2)
 {
     if (cislo1 < cislo2)
     {
@@ -349,7 +373,7 @@ int LabelVykreslovani::minimum(int cislo1, int cislo2)
     return cislo2;
 }
 
-void LabelVykreslovani::vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze)
+void DisplayLabel::vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze)
 {
     qDebug() << Q_FUNC_INFO;
 
@@ -375,7 +399,7 @@ void LabelVykreslovani::vykresliNacestneForce(QVector<StopPointDestination> glob
 
 }
 
-void LabelVykreslovani::vymazPoleLabelu(QVector<QLabel *> vstup)
+void DisplayLabel::vymazPoleLabelu(QVector<QLabel *> vstup)
 {
     foreach (QLabel *odkaz, vstup)
     {
@@ -383,7 +407,7 @@ void LabelVykreslovani::vymazPoleLabelu(QVector<QLabel *> vstup)
     }
 }
 
-QString LabelVykreslovani::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka)
+QString DisplayLabel::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka)
 {
     // bude nahrazeno v inlineformatparser, jen kvuli nacestnym zastavkam
     qDebug() << Q_FUNC_INFO;
@@ -433,7 +457,7 @@ QString LabelVykreslovani::nahradIconPiktogramem(QString vstup, int vyskaObrazku
     return vystup;
 }
 
-QString LabelVykreslovani::replaceIconOuterDisplays(QString vstup)
+QString DisplayLabel::replaceIconOuterDisplays(QString vstup)
 {
     // bude nahrazeno v inlineformatparser, jen kvuli nacestnym zastavkam
     qDebug() << Q_FUNC_INFO;
@@ -469,3 +493,48 @@ QString LabelVykreslovani::replaceIconOuterDisplays(QString vstup)
 }
 
 
+int DisplayLabel::isInRange(int index, int limit)
+{
+    if((index<limit)&&(index>=0))
+    {
+
+        return 1;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit);
+        msgBox.setText(errorMessage);
+        qDebug()<<" errorMessage";
+        msgBox.exec();
+
+
+        return 0;
+    }
+
+}
+QString DisplayLabel::fareZoneListToQString(QVector<FareZone> seznamPasem)
+{
+    qDebug()<<Q_FUNC_INFO;
+    QString vysledek;
+    if (seznamPasem.size()>0)
+    {
+        vysledek=seznamPasem.at(0).name;
+        for (int i=1;i<seznamPasem.size();i++)
+        {
+            vysledek+=","+seznamPasem.at(i).name;
+        }
+    }
+    qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
+    return vysledek;
+}
+
+void DisplayLabel::setVdv301version(const QString &newVdv301version)
+{
+    mVdv301version = newVdv301version;
+}
+
+QString DisplayLabel::vdv301version() const
+{
+    return mVdv301version;
+}

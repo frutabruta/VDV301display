@@ -85,9 +85,11 @@ SOURCES += \
     VDV301subscriber/ibisipsubscriber.cpp \
     VDV301subscriber/xmlgeneratorsubscriber.cpp \
     VDV301subscriber/xmlparsersubscriber.cpp \
+    displaylabel.cpp \
+    displaylabellcd.cpp \
+    displaylabelled.cpp \
     inlineformatparser.cpp \
     VDV301subscriber/ibisipsubscriberonepublisher.cpp \
-    labelvykreslovani.cpp \
         main.cpp \
         mainwindow.cpp \
     pasmovedvojicelcd.cpp \
@@ -137,8 +139,10 @@ HEADERS += \
     VDV301subscriber/ibisipsubscriberonepublisher.h \
     VDV301subscriber/xmlgeneratorsubscriber.h \
     VDV301subscriber/xmlparsersubscriber.h \
+    displaylabel.h \
+    displaylabellcd.h \
+    displaylabelled.h \
     inlineformatparser.h \
-    labelvykreslovani.h \
     mainwindow.h \
     pasmovedvojicelcd.h \
     svgvykreslovani.h \

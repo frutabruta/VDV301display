@@ -14,6 +14,14 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240828_1621
+    - functions related to display of content moved to separate classes
+        - DisplayLabelLcd
+        - DisplayLabelLed
+    - labelVykreslovani renamed to DisplayLabel
+    - known issues
+        - lcd label doesn't delete information change when not on trip
+
 - 20240826_1624
     - MainWindow
         - variables and function translation to English
@@ -21,8 +29,7 @@ Program can be launched with parameter to change settings location.
     - GlobalDisplayContent basics
     - removed submodule VDV301DataStructures, now used from Vdv301Subscriber
     - XmlParser
-        - new functions
-            
+        - new functions            
             - DomNodeToStopPointDestination
             - domStopPointToVdv301StopPoint
             - domDisplayContentToVdv301DisplayContent

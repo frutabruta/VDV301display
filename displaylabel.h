@@ -1,5 +1,5 @@
-#ifndef LABELVYKRESLOVANI_H
-#define LABELVYKRESLOVANI_H
+#ifndef DISPLAYLABEL_H
+#define DISPLAYLABEL_H
 
 #include <QMainWindow>
 #include <QObject>
@@ -13,9 +13,11 @@
 #include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h"
 #include "svgvykreslovani.h"
 #include "inlineformatparser.h"
+#include "barvylinek.h"
 
 class LedLabelDisplay
 {
+
 public:
     QLabel* lineLabel=NULL;
     QLabel* destination1Label=NULL;
@@ -27,14 +29,18 @@ public:
 private:
 };
 
-class LabelVykreslovani
+class DisplayLabel : public QObject
 {
-
+     Q_OBJECT
 public:
-    LabelVykreslovani();
+    DisplayLabel();
 
     QString slozkaPiktogramu="";
     InlineFormatParser inlineFormatParser;
+
+
+
+    BarvyLinek barvyLinek;
 
 
     void naplnZmenaLabel(QString vstup, QLabel *stitek);
@@ -62,10 +68,19 @@ public:
     QString replaceIconOuterDisplays(QString vstup);
     void ledWriteToDisplay(LedLabelDisplay display, QString linka, QString horniRadek, QString dolniRadek);
     void ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay);
+    int isInRange(int index, int limit);
+    QString fareZoneListToQString(QVector<FareZone> seznamPasem);
+    void setVdv301version(const QString &newVdv301version);
+
+    QString vdv301version() const;
+
 signals:
 
 private:
 
+protected:
+    QString mVdv301version="1.0";
+
 };
 
-#endif // LABELVYKRESLOVANI_H
+#endif // DISPLAYLABEL_H

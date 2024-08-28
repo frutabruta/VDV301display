@@ -35,7 +35,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 
 
-    labelVykreslovani.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
+    displayLabelLcd.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
 
     initilializeFonts();
 
@@ -53,10 +53,11 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     displayLabelFillArray(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
     ledLabelInitialize2_3();
+    lcdLabelInitialize2_3();
 
 
     labelUpdateFormat();
-    lcdResizeLabels();
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
     stopRequestedDectivated();
 
@@ -74,7 +75,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 
 
-    this->ledInitializeFormat();
+    displayLabelLed.ledInitializeFormat();
 
     /*
     bool dvaradky=true;
@@ -97,14 +98,14 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     //
     eraseDisplayedInformation();
 
-    timerUpdateSeconds->start(1000); //refresh vterin
-    timerLedSideCycleViaPoints->start(intervalSideDisplay);
+    timerUpdateSeconds.start(1000); //refresh vterin
+    displayLabelLed.timerLedSideCycleViaPoints.start(intervalSideDisplay);
 
-    timerLabelPageSwitch->setInterval(intervalSwitchPages);
 
-    timerDelayedStart->setInterval(intervalDelayedStart);
-    timerDelayedStart->setSingleShot(true);
-    timerDelayedStart->start();
+
+    timerDelayedStart.setInterval(intervalDelayedStart);
+    timerDelayedStart.setSingleShot(true);
+    timerDelayedStart.start();
 }
 
 void MainWindow::updateMainScreenDebugLabels()
@@ -208,55 +209,52 @@ void MainWindow::initilializeFonts()
     QFontDatabase::addApplicationFont(":/fonts/fonty/Roboto-Light.ttf");
 
 
-    fontLed1.setFamily("21-PID 1");
-    fontLed1.setPointSize(65);
+    displayLabelLed.initializeFonts();
 
-    fontLed3.setFamily("21-PID 3");
-    fontLed3.setPointSize(65);
-
-    fontLed3v.setFamily("pid 3v");
-    fontLed3v.setPointSize(65);
-
-    fontLed5.setFamily("21-PID 5");
-    fontLed5.setPointSize(65);
-
-    fontLed8.setFamily("21-PID 8");
-    fontLed8.setPointSize(65);
-
-    fontLed10.setFamily("21-PID 10");
-    fontLed10.setPointSize(65);
-
-    //LCD fonts
-    fontLabelFareZoneLarge.setPointSize(36);
-    fontLabelFareZoneLarge.setFamily("Roboto");
-    fontLabelFareZoneLarge.setBold(true);
-
-    fontLabelFareZoneSmall.setPointSize(20);
-    fontLabelFareZoneSmall.setFamily("Roboto");
-    fontLabelFareZoneSmall.setBold(true);
+    displayLabelLcd.initializeFonts();
 
 }
 
 void MainWindow::ledLabelInitialize2_3()
 {
-    frontDisplay.lineLabel=ui->labelFrontLine;
-    frontDisplay.destinationLabel=ui->labelFrontSingle;
-    frontDisplay.destination1Label=ui->labelFrontTopRow;
-    frontDisplay.destination2Label=ui->labelFrontBottomRow;
-    frontDisplay.ticker=0;
+    displayLabelLed.frontDisplay.lineLabel=ui->labelFrontLine;
+    displayLabelLed.frontDisplay.destinationLabel=ui->labelFrontSingle;
+    displayLabelLed.frontDisplay.destination1Label=ui->labelFrontTopRow;
+    displayLabelLed.frontDisplay.destination2Label=ui->labelFrontBottomRow;
+    displayLabelLed.frontDisplay.ticker=0;
 
-    sideDisplay.lineLabel=ui->labelSideLine;
-    sideDisplay.destinationLabel=ui->labelSideSingle;
-    sideDisplay.destination1Label=ui->labelSideTopRow;
-    sideDisplay.destination2Label=ui->labelSideBottomRow;
-    sideDisplay.ticker=0;
+    displayLabelLed.sideDisplay.lineLabel=ui->labelSideLine;
+    displayLabelLed.sideDisplay.destinationLabel=ui->labelSideSingle;
+    displayLabelLed.sideDisplay.destination1Label=ui->labelSideTopRow;
+    displayLabelLed.sideDisplay.destination2Label=ui->labelSideBottomRow;
+    displayLabelLed.sideDisplay.ticker=0;
 
-    rearDisplay.lineLabel=ui->labelRearLine;
-    rearDisplay.destinationLabel=NULL;
-    rearDisplay.destination1Label=NULL;
-    rearDisplay.destination2Label=NULL;
-    rearDisplay.ticker=0;
+    displayLabelLed.rearDisplay.lineLabel=ui->labelRearLine;
+    displayLabelLed.rearDisplay.destinationLabel=NULL;
+    displayLabelLed.rearDisplay.destination1Label=NULL;
+    displayLabelLed.rearDisplay.destination2Label=NULL;
+    displayLabelLed.rearDisplay.ticker=0;
+
+
+    displayLabelLed.innerDisplay.lineLabel=ui->labelInnerLine;
+    displayLabelLed.innerDisplay.destinationLabel=NULL;
+    displayLabelLed.innerDisplay.destination1Label=ui->labelInnerTopRow;
+    displayLabelLed.innerDisplay.destination2Label=ui->labelInnerBottomRow;
+    displayLabelLed.rearDisplay.ticker=0;
+
 }
+
+void MainWindow::lcdLabelInitialize2_3()
+{
+    displayLabelLcd.labelDestination=ui->Lcil;
+    displayLabelLcd.labelLine=ui->label_linka;
+    displayLabelLcd.labelViaPointsScrolling=ui->label_nacestne;
+    displayLabelLcd.labelClock=ui->label_hodiny;
+    displayLabelLcd.frameFollowingTrip=ui->frame_navaznySpoj;
+
+}
+
+
 
 
 
@@ -316,6 +314,8 @@ void MainWindow::loadConstants()
     if(supportedVersionList.contains(vdv301version))
     {
         cisSubscriber.setVersion(vdv301version);
+        displayLabelLed.setVdv301version(vdv301version);
+        displayLabelLcd.setVdv301version(vdv301version);
     }
     else
     {
@@ -381,26 +381,28 @@ void MainWindow::allConnects()
     connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
 
 
-    connect(timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
+    connect(&timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
+
+
+
+    connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
+    connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+    connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
+
+    connect(&displayLabelLed, &DisplayLabelLed::signalFrontDisplayWidthChanged, ui->spinBox_frontSignWidth, &QSpinBox::setValue);
+    //ui->spinBox_frontSignWidth->setValue(frontDisplay.destinationLabel->width());
+    //emit signalFrontDisplayWidthChanged(frontDisplay.destinationLabel->width());
 
 
     if(cisSubscriber.version()=="2.3")
     {
-        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::tickLedPanels2_3);
+        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotTickLedPanels2_3);
+
     }
     else
     {
-        connect(timerLedSideCycleViaPoints, &QTimer::timeout, this, &MainWindow::ledIterateAllDisplays);
+        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotLedIterateAllDisplays);
     }
-
-
-
-    connect(timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
-    connect(timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
-    connect(timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
-
-
-
 
     //keyboard shortcuts
     // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
@@ -454,32 +456,7 @@ void MainWindow::slotSubscriptionLost()
     displayAbnormalStateScreen("NO SUBSCRIPTION");
 }
 
-void MainWindow::slotMoveScrollingText()
-{
-    int textWidthPixels=ui->label_nacestne->width();
-    int stepSize=1;
 
-    if(textWidthPixels<ui->scrollArea->width() )
-    {
-        return;
-    }
-    // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
-
-    textOffset-=stepSize;
-
-    if (abs(textOffset)>textWidthPixels)
-    {
-        textOffset=0;
-        labelVykreslovani.vykresliNacestneForce(currentDestinationPointList,vehicleState,ui->label_nacestne,cisSubscriber.version());
-    }
-
-    else
-
-    {
-        ui->scrollAreaWidgetContents->scroll(-stepSize,0);
-    }
-
-}
 
 void MainWindow::slotUpdateServiceTable()
 {
@@ -498,76 +475,76 @@ void MainWindow::slotHeartbeatTimeout()
 void MainWindow::displayLabelFillArray()
 {
     qDebug() <<  Q_FUNC_INFO;
-    labelListStopPointName.push_back(ui->Lnacestna1);
-    labelListStopPointName.push_back(ui->Lnacestna2);
-    labelListStopPointName.push_back(ui->Lnacestna3);
-    labelListStopPointName.push_back(ui->Lnacestna4);
-    labelListStopPointName.push_back(ui->Lnacestna5);
+    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna1);
+    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna2);
+    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna3);
+    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna4);
+    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna5);
 
-    labelListFareZoneUpper.push_back(ui->label_pasmo1_1);
-    labelListFareZoneUpper.push_back(ui->label_pasmo2_1);
-    labelListFareZoneUpper.push_back(ui->label_pasmo3_1);
-    labelListFareZoneUpper.push_back(ui->label_pasmo4_1);
-    labelListFareZoneUpper.push_back(ui->label_pasmo5_1);
+    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo1_1);
+    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo2_1);
+    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo3_1);
+    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo4_1);
+    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo5_1);
 
-    labelListFareZoneLower.push_back(ui->label_pasmo1_2);
-    labelListFareZoneLower.push_back(ui->label_pasmo2_2);
-    labelListFareZoneLower.push_back(ui->label_pasmo3_2);
-    labelListFareZoneLower.push_back(ui->label_pasmo4_2);
-    labelListFareZoneLower.push_back(ui->label_pasmo5_2);
+    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo1_2);
+    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo2_2);
+    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo3_2);
+    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo4_2);
+    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo5_2);
 
 
-    labelListConnectionDestination .push_back(ui->label_prestup0_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup1_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup2_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup3_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup4_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup5_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup6_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup7_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup8_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup9_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup10_cil);
-    labelListConnectionDestination.push_back(ui->label_prestup11_cil);
+    displayLabelLcd.labelListConnectionDestination .push_back(ui->label_prestup0_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup1_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup2_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup3_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup4_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup5_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup6_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup7_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup8_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup9_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup10_cil);
+    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup11_cil);
 
-    labelListConnectionLine.push_back(ui->label_prestup0_linka);
-    labelListConnectionLine.push_back(ui->label_prestup1_linka);
-    labelListConnectionLine.push_back(ui->label_prestup2_linka);
-    labelListConnectionLine.push_back(ui->label_prestup3_linka);
-    labelListConnectionLine.push_back(ui->label_prestup4_linka);
-    labelListConnectionLine.push_back(ui->label_prestup5_linka);
-    labelListConnectionLine.push_back(ui->label_prestup6_linka);
-    labelListConnectionLine.push_back(ui->label_prestup7_linka);
-    labelListConnectionLine.push_back(ui->label_prestup8_linka);
-    labelListConnectionLine.push_back(ui->label_prestup9_linka);
-    labelListConnectionLine.push_back(ui->label_prestup10_linka);
-    labelListConnectionLine.push_back(ui->label_prestup11_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup0_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup1_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup2_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup3_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup4_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup5_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup6_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup7_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup8_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup9_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup10_linka);
+    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup11_linka);
 
-    labelListConnectionDeparture.push_back(ui->label_prestup0_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup1_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup2_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup3_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup4_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup5_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup6_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup7_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup8_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup9_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup10_odjezd);
-    labelListConnectionDeparture.push_back(ui->label_prestup11_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup0_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup1_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup2_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup3_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup4_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup5_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup6_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup7_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup8_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup9_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup10_odjezd);
+    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup11_odjezd);
 
-    labelListConnectionPlatform.push_back(ui->label_prestup0_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup1_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup2_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup3_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup4_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup5_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup6_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup7_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup8_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup9_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste);
-    labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup0_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup1_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup2_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup3_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup4_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup5_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup6_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup7_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup8_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup9_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste);
+    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste);
 
     /*
     seznamFramePrestup.push_back(ui->frame_odjezd0);
@@ -594,45 +571,24 @@ void MainWindow::eraseDisplayedInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
-    displayLabelEraseInformation();
+    displayLabelLcd.displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
-    ledClearDisplays();
+    displayLabelLed.ledClearDisplays();
 }
 
 
-void MainWindow::displayLabelEraseInformation()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    ui->Lcil->setText("");
-    ui->label_linka->setText("");
-    //   ui->label_nacestne->setText("");
-
-    ui->frame_navaznySpoj->hide();
-
-    labelVykreslovani.vymazPoleLabelu(labelListStopPointName);
-    labelVykreslovani.vymazPoleLabelu(labelListFareZoneUpper);
-    labelVykreslovani.vymazPoleLabelu(labelListFareZoneLower);
-    //obrazovka prestupu
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionDestination);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionLine);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionPlatform);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionDeparture);
-
-    timerLabelPageSwitch->stop();
-    pageCycleList.clear();
-    pageCycleList.push_back(ui->page_hlavni_2);
-}
 
 
 int MainWindow::showReceivedData()
 {
     qDebug() <<  Q_FUNC_INFO;
 
+
+
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     eraseTable(ui->tableWidget_debugStopList);
 
-    displayLabelEraseInformation();
+    displayLabelLcd.displayLabelEraseInformation();
     updateMainScreenDebugLabels();
 
 
@@ -654,12 +610,12 @@ int MainWindow::showReceivedData()
     }
 
 
-    displayLabelDestination(nazevCile);
-    displayLabelLineName(currentDestinationPointList.at(vehicleState.currentStopIndex0),vehicleState.vehicleSubMode);
-    displayLabelStopFareZone(currentDestinationPointList,nextDestinationPointList);
-    displayLabelViaPoints();
+    displayLabelLcd.displayLabelDestination(nazevCile);
+    displayLabelLcd.displayLabelLineName(currentDestinationPointList.at(vehicleState.currentStopIndex0),vehicleState.vehicleSubMode);
+    displayLabelLcd.displayLabelStopFareZone(currentDestinationPointList,nextDestinationPointList,vehicleState);
+    displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
 
-    pageCycleList.clear();
+    displayLabelLcd.pageCycleList.clear();
 
     //strankyKeStridani.push_back(ui->page_hlavni_2);
 
@@ -689,18 +645,18 @@ int MainWindow::showReceivedData()
     if(additionalTextMessageText!="")
     {
         displayLabelShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
-        pageCycleList.push_back(ui->page_oznameni);
+        displayLabelLcd.pageCycleList.push_back(ui->page_oznameni);
     }
     else
     {
-        labelVykreslovani.naplnAnouncementLabel("",ui->label_announcement);
+        displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
     }
 
     //konecna
 
     if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser.existujeNavaznySpoj(nextDestinationPointList)))
     {
-        pageCycleList.push_front(ui->page_konecna);
+        displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
         displayLabelShowPageFinalStop();
     }
     else
@@ -715,7 +671,7 @@ int MainWindow::showReceivedData()
             {
                 displayLabelReturnToStopList();
             }
-            pageCycleList.push_front(ui->page_hlavni_2);
+            displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
             // skryjZmenuPasma();
         }
 
@@ -723,16 +679,16 @@ int MainWindow::showReceivedData()
 
     if(!currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList.isEmpty())
     {
-        pageCycleList.push_back(ui->page_prestupy);
-        displayLabelConnectionList(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList);
+        displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
+        displayLabelLcd.displayLabelConnectionList(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList);
     }
 
     //   hlavniVykresliNasledne();
 
     labelUpdateFormat();
-    lcdResizeLabels();
-    currentPageIndex=0;
-    timerLabelPageSwitch->start();
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
+    lcdLabelCurrentPageIndex=0;
+    displayLabelLcd.timerLabelPageSwitch.start();
 
     debugStopPointListToTable(currentDestinationPointList,false);
     debugStopPointListToTable(nextDestinationPointList,true);
@@ -770,223 +726,6 @@ void MainWindow::stopRequestedDectivated()
 
 
 
-void MainWindow::displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka,QString subMode)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    //  labelVykreslovani.naplnCisloLinkyLabel(alias,ui->Llinka);
-    qDebug()<<"vypis linky:"<<selectedStopPointDestinationstavka.destination.NameLcd<<" "<<selectedStopPointDestinationstavka.line.lineName<<" vylukova:"<<selectedStopPointDestinationstavka.line.isDiversion ;
-
-    if(cisSubscriber.version()=="2.3")
-    {
-        displayLabelDrawLineNumber2_4(subMode,selectedStopPointDestinationstavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
-
-    }
-    else
-    {
-        displayLabelDrawLineNumber(subMode,selectedStopPointDestinationstavka.line,ui->label_linka, qFloor(ratioPixelPoint*200),false);
-
-    }
-    //  labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
-
-}
-
-void MainWindow::displayLabelDestination(QString nazev)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    labelVykreslovani.naplnNazevCileLabel(nazev,ui->Lcil);
-    /* if(cisSubscriber.verze()=="2.3")
-    {
-       labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
-
-    }
-    else
-    {
-
-    }
-*/
-}
-
-
-
-void MainWindow::displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    //
-    displayLabelStopList(thisStopPointDestinationList,nextStopPointDestinationList,vehicleState.currentStopIndex0);
-
-}
-
-
-
-
-
-void MainWindow::displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList,QVector<StopPointDestination> nextStopPointDestinationList, int index)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    //stavSystemu.indexAktZastavky;
-    int pocetPoli=labelListStopPointName.count();
-    if(thisStopPointDestinationList.isEmpty())
-    {
-        return ;
-    }
-
-    //   zastavky=vektorZastavkaCilZahoditZacatek(zastavky,index);
-
-    thisStopPointDestinationList.remove(0,index);
-
-
-
-    for(int i=0;i<pocetPoli;i++)
-    {
-        StopPointDestination aktualniZastavka;
-        bool navaznySpoj=false;
-        if(!thisStopPointDestinationList.isEmpty())
-        {
-            aktualniZastavka=thisStopPointDestinationList.takeFirst();
-        }
-        else
-        {
-            if(!nextStopPointDestinationList.isEmpty())
-            {
-                navaznySpoj=true;
-                aktualniZastavka=nextStopPointDestinationList.takeFirst();
-            }
-            else
-            {
-                qDebug()<<"pro label "<<i<<" uz nezbyly zastavky";
-
-                return;
-            }
-        }
-
-        displayLabelStopPoint(aktualniZastavka,navaznySpoj,labelListStopPointName.at(i),labelListFareZoneUpper.at(i),labelListFareZoneLower.at(i));
-
-    }
-
-
-
-}
-
-
-void MainWindow::displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop)
-{
-    PasmoveDvojiceLcd pasmoveDvojiceLcd;
-
-
-    if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
-    {
-        //   QString nahradIconPiktogramem(QString vstup);
-        //   nazevZastavky->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.nahradIconPiktogramem( aktualniZastavka.stopPoint.NameLcd, nazevZastavky->font().pixelSize(),labelVykreslovani.slozkaPiktogramu )));
-        pasmoveDvojiceLcd.roztridPasma2_3(selectedStopPointDestination.stopPoint.fareZoneList);
-        labelStopName->setText(labelVykreslovani.inlineFormatParser.parseTextLcd(selectedStopPointDestination.stopPoint.NameLcd, labelStopName->font().pixelSize(),labelVykreslovani.slozkaPiktogramu) );
-    }
-    else
-    {
-        pasmoveDvojiceLcd.roztridPasma(selectedStopPointDestination.stopPoint.fareZoneList);
-        labelStopName->setText(labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(selectedStopPointDestination.stopPoint.NameLcd,selectedStopPointDestination.stopPoint.iconList,labelStopName->font().pixelSize() )));
-    }
-
-
-    if(pasmoveDvojiceLcd.pasmaSystemu1.isEmpty())
-    {
-        labelFarezoneBottom->setText("");
-
-    }
-    else
-    {
-        QString pasmaString1=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu1);
-        QString zkratkaSystemuDvojtecka="";
-        if (!pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
-        {
-
-            if(!pasmoveDvojiceLcd.pasmaSystemu1.first().system.isEmpty())
-            {
-                zkratkaSystemuDvojtecka=pasmoveDvojiceLcd.pasmaSystemu1.first().system+":";
-            }
-
-        }
-        labelFarezoneBottom->setText(zkratkaSystemuDvojtecka+pasmaString1);
-        labelFarezoneBottom->setFont(fontLabelFareZoneLarge);
-    }
-
-    if(pasmoveDvojiceLcd.pasmaSystemu2.isEmpty())
-    {
-        labelFarezoneTop->hide();
-        labelFarezoneTop->setFont(fontLabelFareZoneLarge);
-    }
-    else
-    {
-        QString pasmaString2=svgVykreslovani.pasmaDoStringu( pasmoveDvojiceLcd.pasmaSystemu2);
-        labelFarezoneTop->show();
-
-        labelFarezoneTop->setFont(fontLabelFareZoneSmall );
-        labelFarezoneBottom->setFont(fontLabelFareZoneSmall );
-
-        if(!pasmoveDvojiceLcd.pasmaSystemu2.first().system.isEmpty())
-        {
-            labelFarezoneTop->setText(pasmoveDvojiceLcd.pasmaSystemu2.first().system+":"+pasmaString2);
-        }
-        else
-        {
-            labelFarezoneTop->setText(pasmaString2);
-        }
-
-    }
-
-    if(isFollowingTrip==false)
-    {
-        labelStopName->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-    }
-    else
-    {
-        labelStopName->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-    }
-
-
-}
-
-
-
-
-void MainWindow::displayLabelViaPoints()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    /*
-    if(currentDestinationPointList.isEmpty())
-    {
-        ui->label_nacestne->setText("");
-        return;
-    }
-    */
-
-    QString newViapointString=labelVykreslovani.vykresliNacestneZastavkyText(currentDestinationPointList.at(vehicleState.currentStopIndex0).viaPoints, ui->label_nacestne->font().pixelSize(),cisSubscriber.version());
-
-
-
-    if(oldViapointString!=newViapointString)
-    {
-        ui->label_nacestne->setText( newViapointString);
-        timerScrollingText->start(intervalScrollingText);        
-        oldViapointString=newViapointString;
-    }
-    else
-    {
-        if(ui->label_nacestne->text()=="")
-        {
-            ui->label_nacestne->setText( newViapointString);
-        }
-
-    }
-
-
-}
 
 
 
@@ -1002,11 +741,11 @@ int MainWindow::setDestinationName()
 
         if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
         {
-             nazevCile=labelVykreslovani.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
+            nazevCile=displayLabelLcd.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),displayLabelLcd.slozkaPiktogramu);
         }
         else
         {
-            nazevCile=labelVykreslovani.zabalHtmlDoZnacek(labelVykreslovani.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.destination.NameLcd,aktualniZastavka.destination.iconList,ui->Lcil->font().pixelSize()));
+            nazevCile=displayLabelLcd.zabalHtmlDoZnacek(displayLabelLcd.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.destination.NameLcd,aktualniZastavka.destination.iconList,ui->Lcil->font().pixelSize()));
         }
 
     }
@@ -1300,7 +1039,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             notOnLine();
-            ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
 
@@ -1314,7 +1053,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             notOnLine();
-            ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
         /*
@@ -1369,25 +1108,25 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
                 if(cisSubscriber.version()=="2.3")
                 {
-                    ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
+                    displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(displayLabelLed.ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
 
                 }
                 else if(cisSubscriber.version()=="2.3CZ1.0")
                 {
                     if(vdv301AllData.globalDisplayContentList.isEmpty())
                     {
-                        ledUpdateDisplayedInformationFromDisplayContentList2_3(this->ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
+                        displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(displayLabelLed.ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
                     }
                     else
                     {
-                        ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+                        displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
                         return;
                     }
 
                 }
                 else
                 {
-                    this->ledUpdateDisplayedInformation(currentDestinationPointList,vehicleState);
+                    displayLabelLed.ledUpdateDisplayedInformation(currentDestinationPointList,vehicleState);
                 }
 
 
@@ -1471,7 +1210,7 @@ void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
     labelUpdateFormat();
-    lcdResizeLabels();
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 }
 
 void MainWindow::on_pushButton_menu_timer_clicked()
@@ -1483,7 +1222,7 @@ void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPoza
 {
     qDebug() <<  Q_FUNC_INFO;
     //
-    labelVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
+    displayLabelLcd.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
     svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
 
@@ -1606,385 +1345,16 @@ void MainWindow::on_pushButton_menu_displayLed_clicked()
 }
 
 
-void MainWindow::ledSetTextFront(QString line,QString destinationTop,QString destinationBottom)
-{
-    qDebug() <<  Q_FUNC_INFO;
 
 
-    if (destinationBottom!="")
-    {
-        ui->labelFrontSingle->setVisible(false);
-        ui->labelFrontBottomRow->setVisible(true);
-        ui->labelFrontTopRow->setVisible(true);
-    }
-    else
-    {
-        ui->labelFrontSingle->setVisible(true);
-        ui->labelFrontBottomRow->setVisible(false);
-        ui->labelFrontTopRow->setVisible(false);
-    }
 
 
-    ui->labelFrontTopRow->setText(destinationTop);
-    ui->labelFrontBottomRow->setText(destinationBottom);
-    ui->labelFrontSingle->setText(destinationTop);
-
-    ledSetLine(ui->labelFrontLine,line);
-}
-
-
-void MainWindow::ledAlignTextOverflow(QLabel* label)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    QFontMetrics metrics(label->font());
-
-    if(metrics.horizontalAdvance(label->text())> label->width())
-    {
-        label->setAlignment(Qt::AlignLeading|Qt::AlignBottom);
-    }
-    else
-    {
-        label->setAlignment(Qt::AlignHCenter|Qt::AlignBottom);
-    }
-}
-
-void MainWindow::ledSetTextSide(QString line,QString destinationTop,QString destinationBottom)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-
-
-    if (destinationBottom!="")
-    {
-        ui->labelSideSingle->setVisible(false);
-        ui->labelSideBottomRow->setVisible(true);
-        ui->labelSideTopRow->setVisible(true);
-    }
-    else
-    {
-        ui->labelSideSingle->setVisible(true);
-        ui->labelSideBottomRow->setVisible(false);
-        ui->labelSideTopRow->setVisible(false);
-    }
-
-    ui->labelSideLine->setText(line);
-
-
-    ui->labelSideSingle->setText(destinationTop);
-    ledAlignTextOverflow(ui->labelSideSingle);
-
-    ui->labelSideTopRow->setText(destinationTop);
-    ledAlignTextOverflow(ui->labelSideTopRow);
-
-    ui->labelSideBottomRow->setText(destinationBottom);
-    ledAlignTextOverflow(ui->labelSideBottomRow);
-
-    ledSetLine(ui->labelSideLine,line);
-
-}
-
-
-void MainWindow::ledSetLine(QLabel* label, QString text)
-{
-    qDebug()<<Q_FUNC_INFO;
-    label->setText(text);
-    if (text.length()>3)
-    {
-
-        label->setFont(fontLed10);
-    }
-    else
-    {
-        label->setFont(fontLed8);
-    }
-    ledAlignTextOverflow(label);
-}
-
-void MainWindow::ledSetTextRear(QString line)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    ledSetLine(ui->labelRearLine,line);
-
-}
-
-void MainWindow::ledSetTextInner(QString line,QString destinationTop,QString destinationBottom)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    ui->labelInnerLine->setText(line);
-    ui->labelInnerTopRow->setText(destinationTop);
-    ui->labelInnerBottomRow->setText(destinationBottom);
-}
-
-
-void MainWindow::ledInitializeFormat()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    /*
-    ledNaplnFront("123","čelní horní","čelní dolní");
-    ledNaplnSide("456","Boční cíl","Boční nácestné");
-    ledNaplnRear("789");
-    ledNaplnInner("123","vnitřní cíl", "vnitřní nácesty");
-*/
-
-    ui->labelFrontSingle->setFont(fontLed5);
-    ui->labelSideSingle->setFont(fontLed5);
-
-    ui->labelFrontTopRow->setFont(fontLed3);
-    ui->labelFrontBottomRow->setFont(fontLed3);
-
-    ui->labelSideTopRow->setFont(fontLed1);
-    ui->labelSideBottomRow->setFont(fontLed1);
-
-    ui->labelInnerLine->setFont(fontLed3);
-    ui->labelInnerBottomRow->setFont(fontLed1);
-    ui->labelInnerTopRow->setFont(fontLed1);
-    /* font 3v is not size optimised at the moment
-    ui->labelInnerBottomRow->setFont(fontLed3v);
-    ui->labelInnerTopRow->setFont(fontLed3v);
-    */
-
-    if(ui->labelFrontLine->text().length()>3)
-    {
-        ui->labelFrontLine->setFont(fontLed10);
-        ui->labelSideLine->setFont(fontLed10);
-        ui->labelRearLine->setFont(fontLed10);
-    }
-    else
-    {
-        ui->labelFrontLine->setFont(fontLed8);
-        ui->labelSideLine->setFont(fontLed8);
-        ui->labelRearLine->setFont(fontLed8);
-    }
-
-}
-
-void MainWindow::ledClearDisplays()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    ledSetTextFront("","","");
-    ledSetTextSide("","","");
-    ledSetTextRear("");
-    ledSetTextInner("","", "");
-    textyBocniPanelkIteraci.clear();
-    textyVnitrniPanelkIteraci.clear();
-}
-
-void MainWindow::ledUpdateDisplayedInformation(QVector<StopPointDestination> stopPointList, VehicleState vehicleState )
-{
-    qDebug() <<  Q_FUNC_INFO;
-    if(!isInRange(vehicleState.currentStopIndex0,stopPointList.count()))
-    {
-        return;
-    }
-
-    StopPointDestination aktZast=stopPointList.at(vehicleState.currentStopIndex0);
-
-
-    if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
-    {
-
-        ledSetTextFront(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
-        ledSetTextSide(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
-        ledSetTextRear(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName));
-        ledSetTextInner(labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.line.lineName),aktZast.destination.NameInner,  labelVykreslovani.inlineFormatParser.parseTextLed(aktZast.stopPoint.NameInner));
-
-        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
-        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
-
-
-
-
-    }
-    else
-    {
-
-        ledSetTextFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
-        ledSetTextSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
-        ledSetTextRear(aktZast.line.lineName);
-        ledSetTextInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
-
-        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
-        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
-    }
-
-    ledUpdateDisplaySizes();
-
-
-}
-
-
-QVector<Vdv301DisplayContent> MainWindow::ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav)
-{
-    //new approach to display viapoint from DisplayContent
-    QVector<Vdv301DisplayContent> output;
-    qDebug() <<  Q_FUNC_INFO;
-    if(!isInRange(stav.currentStopIndex0,zastavky.count()))
-    {
-        return output;
-    }
-
-    Vdv301StopPoint aktZast=zastavky.at(stav.currentStopIndex0);
-
-
-
-    output=aktZast.displayContentList;
-
-    return output;
-
-    //   ledUpdateDisplayedInformationFromDisplayContentList2_3(displayContentListAll);
-}
-
-void MainWindow::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> displayContentListAll )
-{
-    //new approach to display viapoint from DisplayContent
-    qDebug() <<  Q_FUNC_INFO;
-
-
-    QVector<Vdv301DisplayContent> displayContentListFront;
-    QVector<Vdv301DisplayContent> displayContentListSide;
-    QVector<Vdv301DisplayContent> displayContentListRear;
-    QVector<Vdv301DisplayContent> displayContentListInner;
-    QVector<Vdv301DisplayContent> displayContentListLcd; //might be replaced with Inner
-
-    foreach(Vdv301DisplayContent selectedDisplayContent, displayContentListAll)
-    {
-        switch(selectedDisplayContent.displayContentType)
-        {
-        case DisplayContentFront:
-            displayContentListFront.append(selectedDisplayContent);
-            break;
-        case DisplayContentSide:
-            displayContentListSide.append(selectedDisplayContent);
-            break;
-        case DisplayContentRear:
-            displayContentListRear.append(selectedDisplayContent);
-            break;
-        case DisplayContentLcd:
-            displayContentListLcd.append(selectedDisplayContent);
-            break;
-        case DisplayContentInner:
-            displayContentListInner.append(selectedDisplayContent);
-            break;
-        case DisplayContentUndefined:
-            qDebug()<<"undefined displayContent";
-            break;
-        default:
-            break;
-
-
-        }
-
-    }
-
-    frontDisplay.displayContentList=displayContentListFront;
-    sideDisplay.displayContentList=displayContentListSide;
-    rearDisplay.displayContentList=displayContentListRear;
-
-
-    ledUpdateDisplaySizes();
-
-    frontDisplay.ticker=0;
-    sideDisplay.ticker=0;
-    rearDisplay.ticker=0;
-
-
-    tickLedPanels2_3();
-    timerLedSideCycleViaPoints->start();
-
-}
-
-void MainWindow::tickLedPanels2_3()
-{
-
-    labelVykreslovani.ledDisplaySetDisplayContent(frontDisplay);
-    labelVykreslovani.ledDisplaySetDisplayContent(sideDisplay);
-    labelVykreslovani.ledDisplaySetDisplayContent(rearDisplay);
-
-
-}
 /*
 void MainWindow::ledCycleDisplayContents()
 {
 
 }
 */
-
-
-QVector<QString> MainWindow::ledStopPointToViapointListSide(StopPointDestination selectedStopPointDestination)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    QVector<QString> output;
-    output.append("přes:");
-    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
-    {
-        output.append(viaPoint.NameSide);
-        // qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
-    }
-    return output;
-
-}
-
-QVector<QString> MainWindow::ledStopPointToViapointListInner(StopPointDestination selectedStopPointDestination)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    QVector<QString> output;
-    output.append("přes:");
-    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
-    {
-        output.append(viaPoint.NameInner);
-        qDebug()<<"pridavam nacestnou na bocni"<<viaPoint.NameSide;
-    }
-    return output;
-
-}
-
-
-void MainWindow::ledIterateAllDisplays()
-{
-    // qDebug()<<"MainWindow::iterujVsechnyPanely()";
-    ledIterateSide(textyBocniPanelkIteraci,currentPageIndexLed);
-    ledIterateInner(textyVnitrniPanelkIteraci,currentPageIndexLed);
-
-
-
-
-}
-
-void MainWindow::ledIterateSide(QVector<QString> texty, int &iteracniIndex)
-{
-    // qDebug()<<"MainWindow::iterujBocniPanel";
-
-    if(iteracniIndex<texty.length())
-    {
-        ui->labelSideBottomRow->setText(texty.at(iteracniIndex));
-        ledAlignTextOverflow(ui->labelSideBottomRow);
-
-        //  iteracniIndex++;
-
-    }
-    else
-    {
-        //   iteracniIndex=0;
-    }
-}
-
-void MainWindow::ledIterateInner(QVector<QString> texty, int &iteracniIndex)
-{
-    // qDebug()<<"MainWindow::iterujBocniPanel";
-
-    if(iteracniIndex<texty.length())
-    {
-        ui->labelInnerBottomRow->setText(texty.at(iteracniIndex));
-
-        iteracniIndex++;
-
-    }
-    else
-    {
-        iteracniIndex=0;
-    }
-}
 
 
 
@@ -2006,7 +1376,7 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneLi
     ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
     ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(toFareZoneList,"PID")));
 
-    labelVykreslovani.naplnZmenaLabel(labelVykreslovani.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
+    displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
 }
 
 
@@ -2020,12 +1390,12 @@ void MainWindow::displayLabelShowPageSpecialAnnouncement(QString title,QString t
 void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
     qDebug() <<  Q_FUNC_INFO;
-    labelVykreslovani.naplnAnouncementLabel(textCz,ui->label_announcement);
+    displayLabelLcd.naplnAnouncementLabel(textCz,ui->label_announcement);
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
 
     ui->label_oznTitle->setText(title);
-    ui->label_oznType->setText(  labelVykreslovani.textNaPiktogramOznameni(type,100*ratioPixelPoint));
+    ui->label_oznType->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
     ui->label_oznTextCs->setText(textCz);
     ui->label_oznTextEn->setText(textEn);
 
@@ -2051,7 +1421,7 @@ void MainWindow::displayLabelReturnToStopList()
     qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
-    labelVykreslovani.naplnZmenaLabel("",ui->label_zmena);
+    displayLabelLcd.naplnZmenaLabel("",ui->label_zmena);
 }
 
 
@@ -2098,168 +1468,10 @@ int MainWindow::isInRange(int index, int limit)
 }
 
 
-void MainWindow::displayLabelConnectionList(QVector<Connection> connectionList)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    foreach(QFrame* label,labelListConnectionDestination)
-    {
-        label->hide();
-    }
-
-    foreach(QFrame* label,labelListConnectionLine)
-    {
-        label->hide();
-    }
-
-    foreach(QFrame* label,labelListConnectionPlatform)
-    {
-        label->hide();
-    }
-
-    foreach(QFrame* label,labelListConnectionDeparture)
-    {
-        label->hide();
-    }
-
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionDestination);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionLine);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionPlatform);
-    labelVykreslovani.vymazPoleLabelu(labelListConnectionDeparture);
 
 
 
 
-
-    for (int i=0;i<labelVykreslovani.minimum(connectionList.count(), labelListConnectionDestination.count()) ; i++)
-    {
-        Connection aktualniPrestup=connectionList.at(i);
-        labelListConnectionDestination.at(i)->setText(aktualniPrestup.destinationName);
-        labelListConnectionDestination.at(i)->show();
-
-
-
-        if(cisSubscriber.version()=="2.3")
-        {
-            displayLabelDrawLineNumber2_4(aktualniPrestup.subMode,aktualniPrestup.line, labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
-
-        }
-        else
-        {
-            displayLabelDrawLineNumber(aktualniPrestup.subMode,aktualniPrestup.line, labelListConnectionLine.at(i),sizeIconConnectionDynamic,true);
-        }
-
-
-        labelListConnectionPlatform.at(i)->setText(aktualniPrestup.platform );
-        labelListConnectionPlatform.at(i)->show();
-
-        labelListConnectionDeparture.at(i)->setText("<b>"+ QString::number( aktualniPrestup.getMinutesToDeparture(QDateTime::currentDateTime() ))+"</b> min.");
-        labelListConnectionDeparture.at(i)->show();
-    }
-}
-
-
-void MainWindow::displayLabelDrawLineNumber( QString subMode, Line line, QLabel* label, int iconSize,bool isConnection)
-{
-    qDebug()<<Q_FUNC_INFO;
-    QString linkaStyleSheetStandard="font-weight: bold;";
-
-    if(isConnection)
-    {
-        linkaStyleSheetStandard+="border-radius:6px;padding: 5px; ";
-    }
-
-
-    QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
-
-
-
-    QString nahrazeno=labelVykreslovani.nahradMetro(line.lineName,subMode,iconSize);
-
-    //defaultni seda barva na bile pozadi, neznama kombinace
-
-    StylLinkyOld stylLinky;
-
-
-
-    stylLinky.pozadi="background-color:"+barvyLinek.barva_bila_255_255_255+";";
-
-
-    stylLinky.text="color:"+barvyLinek.barva_PozadiD_150_150_150+";";
-
-
-
-
-    if(nahrazeno==line.lineName)
-    {
-        stylLinky=barvyLinek.linkaDoStylu(subMode,line);
-
-        label->setStyleSheet(linkaStyleSheetStandard+stylLinky.text+stylLinky.pozadi);
-        label->setText(line.lineName);
-    }
-    else
-    {
-        label->setStyleSheet(linkaStyleSheetPiktogram);
-        label->setText(nahrazeno);
-        //   qDebug()<<"nahrazeny retezec metra:"<<nahrazeno;
-    }
-
-
-
-    label->show();
-}
-
-void MainWindow::displayLabelDrawLineNumber2_4( QString subMode, Line line, QLabel* label, int velikostPiktogramu,bool prestup)
-{
-    qDebug()<<Q_FUNC_INFO;
-
-
-    QString linkaStyleSheetStandard="font-weight: bold; background-color:#ffffff; padding: 0px; margin: 0px; ";
-
-    if(prestup)
-    {
-        linkaStyleSheetStandard+="border-radius:6px;padding: 0px; ";
-    }
-
-
-    QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
-
-
-    label->setStyleSheet(linkaStyleSheetStandard);
-
-    QString vyslednyText= labelVykreslovani.inlineFormatParser.parseTextLcd(line.lineName, label->font().pixelSize(),labelVykreslovani.slozkaPiktogramu);
-    label->setText( vyslednyText);
-
-
-    qDebug().noquote()<<"obsah pole linky: "<<vyslednyText;
-    label->show();
-}
-
-
-
-void MainWindow::slotDisplayLcdLabelCyclePages()
-{
-    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<currentPageIndex<<" v seznamu je "<<pageCycleList.count();
-
-    if(currentPageIndex==(pageCycleList.count()-1))
-    {
-        currentPageIndex=0;
-    }
-    else
-    {
-        currentPageIndex++;
-    }
-
-
-    if(currentPageIndex<pageCycleList.count())
-    {
-        ui->stackedWidget_prostredek->setCurrentWidget(pageCycleList.at(currentPageIndex));
-
-    }
-
-
-
-}
 
 void MainWindow::slotToggleFullscreen()
 {
@@ -2297,7 +1509,7 @@ void MainWindow::slotToggleFullscreen()
     }
     // hlavniAutoformat();
 
-    ledUpdateDisplaySizes();
+    displayLabelLed.ledUpdateDisplaySizes();
 
 
 
@@ -2305,40 +1517,7 @@ void MainWindow::slotToggleFullscreen()
 }
 
 
-void MainWindow::lcdResizeLabels()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    this->show();
-    ratioPixelPoint=ui->frame_hlavni->height()/1050.0;
 
-    sizeIconConnectionDynamic=qFloor(sizeIconConnection*ratioPixelPoint);
-
-
-    labelVykreslovani.labelNastavVelikost(ui->Lcil,sizeFontDestination,ratioPixelPoint ); //100
-    labelVykreslovani.labelNastavVelikost(ui->label_nacestne,sizeFontViaPoints,ratioPixelPoint); //72
-
-    labelVykreslovani.poleLabelNastavVelikost(labelListStopPointName,sizeFontFollowing,ratioPixelPoint); //100
-
-    labelVykreslovani.poleLabelNastavVelikost(labelListConnectionLine,sizeFontTransferLine,ratioPixelPoint); //48
-    labelVykreslovani.poleLabelNastavSirku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameWidth); //95
-    labelVykreslovani.poleLabelNastavVysku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameHeight); //65
-
-    labelVykreslovani.poleLabelNastavVelikost(labelListConnectionDestination,sizeFontTransferDestination,ratioPixelPoint); //36
-    labelVykreslovani.poleLabelNastavVelikost(labelListConnectionPlatform,sizeFontTransferDestination,ratioPixelPoint); //36
-    labelVykreslovani.poleLabelNastavVelikost(labelListConnectionDeparture,sizeFontTransferDestination,ratioPixelPoint); //36
-
-    labelVykreslovani.labelNastavVelikost(ui->label_hodiny,80,ratioPixelPoint); //80
-    labelVykreslovani.labelNastavVelikost(ui->label_textPres,30,ratioPixelPoint); //30
-    labelVykreslovani.labelNastavVelikost(ui->label_textVia ,30,ratioPixelPoint); //30
-    /*
-    labelVykreslovani.labelNastavVelikost(,,);
-    labelVykreslovani.labelNastavVelikost(,,);
-    labelVykreslovani.labelNastavVelikost(,,);
-    labelVykreslovani.labelNastavVelikost(,,);
-    */
-    labelVykreslovani.zmensiCisloLinkyLabel(ui->label_linka);
-
-}
 
 void MainWindow::on_pushButton_menu_fullscreen_clicked()
 {
@@ -2366,86 +1545,6 @@ void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
 }
 
 
-void MainWindow::ledSetWindowSizeDot(QLabel * label, int lengthDotCount, int heightDotCount, float coeficient)
-{
-    //int koeficient = pomer pixel:pocetDotu
-    label->setFixedHeight(float(heightDotCount)*coeficient);
-    label->setFixedWidth(float(lengthDotCount)*coeficient);
-}
-
-
-void MainWindow::ledUpdateDisplaySizes()
-{
-    qDebug()<<Q_FUNC_INFO;
-
-    const int cilSirka=108;
-    const int cilVyskaVelky=19;
-
-    const int vyskaHorniRadek=9;
-    const int vyskaDolniRadek=10;
-
-
-    const int linkaSirka=30;
-    const int linkaVyska=19;
-
-
-    const int linkaVnitrniSirka=22;
-    const int linkaVnitrniVyska=8;
-
-    const int vyskaVnitrniHorniRadek=8;
-    const int vyskaVnitrniDolniRadek=8;
-
-    const int sirkaVnitrniHorniRadek=113;
-    const int sirkaVnitrniDolniRadek=135;
-
-    const int cilBocniSirka=82;
-
-
-    int velikostFontu=fontLed8.pointSize();
-    int vyskaLinky=ui->labelFrontLine->height();
-    float pomerFontuKvysce=float(velikostFontu)/float(vyskaLinky);
-
-    ratioPixelLed=ui->labelFrontSingle->width() /(float(cilSirka)); //A
-
-    ui->spinBox_frontSignWidth->setValue(ui->labelFrontSingle->width());
-
-    float novaVyskaLinky=float(linkaVyska)*ratioPixelLed;
-    float staraVyskaLinky=78.0;
-
-    float novaVelikostFontu=65*(novaVyskaLinky/staraVyskaLinky);
-
-
-    ui->labelFrontSingle->setFixedHeight(float(cilVyskaVelky)*ratioPixelLed);
-
-    ui->labelFrontBottomRow->setFixedHeight(float(vyskaDolniRadek)*ratioPixelLed);
-    ui->labelFrontTopRow->setFixedHeight(float(vyskaHorniRadek)*ratioPixelLed);
-
-    ledSetWindowSizeDot(ui->labelFrontLine,linkaSirka,linkaVyska,ratioPixelLed);
-
-    ledSetWindowSizeDot(ui->labelSideLine,linkaSirka,linkaVyska,ratioPixelLed);
-    ledSetWindowSizeDot(ui->labelSideTopRow,cilBocniSirka,vyskaHorniRadek,ratioPixelLed);
-    ledSetWindowSizeDot(ui->labelSideBottomRow,cilBocniSirka,vyskaDolniRadek,ratioPixelLed);
-
-    ledSetWindowSizeDot(ui->labelRearLine,linkaSirka,linkaVyska,ratioPixelLed);
-
-    ledSetWindowSizeDot(ui->labelInnerLine,linkaVnitrniSirka,linkaVnitrniVyska,ratioPixelLed);
-
-    ledSetWindowSizeDot(ui->labelInnerTopRow,sirkaVnitrniHorniRadek,vyskaVnitrniHorniRadek,ratioPixelLed);
-    ledSetWindowSizeDot(ui->labelInnerBottomRow,sirkaVnitrniDolniRadek,vyskaVnitrniDolniRadek,ratioPixelLed);
-
-
-
-
-    qDebug()<<"pomer vysky: "<<pomerFontuKvysce; //pomer vysky:  0.833333
-
-    fontLed1.setPointSize(novaVelikostFontu);
-    fontLed3.setPointSize(novaVelikostFontu);
-    fontLed5.setPointSize(novaVelikostFontu);
-    fontLed8.setPointSize(novaVelikostFontu);
-    fontLed10.setPointSize(novaVelikostFontu);
-
-    ledInitializeFormat();
-}
 
 void MainWindow::popUpMessage(QString messageContent)
 {
@@ -2562,6 +1661,59 @@ void MainWindow::on_radioButton_settings_languageEn_clicked()
 void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
 {
     ui->labelFrontSingle->setFixedWidth(ui->spinBox_frontSignWidth->value());
-    ledUpdateDisplaySizes();
+    displayLabelLed.ledUpdateDisplaySizes();
 }
 
+
+
+void MainWindow::slotMoveScrollingText()
+{
+    int textWidthPixels=displayLabelLcd.labelViaPointsScrolling->width();
+    int stepSize=1;
+
+    if(textWidthPixels<ui->scrollArea->width() )
+    {
+        return;
+    }
+    // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
+
+    displayLabelLcd.scrollingTextOffset-=stepSize;
+
+    if (abs(displayLabelLcd.scrollingTextOffset)>textWidthPixels)
+    {
+        displayLabelLcd.scrollingTextOffset=0;
+        displayLabelLcd.vykresliNacestneForce(currentDestinationPointList,vehicleState,displayLabelLcd.labelViaPointsScrolling,displayLabelLcd.vdv301version());
+    }
+
+    else
+
+    {
+        ui->scrollAreaWidgetContents->scroll(-stepSize,0);
+    }
+
+}
+
+// move to displayLAbelLcd???
+void MainWindow::slotDisplayLcdLabelCyclePages()
+{
+    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndex<<" v seznamu je "<<displayLabelLcd.pageCycleList.count();
+
+    if(lcdLabelCurrentPageIndex==(displayLabelLcd.pageCycleList.count()-1))
+    {
+        lcdLabelCurrentPageIndex=0;
+    }
+    else
+    {
+        lcdLabelCurrentPageIndex++;
+    }
+
+
+    if(lcdLabelCurrentPageIndex<displayLabelLcd.pageCycleList.count())
+    {
+        ui->stackedWidget_prostredek->setCurrentWidget(displayLabelLcd.pageCycleList.at(lcdLabelCurrentPageIndex));
+
+    }
+
+
+
+}
