@@ -59,16 +59,14 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     labelUpdateFormat();
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
-    stopRequestedDectivated();
+    eventStopRequestedDectivated();
 
-    displayAbnormalStateScreen("NO SUBSCRIPTION");
+    eventDisplayAbnormalStateScreen("NO SUBSCRIPTION");
 
 
 
     cisSubscriber.isSubscriptionActive=false ;
-
     cisSubscriber.start();
-
     cisSubscriber.newSubscribeRequest();
 
     updateMainScreenDebugLabels();
@@ -107,6 +105,62 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     timerDelayedStart.setSingleShot(true);
     timerDelayedStart.start();
 }
+
+MainWindow::~MainWindow()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    delete ui;
+}
+
+void MainWindow::allConnects()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    connect(&cisSubscriber, &IbisIpSubscriber::signalDataReceived  ,this, &MainWindow::slotXmlDoPromenne);
+    connect(&cisSubscriber,&IbisIpSubscriber::signalUpdateDeviceList,this,&MainWindow::slotUpdateServiceTable);
+    connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
+    connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
+    connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotDebugPublisherToTable);
+
+
+    connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
+
+
+    connect(&timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
+
+
+
+    connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
+    connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+    connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
+
+    connect(&displayLabelLed, &DisplayLabelLed::signalFrontDisplayWidthChanged, ui->spinBox_frontSignWidth, &QSpinBox::setValue);
+    //ui->spinBox_frontSignWidth->setValue(frontDisplay.destinationLabel->width());
+    //emit signalFrontDisplayWidthChanged(frontDisplay.destinationLabel->width());
+
+
+    if(cisSubscriber.version()=="2.3")
+    {
+        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotTickLedPanels2_3);
+
+    }
+    else
+    {
+        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotLedIterateAllDisplays);
+    }
+
+    //keyboard shortcuts
+    // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
+    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
+    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_displayLabel_clicked);
+    connect(keyF2, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_svg_clicked );
+    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_displayLed_clicked);
+    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_services_clicked);
+    connect(keyF5, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_timer_clicked );
+    connect(keyF6, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
+    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refresh_clicked);
+    connect(keyF8, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_quit_clicked);
+}
+
 
 void MainWindow::updateMainScreenDebugLabels()
 {
@@ -166,6 +220,18 @@ void MainWindow::constantsToSettingsPage()
     ui->checkBox_settings_startFullscreen->setChecked(settings.value("window/fullscreen").toBool());
     ui->spinBox_defaultScreen->setValue(settings.value("window/defaultScreen").toInt());
 }
+
+void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
+{
+    settings.setValue("deviceManagementService/deviceName",deviceManagementService.deviceName());
+    settings.setValue("deviceManagementService/deviceManufacturer",deviceManagementService.deviceManufacturer());
+    settings.setValue("deviceManagementService/deviceSerialNumber",deviceManagementService.deviceSerialNumber());
+    settings.setValue("deviceManagementService/deviceClass",deviceManagementService.deviceClass());
+    settings.setValue("deviceManagementService/deviceId",deviceManagementService.deviceId());
+    settings.setValue("deviceManagementService/version",deviceManagementService.version());
+
+}
+
 
 void MainWindow::settingsWindowToSettingsFile()
 {
@@ -323,7 +389,7 @@ void MainWindow::loadConstants()
     }
     cisSubscriber.setPortNumber(settings.value("cisSubscriber/port").toUInt());
 
-    switchTabs(settings.value("window/defaultScreen").toInt());
+    menuSwitchTabs(settings.value("window/defaultScreen").toInt());
     if(settings.value("window/fullscreen").toBool()==true)
     {
         slotToggleFullscreen();
@@ -331,15 +397,8 @@ void MainWindow::loadConstants()
 
 }
 
-void MainWindow::slotDelayedStartup()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
-    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
-    //cisSubscriber.novePrihlaseniOdberu();
-}
 
-void MainWindow::switchTabs(int tabNumber)
+void MainWindow::menuSwitchTabs(int tabNumber)
 {
     qDebug() <<  Q_FUNC_INFO<<" "<<tabNumber;
 
@@ -368,54 +427,6 @@ void MainWindow::switchTabs(int tabNumber)
 
 
 
-void MainWindow::allConnects()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    connect(&cisSubscriber, &IbisIpSubscriber::signalDataReceived  ,this, &MainWindow::slotXmlDoPromenne);
-    connect(&cisSubscriber,&IbisIpSubscriber::signalUpdateDeviceList,this,&MainWindow::slotUpdateServiceTable);
-    connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
-    connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
-    connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotDebugPublisherToTable);
-
-
-    connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
-
-
-    connect(&timerUpdateSeconds, &QTimer::timeout, this, &MainWindow::slotEverySecond);
-
-
-
-    connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
-    connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
-    connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
-
-    connect(&displayLabelLed, &DisplayLabelLed::signalFrontDisplayWidthChanged, ui->spinBox_frontSignWidth, &QSpinBox::setValue);
-    //ui->spinBox_frontSignWidth->setValue(frontDisplay.destinationLabel->width());
-    //emit signalFrontDisplayWidthChanged(frontDisplay.destinationLabel->width());
-
-
-    if(cisSubscriber.version()=="2.3")
-    {
-        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotTickLedPanels2_3);
-
-    }
-    else
-    {
-        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotLedIterateAllDisplays);
-    }
-
-    //keyboard shortcuts
-    // connect(keyCtrlF, SIGNAL(activated()), this, SLOT(toggleFullscreen()));
-    connect(keyCtrlF, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
-    connect(keyF1, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_displayLabel_clicked);
-    connect(keyF2, &QShortcut::activated, this,&MainWindow::on_pushButton_menu_svg_clicked );
-    connect(keyF3, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_displayLed_clicked);
-    connect(keyF4, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_services_clicked);
-    connect(keyF5, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_timer_clicked );
-    connect(keyF6, &QShortcut::activated, this, &MainWindow::slotToggleFullscreen);
-    connect(keyF7, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_refresh_clicked);
-    connect(keyF8, &QShortcut::activated, this, &MainWindow::on_pushButton_menu_quit_clicked);
-}
 
 
 QString MainWindow::createProgramVersionString()
@@ -426,6 +437,99 @@ QString MainWindow::createProgramVersionString()
     QString verze=compilationDate.toString("yyyyMMdd")+"_"+compilationTime.toString("hhmm");
     return verze;
 }
+
+
+void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
+
+    QString nazev=zcs->name();
+    QString ipadresa=zcs->ip().toString();
+    QString host=zcs->host();
+    QString verze=zcs.data()->txt().value("ver");
+    int port=zcs->port();
+
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+
+    row = ui->tabulkaSubscriberu->rowCount();
+    ui->tabulkaSubscriberu->insertRow(row);
+    cell = new QTableWidgetItem(nazev);
+    ui->tabulkaSubscriberu->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(verze);
+    ui->tabulkaSubscriberu->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(ipadresa);
+    ui->tabulkaSubscriberu->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(QString::number(port));
+    ui->tabulkaSubscriberu->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(host);
+    ui->tabulkaSubscriberu->setItem(row, 4, cell);
+
+
+    ui->tabulkaSubscriberu->resizeColumnsToContents();
+
+
+    qDebug()<<"sluzbaDoTabulky_konec";
+
+}
+
+
+void MainWindow::slotDelayedStartup()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
+    //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
+    //cisSubscriber.novePrihlaseniOdberu();
+}
+
+void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    eraseTable(ui->tableWidget_selectedSubscriber);
+    qint32 row;
+    QTableWidgetItem *cell;
+
+    QString nazev=zcs->name();
+    QString ipadresa=zcs->ip().toString();
+    QString host=zcs->host();
+    QString verze=zcs.data()->txt().value("ver");
+    int port=zcs->port();
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+
+    row = ui->tableWidget_selectedSubscriber->rowCount();
+    ui->tableWidget_selectedSubscriber->insertRow(row);
+    cell = new QTableWidgetItem(nazev);
+    ui->tableWidget_selectedSubscriber->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(verze);
+    ui->tableWidget_selectedSubscriber->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(ipadresa);
+    ui->tableWidget_selectedSubscriber->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(QString::number(port));
+    ui->tableWidget_selectedSubscriber->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(host);
+    ui->tableWidget_selectedSubscriber->setItem(row, 4, cell);
+
+
+    ui->tableWidget_selectedSubscriber->resizeColumnsToContents();
+
+
+    qDebug()<<"sluzbaDoTabulky_konec";
+
+}
+
 
 
 int MainWindow::slotEverySecond()
@@ -453,7 +557,7 @@ void MainWindow::slotSubscriptionLost()
     qDebug() <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_selectedSubscriber);
     receivedDataVariablesReset();
-    displayAbnormalStateScreen("NO SUBSCRIPTION");
+    eventDisplayAbnormalStateScreen("NO SUBSCRIPTION");
 }
 
 
@@ -471,6 +575,128 @@ void MainWindow::slotHeartbeatTimeout()
 }
 
 
+
+
+void MainWindow::slotToggleFullscreen()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    // isFullScreen() ? showNormal() : showFullScreen();
+
+
+
+    if (MainWindow::windowState()==Qt::WindowFullScreen )
+    {
+        MainWindow::setWindowState(Qt::WindowMaximized);
+        // ui->verticalLayoutWidget_4->show();
+        //    MainWindow::setWindowState(Qt::Window);
+
+        ui->frame_menu->show();
+        ui->menuBar->show();
+        ui->statusBar->show();
+        ui->mainToolBar->show();
+        ui->frame_debug->show();
+
+
+        // this->setWindowFlags(flags|Qt::SplashScreen);
+    }
+    else
+    {
+        MainWindow::setWindowState(Qt::WindowFullScreen);
+
+        ui->frame_menu->hide();
+        ui->menuBar->hide();
+        ui->statusBar->hide();
+        ui->mainToolBar->hide();
+        ui->frame_debug->hide();
+
+
+    }
+    // hlavniAutoformat();
+
+    displayLabelLed.ledUpdateDisplaySizes();
+
+
+
+
+}
+
+
+
+
+void MainWindow::slotDeviceParametersToConfigFile()
+{
+    qDebug()<<Q_FUNC_INFO;
+
+    deviceManagementServiceInternalVariablesToSettingFile();
+    constantsToSettingsPage();
+    updateMainScreenDebugLabels();
+}
+
+
+void MainWindow::slotMoveScrollingText()
+{
+    int textWidthPixels=displayLabelLcd.labelViaPointsScrolling->width();
+    int stepSize=1;
+
+    if(textWidthPixels<ui->scrollArea->width() )
+    {
+        return;
+    }
+    // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
+
+    displayLabelLcd.scrollingTextOffset-=stepSize;
+
+    if (abs(displayLabelLcd.scrollingTextOffset)>textWidthPixels)
+    {
+        displayLabelLcd.scrollingTextOffset=0;
+        displayLabelLcd.vykresliNacestneForce(currentDestinationPointList,vehicleState,displayLabelLcd.labelViaPointsScrolling,displayLabelLcd.vdv301version());
+    }
+
+    else
+
+    {
+        ui->scrollAreaWidgetContents->scroll(-stepSize,0);
+    }
+
+}
+
+// move to displayLAbelLcd???
+void MainWindow::slotDisplayLcdLabelCyclePages()
+{
+    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndex<<" v seznamu je "<<displayLabelLcd.pageCycleList.count();
+
+    if(lcdLabelCurrentPageIndex==(displayLabelLcd.pageCycleList.count()-1))
+    {
+        lcdLabelCurrentPageIndex=0;
+    }
+    else
+    {
+        lcdLabelCurrentPageIndex++;
+    }
+
+
+    if(lcdLabelCurrentPageIndex<displayLabelLcd.pageCycleList.count())
+    {
+        ui->stackedWidget_prostredek->setCurrentWidget(displayLabelLcd.pageCycleList.at(lcdLabelCurrentPageIndex));
+
+    }
+
+
+
+}
+
+
+void MainWindow::slotShutdownReady(bool isReady)
+{
+    if(isReady)
+    {
+        MainWindow::close();
+    }
+    else
+    {
+        popUpMessage(tr("unsubscription was unsuccessful"));
+    }
+}
 
 void MainWindow::displayLabelFillArray()
 {
@@ -577,29 +803,101 @@ void MainWindow::eraseDisplayedInformation()
 }
 
 
+void MainWindow::eventEraseDisplayInformation()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelLcd.displayLabelEraseInformation();
+}
+
+void MainWindow::eventLcdSetMainPage()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    //LCD label
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+}
+
+void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,QString followingTripDestination)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    //LABEL LCD
+    ui->label_navaznaLinka->setText(followingTripLine);
+    ui->label_navaznyCil->setText(followingTripDestination);
+    ui->frame_navaznySpoj->show();
+
+    //SVG
+
+}
+
+void MainWindow::eventShowPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelShowFareZoneChange(zPasem,naPasma);
+    svgVykreslovani.zobrazZmenuPasma(zPasem,naPasma);
+}
+
+void MainWindow::eventStopRequestedActivated()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    ui->label_stopRequested->setText("<b>STOP</b>");
+    ui->label_stopRequestedSymbol->show();
+}
+
+void MainWindow::eventStopRequestedDectivated()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    ui->label_stopRequested->setText("STOP");
+    ui->label_stopRequestedSymbol->hide();
+}
+
+void MainWindow::eventShowPageSpecialAnnouncement(QString title,QString type,QString textCz, QString textEn)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelShowAnnoucement(title,type,textCz,textEn);
+    svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
+}
+
+void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
+{
+    qDebug()<<Q_FUNC_INFO<<" "<<displayState;
+    ui->label_lcd_state->setText(displayState);
+    eraseDisplayedInformation();
+    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
+
+}
+
+void MainWindow::eventNotOnLine()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    eventDisplayAbnormalStateScreen("EMPTY STOP LIST");
+}
 
 
 int MainWindow::showReceivedData()
 {
     qDebug() <<  Q_FUNC_INFO;
+    updateMainScreenDebugLabels();
+    debugStopPointListToTable(currentDestinationPointList,false);
+    debugStopPointListToTable(nextDestinationPointList,true);
 
 
-
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     eraseTable(ui->tableWidget_debugStopList);
 
-    displayLabelLcd.displayLabelEraseInformation();
-    updateMainScreenDebugLabels();
+
+    eventLcdSetMainPage();
+    eventEraseDisplayInformation();
+
+
 
 
     if(vehicleState.isVehicleStopRequested)
     {
-        stopRequestedActivated();
+        eventStopRequestedActivated();
     }
     else
     {
-        stopRequestedDectivated();
+        eventStopRequestedDectivated();
     }
+
     ui->label_currentStopIndex->setText(QString::number(vehicleState.currentStopIndex0+1));
 
 
@@ -634,9 +932,7 @@ int MainWindow::showReceivedData()
         QString navaznaLinka="";
         if(xmlParser.udajeNavaznehoSpoje(nextDestinationPointList,navaznaLinka,navaznyCil))
         {
-            ui->label_navaznaLinka->setText(navaznaLinka);
-            ui->label_navaznyCil->setText(navaznyCil);
-            ui->frame_navaznySpoj->show();
+            eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
         }
     }
 
@@ -644,8 +940,8 @@ int MainWindow::showReceivedData()
 
     if(additionalTextMessageText!="")
     {
-        displayLabelShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
-        displayLabelLcd.pageCycleList.push_back(ui->page_oznameni);
+        eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
+
     }
     else
     {
@@ -663,13 +959,13 @@ int MainWindow::showReceivedData()
     {
         if(isFareZone==true)
         {
-            showPageFareZoneChange(fareZoneChangeFrom,fareZoneChangeTo);
+            eventShowPageFareZoneChange(fareZoneChangeFrom,fareZoneChangeTo);
         }
         else
         {
             if(xmlParser.zmenaDat==true)
             {
-                displayLabelReturnToStopList();
+                eventLcdReturnToStopList();
             }
             displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
             // skryjZmenuPasma();
@@ -686,12 +982,14 @@ int MainWindow::showReceivedData()
     //   hlavniVykresliNasledne();
 
     labelUpdateFormat();
+
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
+
+
     displayLabelLcd.timerLabelPageSwitch.start();
 
-    debugStopPointListToTable(currentDestinationPointList,false);
-    debugStopPointListToTable(nextDestinationPointList,true);
+
 
     connectionListToTable(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList,ui->tableWidget_connections);
 
@@ -709,19 +1007,6 @@ void MainWindow::debugStopPointListToTable(QVector<StopPointDestination> seznamZ
     {
         debugStopPointToTable(polozka,navazny);
     }
-}
-
-void MainWindow::stopRequestedActivated()
-{
-    ui->label_stopRequested->setText("<b>STOP</b>");
-
-    ui->label_stopRequestedSymbol->show();
-}
-
-void MainWindow::stopRequestedDectivated()
-{
-    ui->label_stopRequested->setText("STOP");
-    ui->label_stopRequestedSymbol->hide();
 }
 
 
@@ -777,20 +1062,9 @@ int MainWindow::labelUpdateFormat()
 
 }
 
-MainWindow::~MainWindow()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    delete ui;
-}
 
 
 
-void MainWindow::on_actiontestPolozka_triggered()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    slotToggleFullscreen();
-}
 
 
 /*
@@ -838,89 +1112,6 @@ void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
     }
 }
 
-
-void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    qint32 row;
-    QTableWidgetItem *cell;
-
-    QString nazev=zcs->name();
-    QString ipadresa=zcs->ip().toString();
-    QString host=zcs->host();
-    QString verze=zcs.data()->txt().value("ver");
-    int port=zcs->port();
-
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
-
-
-    row = ui->tabulkaSubscriberu->rowCount();
-    ui->tabulkaSubscriberu->insertRow(row);
-    cell = new QTableWidgetItem(nazev);
-    ui->tabulkaSubscriberu->setItem(row, 0, cell);
-
-    cell = new QTableWidgetItem(verze);
-    ui->tabulkaSubscriberu->setItem(row, 1, cell);
-
-    cell = new QTableWidgetItem(ipadresa);
-    ui->tabulkaSubscriberu->setItem(row, 2, cell);
-
-    cell = new QTableWidgetItem(QString::number(port));
-    ui->tabulkaSubscriberu->setItem(row, 3, cell);
-
-    cell = new QTableWidgetItem(host);
-    ui->tabulkaSubscriberu->setItem(row, 4, cell);
-
-
-    ui->tabulkaSubscriberu->resizeColumnsToContents();
-
-
-    qDebug()<<"sluzbaDoTabulky_konec";
-
-}
-
-
-void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_selectedSubscriber);
-    qint32 row;
-    QTableWidgetItem *cell;
-
-    QString nazev=zcs->name();
-    QString ipadresa=zcs->ip().toString();
-    QString host=zcs->host();
-    QString verze=zcs.data()->txt().value("ver");
-    int port=zcs->port();
-    /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
-
- */
-
-    row = ui->tableWidget_selectedSubscriber->rowCount();
-    ui->tableWidget_selectedSubscriber->insertRow(row);
-    cell = new QTableWidgetItem(nazev);
-    ui->tableWidget_selectedSubscriber->setItem(row, 0, cell);
-
-    cell = new QTableWidgetItem(verze);
-    ui->tableWidget_selectedSubscriber->setItem(row, 1, cell);
-
-    cell = new QTableWidgetItem(ipadresa);
-    ui->tableWidget_selectedSubscriber->setItem(row, 2, cell);
-
-    cell = new QTableWidgetItem(QString::number(port));
-    ui->tableWidget_selectedSubscriber->setItem(row, 3, cell);
-
-    cell = new QTableWidgetItem(host);
-    ui->tableWidget_selectedSubscriber->setItem(row, 4, cell);
-
-
-    ui->tableWidget_selectedSubscriber->resizeColumnsToContents();
-
-
-    qDebug()<<"sluzbaDoTabulky_konec";
-
-}
 
 void MainWindow::debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip)
 {
@@ -1019,7 +1210,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     {
         if(!xmlParser.VytvorSeznamZastavek1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            notOnLine();
+            eventNotOnLine();
             return;
         }
     }
@@ -1027,7 +1218,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     {
         if(!xmlParser.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            notOnLine();
+            eventNotOnLine();
             return;
         }
     }
@@ -1038,7 +1229,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            notOnLine();
+            eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
@@ -1052,7 +1243,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
         if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
-            notOnLine();
+            eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
             return;
         }
@@ -1074,7 +1265,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     }
     else
     {
-        displayAbnormalStateScreen("INCORRECT SUBSCRIBER VERSION");
+        eventDisplayAbnormalStateScreen("INCORRECT SUBSCRIBER VERSION");
         return;
     }
 
@@ -1137,7 +1328,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
             {
                 //vyskakovaciOkno("index zastávky: "+QString::number(indexZastavky));
 
-                displayAbnormalStateScreen("STOP INDEX OUT OF RANGE");
+                eventDisplayAbnormalStateScreen("STOP INDEX OUT OF RANGE");
 
             }
 
@@ -1145,13 +1336,13 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         }
         else
         {
-            displayAbnormalStateScreen("COULDNT PARSE STOPS");
+            eventDisplayAbnormalStateScreen("COULDNT PARSE STOPS");
 
         }
     }
     else
     {
-        displayAbnormalStateScreen("STOP INDEX <0");
+        eventDisplayAbnormalStateScreen("STOP INDEX <0");
     }
 
 
@@ -1177,19 +1368,9 @@ void MainWindow::receivedDataVariablesReset()
 }
 
 
-void MainWindow::displayAbnormalStateScreen(QString displayState)
-{
-    qDebug()<<Q_FUNC_INFO<<" "<<displayState;
-    ui->label_lcd_state->setText(displayState);
-    eraseDisplayedInformation();
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
 
-}
 
-void MainWindow::notOnLine()
-{
-    displayAbnormalStateScreen("EMPTY STOP LIST");
-}
+
 
 void MainWindow::displayNormalOnLineState()
 {
@@ -1201,22 +1382,6 @@ void MainWindow::displayNormalOnLineState()
 
 
 
-void MainWindow::on_pushButton_menu_services_clicked()
-{
-    ui->prepinadloStran->setCurrentWidget(ui->page_seznamSluzeb);
-}
-
-void MainWindow::on_pushButton_menu_displayLabel_clicked()
-{
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
-    labelUpdateFormat();
-    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
-}
-
-void MainWindow::on_pushButton_menu_timer_clicked()
-{
-    ui->prepinadloStran->setCurrentWidget(ui->page_casovac);
-}
 
 void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPozadi)
 {
@@ -1244,17 +1409,7 @@ void MainWindow::on_pushButton_menu_quit_clicked()
     //   connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
 }
 
-void MainWindow::slotShutdownReady(bool isReady)
-{
-    if(isReady)
-    {
-        MainWindow::close();
-    }
-    else
-    {
-        popUpMessage(tr("unsubscription was unsuccessful"));
-    }
-}
+
 
 
 
@@ -1338,12 +1493,6 @@ bool MainWindow::svgOpenFile(const QString &fileName)
     return true;
 }
 
-void MainWindow::on_pushButton_menu_displayLed_clicked()
-{
-    ui->prepinadloStran->setCurrentWidget(ui->page_led);
-    ui->labelFrontBottomRow->setText("");
-}
-
 
 
 
@@ -1359,12 +1508,7 @@ void MainWindow::ledCycleDisplayContents()
 
 
 
-void MainWindow::showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    displayLabelShowFareZoneChange(zPasem,naPasma);
-    svgVykreslovani.zobrazZmenuPasma(zPasem,naPasma);
-}
+
 
 void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList)
 {
@@ -1380,12 +1524,7 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneLi
 }
 
 
-void MainWindow::displayLabelShowPageSpecialAnnouncement(QString title,QString type,QString textCz, QString textEn)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    displayLabelShowAnnoucement(title,type,textCz,textEn);
-    svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
-}
+
 
 void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
@@ -1399,23 +1538,34 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
     ui->label_oznTextCs->setText(textCz);
     ui->label_oznTextEn->setText(textEn);
 
+    displayLabelLcd.pageCycleList.push_back(ui->page_oznameni);
 }
 
 
 
-void MainWindow::hideAnnouncement()
+
+void MainWindow::eventHideAnnouncement()
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
 }
 
-void MainWindow::hideFareZoneChange()
+void MainWindow::eventHideFareZoneChange()
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
 }
 
 
+
+void MainWindow::eventLcdReturnToStopList()
+{
+    //label
+    displayLabelReturnToStopList();
+    //lcd
+
+
+}
 void MainWindow::displayLabelReturnToStopList()
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -1471,81 +1621,6 @@ int MainWindow::isInRange(int index, int limit)
 
 
 
-
-
-void MainWindow::slotToggleFullscreen()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    // isFullScreen() ? showNormal() : showFullScreen();
-
-
-
-    if (MainWindow::windowState()==Qt::WindowFullScreen )
-    {
-        MainWindow::setWindowState(Qt::WindowMaximized);
-        // ui->verticalLayoutWidget_4->show();
-        //    MainWindow::setWindowState(Qt::Window);
-
-        ui->frame_menu->show();
-        ui->menuBar->show();
-        ui->statusBar->show();
-        ui->mainToolBar->show();
-        ui->frame_debug->show();
-
-
-        // this->setWindowFlags(flags|Qt::SplashScreen);
-    }
-    else
-    {
-        MainWindow::setWindowState(Qt::WindowFullScreen);
-
-        ui->frame_menu->hide();
-        ui->menuBar->hide();
-        ui->statusBar->hide();
-        ui->mainToolBar->hide();
-        ui->frame_debug->hide();
-
-
-    }
-    // hlavniAutoformat();
-
-    displayLabelLed.ledUpdateDisplaySizes();
-
-
-
-
-}
-
-
-
-
-void MainWindow::on_pushButton_menu_fullscreen_clicked()
-{
-    slotToggleFullscreen();
-}
-
-void MainWindow::slotDeviceParametersToConfigFile()
-{
-    qDebug()<<Q_FUNC_INFO;
-
-    deviceManagementServiceInternalVariablesToSettingFile();
-    constantsToSettingsPage();
-    updateMainScreenDebugLabels();
-}
-
-void MainWindow::deviceManagementServiceInternalVariablesToSettingFile()
-{
-    settings.setValue("deviceManagementService/deviceName",deviceManagementService.deviceName());
-    settings.setValue("deviceManagementService/deviceManufacturer",deviceManagementService.deviceManufacturer());
-    settings.setValue("deviceManagementService/deviceSerialNumber",deviceManagementService.deviceSerialNumber());
-    settings.setValue("deviceManagementService/deviceClass",deviceManagementService.deviceClass());
-    settings.setValue("deviceManagementService/deviceId",deviceManagementService.deviceId());
-    settings.setValue("deviceManagementService/version",deviceManagementService.version());
-
-}
-
-
-
 void MainWindow::popUpMessage(QString messageContent)
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -1560,20 +1635,47 @@ void MainWindow::popUpMessage(QString messageContent)
 }
 
 
-QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek)
+
+void MainWindow::on_actiontestPolozka_triggered()
 {
-    QVector<StopPointDestination> vystup;
-    for(int i=zacatek;i<vstup.count();i++)
-    {
-        if(i>zacatek)
-        {
-            vystup.push_back(vstup.at(i));
-            // qDebug()<<"orez zastavek:"<<vstup.at(i).stopPoint.NameLcd;
-        }
+    qDebug() <<  Q_FUNC_INFO;
 
-    }
-    return vystup;
+    slotToggleFullscreen();
+}
 
+void MainWindow::on_pushButton_menu_displayLed_clicked()
+{
+    ui->prepinadloStran->setCurrentWidget(ui->page_led);
+    ui->labelFrontBottomRow->setText("");
+}
+
+
+
+
+
+
+
+
+void MainWindow::on_pushButton_menu_fullscreen_clicked()
+{
+    slotToggleFullscreen();
+}
+
+void MainWindow::on_pushButton_menu_services_clicked()
+{
+    ui->prepinadloStran->setCurrentWidget(ui->page_seznamSluzeb);
+}
+
+void MainWindow::on_pushButton_menu_displayLabel_clicked()
+{
+    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    labelUpdateFormat();
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
+}
+
+void MainWindow::on_pushButton_menu_timer_clicked()
+{
+    ui->prepinadloStran->setCurrentWidget(ui->page_casovac);
 }
 
 void MainWindow::on_pushButton_unsubscribe_clicked()
@@ -1666,54 +1768,18 @@ void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
 
 
 
-void MainWindow::slotMoveScrollingText()
+QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek)
 {
-    int textWidthPixels=displayLabelLcd.labelViaPointsScrolling->width();
-    int stepSize=1;
-
-    if(textWidthPixels<ui->scrollArea->width() )
+    QVector<StopPointDestination> vystup;
+    for(int i=zacatek;i<vstup.count();i++)
     {
-        return;
-    }
-    // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
-
-    displayLabelLcd.scrollingTextOffset-=stepSize;
-
-    if (abs(displayLabelLcd.scrollingTextOffset)>textWidthPixels)
-    {
-        displayLabelLcd.scrollingTextOffset=0;
-        displayLabelLcd.vykresliNacestneForce(currentDestinationPointList,vehicleState,displayLabelLcd.labelViaPointsScrolling,displayLabelLcd.vdv301version());
-    }
-
-    else
-
-    {
-        ui->scrollAreaWidgetContents->scroll(-stepSize,0);
-    }
-
-}
-
-// move to displayLAbelLcd???
-void MainWindow::slotDisplayLcdLabelCyclePages()
-{
-    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndex<<" v seznamu je "<<displayLabelLcd.pageCycleList.count();
-
-    if(lcdLabelCurrentPageIndex==(displayLabelLcd.pageCycleList.count()-1))
-    {
-        lcdLabelCurrentPageIndex=0;
-    }
-    else
-    {
-        lcdLabelCurrentPageIndex++;
-    }
-
-
-    if(lcdLabelCurrentPageIndex<displayLabelLcd.pageCycleList.count())
-    {
-        ui->stackedWidget_prostredek->setCurrentWidget(displayLabelLcd.pageCycleList.at(lcdLabelCurrentPageIndex));
+        if(i>zacatek)
+        {
+            vystup.push_back(vstup.at(i));
+            // qDebug()<<"orez zastavek:"<<vstup.at(i).stopPoint.NameLcd;
+        }
 
     }
-
-
+    return vystup;
 
 }

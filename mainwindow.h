@@ -158,7 +158,7 @@ private:
 
     //common functions
     int setDestinationName ();
-    void switchTabs(int tabNumber);
+    void menuSwitchTabs(int tabNumber);
     int labelUpdateFormat();
 
     QString createProgramVersionString();
@@ -217,17 +217,17 @@ private:
 
 
     void labelSetNextStopBackground(QString barvaPisma, QString barvaPozadi);
-
-    void hideAnnouncement(); //nepouzito
-    void hideFareZoneChange(); //nepouzito
+    
+    void eventHideAnnouncement(); //nepouzito
+    void eventHideFareZoneChange(); //nepouzito
 
 
     //void eraseDisplayedInformation();
 
-    void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
-    void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
+    void eventShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
+    void eventShowPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
     void displayLabelShowPageFinalStop();
-    void notOnLine();
+    void eventNotOnLine();
 
     //keyboard shortcuts
     QShortcut *keyCtrlF; // Entity of Ctrl + D hotkeys
@@ -261,13 +261,13 @@ private:
     QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);//unused
 
 
-    void displayAbnormalStateScreen(QString displayState);
+    void eventDisplayAbnormalStateScreen(QString displayState);
     void displayNormalOnLineState();
     void receivedDataVariablesReset();
     void connectionToTable(Connection connection, QTableWidget *tableWidget);
     void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
-    void stopRequestedActivated();
-    void stopRequestedDectivated();
+    void eventStopRequestedActivated();
+    void eventStopRequestedDectivated();
 
 
     void retranslateUi(QString language);
@@ -277,6 +277,11 @@ private:
     void ledLabelInitialize2_3();
     void lcdLabelInitialize2_3();
     void eraseDisplayedInformation();
+
+    void eventEraseDisplayInformation();
+    void eventLcdSetMainPage();
+    void eventLcdShowFollowingTripDestination(QString followingTripLine, QString followingTripDestination);
+    void eventLcdReturnToStopList();
 private slots:
 
     void on_actiontestPolozka_triggered();

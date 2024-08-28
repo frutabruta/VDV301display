@@ -15,6 +15,10 @@ Program can be launched with parameter to change settings location.
 
 ## Changelog
 - 20240828_1621
+    - MainWindow
+        - functions reorder
+        - event functions to achieve  abstraction between SVG and Label displays
+- 20240828_1621
     - functions related to display of content moved to separate classes
         - DisplayLabelLcd
         - DisplayLabelLed
