@@ -308,7 +308,7 @@ QString DisplayLabel::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZa
         {
             separator=" - ";
         }
-        if (verze == "2.3")
+        if ((verze == "2.3")||(verze == "2.3CZ1.0"))
         {
             nacestyString += separator + nahradIconPiktogramem(nacestneZastavky.at(i).NameLcd, velikostPiktogramu, slozkaPiktogramu);
         }

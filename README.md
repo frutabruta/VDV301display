@@ -14,6 +14,12 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20240913_1908
+    - Vdv301publisher
+        - empty triplist out of range fix
+    - DisplayLabel
+        - DisplayLabel::vykresliNacestneZastavkyText
+            - viapoint icon fix for version 2.3CZ1.0
 - 20240828_1621
     - MainWindow
         - functions reorder
