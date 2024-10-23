@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include "xmlparser.h"
-//#include "httpserver2/myhttpserver.h"
-//#include "VDV301subscriber/ibisipsubscriber.h"
+#include "xmlparser2_2cz1_0.h"
+#include "xmlparser2_3.h"
+#include "xmlparser2_3cz1_0.h"
+
 
 #include "VDV301publisher/devicemanagementservice.h"
 #include "VDV301subscriber/cissubscriber.h"
@@ -72,6 +74,9 @@ private:
 
     // complex class instances
     XmlParser xmlParser;
+    XmlParser2_2CZ1_0 xmlParser2_2CZ1_0;
+    XmlParser2_3 xmlParser2_3;
+    XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
 
 
     DisplayLabelLcd displayLabelLcd;

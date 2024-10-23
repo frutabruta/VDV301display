@@ -876,11 +876,12 @@ int MainWindow::showReceivedData()
 {
     qDebug() <<  Q_FUNC_INFO;
     updateMainScreenDebugLabels();
+    eraseTable(ui->tableWidget_debugStopList);
+
     debugStopPointListToTable(currentDestinationPointList,false);
     debugStopPointListToTable(nextDestinationPointList,true);
 
 
-    eraseTable(ui->tableWidget_debugStopList);
 
 
     eventLcdSetMainPage();
@@ -998,6 +999,7 @@ int MainWindow::showReceivedData()
 
 void MainWindow::debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek,bool navazny)
 {
+
     if(!navazny)
     {
         eraseTable(ui->tableWidget_debugStopList);
@@ -1027,6 +1029,7 @@ int MainWindow::setDestinationName()
         if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
         {
             nazevCile=displayLabelLcd.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),displayLabelLcd.slozkaPiktogramu);
+
         }
         else
         {
@@ -1124,11 +1127,12 @@ void MainWindow::debugStopPointToTable(StopPointDestination selectedStopPointDes
     qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
  */
-
     row = ui->tableWidget_debugStopList->rowCount();
     ui->tableWidget_debugStopList->insertRow(row);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.stopPoint.NameLcd));
+    QString stopName=InlineFormatParser::parseTextLed(selectedStopPointDestination.stopPoint.NameLcd);
+
+    cell = new QTableWidgetItem(stopName);
 
     if(isFollowingTrip)
     {
@@ -1143,8 +1147,6 @@ void MainWindow::debugStopPointToTable(StopPointDestination selectedStopPointDes
     ui->tableWidget_debugStopList->setItem(row, 2, cell);
 
     ui->tableWidget_debugStopList->resizeColumnsToContents();
-
-    qDebug()<<"sluzbaDoTabulky_konec";
 }
 
 void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTableWidget* tableWidget)
@@ -1197,17 +1199,18 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     qDebug() <<  Q_FUNC_INFO;
 
 
-    xmlParser.nactiXML(vstupniXml);
+
 
 
     receivedDataVariablesReset();
 
-
+    xmlParser.nactiXML(vstupniXml);
     qDebug()<<"timestamp:"<<xmlParser.vyparsujTimestamp(xmlParser.dokument).toString(Qt::ISODate);
 
 
     if(cisSubscriber.version()=="1.0")
     {
+        xmlParser.nactiXML(vstupniXml);
         if(!xmlParser.VytvorSeznamZastavek1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
@@ -1216,18 +1219,21 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     }
     else if(cisSubscriber.version()=="2.2CZ1.0")
     {
-        if(!xmlParser.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        xmlParser2_2CZ1_0.nactiXML(vstupniXml);
+        if(!xmlParser2_2CZ1_0.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             return;
         }
+        isFareZone= xmlParser2_2CZ1_0.nactiFareZoneChange(xmlParser2_2CZ1_0.dokument,fareZoneChangeFrom,fareZoneChangeTo);
+        xmlParser2_2CZ1_0.nactiAdditionalTextMessage2_2CZ1_0(xmlParser2_2CZ1_0.dokument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
     }
     else if(cisSubscriber.version()=="2.3")
     {
+        xmlParser2_3.nactiXML(vstupniXml);
+        vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.dokument,currenVdv301StopPointList);
 
-        vdv301AllData=xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
-
-        if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser2_3.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
@@ -1238,10 +1244,10 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
     else if(cisSubscriber.version()=="2.3CZ1.0")
     {
+        xmlParser2_3CZ1_0.nactiXML(vstupniXml);
+        vdv301AllData=xmlParser2_3CZ1_0.parseAllData2_3(xmlParser2_3CZ1_0.dokument,currenVdv301StopPointList);
 
-        vdv301AllData=xmlParser.parseAllData2_3(xmlParser.dokument,currenVdv301StopPointList);
-
-        if(!xmlParser.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser2_3CZ1_0.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
@@ -1272,13 +1278,16 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
 
     xmlParser.nactiVehicleGroup(vehicleState,xmlParser.dokument);
+    xmlParser2_2CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
+    xmlParser2_3.nactiVehicleGroup(vehicleState,xmlParser.dokument);
+    xmlParser2_3CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
 
     //additional text message
-    xmlParser.nactiAdditionalTextMessage(xmlParser.dokument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
+
 
     //zmena tarifniho pasma
 
-    isFareZone= xmlParser.nactiFareZoneChange(xmlParser.dokument,fareZoneChangeFrom,fareZoneChangeTo);
+
 
 
     //instanceXMLparser.nactiXML(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);

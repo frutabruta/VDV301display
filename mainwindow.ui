@@ -553,8 +553,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>216</width>
-                      <height>72</height>
+                      <width>170</width>
+                      <height>58</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -4822,7 +4822,7 @@ border-radius: 30px;
      <x>0</x>
      <y>0</y>
      <width>1332</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

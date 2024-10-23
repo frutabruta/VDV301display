@@ -178,6 +178,36 @@ void DisplayLabel::labelNastavVelikost(QLabel *label, int bodovaVelikost, float 
 
 }
 
+bool DisplayLabel::labelSetTextSafe(QLabel *label, QString text)
+{
+    if(label==NULL)
+    {
+        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        return false;
+    }
+
+    else
+    {
+        label->setText(text);
+    }
+    return true;
+}
+
+bool DisplayLabel::labelSetVisibleSafe(QLabel *label, bool visibility)
+{
+    if(label==NULL)
+    {
+        qDebug()<<"DisplayLabel::labelSetVisibleSafe failed";
+        return false;
+    }
+
+    else
+    {
+        label->setVisible(visibility);
+    }
+    return true;
+}
+
 void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
 {
     qDebug()<<Q_FUNC_INFO;
@@ -226,20 +256,6 @@ void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
     */
 }
 
-void DisplayLabel::naplnNazevCileLabel(QString vstup, QLabel *label)
-{
-    qDebug()<<Q_FUNC_INFO;
-
-    if(label!=NULL)
-    {
-        label->setText(vstup);
-    }
-    else
-    {
-        qDebug()<<"label is not set";
-    }
-
-}
 
 void DisplayLabel::naplnAnouncementLabel(QString vstup, QLabel *label)
 {
@@ -403,7 +419,7 @@ void DisplayLabel::vymazPoleLabelu(QVector<QLabel *> vstup)
 {
     foreach (QLabel *odkaz, vstup)
     {
-        odkaz->setText("");
+        labelSetTextSafe(odkaz, "");
     }
 }
 

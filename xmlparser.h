@@ -22,7 +22,7 @@ public:
     int linka=0;
     QString cil="";
 
-    QMap<int,StopPointDestination> globalStopList2_3;
+
 
 
     // SeznamZastavek docasnySeznamZastavek[] ;
@@ -34,12 +34,10 @@ public:
     void nactiXML(QString vstup);
 
     int nactiVehicleGroup(VehicleState &stav, QDomDocument xmlko);
-    int VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
-    int nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa);
-    int nactiAdditionalTextMessage(QDomDocument xmlko, QString &type, QString &headline, QString &text);
+     int nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa);
+    //int nactiAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QString &type, QString &headline, QString &text);
     int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<FareZone> &pasma);
     QVector<QString> naplnVektorPriznaku(QDomNode vstup, QString nazevElementu);
-    int tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
     int udajeNavaznehoSpoje(QVector<StopPointDestination> &docasnySeznamZst, QString &linka, QString &cil);
     int existujeNavaznySpoj(QVector<StopPointDestination> seznamZastavek);
     QVector<Connection> nactiPrestupy(QDomElement vstup);
@@ -56,24 +54,17 @@ public:
     QVector<StopPoint> vyparsujNacestneZastavky1_0(QDomElement zastavka);
     QVector<FareZone> vyparsujPasma_1_0(QDomElement zastavka);
 
-    int tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);
-    int VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasnySeznamZst, QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky);
 
 
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
     QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
     Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
-    Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
     Vdv301StopPoint qDomNodeToStopPointDestination(QDomNode input); //unused
     Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
 private:
-    QVector<StopPoint> vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka);
-    QVector<StopPoint> vyparsujNacestneZastavky2_3(QDomNode displayContent);
-    QVector<FareZone> vyparsujPasma_2_2CZ1_0(QDomElement zastavka);
-    QVector<FareZone> vyparsujPasma_2_3(QDomElement zastavka);
-    QString stareXml="";
+     QString stareXml="";
 };
 
 

@@ -107,7 +107,8 @@ void DisplayLabelLcd::displayLabelDestination(QString nazev)
 {
     qDebug() <<  Q_FUNC_INFO;
 
-    naplnNazevCileLabel(nazev,labelDestination);
+
+    labelSetTextSafe(labelDestination,nazev);
     /* if(cisSubscriber.verze()=="2.3")
     {
        labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
@@ -186,6 +187,11 @@ void DisplayLabelLcd::displayLabelConnectionList(QVector<Connection> connectionL
 void DisplayLabelLcd::displayLabelDrawLineNumber( QString subMode, Line line, QLabel* label, int iconSize,bool isConnection)
 {
     qDebug()<<Q_FUNC_INFO;
+    if(label==NULL)
+    {
+        qDebug()<<Q_FUNC_INFO<<" NULL label";
+        return;
+    }
     QString linkaStyleSheetStandard="font-weight: bold;";
 
     if(isConnection)
@@ -262,12 +268,19 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4( QString subMode, Line line,
 void DisplayLabelLcd::displayLabelEraseInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
+    labelSetTextSafe(labelDestination,"");
+    labelSetTextSafe(labelDestination,"");
 
-    labelDestination->setText("");
-    labelLine->setText("");
     //   ui->label_nacestne->setText("");
 
-    frameFollowingTrip->hide();
+
+
+    if(frameFollowingTrip!=NULL)
+    {
+        frameFollowingTrip->hide();
+    }
+
+
 
     vymazPoleLabelu(labelListStopPointName);
     vymazPoleLabelu(labelListFareZoneUpper);
@@ -282,6 +295,9 @@ void DisplayLabelLcd::displayLabelEraseInformation()
     pageCycleList.clear();
     // pageCycleList.push_back(ui->page_hlavni_2);
 }
+
+
+
 
 
 
@@ -372,6 +388,11 @@ void DisplayLabelLcd::displayLabelStopList(QVector<StopPointDestination> thisSto
 void DisplayLabelLcd::displayLabelViaPoints(QVector<StopPointDestination> currentDestinationPointList, VehicleState vehicleState)
 {
     qDebug() <<  Q_FUNC_INFO;
+    if(labelViaPointsScrolling==NULL)
+    {
+        qDebug()<<"NULL label";
+        return;
+    }
 
     /*
     if(currentDestinationPointList.isEmpty())
@@ -387,7 +408,7 @@ void DisplayLabelLcd::displayLabelViaPoints(QVector<StopPointDestination> curren
 
     if(oldViapointString!=newViapointString)
     {
-        labelViaPointsScrolling->setText( newViapointString);
+        labelSetTextSafe(labelViaPointsScrolling,newViapointString);
         timerScrollingText.start(intervalScrollingText);
         oldViapointString=newViapointString;
     }
@@ -395,7 +416,7 @@ void DisplayLabelLcd::displayLabelViaPoints(QVector<StopPointDestination> curren
     {
         if(labelViaPointsScrolling->text()=="")
         {
-            labelViaPointsScrolling->setText( newViapointString);
+            labelSetTextSafe(labelViaPointsScrolling,newViapointString);
         }
 
     }

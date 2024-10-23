@@ -54,7 +54,7 @@ public:
     int minimum(int cislo1, int cislo2);
     void vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze);
     void zmensiCisloLinkyLabel(QLabel *label);
-    void naplnNazevCileLabel(QString vstup, QLabel *label);
+
     QString nahradMetro(QString linka, QString submode, int vyska);
     void poleLabelNastavVelikost(QVector<QLabel*> labely, int bodovaVelikost, float pomerBodu);
     void labelNastavVelikost(QLabel *label, int bodovaVelikost, float pomerBodu);
@@ -81,6 +81,8 @@ private:
 protected:
     QString mVdv301version="1.0";
 
+    bool labelSetTextSafe(QLabel *label, QString text);
+    bool labelSetVisibleSafe(QLabel *label, bool visibility);
 };
 
 #endif // DISPLAYLABEL_H

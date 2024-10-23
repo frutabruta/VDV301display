@@ -14,6 +14,34 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+
+- 20241023_1231
+    - XmlParser split into classes:
+        - XmlParser (1.0)
+        - XmlParser2_2CZ1_0
+        - XmlParser2_3
+        - XmlParser2_3CZ1_0
+    - DisplayLabel
+        - new functions
+            - labelSetTextSafe
+            - labelSetVisibleSafe
+        - deleted functions
+            - naplnNazevCileLabel
+    - DisplayLabelLcd
+        - displayLabelDrawLineNumber
+            - null label protection
+        - displayLabelEraseInformation 
+            - null label protection
+        - displayLabelViaPoints
+            - null label protection
+    - MainWindow
+        - showReceivedData
+            - fix of debug stop table delete
+        - slotXmlDoPromenne
+            - reorder function calls by functions
+        - usage of different XmlParser versions
+    - known issues
+        - 2.3 version doesn't escape icons in following trip destination label 
 - 20240913_1908
     - Vdv301publisher
         - empty triplist out of range fix
