@@ -14,7 +14,8 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
-
+- 20241023_1638
+    - MainWindow elements translations
 - 20241023_1231
     - XmlParser split into classes:
         - XmlParser (1.0)

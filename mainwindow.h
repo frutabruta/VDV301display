@@ -249,7 +249,7 @@ private:
     QGraphicsScene scene;
     QGraphicsSvgItem *m_svgItem;
     QGraphicsRectItem *m_outlineItem;
-    bool svgVykresleni();
+    bool svgRender();
 
 
 

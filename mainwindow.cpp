@@ -71,27 +71,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     updateMainScreenDebugLabels();
 
-
-
     displayLabelLed.ledInitializeFormat();
-
-    /*
-    bool dvaradky=true;
-    if(dvaradky==true)
-    {
-        ui->labelFrontSingle->setVisible(false);
-        ui->labelFrontBottomRow->setVisible(true);
-        ui->labelFrontTopRow->setVisible(true);
-    }
-    else
-    {
-        ui->labelFrontSingle->setVisible(true);
-        ui->labelFrontBottomRow->setVisible(false);
-        ui->labelFrontTopRow->setVisible(false);
-    }
-    */
-
-
 
     //
     eraseDisplayedInformation();
@@ -434,8 +414,8 @@ QString MainWindow::createProgramVersionString()
     QDate compilationDate=QLocale("en_US").toDate(QString(__DATE__).simplified(), "MMM d yyyy");
     QTime compilationTime=QTime::fromString(__TIME__,"hh:mm:ss");
     qDebug()<<" date:"<<compilationDate<<" time:"<<compilationTime;
-    QString verze=compilationDate.toString("yyyyMMdd")+"_"+compilationTime.toString("hhmm");
-    return verze;
+    QString version=compilationDate.toString("yyyyMMdd")+"_"+compilationTime.toString("hhmm");
+    return version;
 }
 
 
@@ -445,34 +425,34 @@ void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
     qint32 row;
     QTableWidgetItem *cell;
 
-    QString nazev=zcs->name();
-    QString ipadresa=zcs->ip().toString();
+    QString name=zcs->name();
+    QString ipaddress=zcs->ip().toString();
     QString host=zcs->host();
-    QString verze=zcs.data()->txt().value("ver");
+    QString version=zcs.data()->txt().value("ver");
     int port=zcs->port();
 
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+    qDebug() <<"service name "<<name<<" ip address"<<ipaddress<<" port "<<QString::number(port)<<" data" <<version ;
 
 
-    row = ui->tabulkaSubscriberu->rowCount();
-    ui->tabulkaSubscriberu->insertRow(row);
-    cell = new QTableWidgetItem(nazev);
-    ui->tabulkaSubscriberu->setItem(row, 0, cell);
+    row = ui->tableWidget_services->rowCount();
+    ui->tableWidget_services->insertRow(row);
+    cell = new QTableWidgetItem(name);
+    ui->tableWidget_services->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(verze);
-    ui->tabulkaSubscriberu->setItem(row, 1, cell);
+    cell = new QTableWidgetItem(version);
+    ui->tableWidget_services->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(ipadresa);
-    ui->tabulkaSubscriberu->setItem(row, 2, cell);
+    cell = new QTableWidgetItem(ipaddress);
+    ui->tableWidget_services->setItem(row, 2, cell);
 
     cell = new QTableWidgetItem(QString::number(port));
-    ui->tabulkaSubscriberu->setItem(row, 3, cell);
+    ui->tableWidget_services->setItem(row, 3, cell);
 
     cell = new QTableWidgetItem(host);
-    ui->tabulkaSubscriberu->setItem(row, 4, cell);
+    ui->tableWidget_services->setItem(row, 4, cell);
 
 
-    ui->tabulkaSubscriberu->resizeColumnsToContents();
+    ui->tableWidget_services->resizeColumnsToContents();
 
 
     qDebug()<<"sluzbaDoTabulky_konec";
@@ -495,10 +475,10 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
     qint32 row;
     QTableWidgetItem *cell;
 
-    QString nazev=zcs->name();
-    QString ipadresa=zcs->ip().toString();
+    QString name=zcs->name();
+    QString ipAddress=zcs->ip().toString();
     QString host=zcs->host();
-    QString verze=zcs.data()->txt().value("ver");
+    QString version=zcs.data()->txt().value("ver");
     int port=zcs->port();
     /*
     qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
@@ -507,13 +487,13 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
 
     row = ui->tableWidget_selectedSubscriber->rowCount();
     ui->tableWidget_selectedSubscriber->insertRow(row);
-    cell = new QTableWidgetItem(nazev);
+    cell = new QTableWidgetItem(name);
     ui->tableWidget_selectedSubscriber->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(verze);
+    cell = new QTableWidgetItem(version);
     ui->tableWidget_selectedSubscriber->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(ipadresa);
+    cell = new QTableWidgetItem(ipAddress);
     ui->tableWidget_selectedSubscriber->setItem(row, 2, cell);
 
     cell = new QTableWidgetItem(QString::number(port));
@@ -524,10 +504,6 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
 
 
     ui->tableWidget_selectedSubscriber->resizeColumnsToContents();
-
-
-    qDebug()<<"sluzbaDoTabulky_konec";
-
 }
 
 
@@ -680,9 +656,6 @@ void MainWindow::slotDisplayLcdLabelCyclePages()
         ui->stackedWidget_prostredek->setCurrentWidget(displayLabelLcd.pageCycleList.at(lcdLabelCurrentPageIndex));
 
     }
-
-
-
 }
 
 
@@ -796,7 +769,7 @@ void MainWindow::displayLabelFillArray()
 void MainWindow::eraseDisplayedInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
     displayLabelLcd.displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
     displayLabelLed.ledClearDisplays();
@@ -820,8 +793,8 @@ void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,
 {
     qDebug() <<  Q_FUNC_INFO;
     //LABEL LCD
-    ui->label_navaznaLinka->setText(followingTripLine);
-    ui->label_navaznyCil->setText(followingTripDestination);
+    ui->label_followingLine->setText(followingTripLine);
+    ui->label_followingDestination->setText(followingTripDestination);
     ui->frame_navaznySpoj->show();
 
     //SVG
@@ -861,7 +834,7 @@ void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
     qDebug()<<Q_FUNC_INFO<<" "<<displayState;
     ui->label_lcd_state->setText(displayState);
     eraseDisplayedInformation();
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_version);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
 
 }
 
@@ -1106,7 +1079,7 @@ void MainWindow::eraseTable(QTableWidget *tableWidget)
 void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 {
     qDebug() <<  Q_FUNC_INFO;
-    eraseTable(ui->tabulkaSubscriberu);
+    eraseTable(ui->tableWidget_services);
 
 
     foreach(QZeroConfService selectedService, serviceList)
@@ -1198,10 +1171,6 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 {
     qDebug() <<  Q_FUNC_INFO;
 
-
-
-
-
     receivedDataVariablesReset();
 
     xmlParser.nactiXML(vstupniXml);
@@ -1211,6 +1180,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     if(cisSubscriber.version()=="1.0")
     {
         xmlParser.nactiXML(vstupniXml);
+        xmlParser.nactiVehicleGroup(vehicleState,xmlParser.dokument);
         if(!xmlParser.VytvorSeznamZastavek1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
@@ -1219,7 +1189,9 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     }
     else if(cisSubscriber.version()=="2.2CZ1.0")
     {
-        xmlParser2_2CZ1_0.nactiXML(vstupniXml);
+        xmlParser2_2CZ1_0.nactiXML(vstupniXml);        
+        xmlParser2_2CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
+
         if(!xmlParser2_2CZ1_0.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
@@ -1231,6 +1203,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     else if(cisSubscriber.version()=="2.3")
     {
         xmlParser2_3.nactiXML(vstupniXml);
+        xmlParser2_3.nactiVehicleGroup(vehicleState,xmlParser.dokument);
         vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.dokument,currenVdv301StopPointList);
 
         if(!xmlParser2_3.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
@@ -1245,6 +1218,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
     else if(cisSubscriber.version()=="2.3CZ1.0")
     {
         xmlParser2_3CZ1_0.nactiXML(vstupniXml);
+        xmlParser2_3CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
         vdv301AllData=xmlParser2_3CZ1_0.parseAllData2_3(xmlParser2_3CZ1_0.dokument,currenVdv301StopPointList);
 
         if(!xmlParser2_3CZ1_0.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
@@ -1277,23 +1251,6 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
 
 
-    xmlParser.nactiVehicleGroup(vehicleState,xmlParser.dokument);
-    xmlParser2_2CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
-    xmlParser2_3.nactiVehicleGroup(vehicleState,xmlParser.dokument);
-    xmlParser2_3CZ1_0.nactiVehicleGroup(vehicleState,xmlParser.dokument);
-
-    //additional text message
-
-
-    //zmena tarifniho pasma
-
-
-
-
-    //instanceXMLparser.nactiXML(globalniSeznamZastavek, &indexZastavky, &pocetZastavek);
-    //qInfo()<<globalniSeznamZastavek[4].StopName;
-    qInfo()<<stopIndex;
-    qInfo()<<"CIl:"<<nazevCile;
 
     if(stopIndex>=0)
     {
@@ -1306,6 +1263,8 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
                 showReceivedData();
                 labelUpdateFormat();
 
+
+                //LED displays
                 if(cisSubscriber.version()=="2.3")
                 {
                     displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(displayLabelLed.ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
@@ -1330,7 +1289,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
                 }
 
 
-                this->svgVykresleni();
+                this->svgRender();
                 qInfo()<<"CIl:"<<nazevCile;
             }
             else
@@ -1360,13 +1319,6 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
 
 
     }
-
-
-
-
-
-    //NetworkCleanup();
-
 }
 
 void MainWindow::receivedDataVariablesReset()
@@ -1384,7 +1336,7 @@ void MainWindow::receivedDataVariablesReset()
 void MainWindow::displayNormalOnLineState()
 {
 
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
 }
 
 
@@ -1425,12 +1377,12 @@ void MainWindow::on_pushButton_menu_quit_clicked()
 void MainWindow::on_pushButton_menu_svg_clicked()
 {
     qDebug()<<Q_FUNC_INFO;
-    ui->prepinadloStran->setCurrentWidget(ui->page_svg);
+    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_svg);
 
 
     //QSvgRenderer *m_renderer = new QSvgRenderer(QLatin1String("./Verlauf.svg"));
 
-    this->svgVykresleni();
+    this->svgRender();
     /*
     ui->graphicsView->setScene(&novaScena);
     ui->graphicsView->update();
@@ -1442,7 +1394,7 @@ void MainWindow::on_pushButton_menu_svg_clicked()
 
 //zkpirovano z svgviewer demo
 
-bool MainWindow::svgVykresleni()
+bool MainWindow::svgRender()
 {
 
     if (currentDestinationPointList.length()>0)
@@ -1523,7 +1475,7 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneLi
 {
     qDebug() <<  Q_FUNC_INFO;
 
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
 
     ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
@@ -1539,7 +1491,7 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelLcd.naplnAnouncementLabel(textCz,ui->label_announcement);
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
 
     ui->label_oznTitle->setText(title);
@@ -1578,7 +1530,7 @@ void MainWindow::eventLcdReturnToStopList()
 void MainWindow::displayLabelReturnToStopList()
 {
     qDebug() <<  Q_FUNC_INFO;
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
     displayLabelLcd.naplnZmenaLabel("",ui->label_zmena);
 }
@@ -1587,7 +1539,7 @@ void MainWindow::displayLabelReturnToStopList()
 void MainWindow::displayLabelShowPageFinalStop()
 {
     qDebug() <<  Q_FUNC_INFO;
-    ui->stackedWidget_obrazovka->setCurrentWidget(ui->page_hlavni);
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
 
 }
@@ -1654,7 +1606,7 @@ void MainWindow::on_actiontestPolozka_triggered()
 
 void MainWindow::on_pushButton_menu_displayLed_clicked()
 {
-    ui->prepinadloStran->setCurrentWidget(ui->page_led);
+    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_led);
     ui->labelFrontBottomRow->setText("");
 }
 
@@ -1672,19 +1624,19 @@ void MainWindow::on_pushButton_menu_fullscreen_clicked()
 
 void MainWindow::on_pushButton_menu_services_clicked()
 {
-    ui->prepinadloStran->setCurrentWidget(ui->page_seznamSluzeb);
+    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_settings);
 }
 
 void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
-    ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
+    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
     labelUpdateFormat();
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 }
 
 void MainWindow::on_pushButton_menu_timer_clicked()
 {
-    ui->prepinadloStran->setCurrentWidget(ui->page_casovac);
+    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_timer);
 }
 
 void MainWindow::on_pushButton_unsubscribe_clicked()

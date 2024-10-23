@@ -233,7 +233,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QStackedWidget" name="prepinadloStran">
+     <widget class="QStackedWidget" name="stackedWidget_menuSwitch">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
@@ -244,9 +244,9 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="page_hlavniObrazovka">
+      <widget class="QWidget" name="page_labelDisplay">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
          <horstretch>0</horstretch>
@@ -279,7 +279,7 @@
          <number>0</number>
         </property>
         <item row="0" column="0" colspan="2">
-         <widget class="QStackedWidget" name="stackedWidget_obrazovka">
+         <widget class="QStackedWidget" name="stackedWidget_onService">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -291,9 +291,9 @@
 QLabel{color:#FFFFFF}</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
-          <widget class="QWidget" name="page_hlavni">
+          <widget class="QWidget" name="page_route">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
              <horstretch>0</horstretch>
@@ -553,8 +553,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>170</width>
-                      <height>58</height>
+                      <width>898</width>
+                      <height>88</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -610,7 +610,7 @@ QLabel{color:#FFFFFF}</string>
                    <item>
                     <layout class="QHBoxLayout" name="horizontalLayout_19">
                      <item>
-                      <widget class="QLabel" name="label_cil_sipka">
+                      <widget class="QLabel" name="label_destination_arrow">
                        <property name="sizePolicy">
                         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                          <horstretch>0</horstretch>
@@ -681,7 +681,7 @@ QLabel{color:#FFFFFF}</string>
                          </widget>
                         </item>
                         <item>
-                         <widget class="QLabel" name="label_navaznaLinka">
+                         <widget class="QLabel" name="label_followingLine">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                             <horstretch>0</horstretch>
@@ -709,7 +709,7 @@ border-radius: 8px;
                          </widget>
                         </item>
                         <item>
-                         <widget class="QLabel" name="label_continuesas">
+                         <widget class="QLabel" name="label_followingArrow">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                             <horstretch>0</horstretch>
@@ -728,7 +728,7 @@ border-radius: 8px;
                          </widget>
                         </item>
                         <item>
-                         <widget class="QLabel" name="label_navaznyCil">
+                         <widget class="QLabel" name="label_followingDestination">
                           <property name="sizePolicy">
                            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                             <horstretch>0</horstretch>
@@ -3347,7 +3347,7 @@ border-radius: 30px;
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_zmenaLinky">
+          <widget class="QWidget" name="page_lineChange">
            <layout class="QGridLayout" name="gridLayout_14">
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -3583,7 +3583,7 @@ border-radius: 30px;
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_seznamSluzeb">
+      <widget class="QWidget" name="page_settings">
        <widget class="QWidget" name="gridLayoutWidget">
         <property name="geometry">
          <rect>
@@ -3714,7 +3714,7 @@ border-radius: 30px;
         </layout>
        </widget>
       </widget>
-      <widget class="QWidget" name="page_casovac">
+      <widget class="QWidget" name="page_timer">
        <layout class="QGridLayout" name="gridLayout_9">
         <item row="0" column="1">
          <widget class="QGroupBox" name="groupBox_2">
@@ -3785,7 +3785,7 @@ border-radius: 30px;
          </widget>
         </item>
         <item row="4" column="0">
-         <widget class="QTableWidget" name="tabulkaSubscriberu">
+         <widget class="QTableWidget" name="tableWidget_services">
           <column>
            <property name="text">
             <string>Service name</string>
