@@ -2,6 +2,7 @@
 #define XMLPARSER2_3_H
 
 #include "xmlparser.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
 
 class XmlParser2_3 : public XmlParser
 {

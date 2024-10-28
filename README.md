@@ -14,6 +14,22 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20241028_1626
+    - MainWindow
+        - showReceivedData renamed to showReceivedDataVehicleState
+        - new WIP functions
+            - showReceivedDataVdv301
+            - debugStopPointListToTable
+            - debugStopPointToTable
+    - XmlParser
+        - function and variable names translated to english
+        - xml changed fix
+        - nonexisting functions removed from header
+    - XmlParser2_2CZ1_0
+        - usage of renamed functions
+    - XmlParser2_3
+        - usage of renamed functions
+
 - 20241023_1638
     - MainWindow elements translations
 - 20241023_1231

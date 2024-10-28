@@ -37,8 +37,8 @@ int XmlParser2_3::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasn
             priznakyStringy.push_back(priznak);
             // qDebug()<<"parsuju priznaky:"<<priznak;
         }
-
-        docasnaZastavka.line=priznakyDoLinky(priznakyStringy,docasnaZastavka.line);
+        
+        docasnaZastavka.line=propertyStringListToLine(priznakyStringy,docasnaZastavka.line);
 
         QDomNodeList displayContentArray=aktZastavkaDOM.elementsByTagName("DisplayContent");
 
@@ -87,9 +87,9 @@ int XmlParser2_3::tripDoSeznamuZastavek2_3(QVector<StopPointDestination> &docasn
         docasnaZastavka.stopPoint.StopIndex=i;
 
 
-        docasnaZastavka.stopPoint.connectionList=nactiPrestupy(aktZastavkaDOM);
-
-        docasnaZastavka.stopPoint.iconList= naplnVektorPriznaku(aktZastavkaDOM,"Stop");
+        docasnaZastavka.stopPoint.connectionList=domElementToConnectionList(aktZastavkaDOM);
+        
+        docasnaZastavka.stopPoint.iconList= propertyDomToStringList(aktZastavkaDOM,"Stop");
 
         // QDomElement displayContent=aktZastavkaDOM.firstChildElement("DisplayContent");
         // QDomElement dDestination=displayContent.firstChildElement("Destination");
@@ -237,7 +237,7 @@ int XmlParser2_3::VytvorSeznamZastavek2_3(QVector<StopPointDestination> &docasny
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
-    QDomElement root = dokument.firstChildElement();
+    QDomElement root = receivedDataDomDocument.firstChildElement();
     qDebug()<<root.tagName();
     if (root.tagName()!="CustomerInformationService.GetAllDataResponse")
     {

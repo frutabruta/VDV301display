@@ -167,7 +167,7 @@ private:
     int labelUpdateFormat();
 
     QString createProgramVersionString();
-    int showReceivedData();
+    int showReceivedDataVehicleState();
     void eraseTable(QTableWidget *tableWidget);
 
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
@@ -257,9 +257,10 @@ private:
 
     QString replaceIconTagWithImage(QString vstup, int vyskaObrazku, QString slozka);
 
-    void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
-    void debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek, bool navazny);
 
+
+    void debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek, bool navazny);
+     void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
    // void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
 
 
@@ -287,6 +288,14 @@ private:
     void eventLcdSetMainPage();
     void eventLcdShowFollowingTripDestination(QString followingTripLine, QString followingTripDestination);
     void eventLcdReturnToStopList();
+
+
+    //VDV301 structures functions
+    int showReceivedDataVdv301(Vdv301AllData vdv301AllData);
+
+    void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
+    void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
+
 private slots:
 
     void on_actiontestPolozka_triggered();
