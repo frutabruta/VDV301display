@@ -14,7 +14,9 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
-
+- 20241028_1733
+    - MainWindow
+        - removed non-existent function from header file
 - 20241028_1714
     - XmlParser
         - functions moved to XmlParser2_3

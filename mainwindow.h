@@ -69,7 +69,7 @@ public:
 
 private:
 
-    QCommandLineParser qCommandLineParser;
+    //QCommandLineParser qCommandLineParser;
     QSettings settings;
 
     // complex class instances
@@ -119,46 +119,12 @@ private:
     bool showTimeColon=0;
 
     //constants
-
-
-
-
-
     const int intervalSideDisplay=2000;
-
-
     const int intervalDelayedStart=500;
-
-    //font sizes in points
-    //const int velikostFontLinka=200;
-
-
-    //velikosti oken
-
-
-
-
-
-
-    //other variables
-
-
-    //Fonty
-
-
-
-
 
     //timers
 
-    // QTimer *timerScrollingText = new QTimer(this);
-    //  QTimer *timerUpdateSeconds = new QTimer(this);
-    //  QTimer *timerLabelPageSwitch = new QTimer(this);
-    //  QTimer *timerDelayedStart = new QTimer(this);
-
-
     QTimer timerUpdateSeconds;
-
     QTimer timerDelayedStart;
 
     //common functions
@@ -185,21 +151,9 @@ private:
     void initilializeShortcuts();
 
     //functions display LCD with labels
-    void lcdResizeLabels();
     void displayLabelFillArray();
-    void displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka, QString subMode);
-    //void displayLabelViaPoints();
-    void displayLabelDestination(QString alias);
-  //  void displayLabelConnectionList(QVector<Connection> connectionList);
-    void displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, int index);
-  //  void displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList);
-    void displayLabelEraseInformation();
     void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
     void displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList);
-    void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
-    void displayLabelDrawLineNumber2_4(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
-
-
 
     //funkce led
 
@@ -245,23 +199,20 @@ private:
     QShortcut *keyF7;
     QShortcut *keyF8;
 
-    //polozky potrebne pro vykresleni svg
+    //SVG rendering
     QGraphicsScene scene;
     QGraphicsSvgItem *m_svgItem;
     QGraphicsRectItem *m_outlineItem;
     bool svgRender();
 
 
-
-
-
-    QString replaceIconTagWithImage(QString vstup, int vyskaObrazku, QString slozka);
+    //   QString replaceIconTagWithImage(QString vstup, int vyskaObrazku, QString slozka);
 
 
 
     void debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek, bool navazny);
-     void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
-   // void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
+    void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
+    // void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
 
 
     QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);//unused
