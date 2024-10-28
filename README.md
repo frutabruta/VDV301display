@@ -14,6 +14,17 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+
+- 20241028_1714
+    - XmlParser
+        - functions moved to XmlParser2_3
+            - domTripInformationToVdv301Trip(QDomElement input);
+            - qDomNodeToStopPointDestination(QDomNode input); //unused
+            - domStopPointToVdv301StopPoint(QDomElement domStopPoint);
+            - domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
+            - domAllDataToVdv301VehicleInformationGroup(QDomElement input);
+    - - XmlParser2_3
+        - functions names translated to English
 - 20241028_1626
     - MainWindow
         - showReceivedData renamed to showReceivedDataVehicleState
@@ -22,7 +33,7 @@ Program can be launched with parameter to change settings location.
             - debugStopPointListToTable
             - debugStopPointToTable
     - XmlParser
-        - function and variable names translated to english
+        - function and variable names translated to English
         - xml changed fix
         - nonexisting functions removed from header
     - XmlParser2_2CZ1_0

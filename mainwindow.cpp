@@ -1420,7 +1420,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         xmlParser2_3.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
         vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(!xmlParser2_3.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser2_3.receivedDocumentToStopPointList2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
@@ -1435,7 +1435,7 @@ void MainWindow::slotXmlDoPromenne(QString vstupniXml)
         xmlParser2_3CZ1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
         vdv301AllData=xmlParser2_3CZ1_0.parseAllData2_3(xmlParser2_3CZ1_0.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(!xmlParser2_3CZ1_0.VytvorSeznamZastavek2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser2_3CZ1_0.receivedDocumentToStopPointList2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);

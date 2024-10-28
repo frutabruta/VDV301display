@@ -11,8 +11,7 @@
 #include "VDV301subscriber/VDV301DataStructures/farezone.h"
 
 #include "VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h"
-#include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
-#include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
+
 
 class XmlParser
 {
@@ -47,14 +46,8 @@ public:
 
 
 
-    Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
-    QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
 
-    Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
-    Vdv301StopPoint qDomNodeToStopPointDestination(QDomNode input); //unused
-    Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
-    Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
-    Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
+
 private:
     QString previousXmlData="";
 };
