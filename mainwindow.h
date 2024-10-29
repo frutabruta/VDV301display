@@ -15,10 +15,11 @@
 #include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
 #include "VDV301subscriber/VDV301DataStructures/connection.h"
 
-#include "pasmovedvojicelcd.h"
+
 #include "svgvykreslovani.h"
 #include "displaylabelled.h"
-#include "displaylabellcd.h"
+//#include "displaylabellcd.h"
+#include "displaylabellcd2_3.h"
 
 #include "barvylinek.h"
 
@@ -67,6 +68,7 @@ public:
 
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
 
+
 private:
 
     //QCommandLineParser qCommandLineParser;
@@ -79,7 +81,7 @@ private:
     XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
 
 
-    DisplayLabelLcd displayLabelLcd;
+    DisplayLabelLcd2_3 displayLabelLcd;
 
     DisplayLabelLed displayLabelLed;
 
@@ -130,10 +132,10 @@ private:
     //common functions
     int setDestinationName ();
     void menuSwitchTabs(int tabNumber);
-    int labelUpdateFormat();
+    void labelLcdUpdateStopBackground();
 
     QString createProgramVersionString();
-    int showReceivedDataVehicleState();
+    int showReceivedDataLcd();
     void eraseTable(QTableWidget *tableWidget);
 
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
@@ -242,11 +244,20 @@ private:
 
 
     //VDV301 structures functions
-    int showReceivedDataVdv301(Vdv301AllData vdv301AllData);
+    int showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData);
 
     void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
     void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
 
+    void showReceivedDataLed();
+    void showReceivedDataVehicleState();
+    void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
+
+    void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList);
+    void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList);
+    void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList);
+    void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList);
+    void showReceivedDataLedVdv301(Vdv301AllData vdv301AllData);
 private slots:
 
     void on_actiontestPolozka_triggered();
@@ -282,7 +293,7 @@ private slots:
     void slotMoveScrollingText();
     void slotDisplayLcdLabelCyclePages();
     void slotToggleFullscreen();
-    void slotXmlDoPromenne(QString vstupniXml);
+    void slotXmlToVehicleStateVariables(QString inputXmlString);
     void slotDebugServiceToTable(QZeroConfService zcs);
     void slotDelayedStartup();
     void slotUpdateServiceTable();

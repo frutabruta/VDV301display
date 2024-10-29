@@ -166,7 +166,7 @@ void DisplayLabelLcd::displayLabelConnectionList(QVector<Connection> connectionL
 
         if(mVdv301version=="2.3")
         {
-            displayLabelDrawLineNumber2_4(aktualniPrestup.subMode,aktualniPrestup.line, labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
+            displayLabelDrawLineNumber2_4(aktualniPrestup.line.lineName , labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
 
         }
         else
@@ -239,12 +239,12 @@ void DisplayLabelLcd::displayLabelDrawLineNumber( QString subMode, Line line, QL
     label->show();
 }
 
-void DisplayLabelLcd::displayLabelDrawLineNumber2_4( QString subMode, Line line, QLabel* label, int velikostPiktogramu,bool prestup)
+void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* label, int velikostPiktogramu,bool prestup)
 {
     qDebug()<<Q_FUNC_INFO;
 
 
-    QString linkaStyleSheetStandard="font-weight: bold; background-color:#ffffff; padding: 0px; margin: 0px; ";
+    QString linkaStyleSheetStandard="font-weight: bold; background-color:#ffffff; color:#000000; padding: 0px; margin: 0px; ";
 
     if(prestup)
     {
@@ -257,7 +257,7 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4( QString subMode, Line line,
 
     label->setStyleSheet(linkaStyleSheetStandard);
 
-    QString vyslednyText= inlineFormatParser.parseTextLcd(line.lineName, label->font().pixelSize(),slozkaPiktogramu);
+    QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),slozkaPiktogramu);
     label->setText( vyslednyText);
 
 
@@ -309,7 +309,7 @@ void DisplayLabelLcd::displayLabelLineName(StopPointDestination selectedStopPoin
 
     if(mVdv301version=="2.3")
     {
-        displayLabelDrawLineNumber2_4(subMode,selectedStopPointDestinationstavka.line,labelLine, qFloor(ratioPixelPoint*200),false);
+        displayLabelDrawLineNumber2_4(selectedStopPointDestinationstavka.line.lineName,labelLine, qFloor(ratioPixelPoint*200),false);
 
     }
     else
@@ -318,6 +318,15 @@ void DisplayLabelLcd::displayLabelLineName(StopPointDestination selectedStopPoin
 
     }
     //  labelVykreslovani.zmensiCisloLinkyLabel(ui->Llinka);
+
+}
+
+
+void DisplayLabelLcd::displayLabelLineName(QString lineName)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelDrawLineNumber2_4(lineName,labelLine, qFloor(ratioPixelPoint*200),false);
+
 
 }
 
@@ -423,8 +432,6 @@ void DisplayLabelLcd::displayLabelViaPoints(QVector<StopPointDestination> curren
 
 
 }
-
-
 
 
 

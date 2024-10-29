@@ -97,6 +97,7 @@ QVector<StopPointDestination> XmlParser2_3::domTripToStopPointDestinationList2_3
     {
         qDebug()<<"no stop were loaded";
     }
+
     return stopPointList;
 }
 
@@ -174,8 +175,8 @@ Vdv301AllData XmlParser2_3::parseAllData2_3(QDomDocument input, QVector<Vdv301St
     QVector<Vdv301Trip> tripList;
     Vdv301AllData vdv301AllData;
 
-    QString vehicleRef=domAllData.firstChildElement("VehicleRef").firstChildElement("Value").text();
-    vdv301AllData.vehicleRef=vehicleRef;
+    vdv301AllData.timeStamp=parseTimestamp(domAllData.firstChildElement("TimeStamp").firstChildElement("Value").text());
+    vdv301AllData.vehicleRef=domAllData.firstChildElement("VehicleRef").firstChildElement("Value").text();
 
     for(int i=0;i<domTripList.count();i++)
     {
@@ -191,7 +192,7 @@ Vdv301AllData XmlParser2_3::parseAllData2_3(QDomDocument input, QVector<Vdv301St
 
     vdv301AllData.vehicleInformationGroup=domAllDataToVdv301VehicleInformationGroup(domAllData);
 
-
+    vdv301AllData.currentStopIndex=domAllData.firstChildElement("CurrentStopIndex").firstChildElement("Value").text().toInt();
     QDomNodeList displayContentsDom=input.elementsByTagName("GlobalDisplayContent");
     for(int j=0;j<displayContentsDom.count();j++)
     {
@@ -315,6 +316,8 @@ QVector<Vdv301StopPoint> XmlParser2_3::domStopListToVdv301TripStopList( QDomElem
     {
         qDebug()<<"no stop points have been parsed";
     }
+
+
     return tripStopPointList;
 
 }
@@ -390,9 +393,30 @@ Vdv301DisplayContent XmlParser2_3::domDisplayContentToVdv301DisplayContent(QDomE
     }
     temporaryDisplayContent.destination=temporaryDestination;
 
+    QDomNodeList viaPointDomList=selectedDisplayContentDom.elementsByTagName("ViaPoint");
+    for(int k=0;k<viaPointDomList.count();k++)
+    {
+        temporaryDisplayContent.viaPointList.append(domViaPointToVdv301ViaPoint(viaPointDomList.at(k).toElement()));
+    }
+
+
     return temporaryDisplayContent;
 }
 
+
+Vdv301ViaPoint XmlParser2_3::domViaPointToVdv301ViaPoint( QDomElement domViaPoint)
+{
+    Vdv301ViaPoint temporaryViaPoint;
+    temporaryViaPoint.viaPointRef=domViaPoint.firstChildElement("ViaPointRef").firstChildElement().text();
+
+    QDomNodeList viaPointNameListDom=domViaPoint.elementsByTagName("PlaceName");
+    for(int j=0;j<viaPointNameListDom.count();j++)
+    {
+        temporaryViaPoint.placeNameList<<qDomNodeToVdv301InternationalText(viaPointNameListDom.at(j));
+    }
+
+    return temporaryViaPoint;
+}
 
 
 /*

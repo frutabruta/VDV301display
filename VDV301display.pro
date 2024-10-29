@@ -87,6 +87,7 @@ SOURCES += \
     VDV301subscriber/xmlparsersubscriber.cpp \
     displaylabel.cpp \
     displaylabellcd.cpp \
+    displaylabellcd2_3.cpp \
     displaylabelled.cpp \
     inlineformatparser.cpp \
     VDV301subscriber/ibisipsubscriberonepublisher.cpp \
@@ -144,6 +145,7 @@ HEADERS += \
     VDV301subscriber/xmlparsersubscriber.h \
     displaylabel.h \
     displaylabellcd.h \
+    displaylabellcd2_3.h \
     displaylabelled.h \
     inlineformatparser.h \
     mainwindow.h \

@@ -140,7 +140,7 @@ QString DisplayLabel::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<Fare
 {
     qDebug()<<Q_FUNC_INFO;
     QString vysledek = "";
-    vysledek += "prosím pozor! Změna tarifního pásma: " + SvgVykreslovani::pasmaDoStringu(zPasem) + "->" + SvgVykreslovani::pasmaDoStringu(naPasma);
+    vysledek += "prosím pozor! Změna tarifního pásma: " + pasmaDoStringu(zPasem) + "->" + pasmaDoStringu(naPasma);
 
     return vysledek;
 }
@@ -294,10 +294,10 @@ QString DisplayLabel::nahradMetro(QString linka, QString submode, int vyska)
 
     if (submode == "metro")
     {
-        vysledek = "<html><head/><body><p><img src=\":/images/Underground" + linka + "\" height=\"" + QString::number(vyska) + "\" /></p></body></html>";
+        vysledek = "<img src=\":/images/Underground" + linka + "\" height=\"" + QString::number(vyska) + "\" />";
+        vysledek=zabalHtmlDoZnacek(vysledek);
     }
 
-    //<html><head/><body><p><img src=":/images/UndergroundA" height="50" /></p></body></html>
     qDebug() << "nahradMetro:" << vysledek;
     return vysledek;
 }
@@ -334,14 +334,92 @@ QString DisplayLabel::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZa
         }
     }
 
-    QString htmlZacatek = "<html><head/><body><p>";
-    QString htmlKonec = "</p></body></html>";
 
-    QString vysledek = htmlZacatek + nacestyString + htmlKonec;
+    QString vysledek = zabalHtmlDoZnacek( nacestyString );
     qDebug() << "vypis radku nacestnych zastavek text html" << vysledek;
     return vysledek;
 }
 
+
+QString DisplayLabel::vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> nacestneZastavky, int velikostPiktogramu)
+{
+    qDebug()<<Q_FUNC_INFO;
+    if (nacestneZastavky.count() == 0)
+    {
+        return "";
+    }
+
+    QString nacestyString = "";
+
+    //  nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
+    QString separator=" ";
+
+
+    QStringList viaPointStringList;
+    foreach(Vdv301ViaPoint viaPoint, nacestneZastavky)
+    {
+        Vdv301InternationalText viaPointNameJoin=vdv301InternationalTextJoinAll(viaPoint.placeNameList," x ") ;
+       // viaPointStringList<<viaPointNameJoin.text;
+        viaPointStringList<<nahradIconPiktogramem(viaPointNameJoin.text, velikostPiktogramu, slozkaPiktogramu);
+    }
+    nacestyString = viaPointStringList.join(" - ");
+
+    QString vysledek = zabalHtmlDoZnacek(nacestyString);
+    qDebug() << "vypis radku nacestnych zastavek text html" << vysledek;
+
+    return vysledek;
+}
+
+
+
+Vdv301InternationalText DisplayLabel::vdv301InternationalTextJoinAll(QVector<Vdv301InternationalText> internationalTextList, QString separator)
+{
+
+    QStringList languages;
+    Vdv301InternationalText output;
+    if(internationalTextList.isEmpty())
+    {
+        return output;
+    }
+
+
+    QStringList internationalTextForLanguageList;
+    foreach(Vdv301InternationalText text, internationalTextList)
+    {
+        internationalTextForLanguageList<<text.text;
+    }
+    output=Vdv301InternationalText(internationalTextForLanguageList.join(separator),internationalTextList.first().language );
+
+    return output;
+}
+
+QVector<Vdv301InternationalText> DisplayLabel::vdv301InternationalTextJoinByLanguage(QVector<Vdv301InternationalText> internationalTextList, QString separator)
+{
+    QStringList languages;
+    QVector<Vdv301InternationalText> output;
+
+    foreach(Vdv301InternationalText internationalText, internationalTextList)
+    {
+        if(!languages.contains(internationalText.language))
+        {
+            languages<<internationalText.language;
+        }
+    }
+
+    foreach (QString language, languages)
+    {
+        QStringList internationalTextForLanguageList;
+        foreach(Vdv301InternationalText text, internationalTextList)
+        {
+            if(text.language==language)
+            {
+                internationalTextForLanguageList<<text.text;
+            }
+        }
+        output<<Vdv301InternationalText(internationalTextForLanguageList.join(separator),language );
+    }
+    return output;
+}
 QString DisplayLabel::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu, int vyskaObrazku)
 {
     QString vystup = "";
@@ -553,4 +631,21 @@ void DisplayLabel::setVdv301version(const QString &newVdv301version)
 QString DisplayLabel::vdv301version() const
 {
     return mVdv301version;
+}
+
+
+QString DisplayLabel::pasmaDoStringu(QVector<FareZone> seznamPasem)
+{
+    qDebug()<<Q_FUNC_INFO;
+    QString vysledek;
+    if (seznamPasem.size()>0)
+    {
+        vysledek=seznamPasem.at(0).name;
+        for (int i=1;i<seznamPasem.size();i++)
+        {
+            vysledek+=","+seznamPasem.at(i).name;
+        }
+    }
+    qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
+    return vysledek;
 }

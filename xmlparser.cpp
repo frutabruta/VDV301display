@@ -102,6 +102,17 @@ QDateTime XmlParser::parseTimestamp(QDomDocument vstupniDokument)
 }
 
 
+QDateTime XmlParser::parseTimestamp(QString input)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+    QDateTime timestamp =  QDateTime::fromString(input ,Qt::ISODate);
+
+    return timestamp;
+
+}
+
+
 int XmlParser::followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText)
 {
     if (tempStopPointDestinationList.isEmpty())

@@ -2,6 +2,8 @@
 #define DISPLAYLABELLCD_H
 
 #include "displaylabel.h"
+//#include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
+
 
 class DisplayLabelLcd : public DisplayLabel
 {
@@ -49,9 +51,10 @@ public:
     void displayLabelDestination(QString nazev);
     void displayLabelConnectionList(QVector<Connection> connectionList);
     void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
-    void displayLabelDrawLineNumber2_4(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
+    void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
     void displayLabelEraseInformation();
     void displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka, QString subMode);
+    void displayLabelLineName(QString lineName);
     void displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, VehicleState vehicleState);
     void displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, int index);
     void displayLabelViaPoints(QVector<StopPointDestination> currentDestinationPointList, VehicleState vehicleState);
@@ -83,6 +86,7 @@ public:
     void slotMoveScrollingText(QVector<StopPointDestination> currentDestinationPointList, VehicleState vehicleState);
     void lcdResizeLabels(int frameHeight);
     void slotDisplayLcdLabelCyclePages();
+
 };
 
 #endif // DISPLAYLABELLCD_H

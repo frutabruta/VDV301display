@@ -14,6 +14,32 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20241030_0007
+    - major rewrite to display VDV301 2.3CZ1_0 data directly from Vdv301alldata structure without using VehicleState 
+        - DisplayLabel
+            - new functions 
+                - vykresliNacestneZastavkyText
+                - vdv301InternationalTextJoinByLanguage
+                - vdv301InternationalTextJoinAll
+                - pasmaDoStringu
+            - now independent on svgVykreslovani
+        - DisplayLabelLcd
+            - new function
+                - displayLabelLineName(QString lineName)
+            - changed attributes of displayLabelDrawLineNumber2_4
+        - DisplayLabelLcd2_3
+            - new class using Vdv301 structures
+        - MainWindow
+            - added specific Vdv301functions
+            - several functions rename
+        - XmlParser
+            - new function
+                - parseTimestamp(QString input)
+        - XmlParser2_3
+            - new function
+                - domViaPointToVdv301ViaPoint
+    - known issues
+        - viaPoint cycle on LED panels doesn't work
 - 20241028_1733
     - MainWindow
         - removed non-existent function from header file

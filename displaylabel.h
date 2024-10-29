@@ -11,7 +11,8 @@
 
 #include "VDV301subscriber/VDV301DataStructures/farezone.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h"
-#include "svgvykreslovani.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
+//#include "svgvykreslovani.h"
 #include "inlineformatparser.h"
 #include "barvylinek.h"
 
@@ -74,6 +75,10 @@ public:
 
     QString vdv301version() const;
 
+    QString vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> nacestneZastavky, int velikostPiktogramu);
+    QVector<Vdv301InternationalText> vdv301InternationalTextJoinByLanguage(QVector<Vdv301InternationalText> internationalTextList, QString separator);
+    Vdv301InternationalText vdv301InternationalTextJoinAll(QVector<Vdv301InternationalText> internationalTextList, QString separator);
+    QString pasmaDoStringu(QVector<FareZone> seznamPasem);
 signals:
 
 private:

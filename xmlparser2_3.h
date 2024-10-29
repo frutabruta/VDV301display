@@ -28,6 +28,7 @@ public:
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
 
+    Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
 };
 
 #endif // XMLPARSER2_3_H

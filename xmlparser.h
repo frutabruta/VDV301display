@@ -45,9 +45,7 @@ public:
     QVector<FareZone> stopPointElementToFareZoneList1_0(QDomElement stopPointElement);
 
 
-
-
-
+    QDateTime parseTimestamp(QString input);
 private:
     QString previousXmlData="";
 };
