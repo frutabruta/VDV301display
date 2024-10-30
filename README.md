@@ -14,6 +14,16 @@ Program can be launched with parameter to change settings location.
 --config FILEPATH parameter
 
 ## Changelog
+- 20241030_1755
+    - VDV301subscriber
+        - new version with 2.3CZ1.0 VDV301DataStructures
+    - XmlParser2_3
+        - XmlParser2_3::domStopPointToVdv301StopPoint
+            - Connections fix
+            - platform fix
+            - added XML element desctiptions
+        - new function XmlParser2_3::domElementToVdv301Connection
+        
 - 20241030_0007
     - major rewrite to display VDV301 2.3CZ1_0 data directly from Vdv301alldata structure without using VehicleState 
         - DisplayLabel

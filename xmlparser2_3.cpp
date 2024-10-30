@@ -74,7 +74,7 @@ QVector<StopPointDestination> XmlParser2_3::domTripToStopPointDestinationList2_3
             if(ref=="Lcd")
             {
                 stopPointDestination.destination.NameLcd=selectedDisplayContentNode.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-                stopPointDestination.viaPoints=domDisplayContentToViaPointList(selectedDisplayContentNode);
+                stopPointDestination.viaPoints=domDisplayContentToViaPointList(selectedDisplayContentNode.toElement());
                 //   docasnaZastavka.destination.StopName =polozka.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement().text();
 
             }
@@ -108,7 +108,7 @@ QVector<StopPointDestination> XmlParser2_3::domTripToStopPointDestinationList2_3
 
 
 
-QVector<StopPoint> XmlParser2_3::domDisplayContentToViaPointList(QDomNode displayContent)
+QVector<StopPoint> XmlParser2_3::domDisplayContentToViaPointList(QDomElement displayContent)
 {
     qDebug()<<Q_FUNC_INFO;
     QDomNodeList viaPointNodeList = displayContent.toElement().elementsByTagName("ViaPoint");
@@ -326,16 +326,26 @@ QVector<Vdv301StopPoint> XmlParser2_3::domStopListToVdv301TripStopList( QDomElem
 Vdv301StopPoint XmlParser2_3::domStopPointToVdv301StopPoint( QDomElement domStopPoint)
 {
     Vdv301StopPoint temporaryStopPoint;
-    temporaryStopPoint.stopIndex=domStopPoint.elementsByTagName("StopIndex").at(0).firstChildElement().text().toInt();
+    // StopIndex
+    temporaryStopPoint.stopIndex=domStopPoint.firstChildElement("StopIndex").firstChildElement("Value").text().toInt();
+    // StopRef
     temporaryStopPoint.stopRef=domStopPoint.firstChildElement("StopRef").firstChildElement().text();
+    // StopName
     QDomNodeList stopPointNameListDom=domStopPoint.elementsByTagName("StopName");
     for(int j=0;j<stopPointNameListDom.count();j++)
     {
         temporaryStopPoint.stopNameList<<qDomNodeToVdv301InternationalText(stopPointNameListDom.at(j));
     }
+    // StopAlternativeName
+    QDomNodeList stopPointAlternativeNameListDom=domStopPoint.elementsByTagName("StopAlternativeName");
+    for(int j=0;j<stopPointAlternativeNameListDom.count();j++)
+    {
+        temporaryStopPoint.stopAlternativeNameList<<qDomNodeToVdv301InternationalText(stopPointAlternativeNameListDom.at(j));
+    }
+    // Platform minOccurs="0"
+    temporaryStopPoint.platform=domStopPoint.firstChildElement("Platform").firstChildElement("Value").text();
 
-
-    //displayContentApproach
+    // DisplayContent
     QDomNodeList displayContentsDom=domStopPoint.elementsByTagName("DisplayContent");
     for(int j=0;j<displayContentsDom.count();j++)
     {
@@ -346,9 +356,30 @@ Vdv301StopPoint XmlParser2_3::domStopPointToVdv301StopPoint( QDomElement domStop
 
     }
 
-    temporaryStopPoint.departureScheduled=domStopPoint.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text();
-    temporaryStopPoint.departureExpected=domStopPoint.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text();
+    // StopAnnouncement minOccurs="0" not implemented
 
+    // ArrivalScheduled minOccurs="0"
+    temporaryStopPoint.arrivalScheduled=domStopPoint.firstChildElement("ArrivalScheduled").firstChildElement("Value").text();
+
+    // ArrivalExpected minOccurs="0"
+    temporaryStopPoint.arrivalExpected=domStopPoint.firstChildElement("ArrivalExpected").firstChildElement("Value").text();
+
+    // DepartureScheduled minOccurs="0"
+    temporaryStopPoint.departureScheduled=domStopPoint.firstChildElement("DepartureScheduled").firstChildElement("Value").text();
+
+    // DepartureExpected minOccurs="0"
+    temporaryStopPoint.departureExpected=domStopPoint.firstChildElement("DepartureExpected").firstChildElement("Value").text();
+
+    // RecordedArrivalTime minOccurs="0"
+    // DistanceToNextStop minOccurs="0"
+    // Connection minOccurs="0"
+    QDomNodeList connectionListDom=domStopPoint.elementsByTagName("Connection");
+    for(int j=0;j<connectionListDom.count();j++)
+    {
+        temporaryStopPoint.connectionList<<domElementToVdv301Connection(connectionListDom.at(j).toElement());
+    }
+
+    // FareZone minOccurs="0"
     QDomNodeList temporaryFareZoneList=domStopPoint.elementsByTagName("FareZone");
     for(int l=0;l<temporaryFareZoneList.count();l++)
     {
@@ -416,6 +447,40 @@ Vdv301ViaPoint XmlParser2_3::domViaPointToVdv301ViaPoint( QDomElement domViaPoin
     }
 
     return temporaryViaPoint;
+}
+
+
+Vdv301Connection XmlParser2_3::domElementToVdv301Connection(QDomElement connectionElement)
+{
+    //rozepsano
+    qDebug()<<Q_FUNC_INFO;
+
+
+    Vdv301Connection output;
+
+
+    QDomNodeList displayContentList=connectionElement.elementsByTagName("DisplayContent");
+
+    for (int j = 0; j < displayContentList.count(); ++j)
+    {
+        output.vdv301displayContentList<<domDisplayContentToVdv301DisplayContent(displayContentList.at(j).toElement());
+    }
+
+
+    output.expectedDepartureTime=parseTimestamp(connectionElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text());
+    output.scheduledDepartureTime=parseTimestamp(connectionElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text());
+
+
+    output.platform=connectionElement.firstChildElement("Platform").firstChildElement("Value").text();
+
+    QDomElement connectionMode=connectionElement.firstChildElement("ConnectionMode");
+    output.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
+    output.subMode=connectionMode.firstChildElement(output.mainMode).firstChild().nodeValue();
+
+
+
+
+    return output;
 }
 
 
