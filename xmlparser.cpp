@@ -296,7 +296,7 @@ void XmlParser::Test()
 
 
 
-int XmlParser::followingConnectionExists(QVector<StopPointDestination> followingStopPointDestinationList)
+int XmlParser::followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList)
 {
     if (followingStopPointDestinationList.isEmpty())
     {

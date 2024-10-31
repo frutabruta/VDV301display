@@ -69,6 +69,7 @@ public:
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
 
 
+    bool isVehicleOnFinalStop(Vdv301AllData allData);
 private:
 
     //QCommandLineParser qCommandLineParser;
@@ -258,6 +259,8 @@ private:
     void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList);
     void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList);
     void showReceivedDataLedVdv301(Vdv301AllData vdv301AllData);
+    void connectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
+    void connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
 private slots:
 
     void on_actiontestPolozka_triggered();

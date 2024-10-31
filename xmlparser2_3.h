@@ -31,6 +31,7 @@ public:
 
     Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
     Vdv301Connection domElementToVdv301Connection(QDomElement connectionElement);
+    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
 };
 
 #endif // XMLPARSER2_3_H

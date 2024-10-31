@@ -105,9 +105,6 @@ QVector<StopPointDestination> XmlParser2_3::domTripToStopPointDestinationList2_3
 
 
 
-
-
-
 QVector<StopPoint> XmlParser2_3::domDisplayContentToViaPointList(QDomElement displayContent)
 {
     qDebug()<<Q_FUNC_INFO;
@@ -483,6 +480,17 @@ Vdv301Connection XmlParser2_3::domElementToVdv301Connection(QDomElement connecti
     return output;
 }
 
+
+bool XmlParser2_3::followingTripExists(QVector<Vdv301Trip> vdv301tripList)
+{
+    if (vdv301tripList.count()>1)
+    {
+        return true;
+    }
+    return false;
+
+
+}
 
 /*
 Vdv301Destination XmlParser::qDomNodeListToVdv301Destination(QDomNodeList input)

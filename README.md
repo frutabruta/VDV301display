@@ -13,7 +13,26 @@ Program can be launched with parameter to change settings location.
 
 --config FILEPATH parameter
 
+- Planned features
+    - debug window with VDV301subscriber log
+
 ## Changelog
+- 20241031_1755
+    - MainWindow 2.3 show connections fix
+        - new functions
+            - connectionListToTable(QVector<Vdv301Connection> connectionList,QTableWidget* tableWidget)
+            - connectionToTable(Vdv301Connection connection, QTableWidget* tableWidget)
+            - isVehicleOnFinalStop(Vdv301AllData allData)
+        - showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
+            - reduction of old data structure usage
+    - DisplayLabelLcd2_3
+        - new function displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
+    - XmlParser
+        - followingConnectionExists renamed to followingTripExists
+    - XmlParser2_3
+        - new function followingTripExists(QVector<Vdv301Trip> vdv301tripList) 
+
+    
 - 20241030_1755
     - VDV301subscriber
         - new version with 2.3CZ1.0 VDV301DataStructures

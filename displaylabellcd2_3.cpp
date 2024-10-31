@@ -30,6 +30,70 @@ void DisplayLabelLcd2_3::displayLabelDestination(Vdv301Destination vdv301Destina
 
 
 
+void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+    foreach(QFrame* label,labelListConnectionDestination)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,labelListConnectionLine)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,labelListConnectionPlatform)
+    {
+        label->hide();
+    }
+
+    foreach(QFrame* label,labelListConnectionDeparture)
+    {
+        label->hide();
+    }
+
+    vymazPoleLabelu(labelListConnectionDestination);
+    vymazPoleLabelu(labelListConnectionLine);
+    vymazPoleLabelu(labelListConnectionPlatform);
+    vymazPoleLabelu(labelListConnectionDeparture);
+
+
+
+
+
+    for (int i=0;i<minimum(connectionList.count(), labelListConnectionDestination.count()) ; i++)
+    {
+        Vdv301Connection selectedConnection=connectionList.at(i);
+
+
+        if(!selectedConnection.vdv301displayContentList.isEmpty() )
+        {
+            Vdv301DisplayContent firstDisplayContent=selectedConnection.vdv301displayContentList.first();
+
+            labelListConnectionDestination.at(i)->setText(vdv301InternationalTextJoinAll(firstDisplayContent.destination.destinationNameList,"\n").text);
+            labelListConnectionDestination.at(i)->show();
+
+            displayLabelDrawLineNumber2_4(vdv301InternationalTextJoinAll(firstDisplayContent.lineInformation.lineNameList,"\n").text, labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
+
+            labelListConnectionPlatform.at(i)->setText(selectedConnection.platform );
+            labelListConnectionPlatform.at(i)->show();
+
+            labelListConnectionDeparture.at(i)->setText("<b>"+ QString::number( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime() ))+"</b> min.");
+            labelListConnectionDeparture.at(i)->show();
+        }
+        else
+        {
+            qDebug()<<"empty DisplayContent";
+        }
+
+
+    }
+}
+
+
+
 
 void DisplayLabelLcd2_3::displayLabelStopFareZone(Vdv301AllData allData)
 {

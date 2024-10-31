@@ -10,7 +10,7 @@
 #include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
 #include "VDV301subscriber/VDV301DataStructures/farezone.h"
 
-#include "VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h"
+
 
 
 class XmlParser
@@ -29,7 +29,7 @@ public:
     //int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<FareZone> &pasma);
      QVector<QString> propertyDomToStringList(QDomNode domNode, QString elementName);
     int followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText);
-     int followingConnectionExists(QVector<StopPointDestination> followingStopPointDestinationList);
+     int followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList);
     QVector<Connection> domElementToConnectionList(QDomElement connectionsElement);
      Line propertyStringListToLine(QVector<QString> propertyStringList, Line inputLine);
     

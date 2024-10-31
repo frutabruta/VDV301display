@@ -11,6 +11,7 @@ public:
     using DisplayLabelLcd::displayLabelStopFareZone; // to make previous declarations visible in inherited class
     using DisplayLabelLcd::displayLabelViaPoints;
     using DisplayLabelLcd::displayLabelDestination;
+    using DisplayLabelLcd::displayLabelConnectionList;
 
     void displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints);
     void displayLabelDestination(Vdv301Destination vdv301Destination);
@@ -18,6 +19,7 @@ public:
     void displayLabelStopFareZone(Vdv301AllData allData);
     void displayLabelStopPoint(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
 
+    void displayLabelConnectionList(QVector<Vdv301Connection> connectionList);
 };
 
 #endif // DISPLAYLABELLCD2_3_H

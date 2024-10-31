@@ -884,7 +884,7 @@ int MainWindow::showReceivedDataLcd()
 
 
 
-    if(!xmlParser.followingConnectionExists(nextDestinationPointList))
+    if(!xmlParser.followingTripExists(nextDestinationPointList))
     {
         qDebug()<<"navazny spoj neni";
         ui->frame_navaznySpoj->hide();
@@ -915,7 +915,7 @@ int MainWindow::showReceivedDataLcd()
 
     //konecna
 
-    if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser.followingConnectionExists(nextDestinationPointList)))
+    if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser.followingTripExists(nextDestinationPointList)))
     {
         displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
         displayLabelShowPageFinalStop();
@@ -1021,6 +1021,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
     eventLcdSetMainPage();
     eventEraseDisplayInformation();
+    displayLabelLcd.pageCycleList.clear();
 
     if(vdv301AllData.vehicleInformationGroup.vehicleStopRequested)
     {
@@ -1106,26 +1107,27 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
 
 
-        if(vdv301AllData.tripInformationList.count()>1)
+        if(xmlParser2_3.followingTripExists(vdv301AllData.tripInformationList))
         {
             QString navaznyCil="";
             QString navaznaLinka="";
+
+            //replace
             if(xmlParser.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
             {
                 eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
             }
+
         }
         else
         {
             qDebug()<<"navazny spoj neni";
             ui->frame_navaznySpoj->hide();
-            // ui->horizontalLayout_navaznySpoj;
-
         }
 
         //konecna
 
-        if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser.followingConnectionExists(nextDestinationPointList)))
+        if(isVehicleOnFinalStop(vdv301AllData)&&(!xmlParser2_3.followingTripExists(vdv301AllData.tripInformationList)))
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
             displayLabelShowPageFinalStop();
@@ -1148,11 +1150,14 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
         }
 
-        if(!currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList.isEmpty())
+
+        if(!currentStopPoint.connectionList.isEmpty())
         {
+
             displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
-            displayLabelLcd.displayLabelConnectionList(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList);
-            connectionListToTable(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList,ui->tableWidget_connections);
+            displayLabelLcd.displayLabelConnectionList(currentStopPoint.connectionList);
+
+            connectionListToTable(currentStopPoint.connectionList,ui->tableWidget_connections);
         }
 
 
@@ -1164,7 +1169,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
 
 
-    displayLabelLcd.pageCycleList.clear();
+  //  displayLabelLcd.pageCycleList.clear();
 
     //strankyKeStridani.push_back(ui->page_hlavni_2);
 
@@ -1445,6 +1450,19 @@ void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTable
         connectionToTable(connection,tableWidget);
     }
 }
+
+
+void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,QTableWidget* tableWidget)
+{
+
+    eraseTable(tableWidget);
+
+
+    foreach(Vdv301Connection connection, connectionList)
+    {
+        connectionToTable(connection,tableWidget);
+    }
+}
 void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWidget)
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -1473,6 +1491,51 @@ void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWid
     tableWidget->setItem(row, 3, cell);
 
     tableWidget->resizeColumnsToContents();
+
+
+}
+
+
+void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* tableWidget)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
+
+    /*
+    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+
+    if(connection.vdv301displayContentList.isEmpty())
+    {
+        return;
+    }
+    else
+    {
+        Vdv301DisplayContent firstDisplayContent=connection.vdv301displayContentList.first();
+        row = tableWidget->rowCount();
+        tableWidget->insertRow(row);
+
+        QString lineName=InlineFormatParser::parseTextLed(displayLabelLcd.vdv301InternationalTextJoinAll(firstDisplayContent.lineInformation.lineNameList,"\n").text);
+        cell = new QTableWidgetItem(lineName);
+
+        tableWidget->setItem(row, 0, cell);
+
+        QString destinationName=InlineFormatParser::parseTextLed(displayLabelLcd.vdv301InternationalTextJoinAll(firstDisplayContent.destination.destinationNameList,"\n").text);
+        cell = new QTableWidgetItem(destinationName);
+        tableWidget->setItem(row, 1, cell);
+
+        cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
+        tableWidget->setItem(row, 2, cell);
+
+        cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
+        tableWidget->setItem(row, 3, cell);
+
+        tableWidget->resizeColumnsToContents();
+
+    }
+
 
 
 }
@@ -1922,6 +1985,34 @@ int MainWindow::isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestina
     }
     return false;
 }
+
+bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
+{
+
+    qDebug() <<  Q_FUNC_INFO;
+
+    if(allData.tripInformationList.isEmpty())
+    {
+        return false;
+    }
+
+    if(allData.tripInformationList.first().stopPointList.isEmpty())
+    {
+        return false;
+    }
+
+    if(allData.currentStopIndex<1)
+    {
+        return false;
+    }
+
+    if((allData.currentStopIndex==(allData.tripInformationList.first().stopPointList.count()))&&(allData.tripInformationList.first().locationState==Vdv301Enumerations::LocationStateAtStop))
+    {
+        return true;
+    }
+    return false;
+}
+
 
 
 int MainWindow::isInRange(int index, int limit)
