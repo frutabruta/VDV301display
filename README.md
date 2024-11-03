@@ -17,6 +17,27 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241103_1315
+    - XmlParser2_3
+        - removed legacy funtions
+            - domTripToStopPointDestinationList2_3
+            - domDisplayContentToViaPointList
+            - receivedDocumentToStopPointList2_3
+    - MainWindow
+        - showReceivedDataLcdVdv301
+            - removed all VehicleState dependencies
+        - slotXmlToVehicleStateVariables
+            - removed all VehicleState dependencies from 2.3 and 2.3CZ1.0 sections
+        - isInRange
+            - added function name parameter to find issues more easily
+    - removed unused includes from CIS publisher
+    - VDV301subscriber
+        - VDV301DataStructures
+            - added Vdv301Connection related variables
+    - VDV301publisher
+        - XmlCommon
+            - removed unused includes
+            - QtZeroConf newer version
 - 20241031_1755
     - MainWindow 2.3 show connections fix
         - new functions

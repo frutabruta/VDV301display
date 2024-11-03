@@ -1045,7 +1045,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         popUpMessage("stop index is 0");
         return 0;
     }
-    else if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count()))
+    else if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
     {
         Vdv301StopPoint currentStopPoint=vdv301AllData.tripInformationList.first().stopPointList.at(vdv301AllData.currentStopIndex-1);
 
@@ -1578,10 +1578,9 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     else if(cisSubscriber.version()=="2.3")
     {
         xmlParser2_3.loadXmlFile(inputXmlString);
-        xmlParser2_3.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
         vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(!xmlParser2_3.receivedDocumentToStopPointList2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(vdv301AllData.tripInformationList.isEmpty())
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
@@ -1593,10 +1592,9 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     else if(cisSubscriber.version()=="2.3CZ1.0")
     {
         xmlParser2_3CZ1_0.loadXmlFile(inputXmlString);
-        xmlParser2_3CZ1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
         vdv301AllData=xmlParser2_3CZ1_0.parseAllData2_3(xmlParser2_3CZ1_0.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(!xmlParser2_3CZ1_0.receivedDocumentToStopPointList2_3(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(vdv301AllData.tripInformationList.isEmpty())
         {
             eventNotOnLine();
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
@@ -1650,7 +1648,7 @@ void MainWindow::showReceivedDataVehicleState()
         if( currentDestinationPointList.size()>0)
         {
 
-            if(isInRange(stopIndex,currentDestinationPointList.count()))
+            if(isInRange(stopIndex,currentDestinationPointList.count(),Q_FUNC_INFO))
             {
                 //normal state on route
 
@@ -1722,7 +1720,7 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
             if( vdv301AllData.tripInformationList.first().stopPointList.size()>0)
             {
 
-                if(isInRange(stopIndex,currentDestinationPointList.count()))
+                if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
                 {
                     //normal state on route
 
@@ -2015,7 +2013,7 @@ bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
 
 
 
-int MainWindow::isInRange(int index, int limit)
+int MainWindow::isInRange(int index, int limit, QString functionName)
 {
     if((index<limit)&&(index>=0))
     {
@@ -2025,7 +2023,7 @@ int MainWindow::isInRange(int index, int limit)
     else
     {
         QMessageBox msgBox;
-        QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit);
+        QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit)+" function:"+functionName;
         msgBox.setText(errorMessage);
         qDebug()<<" errorMessage";
         msgBox.exec();

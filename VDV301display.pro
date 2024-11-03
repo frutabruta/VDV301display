@@ -55,29 +55,29 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/stoppointdestination.cpp \
     VDV301subscriber/VDV301DataStructures/trip.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301connection.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301destination.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301farezonechange2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301internationaltext.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301line.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301stoppoint.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301stoppoint2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301trip.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.cpp \
     VDV301subscriber/VDV301DataStructures/vehiclerun.cpp \
     VDV301subscriber/VDV301DataStructures/vehiclestate.cpp \
     VDV301publisher/colordisplayrules.cpp \
-    VDV301publisher/customerinformationservice.cpp \
     VDV301publisher/devicemanagementservice.cpp\
     VDV301publisher/httpserverpublisher.cpp \
     VDV301publisher/httpservice.cpp \
     VDV301publisher/subscriber.cpp \
-    VDV301publisher/ticketvalidationservice.cpp \
     VDV301publisher/xmlcommon.cpp \
-    VDV301publisher/xmlcustomerinformationservice.cpp \
     VDV301publisher/xmldevicemanagementservice.cpp \
-    VDV301publisher/xmlticketvalidationservice.cpp \
     VDV301subscriber/cissubscriber.cpp \
     VDV301subscriber/devmgmtpublisherstruct.cpp \
     VDV301subscriber/devmgmtsubscriber.cpp \
@@ -112,29 +112,29 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/stoppointdestination.h \
     VDV301subscriber/VDV301DataStructures/trip.h \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.h \
+    VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301connection.h \
     VDV301subscriber/VDV301DataStructures/vdv301destination.h \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.h \
+    VDV301subscriber/VDV301DataStructures/vdv301farezonechange2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301internationaltext.h \
     VDV301subscriber/VDV301DataStructures/vdv301line.h \
     VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h \
+    VDV301subscriber/VDV301DataStructures/vdv301stoppoint2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301trip.h \
+    VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.h \
     VDV301subscriber/VDV301DataStructures/vehiclerun.h \
     VDV301subscriber/VDV301DataStructures/vehiclestate.h \
     VDV301publisher/colordisplayrules.h \
-    VDV301publisher/customerinformationservice.h \
     VDV301publisher/devicemanagementservice.h \
     VDV301publisher/httpserverpublisher.h \
     VDV301publisher/httpservice.h \
     VDV301publisher/subscriber.h \
-    VDV301publisher/ticketvalidationservice.h \
     VDV301publisher/xmlcommon.h \
-    VDV301publisher/xmlcustomerinformationservice.h \
     VDV301publisher/xmldevicemanagementservice.h \
-    VDV301publisher/xmlticketvalidationservice.h \
     VDV301subscriber/cissubscriber.h \
     VDV301subscriber/devmgmtpublisherstruct.h \
     VDV301subscriber/devmgmtsubscriber.h \

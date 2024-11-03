@@ -11,15 +11,10 @@ class XmlParser2_3 : public XmlParser
 public:
     XmlParser2_3();
 
-
     QMap<int,StopPointDestination> globalStopList2_3;
 
-    QVector<StopPointDestination> domTripToStopPointDestinationList2_3(QDomElement tripDomElement);
-    QVector<StopPoint> domDisplayContentToViaPointList(QDomElement displayContent);
     QVector<FareZone> domStopPointToFareZoneList(QDomElement stopPointElement);
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
-    int receivedDocumentToStopPointList2_3(QVector<StopPointDestination> &stopPointDestinationList, QVector<StopPointDestination> &stopPointDestinationListFollowing, int &docasnyIndexZastavky);
-
 
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
     QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);

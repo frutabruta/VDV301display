@@ -146,7 +146,7 @@ private:
 
     //funkce pomocne
     void popUpMessage(QString messageContent);
-    int isInRange(int index, int limit); //nepouzito
+    int isInRange(int index, int limit, QString functionName); //nepouzito
 
 
     //functions initiliaze
