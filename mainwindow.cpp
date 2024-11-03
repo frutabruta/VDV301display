@@ -841,7 +841,7 @@ void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
 void MainWindow::eventNotOnLine()
 {
     qDebug() <<  Q_FUNC_INFO;
-    eventDisplayAbnormalStateScreen("EMPTY STOP LIST");
+    eventDisplayAbnormalStateScreen("NOT ON LINE");
 }
 
 
@@ -1100,9 +1100,6 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             handleDisplayContentInner(displayContentListLcd);
         }
 
-
-        //redo with VDV301 structures!
-      //  displayLabelLcd.displayLabelStopFareZone(currentDestinationPointList,nextDestinationPointList,vehicleState);
         displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
 
 
@@ -1147,9 +1144,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
                 displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
                 // skryjZmenuPasma();
             }
-
         }
-
 
         if(!currentStopPoint.connectionList.isEmpty())
         {
@@ -1159,21 +1154,11 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
             connectionListToTable(currentStopPoint.connectionList,ui->tableWidget_connections);
         }
-
-
     }
     else
     {
         popUpMessage("stop index is out of range");
     }
-
-
-
-  //  displayLabelLcd.pageCycleList.clear();
-
-    //strankyKeStridani.push_back(ui->page_hlavni_2);
-
-
 
     //additional text message
 
@@ -1187,20 +1172,181 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
     }
 
+    labelLcdUpdateStopBackground();
 
-    //   hlavniVykresliNasledne();
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
+    lcdLabelCurrentPageIndex=0;
+
+    displayLabelLcd.timerLabelPageSwitch.start();
+
+    return 1;
+}
+
+
+int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
+{
+
+    qDebug() <<  Q_FUNC_INFO;
+
+    eventLcdSetMainPage();
+    eventEraseDisplayInformation();
+    displayLabelLcd.pageCycleList.clear();
+
+    if(vdv301AllData.vehicleInformationGroup.vehicleStopRequested)
+    {
+        eventStopRequestedActivated();
+    }
+    else
+    {
+        eventStopRequestedDectivated();
+    }
+
+    ui->label_currentStopIndex->setText(QString::number(vdv301AllData.currentStopIndex));
+
+
+    if(vdv301AllData.currentStopIndex<1 )
+    {
+        popUpMessage("stop index is smaller than 0");
+        return 0;
+    }
+    else if(vdv301AllData.currentStopIndex<1 )
+    {
+        popUpMessage("stop index is 0");
+        return 0;
+    }
+    else if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
+    {
+        Vdv301StopPoint2_3CZ1_0 currentStopPoint=vdv301AllData.tripInformationList.first().stopPointList.at(vdv301AllData.currentStopIndex-1);
+
+
+        //   displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
+
+        QVector<Vdv301DisplayContent> displayContentListUndefined;
+        QVector<Vdv301DisplayContent> displayContentListFront;
+        QVector<Vdv301DisplayContent> displayContentListSide;
+        QVector<Vdv301DisplayContent> displayContentListRear;
+        QVector<Vdv301DisplayContent> displayContentListInner;
+        QVector<Vdv301DisplayContent> displayContentListLcd;
+
+
+        foreach (Vdv301DisplayContent displayContent, currentStopPoint.displayContentList) {
+
+            switch(displayContent.displayContentType)
+            {
+
+            case DisplayContentUndefined:
+                displayContentListUndefined<<displayContent;
+                break;
+            case DisplayContentFront:
+                displayContentListFront<<displayContent;
+                break;
+            case DisplayContentSide:
+                displayContentListSide<<displayContent;
+                break;
+            case DisplayContentRear:
+                displayContentListRear<<displayContent;
+                break;
+            case DisplayContentInner:
+                displayContentListInner<<displayContent;
+                break;
+            case DisplayContentLcd:
+                displayContentListLcd<<displayContent;
+                break;
+            default:
+                qDebug()<<"selected DisplayType does not exist";
+                break;
+            }
+
+        }
+
+
+        if(displayContentListLcd.isEmpty())
+        {
+            handleDisplayContentInner(displayContentListInner);
+        }
+        else
+        {
+            handleDisplayContentInner(displayContentListLcd);
+        }
+
+        displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
+
+
+
+        if(xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList))
+        {
+            QString navaznyCil="";
+            QString navaznaLinka="";
+
+            //replace
+            if(xmlParser.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
+            {
+                eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
+            }
+
+        }
+        else
+        {
+            qDebug()<<"navazny spoj neni";
+            ui->frame_navaznySpoj->hide();
+        }
+
+        //konecna
+
+        if(isVehicleOnFinalStop(vdv301AllData)&&(!xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList)))
+        {
+            displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
+            displayLabelShowPageFinalStop();
+        }
+        else
+        {
+            if(isFareZone==true)
+            {
+                eventShowPageFareZoneChange(fareZoneChangeFrom,fareZoneChangeTo);
+            }
+            else
+            {
+                if(xmlParser.dataChanged==true)
+                {
+                    eventLcdReturnToStopList();
+                }
+                displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+                // skryjZmenuPasma();
+            }
+        }
+
+        if(!currentStopPoint.connectionList.isEmpty())
+        {
+
+            displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
+            displayLabelLcd.displayLabelConnectionList(currentStopPoint.connectionList);
+
+            connectionListToTable(currentStopPoint.connectionList,ui->tableWidget_connections);
+        }
+    }
+    else
+    {
+        popUpMessage("stop index is out of range");
+    }
+
+    //additional text message
+
+    if(additionalTextMessageText!="")
+    {
+        eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
+
+    }
+    else
+    {
+        displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
+    }
 
     labelLcdUpdateStopBackground();
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
 
-
     displayLabelLcd.timerLabelPageSwitch.start();
-
-
-
-
 
     return 1;
 }
@@ -1276,7 +1422,23 @@ void MainWindow::debugStopPointListToTable(QVector<StopPointDestination> seznamZ
     }
 }
 
+
+
 void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek,bool navazny)
+{
+
+    if(!navazny)
+    {
+        eraseTable(ui->tableWidget_debugStopList);
+    }
+
+    foreach(Vdv301StopPoint polozka, seznamZastavek)
+    {
+        debugStopPointToTable(polozka,navazny);
+    }
+}
+
+void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek,bool navazny)
 {
 
     if(!navazny)
@@ -1592,12 +1754,13 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     else if(cisSubscriber.version()=="2.3CZ1.0")
     {
         xmlParser2_3CZ1_0.loadXmlFile(inputXmlString);
-        vdv301AllData=xmlParser2_3CZ1_0.parseAllData2_3(xmlParser2_3CZ1_0.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(vdv301AllData.tripInformationList.isEmpty())
+        vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
+
+        if(vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
         {
             eventNotOnLine();
-            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData2_3CZ1_0.globalDisplayContentList);
             return;
         }
         /*
@@ -1625,10 +1788,16 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
 
 
-    if(cisSubscriber.version()=="2.3CZ1.0")
+    if(cisSubscriber.version()=="2.3")
     {
         showReceivedDataVdv301(vdv301AllData);
         showReceivedDataLedVdv301(vdv301AllData);
+
+    }
+    else if(cisSubscriber.version()=="2.3CZ1.0")
+    {
+        showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
+        //showReceivedDataLedVdv301(vdv301AllData);
 
     }
     else
@@ -1726,6 +1895,65 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
 
 
                     showReceivedDataLcdVdv301(vdv301AllData);
+                    //showReceivedDataLed();
+
+                    // svgRender();
+                }
+                else
+                {
+                    eventDisplayAbnormalStateScreen("STOP INDEX OUT OF RANGE");
+                }
+
+                //instanceHttpServeru.prijatoZeServeruTelo="";
+            }
+            else
+            {
+                eventDisplayAbnormalStateScreen("COULDNT PARSE STOPS");
+            }
+        }
+        else
+        {
+            eventDisplayAbnormalStateScreen("STOP INDEX <=0");
+        }
+    }
+}
+
+
+
+void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+    eraseTable(ui->tableWidget_debugStopList);
+    updateMainScreenDebugLabels();
+
+    int tripCount=vdv301AllData.tripInformationList.count();
+
+
+    if(tripCount==0)
+    {
+        // empty trip list
+        qDebug()<<"empty trip list";
+    }
+    else if(tripCount>0)
+    {
+        debugStopPointListToTable(vdv301AllData.tripInformationList.at(0).stopPointList,false);
+        if(tripCount>1)
+        {
+            debugStopPointListToTable(vdv301AllData.tripInformationList.at(1).stopPointList,true);
+        }
+
+        if(vdv301AllData.currentStopIndex>0)
+        {
+            if( vdv301AllData.tripInformationList.first().stopPointList.size()>0)
+            {
+
+                if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
+                {
+                    //normal state on route
+
+
+                    showReceivedDataLcdVdv301_2_3CZ1_0(vdv301AllData);
                     //showReceivedDataLed();
 
                     // svgRender();

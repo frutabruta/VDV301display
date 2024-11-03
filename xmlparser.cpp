@@ -28,9 +28,6 @@ void XmlParser::loadXmlFile(QString input)
     }
 
     receivedDataDomDocument.setContent(input);
-    // QString blabla = dokument.toString();
-
-
 }
 
 int XmlParser::createStopList1_0(QVector<StopPointDestination> &tempStopList,QVector<StopPointDestination> &tempStopListFollowing, int &tempStopIndex)

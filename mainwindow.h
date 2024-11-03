@@ -18,11 +18,9 @@
 
 #include "svgvykreslovani.h"
 #include "displaylabelled.h"
-//#include "displaylabellcd.h"
-#include "displaylabellcd2_3.h"
+#include "displaylabellcd2_3cz1_0.h"
 
 #include "barvylinek.h"
-
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -37,9 +35,6 @@
 #include <QTableWidget>
 #include <QTextStream>
 #include <QUrl>
-
-
-//#include <QWidget>
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
@@ -66,10 +61,7 @@ public:
     Ui::MainWindow *ui;
     ~MainWindow();
 
-    void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
 
-
-    bool isVehicleOnFinalStop(Vdv301AllData allData);
 private:
 
     //QCommandLineParser qCommandLineParser;
@@ -82,7 +74,7 @@ private:
     XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
 
 
-    DisplayLabelLcd2_3 displayLabelLcd;
+    DisplayLabelLcd2_3CZ1_0 displayLabelLcd;
 
     DisplayLabelLed displayLabelLed;
 
@@ -101,6 +93,7 @@ private:
     QVector<StopPointDestination> nextDestinationPointList;
 
     Vdv301AllData vdv301AllData;
+    Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
     VehicleState vehicleState;
 
     QString nazevCile="";
@@ -159,10 +152,6 @@ private:
     void displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList);
 
     //funkce led
-
-
-
-
 
 
     //funkce SVG
@@ -261,6 +250,14 @@ private:
     void showReceivedDataLedVdv301(Vdv301AllData vdv301AllData);
     void connectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
     void connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
+    void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
+
+    void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
+
+
+    bool isVehicleOnFinalStop(Vdv301AllData allData);
+    void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
+    int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
 private slots:
 
     void on_actiontestPolozka_triggered();

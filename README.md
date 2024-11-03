@@ -1,3 +1,4 @@
+
 # VDV301display
 
 Ctrl+F fullscreen mode
@@ -17,6 +18,28 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241103_1745
+    - new class DisplayLabelLcd2_3CZ1_0
+        - displayLabelStopList
+        - displayLabelStopFareZone
+        - displayLabelStopPoint
+    - MainWindow
+        - eventNotOnLine
+            - changed text from EMPTY STOP LIST to NOT ON LINE
+        - new function MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0
+        - new function MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek,bool navazny)
+        - new function showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
+        - slotXmlToVehicleStateVariables
+            - 2.3CZ1.0 fixes
+    - XmlParser2_3CZ1_0
+        - new functions
+            - QVector<Vdv301StopPoint2_3CZ1_0> domStopListToVdv301TripStopList(QDomElement domTrip);
+            - Vdv301Trip2_3CZ1_0 domTripInformationToVdv301Trip(QDomElement input);
+            - Vdv301StopPoint2_3CZ1_0 domStopPointToVdv301StopPoint(QDomElement domStopPoint);
+            - Vdv301AllData2_3CZ1_0 parseAllData2_3CZ1_0(QDomDocument input);
+            - bool followingTripExists(QVector<Vdv301Trip2_3CZ1_0> vdv301tripList);
+
+
 - 20241103_1315
     - XmlParser2_3
         - removed legacy funtions
