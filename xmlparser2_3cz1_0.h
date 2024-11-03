@@ -13,6 +13,7 @@ public:
     Vdv301StopPoint2_3CZ1_0 domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301AllData2_3CZ1_0 parseAllData2_3CZ1_0(QDomDocument input);
     bool followingTripExists(QVector<Vdv301Trip2_3CZ1_0> vdv301tripList);
+    Vdv301FareZoneChange2_3CZ1_0 domFareZoneChangeToVdv301FareZoneChange(QDomElement input);
 };
 
 #endif // XMLPARSER2_3CZ1_0_H

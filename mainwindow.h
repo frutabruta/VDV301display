@@ -129,7 +129,7 @@ private:
     void labelLcdUpdateStopBackground();
 
     QString createProgramVersionString();
-    int showReceivedDataLcd();
+    int showReceivedDataLcdVehicleState();
     void eraseTable(QTableWidget *tableWidget);
 
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
@@ -176,7 +176,7 @@ private:
     //void eraseDisplayedInformation();
 
     void eventShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
-    void eventShowPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
+    void eventShowPageFareZoneChange(QVector<FareZone> fromFareZones, QVector<FareZone> toFareZones);
     void displayLabelShowPageFinalStop();
     void eventNotOnLine();
 
@@ -239,7 +239,7 @@ private:
     void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
     void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
 
-    void showReceivedDataLed();
+    void showReceivedDataLedVehicleState();
     void showReceivedDataVehicleState();
     void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
 
@@ -247,7 +247,7 @@ private:
     void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList);
     void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList);
     void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList);
-    void showReceivedDataLedVdv301(Vdv301AllData vdv301AllData);
+    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList);
     void connectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
     void connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
     void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
@@ -258,6 +258,8 @@ private:
     bool isVehicleOnFinalStop(Vdv301AllData allData);
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
+    void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
+    void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones);
 private slots:
 
     void on_actiontestPolozka_triggered();

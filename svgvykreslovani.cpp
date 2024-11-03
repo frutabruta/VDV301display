@@ -313,6 +313,11 @@ void SvgVykreslovani::zobrazZmenuPasma(QVector<FareZone> zPasem, QVector<FareZon
     qDebug()<<Q_FUNC_INFO;
 }
 
+void SvgVykreslovani::zobrazZmenuPasma(QVector<Vdv301InternationalText> zPasem, QVector<Vdv301InternationalText> naPasma)
+{
+    qDebug()<<Q_FUNC_INFO;
+}
+
 
 void SvgVykreslovani::obarviPozadiPristi(QString barvaPisma,QString barvaPozadi)
 {

@@ -18,6 +18,16 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241103_2140
+    - 2.3CZ1.0 show farezone change
+    - 2.3CZ1.0 external displays fix
+    - MainWindow
+        - new functions
+            - eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones)
+            - displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
+    - XmlParser2_3CZ1_0
+        - new function
+            - domFareZoneChangeToVdv301FareZoneChange(QDomElement input);
 - 20241103_1745
     - new class DisplayLabelLcd2_3CZ1_0
         - displayLabelStopList

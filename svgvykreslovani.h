@@ -28,6 +28,7 @@ public:
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
     void vymazObrazovku();
     void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
+    void zobrazZmenuPasma(QVector<Vdv301InternationalText> zPasem, QVector<Vdv301InternationalText> naPasma);
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);

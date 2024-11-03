@@ -45,8 +45,37 @@ Vdv301Trip2_3CZ1_0 XmlParser2_3CZ1_0::domTripInformationToVdv301Trip( QDomElemen
     trip.tripRef=input.firstChildElement("TripRef").text();
     trip.stopPointList=domStopListToVdv301TripStopList(input);
     trip.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(input.firstChildElement("LocationState").text());
+
+    trip.fareZoneChange=domFareZoneChangeToVdv301FareZoneChange(input.firstChildElement("FareZoneChange"));
+
     return trip;
 }
+
+
+Vdv301FareZoneChange2_3CZ1_0 XmlParser2_3CZ1_0::domFareZoneChangeToVdv301FareZoneChange( QDomElement input)
+{
+    Vdv301FareZoneChange2_3CZ1_0 fareZoneChange;
+
+    QDomNodeList domFromFareZone=input.firstChildElement("FromFareZones").elementsByTagName("FareZone");
+    for(int i=0; i<domFromFareZone.count();i++)
+    {
+        fareZoneChange.fromFareZone<<qDomNodeToVdv301InternationalText(domFromFareZone.at(i));
+    }
+
+    QDomNodeList domToFareZone=input.firstChildElement("ToFareZones").elementsByTagName("FareZone");
+
+    for(int i=0; i<domToFareZone.count();i++)
+    {
+        fareZoneChange.toFareZone<<qDomNodeToVdv301InternationalText(domToFareZone.at(i));
+    }
+
+    if((!fareZoneChange.fromFareZone.isEmpty())||(!fareZoneChange.toFareZone.isEmpty()))
+    {
+        fareZoneChange.active=true;
+    }
+    return fareZoneChange;
+}
+
 
 
 
