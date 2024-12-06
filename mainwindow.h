@@ -62,6 +62,7 @@ public:
     ~MainWindow();
 
 
+
 private:
 
     //QCommandLineParser qCommandLineParser;
@@ -126,7 +127,8 @@ private:
     //common functions
     int setDestinationName ();
     void menuSwitchTabs(int tabNumber);
-    void labelLcdUpdateStopBackground();
+    void labelLcdUpdateStopBackgroundVehicleState();
+    void labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState);
 
     QString createProgramVersionString();
     int showReceivedDataLcdVehicleState();
@@ -255,7 +257,7 @@ private:
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
 
 
-    bool isVehicleOnFinalStop(Vdv301AllData allData);
+
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);

@@ -18,6 +18,20 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241206_1604
+    - 2.3CZ1.0
+        - fixed color change of next stop background during AtTheStop state
+    - XmlParser2_3CZ1_0::domTripInformationToVdv301Trip
+        - parse RunNumber
+    - XmlParser2_3CZ1_0::domStopPointToVdv301StopPoint
+        - parse GlobalStopRef
+    - Vdv301publisher
+        - new version (changes non-related to VDV301display)
+    - Vdv301subscriber
+        - VDV301DataStructures
+            - new function AllData isOnLastStop
+    
+
 - 20241103_2140
     - 2.3CZ1.0 show farezone change
     - 2.3CZ1.0 external displays fix

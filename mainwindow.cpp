@@ -56,7 +56,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     lcdLabelInitialize2_3();
 
 
-    labelLcdUpdateStopBackground();
+    labelLcdUpdateStopBackgroundVehicleState();
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
     eventStopRequestedDectivated();
@@ -119,6 +119,11 @@ void MainWindow::allConnects()
 
 
     if(cisSubscriber.version()=="2.3")
+    {
+        connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotTickLedPanels2_3);
+
+    }
+    else if(cisSubscriber.version()=="2.3CZ1.0")
     {
         connect(&displayLabelLed.timerLedSideCycleViaPoints, &QTimer::timeout, &displayLabelLed, &DisplayLabelLed::slotTickLedPanels2_3);
 
@@ -953,7 +958,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
 
     //   hlavniVykresliNasledne();
 
-    labelLcdUpdateStopBackground();
+    labelLcdUpdateStopBackgroundVehicleState();
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
@@ -1049,6 +1054,8 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
         //   displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
 
+        labelLcdUpdateStopBackground(vdv301AllData.tripInformationList.first().locationState);
+
         QVector<Vdv301DisplayContent> displayContentListUndefined;
         QVector<Vdv301DisplayContent> displayContentListFront;
         QVector<Vdv301DisplayContent> displayContentListSide;
@@ -1121,7 +1128,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
         //konecna
 
-        if(isVehicleOnFinalStop(vdv301AllData)&&(!xmlParser2_3.followingTripExists(vdv301AllData.tripInformationList)))
+        if(vdv301AllData.isVehicleOnFinalStop()&&(!xmlParser2_3.followingTripExists(vdv301AllData.tripInformationList)))
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
             displayLabelShowPageFinalStop();
@@ -1169,7 +1176,6 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
     }
 
-    labelLcdUpdateStopBackground();
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
@@ -1218,6 +1224,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
 
         //   displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
+
+        labelLcdUpdateStopBackground(currentVdv301trip.locationState);
 
         QVector<Vdv301DisplayContent> displayContentListUndefined;
         QVector<Vdv301DisplayContent> displayContentListFront;
@@ -1291,7 +1299,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         //konecna
 
-        if(isVehicleOnFinalStop(vdv301AllData)&&(!xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList)))
+        if(vdv301AllData.isVehicleOnFinalStop()&&(!xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList)))
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
             displayLabelShowPageFinalStop();
@@ -1339,7 +1347,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
     }
 
-    labelLcdUpdateStopBackground();
+
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
@@ -1484,9 +1492,12 @@ int MainWindow::setDestinationName()
     return 1;
 }
 
-void MainWindow::labelLcdUpdateStopBackground()
+void MainWindow::labelLcdUpdateStopBackgroundVehicleState()
 {
     qDebug() <<  Q_FUNC_INFO;
+
+
+
 
     if (vehicleState.locationState==Vdv301Enumerations::LocationStateAtStop )
     {
@@ -1496,6 +1507,24 @@ void MainWindow::labelLcdUpdateStopBackground()
     {
         labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
     }    
+}
+
+
+void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+
+
+        if (locationState==Vdv301Enumerations::LocationStateAtStop )
+        {
+            labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
+        }
+        else
+        {
+            labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
+        }
+
 }
 
 
@@ -1762,7 +1791,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData2_3CZ1_0.globalDisplayContentList);
             return;
         }
-/*
+        /*
         else
         {
             if(vdv301AllData.globalDisplayContentList.isEmpty())
@@ -1792,7 +1821,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     if(cisSubscriber.version()=="2.3")
     {
         showReceivedDataVdv301(vdv301AllData);
-      //  showReceivedDataLedVdv301(vdv301AllData);
+        //  showReceivedDataLedVdv301(vdv301AllData);
 
     }
     else if(cisSubscriber.version()=="2.3CZ1.0")
@@ -2232,6 +2261,7 @@ int MainWindow::isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestina
     return false;
 }
 
+/*
 bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
 {
 
@@ -2258,7 +2288,36 @@ bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
     }
     return false;
 }
+*/
+/*
+bool MainWindow::isVehicleOnFinalStop(Vdv301AllData2_3CZ1_0 allData)
+{
 
+    qDebug() <<  Q_FUNC_INFO;
+
+    if(allData.tripInformationList.isEmpty())
+    {
+        return false;
+    }
+
+    if(allData.tripInformationList.first().stopPointList.isEmpty())
+    {
+        return false;
+    }
+
+    if(allData.currentStopIndex<1)
+    {
+        return false;
+    }
+
+    if((allData.currentStopIndex==(allData.tripInformationList.first().stopPointList.count()))&&(allData.tripInformationList.first().locationState==Vdv301Enumerations::LocationStateAtStop))
+    {
+        return true;
+    }
+    return false;
+}
+
+*/
 
 
 int MainWindow::isInRange(int index, int limit, QString functionName)
@@ -2334,7 +2393,15 @@ void MainWindow::on_pushButton_menu_services_clicked()
 void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
-    labelLcdUpdateStopBackground();
+  /*  if((cisSubscriber.version()=="2.3")||cisSubscriber.version()=="2.3CZ1.0")
+    {
+        labelLcdUpdateStopBackground();
+    }
+    else
+    {
+        labelLcdUpdateStopBackgroundVehicleState();
+    }
+*/
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 }
 

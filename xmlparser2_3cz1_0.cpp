@@ -47,6 +47,7 @@ Vdv301Trip2_3CZ1_0 XmlParser2_3CZ1_0::domTripInformationToVdv301Trip( QDomElemen
     trip.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(input.firstChildElement("LocationState").text());
 
     trip.fareZoneChange=domFareZoneChangeToVdv301FareZoneChange(input.firstChildElement("FareZoneChange"));
+    trip.runNumber=input.firstChildElement("RunNumber").firstChildElement("Value").text();
 
     return trip;
 }
@@ -86,6 +87,8 @@ Vdv301StopPoint2_3CZ1_0 XmlParser2_3CZ1_0::domStopPointToVdv301StopPoint( QDomEl
     temporaryStopPoint.stopIndex=domStopPoint.firstChildElement("StopIndex").firstChildElement("Value").text().toInt();
     // StopRef
     temporaryStopPoint.stopRef=domStopPoint.firstChildElement("StopRef").firstChildElement().text();
+    // GlobalStopRef
+    temporaryStopPoint.globalStopRef=domStopPoint.firstChildElement("GlobalStopRef").firstChildElement().text();
     // StopName
     QDomNodeList stopPointNameListDom=domStopPoint.elementsByTagName("StopName");
     for(int j=0;j<stopPointNameListDom.count();j++)
