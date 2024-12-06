@@ -57,7 +57,7 @@ void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVe
     QVector<Vdv301DisplayContent> displayContentListFront;
     QVector<Vdv301DisplayContent> displayContentListSide;
     QVector<Vdv301DisplayContent> displayContentListRear;
-    QVector<Vdv301DisplayContent> displayContentListInner;
+    QVector<Vdv301DisplayContent> displayContentListInterior;
     QVector<Vdv301DisplayContent> displayContentListLcd; //might be replaced with Inner
 
     foreach(Vdv301DisplayContent selectedDisplayContent, displayContentListAll)
@@ -76,8 +76,8 @@ void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVe
         case DisplayContentLcd:
             displayContentListLcd.append(selectedDisplayContent);
             break;
-        case DisplayContentInner:
-            displayContentListInner.append(selectedDisplayContent);
+        case DisplayContentInterior:
+            displayContentListInterior.append(selectedDisplayContent);
             break;
         case DisplayContentUndefined:
             qDebug()<<"undefined displayContent";

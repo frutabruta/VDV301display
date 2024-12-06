@@ -18,6 +18,13 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241206_1802
+    - MainWindow
+        - displayContentInner changed to Interior
+    - Vdv301publisher
+        - displayContentInner changed to Interior
+    - Vdv301subscriber
+        - displayContentInner changed to Interior
 - 20241206_1604
     - 2.3CZ1.0
         - fixed color change of next stop background during AtTheStop state

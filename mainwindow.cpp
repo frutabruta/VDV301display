@@ -1060,7 +1060,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         QVector<Vdv301DisplayContent> displayContentListFront;
         QVector<Vdv301DisplayContent> displayContentListSide;
         QVector<Vdv301DisplayContent> displayContentListRear;
-        QVector<Vdv301DisplayContent> displayContentListInner;
+        QVector<Vdv301DisplayContent> displayContentListInterior;
         QVector<Vdv301DisplayContent> displayContentListLcd;
 
 
@@ -1081,8 +1081,8 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             case DisplayContentRear:
                 displayContentListRear<<displayContent;
                 break;
-            case DisplayContentInner:
-                displayContentListInner<<displayContent;
+            case DisplayContentInterior:
+                displayContentListInterior<<displayContent;
                 break;
             case DisplayContentLcd:
                 displayContentListLcd<<displayContent;
@@ -1097,7 +1097,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
         if(displayContentListLcd.isEmpty())
         {
-            handleDisplayContentInner(displayContentListInner);
+            handleDisplayContentInner(displayContentListInterior);
         }
         else
         {
@@ -1231,7 +1231,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         QVector<Vdv301DisplayContent> displayContentListFront;
         QVector<Vdv301DisplayContent> displayContentListSide;
         QVector<Vdv301DisplayContent> displayContentListRear;
-        QVector<Vdv301DisplayContent> displayContentListInner;
+        QVector<Vdv301DisplayContent> displayContentListInterior;
         QVector<Vdv301DisplayContent> displayContentListLcd;
 
 
@@ -1252,8 +1252,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             case DisplayContentRear:
                 displayContentListRear<<displayContent;
                 break;
-            case DisplayContentInner:
-                displayContentListInner<<displayContent;
+            case DisplayContentInterior:
+                displayContentListInterior<<displayContent;
                 break;
             case DisplayContentLcd:
                 displayContentListLcd<<displayContent;
@@ -1268,7 +1268,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         if(displayContentListLcd.isEmpty())
         {
-            handleDisplayContentInner(displayContentListInner);
+            handleDisplayContentInner(displayContentListInterior);
         }
         else
         {
