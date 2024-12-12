@@ -245,7 +245,7 @@ private:
     void showReceivedDataVehicleState();
     void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
 
-    void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList);
+    void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following);
     void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList);
     void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList);
     void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList);
@@ -262,6 +262,7 @@ private:
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
     void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones);
+
 private slots:
 
     void on_actiontestPolozka_triggered();

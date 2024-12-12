@@ -302,6 +302,8 @@ void MainWindow::lcdLabelInitialize2_3()
     displayLabelLcd.labelViaPointsScrolling=ui->label_nacestne;
     displayLabelLcd.labelClock=ui->label_hodiny;
     displayLabelLcd.frameFollowingTrip=ui->frame_navaznySpoj;
+    displayLabelLcd.labelDestinationFollowing= ui->label_followingDestination;
+    displayLabelLcd.labelLineFollowing= ui->label_followingLine;
 
 }
 
@@ -1049,59 +1051,25 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
     }
     else if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
     {
-        Vdv301StopPoint currentStopPoint=vdv301AllData.tripInformationList.first().stopPointList.at(vdv301AllData.currentStopIndex-1);
+        Vdv301Trip currentVdv301trip=vdv301AllData.tripInformationList.first();
+        Vdv301StopPoint currentVdvStopPoint=currentVdv301trip.stopPointList.at(vdv301AllData.currentStopIndex-1);
 
 
         //   displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
 
-        labelLcdUpdateStopBackground(vdv301AllData.tripInformationList.first().locationState);
+        labelLcdUpdateStopBackground(currentVdv301trip.locationState);
 
-        QVector<Vdv301DisplayContent> displayContentListUndefined;
-        QVector<Vdv301DisplayContent> displayContentListFront;
-        QVector<Vdv301DisplayContent> displayContentListSide;
-        QVector<Vdv301DisplayContent> displayContentListRear;
-        QVector<Vdv301DisplayContent> displayContentListInterior;
-        QVector<Vdv301DisplayContent> displayContentListLcd;
-
-
-        foreach (Vdv301DisplayContent displayContent, currentStopPoint.displayContentList) {
-
-            switch(displayContent.displayContentType)
-            {
-
-            case DisplayContentUndefined:
-                displayContentListUndefined<<displayContent;
-                break;
-            case DisplayContentFront:
-                displayContentListFront<<displayContent;
-                break;
-            case DisplayContentSide:
-                displayContentListSide<<displayContent;
-                break;
-            case DisplayContentRear:
-                displayContentListRear<<displayContent;
-                break;
-            case DisplayContentInterior:
-                displayContentListInterior<<displayContent;
-                break;
-            case DisplayContentLcd:
-                displayContentListLcd<<displayContent;
-                break;
-            default:
-                qDebug()<<"selected DisplayType does not exist";
-                break;
-            }
-
-        }
+        QVector<Vdv301DisplayContent> displayContentListInterior=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdvStopPoint.displayContentList,DisplayContentInterior);
+        QVector<Vdv301DisplayContent> displayContentListLcd=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdvStopPoint.displayContentList,DisplayContentLcd);
 
 
         if(displayContentListLcd.isEmpty())
         {
-            handleDisplayContentInner(displayContentListInterior);
+            handleDisplayContentInner(displayContentListInterior,false);
         }
         else
         {
-            handleDisplayContentInner(displayContentListLcd);
+            handleDisplayContentInner(displayContentListLcd,false);
         }
 
         displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
@@ -1110,13 +1078,33 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
         if(xmlParser2_3.followingTripExists(vdv301AllData.tripInformationList))
         {
-            QString navaznyCil="";
-            QString navaznaLinka="";
-
-            //replace
-            if(xmlParser.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
+            Vdv301Trip nextVdv301trip=vdv301AllData.tripInformationList.at(1);
+            if(!nextVdv301trip.stopPointList.isEmpty())
             {
-                eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
+                Vdv301StopPoint firstVdv301StopPointOfNextTrip=nextVdv301trip.stopPointList.first();
+
+
+                QVector<Vdv301DisplayContent> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
+                QVector<Vdv301DisplayContent> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
+
+                /*
+                  if(displayContentListLcdNext.isEmpty())
+                  {
+                      handleDisplayContentInner(displayContentListInteriorNext,false);
+                  }
+                  else
+                  {
+                      handleDisplayContentInner(displayContentListLcdNext,false);
+                  }*/
+
+                if(displayContentListLcdNext.isEmpty())
+                {
+                    handleDisplayContentInner(displayContentListInteriorNext,true);
+                }
+                else
+                {
+                    handleDisplayContentInner(displayContentListLcdNext,true);
+                }
             }
 
         }
@@ -1150,13 +1138,13 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             }
         }
 
-        if(!currentStopPoint.connectionList.isEmpty())
+        if(!currentVdvStopPoint.connectionList.isEmpty())
         {
 
             displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
-            displayLabelLcd.displayLabelConnectionList(currentStopPoint.connectionList);
+            displayLabelLcd.displayLabelConnectionList(currentVdvStopPoint.connectionList);
 
-            connectionListToTable(currentStopPoint.connectionList,ui->tableWidget_connections);
+            connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
         }
     }
     else
@@ -1184,7 +1172,6 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
     return 1;
 }
-
 
 int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
 {
@@ -1227,52 +1214,20 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         labelLcdUpdateStopBackground(currentVdv301trip.locationState);
 
-        QVector<Vdv301DisplayContent> displayContentListUndefined;
-        QVector<Vdv301DisplayContent> displayContentListFront;
-        QVector<Vdv301DisplayContent> displayContentListSide;
-        QVector<Vdv301DisplayContent> displayContentListRear;
-        QVector<Vdv301DisplayContent> displayContentListInterior;
-        QVector<Vdv301DisplayContent> displayContentListLcd;
 
 
-        foreach (Vdv301DisplayContent displayContent, currentVdv301StopPoint.displayContentList) {
 
-            switch(displayContent.displayContentType)
-            {
-
-            case DisplayContentUndefined:
-                displayContentListUndefined<<displayContent;
-                break;
-            case DisplayContentFront:
-                displayContentListFront<<displayContent;
-                break;
-            case DisplayContentSide:
-                displayContentListSide<<displayContent;
-                break;
-            case DisplayContentRear:
-                displayContentListRear<<displayContent;
-                break;
-            case DisplayContentInterior:
-                displayContentListInterior<<displayContent;
-                break;
-            case DisplayContentLcd:
-                displayContentListLcd<<displayContent;
-                break;
-            default:
-                qDebug()<<"selected DisplayType does not exist";
-                break;
-            }
-
-        }
+        QVector<Vdv301DisplayContent> displayContentListInterior=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentInterior);
+        QVector<Vdv301DisplayContent> displayContentListLcd=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentLcd);
 
 
         if(displayContentListLcd.isEmpty())
         {
-            handleDisplayContentInner(displayContentListInterior);
+            handleDisplayContentInner(displayContentListInterior,false);
         }
         else
         {
-            handleDisplayContentInner(displayContentListLcd);
+            handleDisplayContentInner(displayContentListLcd,false);
         }
 
         displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
@@ -1281,14 +1236,39 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         if(xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList))
         {
-            QString navaznyCil="";
-            QString navaznaLinka="";
-
-            //replace
-            if(xmlParser.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
+            Vdv301Trip2_3CZ1_0 nextVdv301trip=vdv301AllData.tripInformationList.at(1);
+            if(!nextVdv301trip.stopPointList.isEmpty())
             {
-                eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
+                  Vdv301StopPoint2_3CZ1_0 firstVdv301StopPointOfNextTrip=nextVdv301trip.stopPointList.first();
+                //replace
+
+                  QVector<Vdv301DisplayContent> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
+                  QVector<Vdv301DisplayContent> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
+
+/*
+                  if(displayContentListLcdNext.isEmpty())
+                  {
+                      handleDisplayContentInner(displayContentListInteriorNext,false);
+                  }
+                  else
+                  {
+                      handleDisplayContentInner(displayContentListLcdNext,false);
+                  }*/
+
+                if(displayContentListLcdNext.isEmpty())
+                {
+                    handleDisplayContentInner(displayContentListInteriorNext,true);
+                }
+                else
+                {
+                    handleDisplayContentInner(displayContentListLcdNext,true);
+                }
             }
+
+
+
+
+
 
         }
         else
@@ -1296,6 +1276,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             qDebug()<<"navazny spoj neni";
             ui->frame_navaznySpoj->hide();
         }
+
+
 
         //konecna
 
@@ -1357,7 +1339,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     return 1;
 }
 
-void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList)
+void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following)
 {
     if(displayContentList.isEmpty())
     {
@@ -1370,24 +1352,55 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
 
 
     Vdv301Destination destination=firstDisplayContent.destination;
-    if(destination.destinationNameList.isEmpty())
+    Vdv301Line line=firstDisplayContent.lineInformation;
+
+
+    if(following)
     {
-        displayLabelLcd.displayLabelDestination("");
+        if(destination.destinationNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelDestinationFollowing("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelDestinationFollowing(destination);
+        }
+
+        if(line.lineNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelLineNameFollowing("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelLineNameFollowing(line);
+
+        }
     }
     else
     {
-        displayLabelLcd.displayLabelDestination(destination);
+        if(destination.destinationNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelDestination("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelDestination(destination);
+        }
+
+        if(line.lineNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelLineName("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelLineName(line);
+        }
     }
 
-    Vdv301Line line=firstDisplayContent.lineInformation;
-    if(line.lineNameList.isEmpty())
-    {
-        displayLabelLcd.displayLabelLineName("");
-    }
-    else
-    {
-        displayLabelLcd.displayLabelLineName(line.lineNameList.first().text);
-    }
+
+
+    //displayLabelLcd.displayLabelLineName(line);
+
 
     displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
 
@@ -2515,5 +2528,4 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
     return vystup;
 
 }
-
 

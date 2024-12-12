@@ -121,6 +121,24 @@ void DisplayLabelLcd::displayLabelDestination(QString nazev)
 */
 }
 
+void DisplayLabelLcd::displayLabelDestinationFollowing(QString nazev)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+
+    labelSetTextSafe(labelDestinationFollowing,nazev);
+    /* if(cisSubscriber.verze()=="2.3")
+    {
+       labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
+
+    }
+    else
+    {
+
+    }
+*/
+}
+
 
 
 void DisplayLabelLcd::displayLabelConnectionList(QVector<Connection> connectionList)
@@ -326,6 +344,14 @@ void DisplayLabelLcd::displayLabelLineName(QString lineName)
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelDrawLineNumber2_4(lineName,labelLine, qFloor(ratioPixelPoint*200),false);
+
+
+}
+
+void DisplayLabelLcd::displayLabelLineNameFollowing(QString lineName)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelDrawLineNumber2_4(lineName,labelLineFollowing, qFloor(ratioPixelPoint*200),false);
 
 
 }

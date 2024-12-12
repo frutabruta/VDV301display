@@ -29,6 +29,81 @@ void DisplayLabelLcd2_3::displayLabelDestination(Vdv301Destination vdv301Destina
 }
 
 
+void DisplayLabelLcd2_3::displayLabelLineName(Vdv301Line vdv301Line)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+
+    if(vdv301Line.lineNameList.isEmpty())
+    {
+        displayLabelLineName("");
+    }
+    else
+    {
+        displayLabelLineName(vdv301Line.lineNameList.first().text);
+    }
+}
+
+
+void DisplayLabelLcd2_3::displayLabelLineNameFollowing(Vdv301Line vdv301Line)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+
+    if(vdv301Line.lineNameList.isEmpty())
+    {
+        displayLabelLineNameFollowing("");
+    }
+    else
+    {
+        displayLabelLineNameFollowing(vdv301Line.lineNameList.first().text);
+    }
+}
+
+
+
+
+
+void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv301Destination)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+    frameFollowingTrip->show();
+
+    int iconSize=60;
+    if(labelDestination!=NULL)
+    {
+        iconSize=labelDestination->font().pixelSize();
+    }
+
+    QString text=nahradIconPiktogramem(vdv301InternationalTextJoinAll(vdv301Destination.destinationNameList,"\n").text, iconSize, slozkaPiktogramu);
+    labelSetTextSafe(labelDestinationFollowing,text);
+
+
+
+
+
+    /*
+    ui->label_followingLine->setText(followingTripLine);
+    ui->label_followingDestination->setText(followingTripDestination);
+    ui->frame_navaznySpoj->show();
+    */
+
+
+
+    /* if(cisSubscriber.verze()=="2.3")
+    {
+       labelVykreslovani.naplnNazevCileLabel(labelVykreslovani.inlineFormatParser.vyparsujText(nazev, ui->Lcil->font().pixelSize(),labelVykreslovani.slozkaPiktogramu), ui->Lcil);
+
+    }
+    else
+    {
+
+    }
+*/
+}
+
+
 
 void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
 {
@@ -210,7 +285,6 @@ void DisplayLabelLcd2_3::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints
 
 void DisplayLabelLcd2_3::displayLabelStopPoint(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop)
 {
-   // PasmoveDvojiceLcd pasmoveDvojiceLcd;
 
     QStringList fareZoneList= selectedStopPointDestination.fareZoneList;
 
@@ -275,4 +349,22 @@ void DisplayLabelLcd2_3::displayLabelStopPoint(Vdv301StopPoint selectedStopPoint
         labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
     }
 
+}
+
+
+
+QVector<Vdv301DisplayContent> DisplayLabelLcd2_3::filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent> displayContentList, DisplayContentClass displayContentType)
+{
+    QVector<Vdv301DisplayContent> output;
+    foreach (Vdv301DisplayContent displayContent, displayContentList)
+    {
+
+        if(displayContent.displayContentType==displayContentType)
+        {
+            output<<displayContent;
+        }
+
+    }
+
+    return output;
 }

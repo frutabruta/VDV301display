@@ -26,7 +26,9 @@ public:
 
     //display labels
     QLabel *labelDestination=NULL;
+    QLabel *labelDestinationFollowing=NULL;
     QLabel *labelLine=NULL;
+    QLabel *labelLineFollowing=NULL;
     QLabel *labelViaPointsScrolling=NULL;
     QLabel *labelClock=NULL;
 
@@ -49,6 +51,7 @@ public:
     void initializeFonts();
     void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
     void displayLabelDestination(QString nazev);
+    void displayLabelDestinationFollowing(QString nazev);
     void displayLabelConnectionList(QVector<Connection> connectionList);
     void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
     void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
@@ -87,6 +90,8 @@ public:
     void lcdResizeLabels(int frameHeight);
     void slotDisplayLcdLabelCyclePages();
 
+
+    void displayLabelLineNameFollowing(QString lineName);
 };
 
 #endif // DISPLAYLABELLCD_H

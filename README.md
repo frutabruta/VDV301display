@@ -18,6 +18,23 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20241212_2017
+    - following Trip destination display fix (2.3 and 2.3CZ1.0)
+    - new function DisplayLabelLcd::displayLabelDestinationFollowing
+    - new function DisplayLabelLcd::displayLabelLineNameFollowing
+    - DisplayLabelLcd
+        - new variable QLabel *labelDestinationFollowing
+        - new variable QLabel *labelLineFollowing
+    
+    - new function DisplayLabelLcd2_3::displayLabelLineName(Vdv301Line vdv301Line)
+    - new function DisplayLabelLcd2_3::displayLabelLineNameFollowing(Vdv301Line vdv301Line)
+    - new function DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv301Destination)
+    - new function DisplayLabelLcd2_3::filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent> displayContentList, DisplayContentClass displayContentType)
+    - MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
+        - fixed following trip display (line+destination)
+    - MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
+        - fixed following trip display (line+destination)
+    
 - 20241206_1802
     - MainWindow
         - displayContentInner changed to Interior
