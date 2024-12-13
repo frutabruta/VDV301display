@@ -1146,6 +1146,10 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
             connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
         }
+        else
+        {
+            eraseTable(ui->tableWidget_connections);
+        }
     }
     else
     {
@@ -1310,6 +1314,10 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             displayLabelLcd.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
 
             connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
+        }
+        else
+        {
+            eraseTable(ui->tableWidget_connections);
         }
     }
     else
