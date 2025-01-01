@@ -5,11 +5,6 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QtXml>
-#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
-#include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
-#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
-#include "VDV301subscriber/VDV301DataStructures/farezone.h"
-
 
 
 
@@ -23,26 +18,13 @@ public:
     
     void loadXmlFile(QString input);
     
-    int domDocumentVehicleGroupToVehicleState(VehicleState &vehicleState, QDomDocument xmlDocument);
-   //  int nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa);
-    //int nactiAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QString &type, QString &headline, QString &text);
-    //int vyparsujPasmaZeSeznamu(QDomElement vstup, QVector<FareZone> &pasma);
-     QVector<QString> propertyDomToStringList(QDomNode domNode, QString elementName);
-    int followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText);
-     int followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList);
-    QVector<Connection> domElementToConnectionList(QDomElement connectionsElement);
-     Line propertyStringListToLine(QVector<QString> propertyStringList, Line inputLine);
-    
+    QVector<QString> propertyDomToStringList(QDomNode domNode, QString elementName);
+
     QDateTime parseTimestamp(QDomDocument vstupniDokument);
-     
-     bool dataChanged=false;
-   // static int minutDoOdjezdu(QDateTime aktCas, QDateTime casOdjezdu);  //unused
+
+    bool dataChanged=false;
 
     //rozdelano
-    int createStopList1_0(QVector<StopPointDestination> &tempStopList, QVector<StopPointDestination> &tempStopListFollowing, int &tempStopIndex);
-    int tripToStoplist1_0(QVector<StopPointDestination> &tempStopList, QDomElement domInput);
-    QVector<StopPoint> domStopPointToViaPointsVector(QDomElement stopPointElement);
-    QVector<FareZone> stopPointElementToFareZoneList1_0(QDomElement stopPointElement);
 
 
     QDateTime parseTimestamp(QString input);

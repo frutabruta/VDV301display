@@ -98,6 +98,7 @@ SOURCES += \
     svgvykreslovani.cpp \
     xmlparser.cpp \
     barvylinek.cpp \
+    xmlparser1_0.cpp \
     xmlparser2_2cz1_0.cpp \
     xmlparser2_3.cpp \
     xmlparser2_3cz1_0.cpp
@@ -155,6 +156,7 @@ HEADERS += \
     svgvykreslovani.h \
     xmlparser.h \
     barvylinek.h \
+    xmlparser1_0.h \
     xmlparser2_2cz1_0.h \
     xmlparser2_3.h \
     xmlparser2_3cz1_0.h

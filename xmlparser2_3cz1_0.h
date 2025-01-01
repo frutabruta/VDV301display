@@ -8,12 +8,15 @@ class XmlParser2_3CZ1_0 : public XmlParser2_3
 {
 public:
     XmlParser2_3CZ1_0();
-    QVector<Vdv301StopPoint2_3CZ1_0> domStopListToVdv301TripStopList(QDomElement domTrip);
-    Vdv301Trip2_3CZ1_0 domTripInformationToVdv301Trip(QDomElement input);
+
     Vdv301StopPoint2_3CZ1_0 domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301AllData2_3CZ1_0 parseAllData2_3CZ1_0(QDomDocument input);
     bool followingTripExists(QVector<Vdv301Trip2_3CZ1_0> vdv301tripList);
-    Vdv301FareZoneChange2_3CZ1_0 domFareZoneChangeToVdv301FareZoneChange(QDomElement input);
+ private:
+    QVector<Vdv301StopPoint2_3CZ1_0> domStopListToVdv301TripStopList(QDomElement domTrip);
+    Vdv301Trip2_3CZ1_0 domTripInformationToVdv301Trip(QDomElement input);
+    Vdv301FareZoneChange2_3CZ1_0 domFareZoneChangeToVdv301FareZoneChange(QDomElement input); //deprecated
+
 };
 
 #endif // XMLPARSER2_3CZ1_0_H

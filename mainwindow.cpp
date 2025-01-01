@@ -898,7 +898,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
 
 
 
-    if(!xmlParser.followingTripExists(nextDestinationPointList))
+    if(!xmlParser1_0.followingTripExists(nextDestinationPointList))
     {
         qDebug()<<"navazny spoj neni";
         ui->frame_navaznySpoj->hide();
@@ -909,7 +909,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
     {
         QString navaznyCil="";
         QString navaznaLinka="";
-        if(xmlParser.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
+        if(xmlParser1_0.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
         {
             eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
         }
@@ -929,7 +929,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
 
     //konecna
 
-    if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser.followingTripExists(nextDestinationPointList)))
+    if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser1_0.followingTripExists(nextDestinationPointList)))
     {
         displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
         displayLabelShowPageFinalStop();
@@ -942,7 +942,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
         }
         else
         {
-            if(xmlParser.dataChanged==true)
+            if(xmlParser1_0.dataChanged==true)
             {
                 eventLcdReturnToStopList();
             }
@@ -1129,7 +1129,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             }
             else
             {
-                if(xmlParser.dataChanged==true)
+                if(xmlParser1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
@@ -1298,7 +1298,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             }
             else
             {
-                if(xmlParser.dataChanged==true)
+                if(xmlParser1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
@@ -1758,15 +1758,15 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
     receivedDataVariablesReset();
 
-    xmlParser.loadXmlFile(inputXmlString);
-    qDebug()<<"timestamp:"<<xmlParser.parseTimestamp(xmlParser.receivedDataDomDocument).toString(Qt::ISODate);
+    xmlParser1_0.loadXmlFile(inputXmlString);
+    qDebug()<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
 
 
     if(cisSubscriber.version()=="1.0")
     {
-        xmlParser.loadXmlFile(inputXmlString);
-        xmlParser.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
-        if(!xmlParser.createStopList1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        xmlParser1_0.loadXmlFile(inputXmlString);
+        xmlParser1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser1_0.receivedDataDomDocument);
+        if(!xmlParser1_0.createStopList1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             return;
@@ -1775,15 +1775,15 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     else if(cisSubscriber.version()=="2.2CZ1.0")
     {
         xmlParser2_2CZ1_0.loadXmlFile(inputXmlString);
-        xmlParser2_2CZ1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser.receivedDataDomDocument);
+        xmlParser2_2CZ1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser1_0.receivedDataDomDocument);
 
-        if(!xmlParser2_2CZ1_0.VytvorSeznamZastavek2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
+        if(!xmlParser2_2CZ1_0.createStopList2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
         {
             eventNotOnLine();
             return;
         }
-        isFareZone= xmlParser2_2CZ1_0.nactiFareZoneChange(xmlParser2_2CZ1_0.receivedDataDomDocument,fareZoneChangeFrom,fareZoneChangeTo);
-        xmlParser2_2CZ1_0.nactiAdditionalTextMessage2_2CZ1_0(xmlParser2_2CZ1_0.receivedDataDomDocument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
+        isFareZone= xmlParser2_2CZ1_0.parseFareZoneChange(xmlParser2_2CZ1_0.receivedDataDomDocument,fareZoneChangeFrom,fareZoneChangeTo);
+        xmlParser2_2CZ1_0.parseAdditionalTextMessage2_2CZ1_0(xmlParser2_2CZ1_0.receivedDataDomDocument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
     }
 
     else if(cisSubscriber.version()=="2.3")

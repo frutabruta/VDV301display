@@ -18,7 +18,10 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
--  20241213_1829
+- 20250101_2309
+    - split XmlParser1_0 and XmlParser
+    - all XmlParser classes public/private/protected reevaluation
+- 20241213_1829
     - debug window clear connections when connection list is empty
 - 20241212_2017
     - following Trip destination display fix (2.3 and 2.3CZ1.0)

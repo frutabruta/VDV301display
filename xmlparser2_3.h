@@ -5,28 +5,33 @@
 #include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 
 class XmlParser2_3 : public XmlParser
 {
 public:
     XmlParser2_3();
 
-    QMap<int,StopPointDestination> globalStopList2_3;
-
-    QVector<FareZone> domStopPointToFareZoneList(QDomElement stopPointElement);
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
+    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
 
+protected:
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
-    QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
-    Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
-    Vdv301StopPoint qDomNodeToStopPointDestination(QDomNode input); //unused
-    Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
-
-    Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
     Vdv301Connection domElementToVdv301Connection(QDomElement connectionElement);
-    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
+
+private:
+    QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
+    Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
+    Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
+    Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
+
+
+
+
+
+
 };
 
 #endif // XMLPARSER2_3_H

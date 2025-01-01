@@ -4,26 +4,6 @@ XmlParser2_3::XmlParser2_3() {}
 
 
 
-QVector<FareZone> XmlParser2_3::domStopPointToFareZoneList(QDomElement stopPointElement)
-{
-    qDebug()<<Q_FUNC_INFO;
-    QVector<FareZone> output;
-
-    QDomNodeList fareZoneNodeList = stopPointElement.elementsByTagName("FareZone");
-
-    for (int i=0;i<fareZoneNodeList.count();i++)
-    {
-        FareZone selectedFareZone;
-        //  aktPasmo.system=domPasma.at(i).firstChildElement("Value").firstChildElement("FareZoneTypeName").firstChildElement("Value").firstChild().nodeValue();
-        selectedFareZone.name=fareZoneNodeList.at(i).firstChildElement("Value").firstChild().nodeValue();
-        output.append(selectedFareZone);
-
-    }
-
-    return output;
-}
-
-
 Vdv301AllData XmlParser2_3::parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList)
 {
     QDomElement root = input.firstChildElement();

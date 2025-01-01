@@ -6,7 +6,7 @@ XmlParser2_2CZ1_0::XmlParser2_2CZ1_0()
 
 
 
-int XmlParser2_2CZ1_0::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
+int XmlParser2_2CZ1_0::createStopList2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst,QVector<StopPointDestination> &docasnySeznamZstNavazny, int &docasnyIndexZastavky)
 {
     qDebug()<<Q_FUNC_INFO;
     docasnySeznamZst.clear();
@@ -34,23 +34,23 @@ int XmlParser2_2CZ1_0::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination
         break;
     case 1:
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
+        parseStopPointDestinationList2_2CZ1_0(docasnySeznamZst,tripInformation);
         break ;
     case 2:
         qDebug()<<"existuje jeden navazny spoj";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
+        parseStopPointDestinationList2_2CZ1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
+        parseStopPointDestinationList2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
     default:
         qDebug()<<"moc navaznych spoju";
         tripInformation=tripInformationList.at(0).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZst,tripInformation);
+        parseStopPointDestinationList2_2CZ1_0(docasnySeznamZst,tripInformation);
         tripInformation2=tripInformationList.at(1).toElement();
-        tripDoSeznamuZastavek2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
+        parseStopPointDestinationList2_2CZ1_0(docasnySeznamZstNavazny,tripInformation2);
 
         break;
 
@@ -62,7 +62,7 @@ int XmlParser2_2CZ1_0::VytvorSeznamZastavek2_2CZ1_0(QVector<StopPointDestination
 }
 
 
-int XmlParser2_2CZ1_0::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
+int XmlParser2_2CZ1_0::parseStopPointDestinationList2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup)
 {
     qDebug()<<Q_FUNC_INFO;
 
@@ -97,7 +97,7 @@ int XmlParser2_2CZ1_0::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestinatio
         docasnaZastavka.line=propertyStringListToLine(priznakyStringy,docasnaZastavka.line);
 
         docasnaZastavka.stopPoint.StopIndex=i;
-        docasnaZastavka.viaPoints=vyparsujNacestneZastavky2_2CZ1_0(aktZastavkaDOM);
+        docasnaZastavka.viaPoints=domToViaPoints2_2CZ1_0(aktZastavkaDOM);
         docasnaZastavka.stopPoint.connectionList=domElementToConnectionList(aktZastavkaDOM);
 
         QDomElement displayContent=aktZastavkaDOM.firstChildElement("DisplayContent");
@@ -124,7 +124,7 @@ int XmlParser2_2CZ1_0::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestinatio
         docasnaZastavka.destination.NameLcd=dDestination.firstChildElement("DestinationLcdName").firstChildElement().text();
 
         //    qInfo()<< "xml "<<QString::number(poradiZastavky)<<"i "<<QString::number(i) << docasnaZastavka.stopPoint.StopName<<"cil"<<docasnaZastavka.destination.NameLcd<<"linka "<<docasnaZastavka.line.LineName<<" nocni "<<docasnaZastavka.line.isNight ;
-        docasnaZastavka.stopPoint.fareZoneList=vyparsujPasma_2_2CZ1_0(aktZastavkaDOM);
+        docasnaZastavka.stopPoint.fareZoneList=domToFareZoneList2_2CZ1_0(aktZastavkaDOM);
         docasnySeznamZst.push_back(docasnaZastavka);
     }
     if (docasnySeznamZst.size() ==0)
@@ -138,12 +138,12 @@ int XmlParser2_2CZ1_0::tripDoSeznamuZastavek2_2CZ1_0(QVector<StopPointDestinatio
 
 
 
-QVector<FareZone> XmlParser2_2CZ1_0::vyparsujPasma_2_2CZ1_0(QDomElement zastavka)
+QVector<FareZone> XmlParser2_2CZ1_0::domToFareZoneList2_2CZ1_0(QDomElement domStopPoint)
 {
     qDebug()<<Q_FUNC_INFO;
     QVector<FareZone> vystupniVektorPasmo;
 
-    QDomNodeList domPasma = zastavka.elementsByTagName("FareZone");
+    QDomNodeList domPasma = domStopPoint.elementsByTagName("FareZone");
 
     for (int i=0;i<domPasma.count();i++)
     {
@@ -159,10 +159,10 @@ QVector<FareZone> XmlParser2_2CZ1_0::vyparsujPasma_2_2CZ1_0(QDomElement zastavka
 
 
 
-QVector<StopPoint> XmlParser2_2CZ1_0::vyparsujNacestneZastavky2_2CZ1_0(QDomElement zastavka)
+QVector<StopPoint> XmlParser2_2CZ1_0::domToViaPoints2_2CZ1_0(QDomElement domStopPoint)
 {
     qDebug()<<Q_FUNC_INFO;
-    QDomNodeList nacesty = zastavka.elementsByTagName("ViaPoint");
+    QDomNodeList nacesty = domStopPoint.elementsByTagName("ViaPoint");
     QVector<StopPoint> vectorNacesty;
     for (int i=0;i<nacesty.count();i++)
     {
@@ -196,7 +196,7 @@ QVector<StopPoint> XmlParser2_2CZ1_0::vyparsujNacestneZastavky2_2CZ1_0(QDomEleme
 
 
 
-int XmlParser2_2CZ1_0::nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa )
+int XmlParser2_2CZ1_0::parseFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa )
 {
     //rozepsano
     qDebug()<<Q_FUNC_INFO;
@@ -212,17 +212,17 @@ int XmlParser2_2CZ1_0::nactiFareZoneChange(QDomDocument xmlko, QVector<FareZone>
     }
 
     QDomElement fromFareZones=fareZoneChange.firstChildElement("FromFareZones");
-    pasmaZ=vyparsujPasma_2_2CZ1_0(fromFareZones);
+    pasmaZ=domToFareZoneList2_2CZ1_0(fromFareZones);
 
     QDomElement toFareZones=fareZoneChange.firstChildElement("ToFareZones");
-    pasmaNa=vyparsujPasma_2_2CZ1_0(toFareZones);
+    pasmaNa=domToFareZoneList2_2CZ1_0(toFareZones);
 
     qDebug()<<"pocet pasem Z "<<pasmaZ.count()<<" pocet pasem DO "<<pasmaNa.count();
     return 1;
 }
 
 
-int XmlParser2_2CZ1_0::nactiAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QString &type ,QString &headline,QString &text )
+int XmlParser2_2CZ1_0::parseAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QString &type ,QString &headline,QString &text )
 {
     qDebug()<<Q_FUNC_INFO;
     QDomElement root = xmlko.firstChildElement();
@@ -250,3 +250,5 @@ int XmlParser2_2CZ1_0::nactiAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QS
 
     return 1;
 }
+
+
