@@ -152,7 +152,34 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_subscribedVersion->setText(cisSubscriber.version());
     ui->label_deviceClass->setText(deviceManagementService.deviceClass());
     ui->label_deviceID->setText(deviceManagementService.deviceId());
-    ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vehicleState.locationState));
+
+    if((cisSubscriber.version()=="1.0")||(cisSubscriber.version()=="2.2CZ1.0"))
+    {
+        ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vehicleState.locationState));
+    }
+    else if(cisSubscriber.version()=="2.3CZ1.0")
+    {
+        if(!vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
+        {
+            ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData2_3CZ1_0.tripInformationList.first().locationState));
+        }
+        else
+        {
+            ui->label_locationState->setText("");
+        }
+    }
+    else
+    {
+        if(!vdv301AllData.tripInformationList.isEmpty())
+        {
+            ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData.tripInformationList.first().locationState));
+        }
+        else         {
+            ui->label_locationState->setText("");
+        }
+    }
+
+
 
     ui->label_build->setText(createProgramVersionString());
     ui->label_lcd_version->setText(createProgramVersionString());
@@ -1243,13 +1270,13 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             Vdv301Trip2_3CZ1_0 nextVdv301trip=vdv301AllData.tripInformationList.at(1);
             if(!nextVdv301trip.stopPointList.isEmpty())
             {
-                  Vdv301StopPoint2_3CZ1_0 firstVdv301StopPointOfNextTrip=nextVdv301trip.stopPointList.first();
+                Vdv301StopPoint2_3CZ1_0 firstVdv301StopPointOfNextTrip=nextVdv301trip.stopPointList.first();
                 //replace
 
-                  QVector<Vdv301DisplayContent> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
-                  QVector<Vdv301DisplayContent> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
+                QVector<Vdv301DisplayContent> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
+                QVector<Vdv301DisplayContent> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
 
-/*
+                /*
                   if(displayContentListLcdNext.isEmpty())
                   {
                       handleDisplayContentInner(displayContentListInteriorNext,false);
@@ -1527,7 +1554,7 @@ void MainWindow::labelLcdUpdateStopBackgroundVehicleState()
     else
     {
         labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
-    }    
+    }
 }
 
 
@@ -1537,14 +1564,14 @@ void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateE
 
 
 
-        if (locationState==Vdv301Enumerations::LocationStateAtStop )
-        {
-            labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
-        }
-        else
-        {
-            labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
-        }
+    if (locationState==Vdv301Enumerations::LocationStateAtStop )
+    {
+        labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
+    }
+    else
+    {
+        labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
+    }
 
 }
 
@@ -1761,6 +1788,8 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     xmlParser1_0.loadXmlFile(inputXmlString);
     qDebug()<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
 
+    receivedMessagesCounter++;
+    ui->label_messageCounter->setText(QString::number(receivedMessagesCounter));
 
     if(cisSubscriber.version()=="1.0")
     {
@@ -2414,15 +2443,7 @@ void MainWindow::on_pushButton_menu_services_clicked()
 void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
-  /*  if((cisSubscriber.version()=="2.3")||cisSubscriber.version()=="2.3CZ1.0")
-    {
-        labelLcdUpdateStopBackground();
-    }
-    else
-    {
-        labelLcdUpdateStopBackgroundVehicleState();
-    }
-*/
+
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 }
 

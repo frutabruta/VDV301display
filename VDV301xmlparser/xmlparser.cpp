@@ -1,8 +1,4 @@
 #include "xmlparser.h"
-#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
-#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
-#include "VDV301subscriber/VDV301DataStructures/farezone.h"
-
 #include <QDebug>
 #include <QMainWindow>
 

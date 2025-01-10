@@ -1,10 +1,10 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "xmlparser1_0.h"
-#include "xmlparser2_2cz1_0.h"
-#include "xmlparser2_3.h"
-#include "xmlparser2_3cz1_0.h"
+#include "VDV301xmlparser/xmlparser1_0.h"
+#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
+#include "VDV301xmlparser/xmlparser2_3.h"
+#include "VDV301xmlparser/xmlparser2_3cz1_0.h"
 
 
 #include "VDV301publisher/devicemanagementservice.h"
@@ -115,6 +115,7 @@ private:
 
     bool showTimeColon=0;
 
+    int receivedMessagesCounter=0;
     //constants
     const int intervalSideDisplay=2000;
     const int intervalDelayedStart=500;
@@ -123,6 +124,8 @@ private:
 
     QTimer timerUpdateSeconds;
     QTimer timerDelayedStart;
+
+
 
     //common functions
     int setDestinationName ();

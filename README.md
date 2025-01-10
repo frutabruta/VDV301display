@@ -18,6 +18,14 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250110_1543
+    - XmlParser classes moved to separate folder (prepared to become a submodule in future revisions)
+    - MainWindow::updateMainScreenDebugLabels
+        - locationState enumeration fix fo r2.3CZ1.0
+    - added received messages counter to debug tab 
+    - Vdv301publisher
+        - fixes not connected with VDV301Display
+
 - 20250101_2309
     - split XmlParser1_0 and XmlParser
     - all XmlParser classes public/private/protected reevaluation

@@ -96,12 +96,12 @@ SOURCES += \
         mainwindow.cpp \
     pasmovedvojicelcd.cpp \
     svgvykreslovani.cpp \
-    xmlparser.cpp \
     barvylinek.cpp \
-    xmlparser1_0.cpp \
-    xmlparser2_2cz1_0.cpp \
-    xmlparser2_3.cpp \
-    xmlparser2_3cz1_0.cpp
+    VDV301xmlparser/xmlparser.cpp \
+    VDV301xmlparser/xmlparser1_0.cpp \
+    VDV301xmlparser/xmlparser2_2cz1_0.cpp \
+    VDV301xmlparser/xmlparser2_3.cpp \
+    VDV301xmlparser/xmlparser2_3cz1_0.cpp
 
 HEADERS += \
     VDV301subscriber/VDV301DataStructures/additionalannoucement.h \
@@ -156,10 +156,10 @@ HEADERS += \
     svgvykreslovani.h \
     xmlparser.h \
     barvylinek.h \
-    xmlparser1_0.h \
-    xmlparser2_2cz1_0.h \
-    xmlparser2_3.h \
-    xmlparser2_3cz1_0.h
+    VDV301xmlparser/xmlparser1_0.h \
+    VDV301xmlparser/xmlparser2_2cz1_0.h \
+    VDV301xmlparser/xmlparser2_3.h \
+    VDV301xmlparser/xmlparser2_3cz1_0.h
 
 FORMS += \
         mainwindow.ui
