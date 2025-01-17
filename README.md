@@ -18,6 +18,9 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250117_1834
+    - MainWindow::showReceivedDataLcdVehicleState()
+        - 2.2CZ1.0 specialAnnouncement fix
 - 20250110_1543
     - XmlParser classes moved to separate folder (prepared to become a submodule in future revisions)
     - MainWindow::updateMainScreenDebugLabels

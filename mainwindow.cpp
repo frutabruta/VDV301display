@@ -942,17 +942,7 @@ int MainWindow::showReceivedDataLcdVehicleState()
         }
     }
 
-    //additional text message
 
-    if(additionalTextMessageText!="")
-    {
-        eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
-
-    }
-    else
-    {
-        displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
-    }
 
     //konecna
 
@@ -973,8 +963,20 @@ int MainWindow::showReceivedDataLcdVehicleState()
             {
                 eventLcdReturnToStopList();
             }
-            displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+            displayLabelLcd.pageCycleList.push_back(ui->page_hlavni_2);
             // skryjZmenuPasma();
+
+            //additional text message
+
+            if(additionalTextMessageText!="")
+            {
+                eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
+
+            }
+            else
+            {
+                displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
+            }
         }
 
     }
