@@ -1297,12 +1297,9 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
                     handleDisplayContentInner(displayContentListLcdNext,true);
                 }
             }
-
-
-
-
-
-
+            
+            
+                   
         }
         else
         {
@@ -1410,7 +1407,6 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
         else
         {
             displayLabelLcd.displayLabelLineNameFollowing(line);
-
         }
     }
     else
@@ -1432,6 +1428,8 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
         {
             displayLabelLcd.displayLabelLineName(line);
         }
+
+        displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
     }
 
 
@@ -1439,7 +1437,7 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
     //displayLabelLcd.displayLabelLineName(line);
 
 
-    displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
+
 
 }
 
