@@ -68,7 +68,7 @@ void DisplayLabel::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
         else
         {
             selectedDisplay.ticker=0;
-            qDebug()<<"displayContent out of range";
+           // qDebug()<<"displayContent out of range";
         }
     }
 

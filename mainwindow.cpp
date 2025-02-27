@@ -538,6 +538,8 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
 
 
     ui->tableWidget_selectedSubscriber->resizeColumnsToContents();
+
+    eventDisplayAbnormalStateScreen("SUBSCRIBED");
 }
 
 
@@ -546,7 +548,7 @@ int MainWindow::slotEverySecond()
 {
 
     ui->label_remainingSeconds->setText(QString::number(cisSubscriber.timerHeartbeatCheck.remainingTime()/1000) );
-    ui->label_odebirano->setText(QString::number(cisSubscriber.isSubscriptionActive));
+    ui->label_isSubscribed->setText(QString::number(cisSubscriber.isSubscriptionActive));
 
     if(showTimeColon==true)
     {
@@ -779,6 +781,15 @@ void MainWindow::displayLabelFillArray()
     displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste);
     displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste);
 
+    displayLabelLcd.pageAdditionalTextMessage=ui->page_additionalTextMessage;
+    displayLabelLcd.pageRoute=ui->page_route;
+
+    displayLabelLcd.stackedWidget_middle=ui->stackedWidget_prostredek;
+    displayLabelLcd.stackedWidget_onService=ui->stackedWidget_onService;
+
+    displayLabelLcd.labelAnnouncementLeft=ui->label_announcementLeft;
+    displayLabelLcd.labelAnnouncementRight=ui->label_announcementRight;
+
     /*
     seznamFramePrestup.push_back(ui->frame_odjezd0);
     seznamFramePrestup.push_back(ui->frame_odjezd1);
@@ -849,6 +860,9 @@ void MainWindow::eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fr
     svgVykreslovani.zobrazZmenuPasma(fromFareZones,toFareZones);
 }
 
+
+
+
 void MainWindow::eventStopRequestedActivated()
 {
     qDebug() <<  Q_FUNC_INFO;
@@ -868,6 +882,13 @@ void MainWindow::eventShowPageSpecialAnnouncement(QString title,QString type,QSt
     qDebug() <<  Q_FUNC_INFO;
     displayLabelShowAnnoucement(title,type,textCz,textEn);
     svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
+}
+
+void MainWindow::eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage,QVector<Vdv301InternationalText> additionalTextMessage1,QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3,QVector<Vdv301InternationalText> additionalTextMessage4)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    displayLabelShowAnnoucement(additionalTextMessage,additionalTextMessage1,additionalTextMessage2,additionalTextMessage3,additionalTextMessage4);
+    //   svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
 }
 
 void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
@@ -1211,6 +1232,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
     qDebug() <<  Q_FUNC_INFO;
 
+    bool timerOverride=false;
+
     eventLcdSetMainPage();
     eventEraseDisplayInformation();
     displayLabelLcd.pageCycleList.clear();
@@ -1299,7 +1322,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             }
             
             
-                   
+
         }
         else
         {
@@ -1318,19 +1341,66 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         }
         else
         {
-            if(currentVdv301trip.fareZoneChange.active)
+            displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+
+
+            if(!currentVdv301trip.additionalTextMessageList.isEmpty())
             {
-                eventShowPageFareZoneChange(currentVdv301trip.fareZoneChange.fromFareZone,currentVdv301trip.fareZoneChange.toFareZone);
+                if(!currentVdv301trip.additionalTextMessage4List.isEmpty())
+                {
+                    if(currentVdv301trip.additionalTextMessage4List.first().text=="FareZoneChange")
+                    {
+                         timerOverride=true;
+                        eventShowPageFareZoneChange(currentVdv301trip.additionalTextMessage2List,currentVdv301trip.additionalTextMessage3List);
+                    }
+                    else if(currentVdv301trip.additionalTextMessage4List.first().text=="LineChange")
+                    {
+                        //eventshowline change
+                    }
+                }
+                else
+                {
+                    timerOverride=true;
+                    eventShowPageSpecialAnnouncement(currentVdv301trip.additionalTextMessageList,currentVdv301trip.additionalTextMessage1List,currentVdv301trip.additionalTextMessage2List,currentVdv301trip.additionalTextMessage3List,currentVdv301trip.additionalTextMessage4List);
+                }
+
             }
             else
             {
+
+                displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
                 if(xmlParser1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
-                displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
-                // skryjZmenuPasma();
             }
+
+            /*
+                if(!currentVdv301trip.additionalAnnouncementList.isEmpty())
+                {
+
+                    Vdv301AdditionalAnnouncement2_3CZ1_0 firstAnnouncement=currentVdv301trip.additionalAnnouncementList.first();
+                    if(!firstAnnouncement.announcementTextList.isEmpty())
+                    {
+                        eventShowPageSpecialAnnouncement("","",firstAnnouncement.announcementTextList.first().text ,"");
+                    }
+
+
+                }
+                else
+                {
+
+                    displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
+                    if(xmlParser1_0.dataChanged==true)
+                    {
+                        eventLcdReturnToStopList();
+                    }
+                }
+
+                */
+
+            // skryjZmenuPasma();
+
         }
 
         if(!currentVdv301StopPoint.connectionList.isEmpty())
@@ -1351,24 +1421,19 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         popUpMessage("stop index is out of range");
     }
 
-    //additional text message
 
-    if(additionalTextMessageText!="")
+    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
+
+    lcdLabelCurrentPageIndex=0;
+    if(timerOverride)
     {
-        eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
-
+        displayLabelLcd.timerLabelPageSwitch.stop();
     }
     else
     {
-        displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
+        displayLabelLcd.timerLabelPageSwitch.start();
     }
 
-
-
-    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
-    lcdLabelCurrentPageIndex=0;
-
-    displayLabelLcd.timerLabelPageSwitch.start();
 
     return 1;
 }
@@ -1657,23 +1722,46 @@ void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestinat
     row = ui->tableWidget_debugStopList->rowCount();
     ui->tableWidget_debugStopList->insertRow(row);
 
-    QString stopName=InlineFormatParser::parseTextLed(selectedStopPointDestination.stopNameList.first().text);
 
-    cell = new QTableWidgetItem(stopName);
-
-    if(isFollowingTrip)
+    if(!selectedStopPointDestination.stopNameList.isEmpty())
     {
-        cell->setBackground(QColor(240,240,240));
+        Vdv301InternationalText firstName=selectedStopPointDestination.stopNameList.first();
+
+        QString stopName=InlineFormatParser::parseTextLed(firstName.text);
+
+        cell = new QTableWidgetItem(stopName);
+
+        if(isFollowingTrip)
+        {
+            cell->setBackground(QColor(240,240,240));
+        }
+
+        ui->tableWidget_debugStopList->setItem(row, 0, cell);
     }
-    ui->tableWidget_debugStopList->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.displayContentList.first().lineInformation.lineNameList.first().text));
-    ui->tableWidget_debugStopList->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.displayContentList.first().destination.destinationNameList.first().text));
-    ui->tableWidget_debugStopList->setItem(row, 2, cell);
+    if(!selectedStopPointDestination.displayContentList.isEmpty())
+    {
+        Vdv301DisplayContent firstDisplayContent=selectedStopPointDestination.displayContentList.first();
+
+        if(!firstDisplayContent.lineInformation.lineNameList.isEmpty())
+        {
+            cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(firstDisplayContent.lineInformation.lineNameList.first().text));
+            ui->tableWidget_debugStopList->setItem(row, 1, cell);
+        }
+
+        if(!firstDisplayContent.destination.destinationNameList.isEmpty())
+        {
+            cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(firstDisplayContent.destination.destinationNameList.first().text));
+            ui->tableWidget_debugStopList->setItem(row, 2, cell);
+        }
+
+    }
+
 
     ui->tableWidget_debugStopList->resizeColumnsToContents();
+
+
 }
 
 void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTableWidget* tableWidget)
@@ -2258,6 +2346,24 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
 }
 
 
+void MainWindow::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList,QVector<Vdv301InternationalText> additionalTextMessage1List,QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List,QVector<Vdv301InternationalText> additionalTextMessage4List)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    if(!additionalTextMessageList.isEmpty() )
+    {
+        displayLabelLcd.naplnAnouncementLabel(additionalTextMessageList.first().text,ui->label_announcement);
+    }
+
+
+
+    displayLabelLcd.displayLabelShowAnnoucement(additionalTextMessageList,additionalTextMessage1List,additionalTextMessage2List,additionalTextMessage3List,additionalTextMessage4List);
+
+
+
+
+}
+
+
 
 
 void MainWindow::eventHideAnnouncement()
@@ -2557,4 +2663,3 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
     return vystup;
 
 }
-

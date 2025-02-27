@@ -54,6 +54,8 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/stoppoint.cpp \
     VDV301subscriber/VDV301DataStructures/stoppointdestination.cpp \
     VDV301subscriber/VDV301DataStructures/trip.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301connection.cpp \
@@ -113,6 +115,8 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/stoppoint.h \
     VDV301subscriber/VDV301DataStructures/stoppointdestination.h \
     VDV301subscriber/VDV301DataStructures/trip.h \
+    VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement.h \
+    VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.h \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301connection.h \

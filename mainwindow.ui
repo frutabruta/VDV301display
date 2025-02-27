@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_labelDisplay">
        <property name="sizePolicy">
@@ -764,7 +764,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>5</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -1314,6 +1314,9 @@ border-radius: 8px;
                          <layout class="QVBoxLayout" name="verticalLayout_11">
                           <item>
                            <widget class="QLabel" name="label_oznTitle">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
                               <horstretch>0</horstretch>
@@ -1356,6 +1359,9 @@ border-radius: 8px;
                           </item>
                           <item>
                            <widget class="QLabel" name="label_oznTextEn">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
                             <property name="font">
                              <font>
                               <family>roboto</family>
@@ -3041,6 +3047,68 @@ border-radius: 30px;
                    </item>
                   </layout>
                  </widget>
+                 <widget class="QWidget" name="page_additionalTextMessage">
+                  <layout class="QVBoxLayout" name="verticalLayout_29">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_21">
+                     <item>
+                      <widget class="QFrame" name="frame_3">
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QHBoxLayout" name="horizontalLayout_12">
+                        <item>
+                         <widget class="QLabel" name="label_announcementLeft">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
+                          <property name="font">
+                           <font>
+                            <family>roboto</family>
+                            <pointsize>30</pointsize>
+                           </font>
+                          </property>
+                          <property name="text">
+                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                          </property>
+                          <property name="alignment">
+                           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                          </property>
+                         </widget>
+                        </item>
+                        <item>
+                         <layout class="QVBoxLayout" name="verticalLayout_28">
+                          <item>
+                           <widget class="QLabel" name="label_announcementRight">
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>30</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>announcementText</string>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
                 </widget>
                </item>
                <item>
@@ -3886,7 +3954,7 @@ border-radius: 30px;
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
-            <widget class="QLabel" name="label_odebirano">
+            <widget class="QLabel" name="label_isSubscribed">
              <property name="text">
               <string>TextLabel</string>
              </property>

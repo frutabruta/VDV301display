@@ -1,9 +1,9 @@
 #ifndef DISPLAYLABELLCD_H
 #define DISPLAYLABELLCD_H
 
-#include "displaylabel.h"
-//#include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
+#include <QStackedWidget>
 
+#include "displaylabel.h"
 
 class DisplayLabelLcd : public DisplayLabel
 {
@@ -33,6 +33,15 @@ public:
     QLabel *labelClock=NULL;
 
 
+    //announcement labels
+    //display labels
+    QLabel *labelAnnouncementLeft=NULL;
+    QLabel *labelAnnouncementRight=NULL;
+
+    QWidget *pageAdditionalTextMessage=NULL;
+    QWidget *pageRoute=NULL;
+
+
 
     //vektory Labelu Hlavni
     QVector<QLabel*> labelListStopPointName;
@@ -45,6 +54,12 @@ public:
     QVector<QLabel*> labelListConnectionPlatform;
 
     QFrame *frameFollowingTrip=NULL;
+
+    QStackedWidget *stackedWidget_onService=NULL;
+    QStackedWidget *stackedWidget_middle=NULL;
+
+
+
 
      QVector<QWidget*> pageCycleList;
 

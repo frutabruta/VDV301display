@@ -15,8 +15,10 @@ public:
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
     bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
 
+
 protected:
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
+    QVector<Vdv301InternationalText> qDomNodeListToVdv301InternationalTextList(QDomNodeList domNodeList);
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
     Vdv301Connection domElementToVdv301Connection(QDomElement connectionElement);

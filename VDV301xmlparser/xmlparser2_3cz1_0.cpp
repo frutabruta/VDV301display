@@ -38,6 +38,39 @@ Vdv301AllData2_3CZ1_0 XmlParser2_3CZ1_0::parseAllData2_3CZ1_0(QDomDocument input
 }
 
 
+Vdv301AdditionalAnnouncement2_3CZ1_0 XmlParser2_3CZ1_0::domAdditionalAnnouncementToVdv301AdditionalAnnouncement(QDomElement input)
+{
+    Vdv301AdditionalAnnouncement2_3CZ1_0 additionalAnnouncement;
+
+    additionalAnnouncement.announcementRef=input.firstChildElement("AnnouncementRef").text();
+
+    QDomNodeList domAnnouncementTextList=input.elementsByTagName("AnnouncementText");
+    for(int i=0;i<domAnnouncementTextList.count();i++)
+    {
+        Vdv301InternationalText annoucementText;
+        annoucementText.text=domAnnouncementTextList.at(i).firstChildElement("Value").text();
+        annoucementText.language=domAnnouncementTextList.at(i).firstChildElement("Language").text();
+        additionalAnnouncement.announcementTextList<<annoucementText;
+    }
+
+    QDomNodeList domAnnouncementTTSTextList=input.elementsByTagName("AnnouncementTTSText");
+    for(int i=0;i<domAnnouncementTTSTextList.count();i++)
+    {
+        Vdv301InternationalText annoucementTTSText;
+        annoucementTTSText.text=domAnnouncementTTSTextList.at(i).firstChildElement("Value").text();
+        annoucementTTSText.language=domAnnouncementTTSTextList.at(i).firstChildElement("Language").text();
+        additionalAnnouncement.announcementTTSTextList<<annoucementTTSText;
+    }
+
+
+    //immediate
+
+    //periodic
+
+    //farezonechange
+
+    return additionalAnnouncement;
+}
 
 Vdv301Trip2_3CZ1_0 XmlParser2_3CZ1_0::domTripInformationToVdv301Trip( QDomElement input)
 {
@@ -48,6 +81,26 @@ Vdv301Trip2_3CZ1_0 XmlParser2_3CZ1_0::domTripInformationToVdv301Trip( QDomElemen
 
     trip.fareZoneChange=domFareZoneChangeToVdv301FareZoneChange(input.firstChildElement("FareZoneChange"));
     trip.runNumber=input.firstChildElement("RunNumber").firstChildElement("Value").text();
+
+
+    trip.additionalTextMessageList=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage"));
+    trip.additionalTextMessage1List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage1"));
+    trip.additionalTextMessage2List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage2"));
+    trip.additionalTextMessage3List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage3"));
+    trip.additionalTextMessage4List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage4"));
+    trip.additionalTextMessage5List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage5"));
+    trip.additionalTextMessage6List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage6"));
+    trip.additionalTextMessage7List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage7"));
+    trip.additionalTextMessage8List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage8"));
+    trip.additionalTextMessage9List=qDomNodeListToVdv301InternationalTextList(input.elementsByTagName("AdditionalTextMessage9"));
+
+
+    QDomNodeList domAdditionalAnnouncementList=input.elementsByTagName("AdditionalAnnouncement");
+    for(int i = 0; i<domAdditionalAnnouncementList.count();i++ )
+    {
+        trip.additionalAnnouncementList<<domAdditionalAnnouncementToVdv301AdditionalAnnouncement(domAdditionalAnnouncementList.at(i).toElement());
+    }
+
 
     return trip;
 }

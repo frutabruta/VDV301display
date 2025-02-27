@@ -18,6 +18,22 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250227_1726
+    - Vdv301publisher
+        - additionalMessage1-9
+    - Vdv301subscriber
+        - additionalMessage1-9
+    - MainWindow
+        - added new page for additionalTextMessage
+            - support for icon inclusion
+    - new function DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement
+    - new function XmlParser2_3::qDomNodeListToVdv301InternationalTextList
+    - XmlParser additionalMessage1-9 parsing functions
+        
+
+- 20250221_1824
+    - MainWindow::handleDisplayContentInner
+        - fix viaPoints with following trip
 - 20250117_1834
     - MainWindow::showReceivedDataLcdVehicleState()
         - 2.2CZ1.0 specialAnnouncement fix

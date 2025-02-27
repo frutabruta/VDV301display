@@ -147,3 +147,59 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
 
 }
 
+
+void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList,QVector<Vdv301InternationalText> additionalTextMessage1List,QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List,QVector<Vdv301InternationalText> additionalTextMessage4List)
+{
+    qDebug() <<  Q_FUNC_INFO;
+
+    labelSetTextSafe(labelAnnouncementLeft,"");
+    labelSetTextSafe(labelAnnouncementRight,"");
+
+
+    if(!additionalTextMessage1List.isEmpty() )
+    {
+        //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
+        labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcd(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+    }
+    else
+    {
+        labelSetTextSafe(labelAnnouncementLeft,"");
+    }
+
+    if(!additionalTextMessageList.isEmpty() )
+    {
+        labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcd(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+    }
+    else
+    {
+        labelSetTextSafe( labelAnnouncementRight,"");
+    }
+
+    // ui->label_oznTextEn->setText("");
+
+
+    if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
+    {
+        stackedWidget_onService->setCurrentWidget(pageRoute);
+    }
+    if((stackedWidget_middle!=NULL)&&(pageAdditionalTextMessage!=NULL))
+    {
+        stackedWidget_middle->setCurrentWidget(pageAdditionalTextMessage);
+    }
+
+
+
+    if(pageAdditionalTextMessage!=NULL)
+    {
+        pageCycleList.push_back(pageAdditionalTextMessage);
+    }
+    else
+    {
+        qDebug("pageAnnouncement pointer is NULL");
+    }
+
+    //    pageCycleList.push_back(page ui->page_oznameni);
+
+}
+
+
