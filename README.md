@@ -30,6 +30,15 @@ Program can be launched with parameter to change settings location.
     - new function XmlParser2_3::qDomNodeListToVdv301InternationalTextList
     - XmlParser additionalMessage1-9 parsing functions
         
+- 20250308_1901
+    - MainWindow
+        - divided debug menu to three tabs
+            - subscription
+            - data
+            - inline formatting tester
+    - support for in-line formatting in additionalTextMessage
+        - support for b, icon, font, color
+        - fix needed to remove alternative icon text
 
 - 20250221_1824
     - MainWindow::handleDisplayContentInner

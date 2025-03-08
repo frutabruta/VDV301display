@@ -315,6 +315,8 @@ private slots:
     void slotDebugPublisherToTable(QZeroConfService zcs);
 
     void slotDeviceParametersToConfigFile();
+    void on_pushButton_debugConvertInline_clicked();
+
 public slots:
 
 

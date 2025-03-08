@@ -2663,3 +2663,13 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
     return vystup;
 
 }
+
+void MainWindow::on_pushButton_debugConvertInline_clicked()
+{
+    QXmlStreamReader xmlReader("<wrapper>"+ui->plainTextEdit_debugInLineInput->toPlainText()+"</wrapper>");
+
+    QString result=displayLabelLcd.inlineFormatParser.parseTextLcdOuter(ui->plainTextEdit_debugInLineInput->toPlainText(),100,displayLabelLcd.slozkaPiktogramu);
+    ui->plainTextEdit_debugInLineOutput->setPlainText(result);
+    ui->label_debugInLineOutput->setText(result);
+}
+

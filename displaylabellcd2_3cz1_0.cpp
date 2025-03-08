@@ -159,7 +159,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
     if(!additionalTextMessage1List.isEmpty() )
     {
         //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
-        labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcd(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+        labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
     }
     else
     {
@@ -168,7 +168,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
 
     if(!additionalTextMessageList.isEmpty() )
     {
-        labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcd(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+        labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
     }
     else
     {
