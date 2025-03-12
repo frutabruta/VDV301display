@@ -317,6 +317,8 @@ private slots:
     void slotDeviceParametersToConfigFile();
     void on_pushButton_debugConvertInline_clicked();
 
+    void on_pushButton_debugShowHtml_clicked();
+
 public slots:
 
 

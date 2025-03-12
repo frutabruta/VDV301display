@@ -40,8 +40,8 @@ public:
     static QString parseTextLcd(QString vstup, int vyskaObrazku, QString slozka);
     static QString parseTextLed(QString vstup);
 
-    static QString parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka);
-    static QString parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, Color &barva);
+    static QString parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka, QString &bgColor);
+    static QString parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, Color &barva, QString &bgColor);
 
     static QString iconToQDomNodeStart(Icon vstup, int vyskaObrazku, QString slozka);
 private:

@@ -172,7 +172,7 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
 
 
 
-QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka)
+QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka, QString &bgColor)
 {
     qDebug()<<Q_FUNC_INFO;
 
@@ -186,12 +186,14 @@ QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, Q
     QXmlStreamReader xmlReader(vstup);
     Color color;
 
-    return "<html><body>"+parseTextLcdRecursive(xmlReader,"",vyskaObrazku,slozka,color)+"</body></html>";
 
+    QString output= "<html><body>"+parseTextLcdRecursive(xmlReader,"",vyskaObrazku,slozka,color,bgColor)+"</body></html>";
+
+    return output;
 }
 
 
-QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, Color &barva)
+QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, Color &barva, QString &bgColor)
 {
     qDebug() << Q_FUNC_INFO;
     QString timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
@@ -236,7 +238,12 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
 
                     if (attributeName == "bg")
                     {
+
                         barva.bg = attributeValue;
+                        if(parent==".wrapper")
+                        {
+                            bgColor=barva.bg;
+                        }
                     }
                     else if (attributeName == "fg")
                     {
@@ -299,7 +306,7 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
                 }
 */
                 result += elementStart;
-                result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, barva);
+                result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, barva, bgColor);
                 break;
             }
 

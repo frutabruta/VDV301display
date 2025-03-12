@@ -554,7 +554,7 @@ QLabel{color:#FFFFFF}</string>
                       <x>0</x>
                       <y>0</y>
                       <width>898</width>
-                      <height>88</height>
+                      <height>83</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -4084,25 +4084,41 @@ border-radius: 30px;
               <item>
                <widget class="QPlainTextEdit" name="plainTextEdit_debugInLineInput">
                 <property name="plainText">
-                 <string>&lt;font size=&quot;60&quot;&gt;&lt;color fg=&quot;#9bcaea&quot;&gt;&lt;b&gt;Terminál 1&lt;/b&gt;&lt;/color&gt;&lt;/font&gt;
-&lt;font size=&quot;40&quot;&gt;&lt;b&gt;lety do zemí mimo Schengenský prostor &lt;/b&gt;&lt;color fg=&quot;#969696&quot;&gt;/ flights to countries outside the Schengen Area&lt;/color&gt;&lt;/font&gt;</string>
+                 <string>&lt;color bg=&quot;#ff0000&quot;&gt;&lt;font size=&quot;60&quot;&gt;&lt;color fg=&quot;#9bcaea&quot;&gt;&lt;b&gt;Terminál 1&lt;/b&gt;&lt;/color&gt;&lt;/font&gt;
+&lt;font size=&quot;40&quot;&gt;&lt;b&gt;lety do zemí mimo Schengenský prostor &lt;/b&gt;&lt;color fg=&quot;#969696&quot;&gt;/ flights to countries outside the Schengen Area&lt;/color&gt;&lt;/font&gt;&lt;/color&gt;</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="pushButton_debugConvertInline">
                 <property name="text">
-                 <string>convert</string>
+                 <string>convert from in-line format</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPlainTextEdit" name="plainTextEdit_debugInLineOutput"/>
               </item>
+              <item>
+               <widget class="QPushButton" name="pushButton_debugShowHtml">
+                <property name="text">
+                 <string>show from HTML</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </item>
             <item>
              <widget class="QLabel" name="label_debugInLineOutput">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
               <property name="text">
                <string>TextLabel</string>
               </property>
@@ -4964,7 +4980,7 @@ border-radius: 30px;
      <x>0</x>
      <y>0</y>
      <width>1332</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

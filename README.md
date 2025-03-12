@@ -18,6 +18,19 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250312_2102
+    - VDV301Publisher
+        - Vdv301DataStructures
+            - stoppoint neozn and zast
+    - VDV301Subscriber
+        - Vdv301DataStructures
+            - stoppoint neozn and zast
+    - DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement
+    - InlineFormatParser
+        - added coloring of whole label if the text is enclosed in color tag
+    - MainWindow
+        - added button to test HTML formatted text on a label 
+
 - 20250227_1726
     - Vdv301publisher
         - additionalMessage1-9

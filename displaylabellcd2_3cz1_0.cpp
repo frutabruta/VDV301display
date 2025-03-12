@@ -159,7 +159,8 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
     if(!additionalTextMessage1List.isEmpty() )
     {
         //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
-        labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+      //  labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+        labelSetTextBgInline(labelAnnouncementLeft,additionalTextMessage1List.first().text);
     }
     else
     {
@@ -168,7 +169,8 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
 
     if(!additionalTextMessageList.isEmpty() )
     {
-        labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+        //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+        labelSetTextBgInline(labelAnnouncementRight,additionalTextMessageList.first().text);
     }
     else
     {
@@ -200,6 +202,42 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
 
     //    pageCycleList.push_back(page ui->page_oznameni);
 
+}
+
+
+bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text)
+{
+
+
+    if(label==NULL)
+    {
+        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        return false;
+    }
+
+    else
+    {
+           QXmlStreamReader xmlReader("<wrapper>"+text+"</wrapper>");
+
+
+        QString barvaPozadi="";
+        QString result=inlineFormatParser.parseTextLcdOuter(text,100,slozkaPiktogramu,barvaPozadi);
+
+
+        QString barvaPozadiCss="background-color:"+barvaPozadi+";";
+
+        if(barvaPozadi!="")
+        {
+            label->setStyleSheet(barvaPozadiCss);
+        }
+        else
+        {
+            label->setStyleSheet("");
+        }
+
+        label->setText(result);
+    }
+    return true;
 }
 
 
