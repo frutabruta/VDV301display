@@ -554,7 +554,7 @@ QLabel{color:#FFFFFF}</string>
                       <x>0</x>
                       <y>0</y>
                       <width>898</width>
-                      <height>83</height>
+                      <height>88</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -1385,7 +1385,7 @@ border-radius: 8px;
                    </item>
                   </layout>
                  </widget>
-                 <widget class="QWidget" name="page_zmenaPasma">
+                 <widget class="QWidget" name="page_fareZoneChange">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                     <horstretch>0</horstretch>
@@ -1396,53 +1396,57 @@ border-radius: 8px;
                    <item row="0" column="0">
                     <layout class="QVBoxLayout" name="verticalLayout_10">
                      <item>
-                      <widget class="QLabel" name="label_18">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="font">
-                        <font>
-                         <family>roboto</family>
-                         <pointsize>40</pointsize>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="text">
-                        <string>Prosím pozor! Změna tarifního pásma.</string>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignCenter</set>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QLabel" name="label_19">
-                       <property name="font">
-                        <font>
-                         <family>roboto</family>
-                         <pointsize>30</pointsize>
-                         <bold>false</bold>
-                        </font>
-                       </property>
-                       <property name="text">
-                        <string>Attention please! Change of fare zone.</string>
-                       </property>
-                       <property name="alignment">
-                        <set>Qt::AlignCenter</set>
-                       </property>
-                      </widget>
+                      <layout class="QHBoxLayout" name="horizontalLayout_35">
+                       <item>
+                        <widget class="QLabel" name="label_fareChangeAnnLeft">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="font">
+                          <font>
+                           <family>roboto</family>
+                           <pointsize>40</pointsize>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>X</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="label_fareChangeAnnRight">
+                         <property name="font">
+                          <font>
+                           <family>roboto</family>
+                           <pointsize>30</pointsize>
+                           <bold>false</bold>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>zmen pasma text</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
                      </item>
                      <item>
                       <layout class="QHBoxLayout" name="horizontalLayout_16">
                        <item>
-                        <widget class="QLabel" name="label_pasmo1">
+                        <widget class="QLabel" name="label_fareZoneChangeFrom">
                          <property name="font">
                           <font>
                            <family>roboto</family>
-                           <pointsize>50</pointsize>
+                           <pointsize>180</pointsize>
                            <bold>true</bold>
                           </font>
                          </property>
@@ -1451,11 +1455,11 @@ border-radius: 8px;
 background-color: rgb(100,100,100);
 color: rgb(25,25,25);
 border: none;
-border-radius: 30px;
+border-radius: 140px;
 }</string>
                          </property>
                          <property name="text">
-                          <string>Pasmo1</string>
+                          <string>P1</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1471,7 +1475,13 @@ border-radius: 30px;
                           </font>
                          </property>
                          <property name="text">
-                          <string>-&gt;</string>
+                          <string/>
+                         </property>
+                         <property name="pixmap">
+                          <pixmap resource="resources.qrc">:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg</pixmap>
+                         </property>
+                         <property name="scaledContents">
+                          <bool>false</bool>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -1479,11 +1489,11 @@ border-radius: 30px;
                         </widget>
                        </item>
                        <item>
-                        <widget class="QLabel" name="label_pasmo2">
+                        <widget class="QLabel" name="label_fareZoneChangeTo">
                          <property name="font">
                           <font>
                            <family>roboto</family>
-                           <pointsize>50</pointsize>
+                           <pointsize>180</pointsize>
                            <bold>true</bold>
                           </font>
                          </property>
@@ -1492,11 +1502,11 @@ border-radius: 30px;
 background-color: rgb(255,255,255); 
 color: rgb(25,25,25);
 border: none;
-border-radius: 30px;
+border-radius: 140px;
 }</string>
                          </property>
                          <property name="text">
-                          <string>Pasmo2</string>
+                          <string>P2</string>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignCenter</set>
@@ -3423,48 +3433,15 @@ border-radius: 30px;
             <item row="0" column="0">
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <item>
-               <widget class="QLabel" name="label_13">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="font">
-                 <font>
-                  <family>roboto</family>
-                  <pointsize>20</pointsize>
-                  <bold>true</bold>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Prosím pozor! Změna čísla linky.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_14">
-                <property name="font">
-                 <font>
-                  <family>roboto</family>
-                  <pointsize>20</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>Attention please! Line number change.</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_15">
+               <layout class="QHBoxLayout" name="horizontalLayout_36">
                 <item>
-                 <widget class="QLabel" name="label_15">
+                 <widget class="QLabel" name="label_lineChangeLeft">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>roboto</family>
@@ -3473,7 +3450,52 @@ border-radius: 30px;
                    </font>
                   </property>
                   <property name="text">
-                   <string>Linka1</string>
+                   <string>XXX</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_lineChangeRight">
+                  <property name="font">
+                   <font>
+                    <family>roboto</family>
+                    <pointsize>20</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>Prosím pozor! Změna čísla linky. Attention please! Line number change.</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <widget class="QLabel" name="label_lineFrom">
+                  <property name="font">
+                   <font>
+                    <family>roboto</family>
+                    <pointsize>260</pointsize>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">*{
+background-color: rgb(255,255,255); 
+color: rgb(25,25,25);
+border: none;
+border-radius: 30px;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>L1</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -3489,7 +3511,13 @@ border-radius: 30px;
                    </font>
                   </property>
                   <property name="text">
-                   <string>-&gt;</string>
+                   <string/>
+                  </property>
+                  <property name="pixmap">
+                   <pixmap resource="resources.qrc">:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg</pixmap>
+                  </property>
+                  <property name="scaledContents">
+                   <bool>false</bool>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -3497,16 +3525,24 @@ border-radius: 30px;
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLabel" name="label_16">
+                 <widget class="QLabel" name="label_lineTo">
                   <property name="font">
                    <font>
                     <family>roboto</family>
-                    <pointsize>20</pointsize>
+                    <pointsize>260</pointsize>
                     <bold>true</bold>
                    </font>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">*{
+background-color: rgb(255,255,255); 
+color: rgb(25,25,25);
+border: none;
+border-radius: 30px;
+}</string>
+                  </property>
                   <property name="text">
-                   <string>Linka2</string>
+                   <string>L2</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -4980,7 +5016,7 @@ border-radius: 30px;
      <x>0</x>
      <y>0</y>
      <width>1332</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">
@@ -5022,6 +5058,8 @@ border-radius: 30px;
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

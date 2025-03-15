@@ -790,6 +790,24 @@ void MainWindow::displayLabelFillArray()
     displayLabelLcd.labelAnnouncementLeft=ui->label_announcementLeft;
     displayLabelLcd.labelAnnouncementRight=ui->label_announcementRight;
 
+    displayLabelLcd.pageFareZoneChange=ui->page_fareZoneChange;
+    displayLabelLcd.labelFareZoneAnnouncementLeft=ui->label_fareChangeAnnLeft;
+    displayLabelLcd.labelFareZoneAnnouncementRight=ui->label_fareChangeAnnRight;
+    displayLabelLcd.labelFareZoneChangeFrom=ui->label_fareZoneChangeFrom;
+    displayLabelLcd.labelFareZoneChangeTo=ui->label_fareZoneChangeTo;
+
+
+   //     displayLabelLcd.labelFareZoneChangeTo=ui->label_fareChangeAnnRight;
+
+
+
+    displayLabelLcd.pageLineChange=ui->page_lineChange;
+    displayLabelLcd.labelLineChangeAnnouncementLeft=ui->label_lineChangeLeft;
+    displayLabelLcd.labelLineChangeAnnouncementRight=ui->label_lineChangeRight;
+    displayLabelLcd.labelLineChangeAnnouncementFrom =ui->label_lineFrom;
+    displayLabelLcd.labelLineChangeAnnouncementTo=ui->label_lineTo;
+
+
     /*
     seznamFramePrestup.push_back(ui->frame_odjezd0);
     seznamFramePrestup.push_back(ui->frame_odjezd1);
@@ -1346,6 +1364,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
             if(!currentVdv301trip.additionalTextMessageList.isEmpty())
             {
+                eventShowPageSpecialAnnouncement(currentVdv301trip.additionalTextMessageList,currentVdv301trip.additionalTextMessage1List,currentVdv301trip.additionalTextMessage2List,currentVdv301trip.additionalTextMessage3List,currentVdv301trip.additionalTextMessage4List);
+                /*
                 if(!currentVdv301trip.additionalTextMessage4List.isEmpty())
                 {
                     if(currentVdv301trip.additionalTextMessage4List.first().text=="FareZoneChange")
@@ -1362,7 +1382,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
                 {
                     timerOverride=true;
                     eventShowPageSpecialAnnouncement(currentVdv301trip.additionalTextMessageList,currentVdv301trip.additionalTextMessage1List,currentVdv301trip.additionalTextMessage2List,currentVdv301trip.additionalTextMessage3List,currentVdv301trip.additionalTextMessage4List);
-                }
+                }*/
 
             }
             else
@@ -2305,10 +2325,10 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneLi
     qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
 
-    ui->label_pasmo1->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
-    ui->label_pasmo2->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(toFareZoneList,"PID")));
+    ui->label_fareZoneChangeFrom->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
+    ui->label_fareZoneChangeTo->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(toFareZoneList,"PID")));
 
     displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
 }
@@ -2319,10 +2339,10 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
     qDebug() <<  Q_FUNC_INFO;
 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_zmenaPasma);
+    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
 
-    ui->label_pasmo1->setText(displayLabelLcd.vdv301InternationalTextJoinAll(fromFareZoneList,"\n").text);
-    ui->label_pasmo2->setText(displayLabelLcd.vdv301InternationalTextJoinAll(toFareZoneList,"\n").text);
+    ui->label_fareZoneChangeFrom->setText(displayLabelLcd.vdv301InternationalTextJoinAll(fromFareZoneList,"\n").text);
+    ui->label_fareZoneChangeTo->setText(displayLabelLcd.vdv301InternationalTextJoinAll(toFareZoneList,"\n").text);
     // displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
 }
 

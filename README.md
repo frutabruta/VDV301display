@@ -18,6 +18,9 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250314_1857
+    - DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement
+        - reworked to support fare zone change etc.
 - 20250312_2102
     - VDV301Publisher
         - Vdv301DataStructures

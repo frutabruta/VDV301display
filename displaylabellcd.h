@@ -38,7 +38,24 @@ public:
     QLabel *labelAnnouncementLeft=NULL;
     QLabel *labelAnnouncementRight=NULL;
 
+    QLabel *labelFareZoneAnnouncementLeft=NULL;
+    QLabel *labelFareZoneAnnouncementRight=NULL;
+
+
+    QLabel *labelFareZoneChangeFrom=NULL;
+    QLabel *labelFareZoneChangeTo=NULL;
+
+
+    QLabel *labelLineChangeAnnouncementLeft=NULL;
+    QLabel *labelLineChangeAnnouncementRight=NULL;
+
+
+    QLabel *labelLineChangeAnnouncementFrom=NULL;
+    QLabel *labelLineChangeAnnouncementTo=NULL;
+
     QWidget *pageAdditionalTextMessage=NULL;
+    QWidget *pageFareZoneChange=NULL;
+    QWidget *pageLineChange=NULL;
     QWidget *pageRoute=NULL;
 
 

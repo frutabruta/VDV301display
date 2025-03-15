@@ -156,56 +156,205 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
     labelSetTextSafe(labelAnnouncementRight,"");
 
 
-    if(!additionalTextMessage1List.isEmpty() )
+    labelSetTextSafe(labelFareZoneAnnouncementLeft,"");
+    labelSetTextSafe(labelFareZoneAnnouncementRight,"");
+    labelSetTextSafe(labelFareZoneChangeFrom,"");
+    labelSetTextSafe(labelFareZoneChangeTo,"");
+
+    labelSetTextSafe(labelLineChangeAnnouncementLeft,"");
+    labelSetTextSafe(labelLineChangeAnnouncementRight,"");
+    labelSetTextSafe(labelLineChangeAnnouncementFrom,"");
+    labelSetTextSafe(labelLineChangeAnnouncementTo,"");
+
+
+    if(additionalTextMessage4List.isEmpty())
     {
-        //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
-      //  labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
-        labelSetTextBgInline(labelAnnouncementLeft,additionalTextMessage1List.first().text);
+        if(!additionalTextMessage1List.isEmpty() )
+        {
+            //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
+            //  labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelAnnouncementLeft,additionalTextMessage1List.first().text);
+        }
+        else
+        {
+            labelSetTextSafe(labelAnnouncementLeft,"");
+        }
+
+        if(!additionalTextMessageList.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelAnnouncementRight,additionalTextMessageList.first().text);
+        }
+        else
+        {
+            labelSetTextSafe( labelAnnouncementRight,"");
+        }
+
+        // ui->label_oznTextEn->setText("");
+
+
+        if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
+        {
+            stackedWidget_onService->setCurrentWidget(pageRoute);
+        }
+        if((stackedWidget_middle!=NULL)&&(pageAdditionalTextMessage!=NULL))
+        {
+            stackedWidget_middle->setCurrentWidget(pageAdditionalTextMessage);
+        }
+
+        if(pageAdditionalTextMessage!=NULL)
+        {
+            pageCycleList.push_back(pageAdditionalTextMessage);
+        }
+        else
+        {
+            qDebug("pageAnnouncement pointer is NULL");
+        }
+
+        //    pageCycleList.push_back(page ui->page_oznameni);
+
+    }
+    else if(additionalTextMessage4List.first().text=="FareZoneChange")
+    {
+        if(!additionalTextMessage1List.isEmpty() )
+        {
+            //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
+            //  labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelFareZoneAnnouncementLeft,additionalTextMessage1List.first().text);
+        }
+        else
+        {
+            labelSetTextSafe(labelFareZoneAnnouncementLeft,"");
+        }
+
+        if(!additionalTextMessageList.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelFareZoneAnnouncementRight,additionalTextMessageList.first().text);
+        }
+        else
+        {
+            labelSetTextSafe(labelFareZoneAnnouncementRight,"");
+        }
+
+        if(!additionalTextMessage2List.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelFareZoneChangeFrom,additionalTextMessage2List.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelFareZoneChangeFrom,"");
+        }
+
+        if(!additionalTextMessage3List.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelFareZoneChangeTo,additionalTextMessage3List.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelFareZoneChangeTo,"");
+        }
+
+        // ui->label_oznTextEn->setText("");
+
+
+        if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
+        {
+            stackedWidget_onService->setCurrentWidget(pageRoute);
+        }
+        if((stackedWidget_middle!=NULL)&&(pageFareZoneChange!=NULL))
+        {
+            stackedWidget_middle->setCurrentWidget(pageFareZoneChange);
+        }
+
+        if(pageAdditionalTextMessage!=NULL)
+        {
+            pageCycleList.push_back(pageFareZoneChange);
+        }
+        else
+        {
+            qDebug("pageAnnouncement pointer is NULL");
+        }
+
+        //    pageCycleList.push_back(page ui->page_oznameni);
+    }
+    else if(additionalTextMessage4List.first().text=="LineChange")
+    {
+        if(!additionalTextMessageList.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelLineChangeAnnouncementRight,additionalTextMessageList.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelLineChangeAnnouncementRight,"");
+        }
+
+        if(!additionalTextMessage1List.isEmpty() )
+        {
+            //labelAnnouncementLeft->setText(  additionalTextMessage1List.first().text);
+            //  labelSetTextSafe( labelAnnouncementLeft,inlineFormatParser.parseTextLcdOuter(additionalTextMessage1List.first().text,  labelAnnouncementLeft->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelLineChangeAnnouncementLeft,additionalTextMessage1List.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelLineChangeAnnouncementLeft,"");
+        }
+
+
+        if(!additionalTextMessage2List.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelLineChangeAnnouncementFrom,additionalTextMessage2List.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelLineChangeAnnouncementFrom,"");
+        }
+
+
+        if(!additionalTextMessage2List.isEmpty() )
+        {
+            //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
+            labelSetTextBgInline(labelLineChangeAnnouncementTo,additionalTextMessage3List.first().text,true);
+        }
+        else
+        {
+            labelSetTextSafe(labelLineChangeAnnouncementTo,"");
+        }
+
+
+        // ui->label_oznTextEn->setText("");
+
+
+        if((stackedWidget_onService!=NULL)&&(pageLineChange!=NULL))
+        {
+            stackedWidget_onService->setCurrentWidget(pageLineChange);
+        }
+
+        if(pageAdditionalTextMessage!=NULL)
+        {
+            pageCycleList.push_back(pageLineChange);
+        }
+        else
+        {
+            qDebug("pageAnnouncement pointer is NULL");
+        }
+
+        //    pageCycleList.push_back(page ui->page_oznameni);
     }
     else
     {
-        labelSetTextSafe(labelAnnouncementLeft,"");
+        qDebug()<<"unknown additionalTextMessage4 value";
     }
 
-    if(!additionalTextMessageList.isEmpty() )
-    {
-        //labelSetTextSafe( labelAnnouncementRight,inlineFormatParser.parseTextLcdOuter(additionalTextMessageList.first().text,  labelAnnouncementRight->font().pixelSize(),slozkaPiktogramu) );
-        labelSetTextBgInline(labelAnnouncementRight,additionalTextMessageList.first().text);
-    }
-    else
-    {
-        labelSetTextSafe( labelAnnouncementRight,"");
-    }
-
-    // ui->label_oznTextEn->setText("");
-
-
-    if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
-    {
-        stackedWidget_onService->setCurrentWidget(pageRoute);
-    }
-    if((stackedWidget_middle!=NULL)&&(pageAdditionalTextMessage!=NULL))
-    {
-        stackedWidget_middle->setCurrentWidget(pageAdditionalTextMessage);
-    }
-
-
-
-    if(pageAdditionalTextMessage!=NULL)
-    {
-        pageCycleList.push_back(pageAdditionalTextMessage);
-    }
-    else
-    {
-        qDebug("pageAnnouncement pointer is NULL");
-    }
-
-    //    pageCycleList.push_back(page ui->page_oznameni);
 
 }
 
 
-bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text)
+bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, bool ignoreBackground )
 {
 
 
@@ -226,14 +375,18 @@ bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text)
 
         QString barvaPozadiCss="background-color:"+barvaPozadi+";";
 
-        if(barvaPozadi!="")
+        if(!ignoreBackground)
         {
-            label->setStyleSheet(barvaPozadiCss);
+            if(barvaPozadi!="")
+            {
+                label->setStyleSheet(barvaPozadiCss);
+            }
+            else
+            {
+                label->setStyleSheet("");
+            }
         }
-        else
-        {
-            label->setStyleSheet("");
-        }
+
 
         label->setText(result);
     }

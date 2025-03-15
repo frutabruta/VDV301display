@@ -13,7 +13,7 @@ public:
     void displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData);
     void displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
     void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
-    bool labelSetTextBgInline(QLabel *label, QString text);
+    bool labelSetTextBgInline(QLabel *label, QString text, bool ignoreBackground = false );
 public slots:
 
 };
