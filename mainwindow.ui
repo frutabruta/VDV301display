@@ -418,8 +418,8 @@ QLabel{color:#FFFFFF}</string>
                      </property>
                      <property name="maximumSize">
                       <size>
-                       <width>500</width>
-                       <height>500</height>
+                       <width>1000</width>
+                       <height>1000</height>
                       </size>
                      </property>
                      <property name="font">
@@ -1422,6 +1422,12 @@ border-radius: 8px;
                        </item>
                        <item>
                         <widget class="QLabel" name="label_fareChangeAnnRight">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
                          <property name="font">
                           <font>
                            <family>roboto</family>
@@ -3059,6 +3065,21 @@ border-radius: 140px;
                  </widget>
                  <widget class="QWidget" name="page_additionalTextMessage">
                   <layout class="QVBoxLayout" name="verticalLayout_29">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
                    <item>
                     <layout class="QHBoxLayout" name="horizontalLayout_21">
                      <item>
@@ -3070,6 +3091,21 @@ border-radius: 140px;
                         <enum>QFrame::Raised</enum>
                        </property>
                        <layout class="QHBoxLayout" name="horizontalLayout_12">
+                        <property name="spacing">
+                         <number>0</number>
+                        </property>
+                        <property name="leftMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="topMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="rightMargin">
+                         <number>0</number>
+                        </property>
+                        <property name="bottomMargin">
+                         <number>0</number>
+                        </property>
                         <item>
                          <widget class="QLabel" name="label_announcementLeft">
                           <property name="sizePolicy">
@@ -3094,6 +3130,9 @@ border-radius: 140px;
                         </item>
                         <item>
                          <layout class="QVBoxLayout" name="verticalLayout_28">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
                           <item>
                            <widget class="QLabel" name="label_announcementRight">
                             <property name="font">
@@ -3459,6 +3498,12 @@ border-radius: 140px;
                 </item>
                 <item>
                  <widget class="QLabel" name="label_lineChangeRight">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="font">
                    <font>
                     <family>roboto</family>
@@ -3826,7 +3871,7 @@ border-radius: 30px;
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_subscription">
            <attribute name="title">

@@ -18,6 +18,15 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250316_2359
+    - InlineFormatParser::parseTextLcdRecursive
+        - removed barva attribute
+        - removed replacement symbol from icon
+    - InlineFormatParser::getDirectParent
+        - new function
+    - MainWindow
+        - modified FareZone change and LineChange layout to expand and removed padding/margin to remove gaps in background color
+        
 - 20250314_1857
     - DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement
         - reworked to support fare zone change etc.

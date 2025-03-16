@@ -184,16 +184,16 @@ QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, Q
 
     vstup="<wrapper>"+vstup+"</wrapper>";
     QXmlStreamReader xmlReader(vstup);
-    Color color;
+  //  Color color;
 
 
-    QString output= "<html><body>"+parseTextLcdRecursive(xmlReader,"",vyskaObrazku,slozka,color,bgColor)+"</body></html>";
+    QString output= "<html><body>"+parseTextLcdRecursive(xmlReader,"",vyskaObrazku,slozka,bgColor)+"</body></html>";
 
     return output;
 }
 
 
-QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, Color &barva, QString &bgColor)
+QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, QString &bgColor)
 {
     qDebug() << Q_FUNC_INFO;
     QString timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
@@ -204,6 +204,7 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
 
     Icon ikona;
     Font font;
+    Color barva;
 
     QString popredi = "xx";
     QString result = "";
@@ -306,14 +307,18 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
                 }
 */
                 result += elementStart;
-                result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, barva, bgColor);
+                result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, bgColor);
                 break;
             }
 
             case QXmlStreamReader::Characters:
             {
                 QString textContent = xmlReader.text().toString();
-                result += textContent;
+                if(getDirectParent(parent)!="icon")
+                {
+                    result += textContent; //need to be fixed to support replacement characters
+                }
+
                 break;
             }
 
@@ -378,6 +383,19 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
     }
 
     return result;
+}
+
+QString InlineFormatParser::getDirectParent(QString input)
+{
+    QStringList list=input.split(".");
+    if(list.isEmpty())
+    {
+        return "";
+    }
+    else
+    {
+        return list.last();
+    }
 }
 
 QString InlineFormatParser::parseTextLed(QString vstup)
