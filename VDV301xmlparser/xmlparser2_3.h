@@ -3,6 +3,7 @@
 
 #include "xmlparser.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
@@ -13,9 +14,9 @@ public:
     XmlParser2_3();
 
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
-    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
+    Vdv301CurrentDisplayContent parseCurrentDisplayContent2_3(QDomDocument input);
 
-
+    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);    
 protected:
     Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
     QVector<Vdv301InternationalText> qDomNodeListToVdv301InternationalTextList(QDomNodeList domNodeList);

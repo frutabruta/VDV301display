@@ -41,6 +41,25 @@ Vdv301AllData XmlParser2_3::parseAllData2_3(QDomDocument input, QVector<Vdv301St
     return vdv301AllData;
 }
 
+Vdv301CurrentDisplayContent XmlParser2_3::parseCurrentDisplayContent2_3(QDomDocument input)
+{
+    QDomElement root = input.firstChildElement();
+    QDomElement domCurrentDisplayContentData=root.firstChildElement("CurrentDisplayContentData");
+    QDomNodeList domDisplayContentList=domCurrentDisplayContentData.elementsByTagName("CurrentDisplayContent");
+
+
+    Vdv301CurrentDisplayContent currentDisplayContentData;
+
+    currentDisplayContentData.timeStamp=parseTimestamp(domCurrentDisplayContentData.firstChildElement("TimeStamp").firstChildElement("Value").text());
+
+    for(int i=0;i<domDisplayContentList.count();i++)
+    {
+        currentDisplayContentData.displayContentList<<domDisplayContentToVdv301DisplayContent(domDisplayContentList.at(i).toElement());
+    }
+
+    return currentDisplayContentData;
+}
+
 
 
 

@@ -18,6 +18,22 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250403_2149
+    - option to subscribe CurrentDisplayContent
+    - Vdv301publisher
+          - Vdv301DataStructures
+                - added Vdv301CurrentDisplayContent
+    - Vdv301subscriber
+        - IbisIpSubscriber::structureName added setter and getter      
+
+    - MainWindow
+        - added window for received XML file
+        - added settings option to choose subscription structure
+        - new function showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent)
+        
+    - new function XmlParser2_3::parseCurrentDisplayContent2_3
+    - settings.ini updated to support CurrentDisplayContent option
+
 - 20250316_2359
     - InlineFormatParser::parseTextLcdRecursive
         - removed barva attribute

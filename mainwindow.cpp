@@ -7,7 +7,6 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     settings(configurationFilePath, QSettings::IniFormat),
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
-
     deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
 
 {
@@ -403,6 +402,17 @@ void MainWindow::loadConstants()
     }
     cisSubscriber.setPortNumber(settings.value("cisSubscriber/port").toUInt());
 
+    if(settings.value("cisSubscriber/structure").toString()=="")
+    {
+        cisSubscriber.setStructureName("AllData");
+    }
+    else
+    {
+        cisSubscriber.setStructureName(settings.value("cisSubscriber/structure").toString());
+    }
+
+
+
     menuSwitchTabs(settings.value("window/defaultScreen").toInt());
     if(settings.value("window/fullscreen").toBool()==true)
     {
@@ -797,7 +807,7 @@ void MainWindow::displayLabelFillArray()
     displayLabelLcd.labelFareZoneChangeTo=ui->label_fareZoneChangeTo;
 
 
-   //     displayLabelLcd.labelFareZoneChangeTo=ui->label_fareChangeAnnRight;
+    //     displayLabelLcd.labelFareZoneChangeTo=ui->label_fareChangeAnnRight;
 
 
 
@@ -1891,6 +1901,8 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 {
     qDebug() <<  Q_FUNC_INFO;
 
+
+    ui->plainTextEdit_debugReceivedXml->setPlainText(inputXmlString);
     receivedDataVariablesReset();
 
     xmlParser1_0.loadXmlFile(inputXmlString);
@@ -1926,13 +1938,26 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     else if(cisSubscriber.version()=="2.3")
     {
         xmlParser2_3.loadXmlFile(inputXmlString);
-        vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currenVdv301StopPointList);
 
-        if(vdv301AllData.tripInformationList.isEmpty())
+        if(cisSubscriber.structureName()=="AllData")
         {
-            eventNotOnLine();
-            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
-            return;
+            vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currenVdv301StopPointList);
+
+            if(vdv301AllData.tripInformationList.isEmpty())
+            {
+                eventNotOnLine();
+                displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
+                return;
+            }
+        }
+        else if (cisSubscriber.structureName()=="CurrentDisplayContent")
+        {
+            vdv301currentDisplayContent=xmlParser2_3.parseCurrentDisplayContent2_3(xmlParser2_3.receivedDataDomDocument);
+
+        }
+        else
+        {
+            qDebug()<<"unknown structure to parse";
         }
 
     }
@@ -1941,15 +1966,18 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     {
         xmlParser2_3CZ1_0.loadXmlFile(inputXmlString);
 
-        vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
 
-        if(vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
+        if(cisSubscriber.structureName()=="AllData")
         {
-            eventNotOnLine();
-            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData2_3CZ1_0.globalDisplayContentList);
-            return;
-        }
-        /*
+            vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
+
+            if(vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
+            {
+                eventNotOnLine();
+                displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData2_3CZ1_0.globalDisplayContentList);
+                return;
+            }
+            /*
         else
         {
             if(vdv301AllData.globalDisplayContentList.isEmpty())
@@ -1963,6 +1991,16 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             }
         }
 */
+        }
+        else if (cisSubscriber.structureName()=="CurrentDisplayContent")
+        {
+            vdv301currentDisplayContent=xmlParser2_3CZ1_0.parseCurrentDisplayContent2_3(xmlParser2_3CZ1_0.receivedDataDomDocument);
+        }
+        else
+        {
+            qDebug()<<"unknown structure to parse";
+        }
+
 
 
     }
@@ -1984,7 +2022,20 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     }
     else if(cisSubscriber.version()=="2.3CZ1.0")
     {
-        showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
+        if(cisSubscriber.structureName()=="AllData")
+        {
+            showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
+        }
+        else if(cisSubscriber.structureName()=="CurrentDisplayContent")
+        {
+            showReceivedDataVdv301_2_3CZ1_0(vdv301currentDisplayContent);
+        }
+        else
+        {
+            qDebug()<<"unknown structure to show";
+        }
+
+
         //showReceivedDataLedVdv301(vdv301AllData);
 
     }
@@ -2168,6 +2219,22 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
             eventDisplayAbnormalStateScreen("STOP INDEX <=0");
         }
     }
+}
+
+
+
+
+void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent)
+{
+    qDebug()<<Q_FUNC_INFO;
+
+    eraseTable(ui->tableWidget_debugStopList);
+    updateMainScreenDebugLabels();
+
+
+    QVector<Vdv301DisplayContent> emptyDisplayContentList;
+
+    showReceivedDataLedVdv301(emptyDisplayContentList,vdv301currentDisplayContent.displayContentList );
 }
 
 void MainWindow::receivedDataVariablesReset()

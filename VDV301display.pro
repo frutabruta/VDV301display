@@ -59,6 +59,7 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301connection.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301destination.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.cpp \
@@ -120,6 +121,7 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.h \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301connection.h \
+    VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.h \
     VDV301subscriber/VDV301DataStructures/vdv301destination.h \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.h \

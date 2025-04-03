@@ -83,6 +83,7 @@ private:
     SvgVykreslovani svgVykreslovani;
 
     CisSubscriber cisSubscriber;
+
     DeviceManagementService deviceManagementService;
 
 
@@ -95,6 +96,9 @@ private:
 
     Vdv301AllData vdv301AllData;
     Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
+
+    Vdv301CurrentDisplayContent vdv301currentDisplayContent;
+
     VehicleState vehicleState;
 
     QString nazevCile="";
@@ -263,11 +267,13 @@ private:
 
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
+    void showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent);
     void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
     void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones);
 
     void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
     void eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage, QVector<Vdv301InternationalText> additionalTextMessage1, QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3, QVector<Vdv301InternationalText> additionalTextMessage4);
+
 private slots:
 
     void on_actiontestPolozka_triggered();

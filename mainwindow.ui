@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_labelDisplay">
        <property name="sizePolicy">
@@ -3871,7 +3871,7 @@ border-radius: 30px;
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_subscription">
            <attribute name="title">
@@ -4152,6 +4152,9 @@ border-radius: 30px;
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="1" column="0">
+             <widget class="QPlainTextEdit" name="plainTextEdit_debugReceivedXml"/>
             </item>
            </layout>
           </widget>
