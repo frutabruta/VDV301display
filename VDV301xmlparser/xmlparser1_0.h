@@ -2,26 +2,38 @@
 #define XMLPARSER1_0_H
 
 #include "xmlparser.h"
-#include "VDV301subscriber/VDV301DataStructures/farezone.h"
-#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 
 class XmlParser1_0 : public XmlParser
 {
 public:
     XmlParser1_0();
-    int followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText);
-    int followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList);
-    int domDocumentVehicleGroupToVehicleState(VehicleState &vehicleState, QDomDocument xmlDocument);
-    int createStopList1_0(QVector<StopPointDestination> &tempStopList, QVector<StopPointDestination> &tempStopListFollowing, int &tempStopIndex);
 
+    Vdv301AllData parseAllData1_0(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
+    Vdv301CurrentDisplayContent parseCurrentDisplayContent1_0(QDomDocument input);
+
+    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);    
 protected:
-    Line propertyStringListToLine(QVector<QString> propertyStringList, Line inputLine);
-    QVector<Connection> domElementToConnectionList(QDomElement connectionsElement);
+    Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
+    QVector<Vdv301InternationalText> qDomNodeListToVdv301InternationalTextList(QDomNodeList domNodeList);
+    Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
+    Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
+    Vdv301Connection domElementToVdv301Connection(QDomElement connectionElement);
 
 private:
-    int tripToStoplist1_0(QVector<StopPointDestination> &tempStopList, QDomElement domInput);
-    QVector<FareZone> stopPointElementToFareZoneList1_0(QDomElement stopPointElement);
-    QVector<StopPoint> domStopPointToViaPointsVector(QDomElement stopPointElement);
+    QVector<Vdv301StopPoint> domStopListToVdv301TripStopList(QDomElement domTrip);
+    Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
+    Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
+    Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
+
+
+
+
+
 
 };
 

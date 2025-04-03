@@ -88,6 +88,8 @@ SOURCES += \
     VDV301subscriber/ibisipsubscriber.cpp \
     VDV301subscriber/xmlgeneratorsubscriber.cpp \
     VDV301subscriber/xmlparsersubscriber.cpp \
+    VDV301xmlparser/xmlparser1_0.cpp \
+    VDV301xmlparser/xmlparser1_0old.cpp \
     displaylabel.cpp \
     displaylabellcd.cpp \
     displaylabellcd2_3.cpp \
@@ -101,7 +103,6 @@ SOURCES += \
     svgvykreslovani.cpp \
     barvylinek.cpp \
     VDV301xmlparser/xmlparser.cpp \
-    VDV301xmlparser/xmlparser1_0.cpp \
     VDV301xmlparser/xmlparser2_2cz1_0.cpp \
     VDV301xmlparser/xmlparser2_3.cpp \
     VDV301xmlparser/xmlparser2_3cz1_0.cpp
@@ -151,6 +152,8 @@ HEADERS += \
     VDV301subscriber/ibisipsubscriberonepublisher.h \
     VDV301subscriber/xmlgeneratorsubscriber.h \
     VDV301subscriber/xmlparsersubscriber.h \
+    VDV301xmlparser/xmlparser1_0.h \
+    VDV301xmlparser/xmlparser1_0old.h \
     displaylabel.h \
     displaylabellcd.h \
     displaylabellcd2_3.h \
@@ -162,7 +165,6 @@ HEADERS += \
     svgvykreslovani.h \
     xmlparser.h \
     barvylinek.h \
-    VDV301xmlparser/xmlparser1_0.h \
     VDV301xmlparser/xmlparser2_2cz1_0.h \
     VDV301xmlparser/xmlparser2_3.h \
     VDV301xmlparser/xmlparser2_3cz1_0.h

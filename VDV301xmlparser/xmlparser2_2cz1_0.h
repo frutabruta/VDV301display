@@ -3,9 +3,9 @@
 
 #include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
 
-#include "xmlparser1_0.h"
+#include "xmlparser1_0old.h"
 
-class XmlParser2_2CZ1_0 : public XmlParser1_0
+class XmlParser2_2CZ1_0 : public XmlParser1_0old
 {
 public:
     XmlParser2_2CZ1_0();

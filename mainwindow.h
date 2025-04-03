@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "VDV301xmlparser/xmlparser1_0.h"
+#include "VDV301xmlparser/xmlparser1_0old.h"
 #include "VDV301xmlparser/xmlparser2_2cz1_0.h"
 #include "VDV301xmlparser/xmlparser2_3.h"
 #include "VDV301xmlparser/xmlparser2_3cz1_0.h"
@@ -69,7 +69,7 @@ private:
     QSettings settings;
 
     // complex class instances
-    XmlParser1_0 xmlParser1_0;
+    XmlParser1_0old xmlParser1_0;
     XmlParser2_2CZ1_0 xmlParser2_2CZ1_0;
     XmlParser2_3 xmlParser2_3;
     XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
