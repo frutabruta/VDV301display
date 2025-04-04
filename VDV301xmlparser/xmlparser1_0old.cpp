@@ -193,8 +193,8 @@ int XmlParser1_0old::domDocumentVehicleGroupToVehicleState(VehicleState &vehicle
     vehicleState.currentStopIndex0=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1; //-1
     vehicleState.isVehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
     vehicleState.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue());
-    vehicleState.vehicleMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
-    vehicleState.vehicleSubMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement(vehicleState.vehicleMode).firstChild().nodeValue();
+    // vehicleState.vehicleMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
+    //  vehicleState.vehicleSubMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement(vehicleState.vehicleMode).firstChild().nodeValue();
     qDebug()<<"stopIndex "<<QString::number(vehicleState.currentStopIndex0)<<"stopRequested "<<vehicleState.isVehicleStopRequested<<" locState "<<vehicleState.locationState;
 
     return 1;
@@ -281,9 +281,13 @@ QVector<Connection> XmlParser1_0old::domElementToConnectionList(QDomElement conn
     {
         Connection selectedConnection;
         QDomElement selectedConnectionElement=connectionNodeList.at(i).toElement();
-        selectedConnection.connectionProperty=selectedConnectionElement.firstChildElement("ConnectionProperty").firstChild().nodeValue();
 
+        // StopRef" type="IBIS-IP.NMTOKEN">
+        // ConnectionRef" type="IBIS-IP.NMTOKEN">
+        // ConnectionType" type="ConnectionTypeEnumeration">
         selectedConnection.connectionType=selectedConnectionElement.firstChildElement("ConnectionType").firstChild().nodeValue();
+
+        // DisplayContent" type="DisplayContentStructure">
 
         QDomElement displayContent=selectedConnectionElement.firstChildElement("DisplayContent");
         QDomElement lineInformation=displayContent.firstChildElement("LineInformation");
@@ -292,20 +296,6 @@ QVector<Connection> XmlParser1_0old::domElementToConnectionList(QDomElement conn
         selectedConnection.line.lineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
 
         selectedConnection.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
-        selectedConnection.expectedDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
-
-        selectedConnection.scheduledDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
-
-        QDateTime timestamp = selectedConnection.expectedDepartureTime;
-        // timestamp.setTimeSpec(Qt::UTC); // mark the timestamp as UTC (but don't convert it)
-        //  timestamp = timestamp.toLocalTime(); // convert to local time
-
-
-        selectedConnection.platform=selectedConnectionElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();
-
-        QDomElement connectionMode=selectedConnectionElement.firstChildElement("ConnectionMode");
-        selectedConnection.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
-        selectedConnection.subMode=connectionMode.firstChildElement(selectedConnection.mainMode).firstChild().nodeValue();
 
         QVector<QString> linePropertyStringList;
 
@@ -318,7 +308,27 @@ QVector<Connection> XmlParser1_0old::domElementToConnectionList(QDomElement conn
         }
         selectedConnection.line=propertyStringListToLine(linePropertyStringList,selectedConnection.line);
 
-        //    qDebug()<<"XmlParser::nactiPrestupy "<<aktualniPrestup.connectionProperty<<" "<<aktualniPrestup.line.LineName<<" "<<aktualniPrestup.destinationName<<" "<<aktualniPrestup.expectedDepartureTime<<" "<<aktualniPrestup.mainMode<<" "<<aktualniPrestup.subMode<<" "<<aktualniPrestup.platform<<" replacement "<<aktualniPrestup.line.isReplacement;
+
+        // Platform" type="IBIS-IP.string" minOccurs="0">
+        selectedConnection.platform=selectedConnectionElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();
+
+
+        // ConnectionState" type="ConnectionStateEnumeration" minOccurs="0">
+        // TransportMode" type="VehicleStructure" minOccurs="0">
+        // ExpectedDepatureTime" type="IBIS-IP.dateTime" minOccurs="0">
+        selectedConnection.expectedDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ExpectedDepatureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
+
+
+
+        selectedConnection.connectionProperty=selectedConnectionElement.firstChildElement("ConnectionProperty").firstChild().nodeValue();
+
+        //   selectedConnection.scheduledDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
+
+        QDateTime timestamp = selectedConnection.expectedDepartureTime;
+
+        QDomElement connectionMode=selectedConnectionElement.firstChildElement("ConnectionMode");
+     //   selectedConnection.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
+    //    selectedConnection.subMode=connectionMode.firstChildElement(selectedConnection.mainMode).firstChild().nodeValue();
 
         output.push_back(selectedConnection);
     }

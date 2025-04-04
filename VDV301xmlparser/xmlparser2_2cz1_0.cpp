@@ -252,3 +252,135 @@ int XmlParser2_2CZ1_0::parseAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QS
 }
 
 
+
+QVector<Connection> XmlParser2_2CZ1_0::domElementToConnectionList(QDomElement connectionsElement)
+{
+    //rozepsano
+    qDebug()<<Q_FUNC_INFO;
+    QVector<Connection> output;
+
+    QDomNodeList connectionNodeList=connectionsElement.elementsByTagName("Connection") ;
+
+    for (int i=0;i<connectionNodeList.count();i++)
+    {
+        Connection selectedConnection;
+        QDomElement selectedConnectionElement=connectionNodeList.at(i).toElement();
+
+        // StopRef" type="IBIS-IP.NMTOKEN">
+        // ConnectionRef" type="IBIS-IP.NMTOKEN">
+        // ConnectionType" type="ConnectionTypeEnumeration">
+        selectedConnection.connectionType=selectedConnectionElement.firstChildElement("ConnectionType").firstChild().nodeValue();
+
+        // DisplayContent" type="DisplayContentStructure">
+
+        QDomElement displayContent=selectedConnectionElement.firstChildElement("DisplayContent");
+        QDomElement lineInformation=displayContent.firstChildElement("LineInformation");
+
+        selectedConnection.line.lineName=lineInformation.firstChildElement("LineName").firstChildElement("Value").firstChild().nodeValue();
+        selectedConnection.line.lineNumber=lineInformation.firstChildElement("LineNumber").firstChildElement("Value").firstChild().nodeValue();
+
+        selectedConnection.destinationName=displayContent.firstChildElement("Destination").firstChildElement("DestinationName").firstChildElement("Value").firstChild().nodeValue();
+
+        QVector<QString> linePropertyStringList;
+
+        QDomNodeList linePropertyElementList=selectedConnectionElement.elementsByTagName("LineProperty");
+
+        for(int j=0; j<linePropertyElementList.count();j++)
+        {
+            QString propertyValue=linePropertyElementList.at(j).firstChild().nodeValue();
+            linePropertyStringList.push_back(propertyValue);
+        }
+        selectedConnection.line=propertyStringListToLine(linePropertyStringList,selectedConnection.line);
+
+
+        // Platform" type="IBIS-IP.string" minOccurs="0">
+        selectedConnection.platform=selectedConnectionElement.firstChildElement("Platform").firstChildElement("Value").firstChild().nodeValue();
+
+
+        // ConnectionState" type="ConnectionStateEnumeration" minOccurs="0">
+        // TransportMode" type="VehicleStructure" minOccurs="0">
+        // ExpectedDepatureTime" type="IBIS-IP.dateTime" minOccurs="0">
+        selectedConnection.expectedDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
+        selectedConnection.scheduledDepartureTime=QDateTime::fromString( selectedConnectionElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").firstChild().nodeValue(),Qt::ISODate);
+
+
+
+        selectedConnection.connectionProperty=selectedConnectionElement.firstChildElement("ConnectionProperty").firstChild().nodeValue();
+
+       
+        QDateTime timestamp = selectedConnection.expectedDepartureTime;
+
+        QDomElement connectionMode=selectedConnectionElement.firstChildElement("ConnectionMode");
+        selectedConnection.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
+        selectedConnection.subMode=connectionMode.firstChildElement(selectedConnection.mainMode).firstChild().nodeValue();
+
+        output.push_back(selectedConnection);
+    }
+    return output;
+}
+
+
+
+Line XmlParser2_2CZ1_0::propertyStringListToLine(QVector<QString> propertyStringList, Line inputLine)
+{
+    qDebug()<<Q_FUNC_INFO;
+    // qDebug()<<"linka je nocni:"<<vstupniLinka.isNight;
+    foreach(QString selectedPropertyString,propertyStringList)
+    {
+        //  qDebug()<<"priznakLinky: "<<textPriznak;
+        if(selectedPropertyString=="Night")
+        {
+            inputLine.isNight=true;
+            //  qDebug()<<"linka je nocni";
+        }
+        if(selectedPropertyString=="Day")
+        {
+            inputLine.isNight=false;
+        }
+        if(selectedPropertyString=="Diversion")
+        {
+            inputLine.isDiversion=true;
+        }
+        if(selectedPropertyString=="Replacement")
+        {
+            inputLine.isReplacement=true;
+            qDebug()<<"line is replacement";
+        }
+        if(selectedPropertyString=="Special")
+        {
+            inputLine.isSpecial=true;
+        }
+        if(selectedPropertyString=="WheelChair")
+        {
+            inputLine.isWheelchair=true;
+        }
+        /*
+        if(selectedPropertyString=="XXX")
+        {
+            inputLine.XXX=true;
+        }
+        */
+    }
+
+    return inputLine;
+
+}
+
+
+
+int XmlParser2_2CZ1_0::domDocumentVehicleGroupToVehicleState(VehicleState &vehicleState,QDomDocument xmlDocument )
+{
+    qDebug()<<Q_FUNC_INFO;
+    QDomElement root = xmlDocument.firstChildElement();
+    qDebug()<<"root name "<<root.nodeName();
+    QDomElement allData=root.firstChildElement("AllData");
+    qDebug()<<"alldata name "<<allData.nodeName();
+    vehicleState.currentStopIndex0=allData.firstChildElement("CurrentStopIndex").firstChildElement().firstChild().nodeValue().toInt()-1; //-1
+    vehicleState.isVehicleStopRequested=allData.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+    vehicleState.locationState=Vdv301Enumerations::LocationStateEnumerationFromQString(allData.firstChildElement("TripInformation").firstChildElement("LocationState").firstChild().nodeValue());
+    vehicleState.vehicleMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
+    vehicleState.vehicleSubMode=allData.firstChildElement("MyOwnVehicleMode").firstChildElement(vehicleState.vehicleMode).firstChild().nodeValue();
+    qDebug()<<"stopIndex "<<QString::number(vehicleState.currentStopIndex0)<<"stopRequested "<<vehicleState.isVehicleStopRequested<<" locState "<<vehicleState.locationState;
+
+    return 1;
+}

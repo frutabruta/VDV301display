@@ -66,16 +66,21 @@ Vdv301CurrentDisplayContent XmlParser1_0::parseCurrentDisplayContent1_0(QDomDocu
 Vdv301VehicleInformationGroup XmlParser1_0::domAllDataToVdv301VehicleInformationGroup(QDomElement input)
 {
     Vdv301VehicleInformationGroup output;
-
+    // RouteDeviation" type="RouteDeviationEnumeration">
+    output.routeDeviation=Vdv301Enumerations::RouteDeviationEnumerationFromQString(input.firstChildElement("DoorState").text());
+    // DoorState" type="DoorOpenStateEnumeration" minOccurs="0">
     output.doorState=Vdv301Enumerations::DoorOpenStateEnumerationFromQString(input.firstChildElement("DoorState").text());
-    //output.tripState=
-    //output.exitSide=
-    //output.inPanic=
-    //output.routeDeviation
-    output.vehicleMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
-    output.vehicleSubMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement(output.vehicleMode).firstChild().nodeValue();
+
+    // InPanic" type="IBIS-IP.boolean" minOccurs="0">
+    output.inPanic=input.firstChildElement("InPanic").firstChildElement("Value").firstChild().nodeValue().toInt() ;
+    // VehicleStopRequested" type="IBIS-IP.boolean" minOccurs="0">
     output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
 
+    // ExitSide" type="ExitSideEnumeration" minOccurs="0">
+ //   output.exitSide=input.firstChildElement("ExitSide").firstChild().nodeValue();
+
+        // MovingDirectionForward" type="IBIS-IP.boolean" minOccurs="0">
+    // VehicleMode" type="VehicleModeEnumeration" minOccurs="0"/>
 
     return output;
 }
@@ -161,14 +166,8 @@ Vdv301StopPoint XmlParser1_0::domStopPointToVdv301StopPoint( QDomElement domStop
     // ArrivalScheduled minOccurs="0"
     temporaryStopPoint.arrivalScheduled=domStopPoint.firstChildElement("ArrivalScheduled").firstChildElement("Value").text();
 
-    // ArrivalExpected minOccurs="0"
-    temporaryStopPoint.arrivalExpected=domStopPoint.firstChildElement("ArrivalExpected").firstChildElement("Value").text();
-
     // DepartureScheduled minOccurs="0"
     temporaryStopPoint.departureScheduled=domStopPoint.firstChildElement("DepartureScheduled").firstChildElement("Value").text();
-
-    // DepartureExpected minOccurs="0"
-    temporaryStopPoint.departureExpected=domStopPoint.firstChildElement("DepartureExpected").firstChildElement("Value").text();
 
     // RecordedArrivalTime minOccurs="0"
     // DistanceToNextStop minOccurs="0"
@@ -192,9 +191,13 @@ Vdv301StopPoint XmlParser1_0::domStopPointToVdv301StopPoint( QDomElement domStop
 Vdv301DisplayContent XmlParser1_0::domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom)
 {
     Vdv301DisplayContent temporaryDisplayContent;
+
+
+    //DisplayContentRef" type="IBIS-IP.NMTOKEN" minOccurs="0">
     temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
     temporaryDisplayContent.displayContentType=Vdv301DisplayContent::qStringToDisplayContentClass(selectedDisplayContentDom.firstChildElement("DisplayContentRef").text());
-    //QStringList temporaryDestinationList;
+
+    //LineInformation" type="LineInformationStructure">
     QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
     Vdv301Line temporaryLine;
     temporaryLine.lineRef=lineInformationDom.firstChildElement("LineRef").firstChildElement("Value").text();
@@ -210,7 +213,7 @@ Vdv301DisplayContent XmlParser1_0::domDisplayContentToVdv301DisplayContent(QDomE
 
     temporaryDisplayContent.lineInformation=temporaryLine;
 
-
+    //Destination" type="DestinationStructure">
     QDomNode destinationDom=selectedDisplayContentDom.firstChildElement("Destination");
     Vdv301Destination temporaryDestination;
     temporaryDestination.destinationRef=destinationDom.firstChildElement("DestinationRef").text();
@@ -224,11 +227,15 @@ Vdv301DisplayContent XmlParser1_0::domDisplayContentToVdv301DisplayContent(QDomE
     }
     temporaryDisplayContent.destination=temporaryDestination;
 
+    //ViaPoint" type="ViaPointStructure" minOccurs="0" maxOccurs="unbounded">
     QDomNodeList viaPointDomList=selectedDisplayContentDom.elementsByTagName("ViaPoint");
     for(int k=0;k<viaPointDomList.count();k++)
     {
         temporaryDisplayContent.viaPointList.append(domViaPointToVdv301ViaPoint(viaPointDomList.at(k).toElement()));
     }
+
+    //AdditionalInformation" type="InternationalTextType" minOccurs="0" maxOccurs="unbounded">
+    //"DisplayPolicyGroup" minOccurs="0">
 
 
     return temporaryDisplayContent;
@@ -258,7 +265,10 @@ Vdv301Connection XmlParser1_0::domElementToVdv301Connection(QDomElement connecti
 
     Vdv301Connection output;
 
-
+    //StopRef" type="IBIS-IP.NMTOKEN">
+    //ConnectionRef" type="IBIS-IP.NMTOKEN">
+    //ConnectionType" type="ConnectionTypeEnumeration">
+    //DisplayContent" type="DisplayContentStructure">
     QDomNodeList displayContentList=connectionElement.elementsByTagName("DisplayContent");
 
     for (int j = 0; j < displayContentList.count(); ++j)
@@ -266,20 +276,21 @@ Vdv301Connection XmlParser1_0::domElementToVdv301Connection(QDomElement connecti
         output.vdv301displayContentList<<domDisplayContentToVdv301DisplayContent(displayContentList.at(j).toElement());
     }
 
-
-    output.expectedDepartureTime=parseTimestamp(connectionElement.firstChildElement("ExpectedDepartureTime").firstChildElement("Value").text());
-    output.scheduledDepartureTime=parseTimestamp(connectionElement.firstChildElement("ScheduledDepartureTime").firstChildElement("Value").text());
-
-
+    //Platform" type="IBIS-IP.string" minOccurs="0">
     output.platform=connectionElement.firstChildElement("Platform").firstChildElement("Value").text();
+    //ConnectionState" type="ConnectionStateEnumeration" minOccurs="0">
+    //TransportMode" type="VehicleStructure" minOccurs="0">
+    //ExpectedDepatureTime" type="IBIS-IP.dateTime" minOccurs="0">
+    output.expectedDepartureTime=parseTimestamp(connectionElement.firstChildElement("ExpectedDepatureTime").firstChildElement("Value").text());
 
+
+
+
+    /*
     QDomElement connectionMode=connectionElement.firstChildElement("ConnectionMode");
     output.mainMode=connectionMode.firstChildElement("PtMainMode").firstChild().nodeValue();
     output.subMode=connectionMode.firstChildElement(output.mainMode).firstChild().nodeValue();
-
-
-
-
+*/
     return output;
 }
 

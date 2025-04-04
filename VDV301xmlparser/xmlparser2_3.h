@@ -1,14 +1,14 @@
 #ifndef XMLPARSER2_3_H
 #define XMLPARSER2_3_H
 
-#include "xmlparser.h"
+#include "xmlparser1_0.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301trip.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 
-class XmlParser2_3 : public XmlParser
+class XmlParser2_3 : public XmlParser1_0
 {
 public:
     XmlParser2_3();
@@ -18,8 +18,6 @@ public:
 
     bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);    
 protected:
-    Vdv301InternationalText qDomNodeToVdv301InternationalText(QDomNode domNode);
-    QVector<Vdv301InternationalText> qDomNodeListToVdv301InternationalTextList(QDomNodeList domNodeList);
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
     Vdv301Connection domElementToVdv301Connection(QDomElement connectionElement);

@@ -303,22 +303,5 @@ Vdv301Destination XmlParser::qDomNodeListToVdv301Destination(QDomNodeList input)
 */
 
 
-Vdv301InternationalText XmlParser2_3::qDomNodeToVdv301InternationalText(QDomNode domNode)
-{
-    Vdv301InternationalText output;
-    output.text=domNode.firstChildElement("Value").text();
-    output.language=domNode.firstChildElement("Language").text();
-
-    return output;
-}
 
 
-QVector<Vdv301InternationalText> XmlParser2_3::qDomNodeListToVdv301InternationalTextList(QDomNodeList domNodeList)
-{
-    QVector<Vdv301InternationalText> output;
-    for(int i=0;i<domNodeList.count();i++)
-    {
-        output<<Vdv301InternationalText(domNodeList.at(i).firstChildElement("Value").text(),domNodeList.at(i).firstChildElement("Language").text());
-    }
-    return output;
-}
