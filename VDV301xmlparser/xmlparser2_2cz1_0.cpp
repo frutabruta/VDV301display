@@ -384,3 +384,31 @@ int XmlParser2_2CZ1_0::domDocumentVehicleGroupToVehicleState(VehicleState &vehic
 
     return 1;
 }
+
+
+int XmlParser2_2CZ1_0::followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList)
+{
+    if (followingStopPointDestinationList.isEmpty())
+    {
+        return false;
+    }
+    return true;
+
+
+}
+
+
+int XmlParser2_2CZ1_0::followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText)
+{
+    if (tempStopPointDestinationList.isEmpty())
+    {
+        return 0;
+    }
+    lineText=tempStopPointDestinationList.first().line.lineName;
+    destinationText=tempStopPointDestinationList.first().destination.NameLcd;
+
+
+    return 1;
+}
+
+

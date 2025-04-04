@@ -13,6 +13,8 @@ public:
     int parseFareZoneChange(QDomDocument xmlko, QVector<FareZone> &pasmaZ, QVector<FareZone> &pasmaNa);
     int parseAdditionalTextMessage2_2CZ1_0(QDomDocument xmlko, QString &type, QString &headline, QString &text);
     int domDocumentVehicleGroupToVehicleState(VehicleState &vehicleState, QDomDocument xmlDocument);
+    int followingTripExists(QVector<StopPointDestination> followingStopPointDestinationList);
+    int followingTripLineDestination(QVector<StopPointDestination> &tempStopPointDestinationList, QString &lineText, QString &destinationText);
 private:
     QVector<FareZone> domToFareZoneList2_2CZ1_0(QDomElement domStopPoint);
     int parseStopPointDestinationList2_2CZ1_0(QVector<StopPointDestination> &docasnySeznamZst, QDomElement vstup);

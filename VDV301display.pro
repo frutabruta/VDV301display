@@ -89,7 +89,10 @@ SOURCES += \
     VDV301subscriber/xmlgeneratorsubscriber.cpp \
     VDV301subscriber/xmlparsersubscriber.cpp \
     VDV301xmlparser/xmlparser1_0.cpp \
-    VDV301xmlparser/xmlparser1_0old.cpp \
+    VDV301xmlparser/xmlparser.cpp \
+    VDV301xmlparser/xmlparser2_2cz1_0.cpp \
+    VDV301xmlparser/xmlparser2_3.cpp \
+    VDV301xmlparser/xmlparser2_3cz1_0.cpp \
     displaylabel.cpp \
     displaylabellcd.cpp \
     displaylabellcd2_3.cpp \
@@ -101,11 +104,8 @@ SOURCES += \
         mainwindow.cpp \
     pasmovedvojicelcd.cpp \
     svgvykreslovani.cpp \
-    barvylinek.cpp \
-    VDV301xmlparser/xmlparser.cpp \
-    VDV301xmlparser/xmlparser2_2cz1_0.cpp \
-    VDV301xmlparser/xmlparser2_3.cpp \
-    VDV301xmlparser/xmlparser2_3cz1_0.cpp
+    barvylinek.cpp
+
 
 HEADERS += \
     VDV301subscriber/VDV301DataStructures/additionalannoucement.h \
@@ -153,7 +153,9 @@ HEADERS += \
     VDV301subscriber/xmlgeneratorsubscriber.h \
     VDV301subscriber/xmlparsersubscriber.h \
     VDV301xmlparser/xmlparser1_0.h \
-    VDV301xmlparser/xmlparser1_0old.h \
+    VDV301xmlparser/xmlparser2_2cz1_0.h \
+    VDV301xmlparser/xmlparser2_3.h \
+    VDV301xmlparser/xmlparser2_3cz1_0.h \
     displaylabel.h \
     displaylabellcd.h \
     displaylabellcd2_3.h \
@@ -164,10 +166,7 @@ HEADERS += \
     pasmovedvojicelcd.h \
     svgvykreslovani.h \
     xmlparser.h \
-    barvylinek.h \
-    VDV301xmlparser/xmlparser2_2cz1_0.h \
-    VDV301xmlparser/xmlparser2_3.h \
-    VDV301xmlparser/xmlparser2_3cz1_0.h
+    barvylinek.h
 
 FORMS += \
         mainwindow.ui

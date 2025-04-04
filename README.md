@@ -18,8 +18,10 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250404_1944
+    - 1.0 now parsed using Vdv301 data structures
 - 20250404_1837
-    - XmlPasrser fixes of departure time
+    - XmlParser fixes of departure time
     - **last version to support parsing 1.0 to VehicleState variables**
 - 20250404_0039
     - renamed VehicleState 1.0 parser to XmlParser1_0
