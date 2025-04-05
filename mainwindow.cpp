@@ -54,8 +54,6 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     ledLabelInitialize2_3();
     lcdLabelInitialize2_3();
 
-
-    labelLcdUpdateStopBackgroundVehicleState();
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
     eventStopRequestedDectivated();
@@ -152,11 +150,7 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_deviceClass->setText(deviceManagementService.deviceClass());
     ui->label_deviceID->setText(deviceManagementService.deviceId());
 
-    if((cisSubscriber.version()=="1.0")||(cisSubscriber.version()=="2.2CZ1.0"))
-    {
-        ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vehicleState.locationState));
-    }
-    else if(cisSubscriber.version()=="2.3CZ1.0")
+    if(cisSubscriber.version()=="2.3CZ1.0")
     {
         if(!vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
         {
@@ -671,11 +665,9 @@ void MainWindow::slotMoveScrollingText()
     if (abs(displayLabelLcd.scrollingTextOffset)>textWidthPixels)
     {
         displayLabelLcd.scrollingTextOffset=0;
-        displayLabelLcd.vykresliNacestneForce(currentDestinationPointList,vehicleState,displayLabelLcd.labelViaPointsScrolling,displayLabelLcd.vdv301version());
     }
 
     else
-
     {
         ui->scrollAreaWidgetContents->scroll(-stepSize,0);
     }
@@ -874,12 +866,6 @@ void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,
 
 }
 
-void MainWindow::eventShowPageFareZoneChange(QVector<FareZone> fromFareZones, QVector<FareZone> toFareZones)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    displayLabelShowFareZoneChange(fromFareZones,toFareZones);
-    svgVykreslovani.zobrazZmenuPasma(fromFareZones,toFareZones);
-}
 
 void MainWindow::eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones)
 {
@@ -935,149 +921,6 @@ void MainWindow::eventNotOnLine()
 }
 
 
-int MainWindow::showReceivedDataLcdVehicleState()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    displayNormalOnLineState();
-
-    setDestinationName();
-    eventLcdSetMainPage();
-    eventEraseDisplayInformation();
-
-    if(vehicleState.isVehicleStopRequested)
-    {
-        eventStopRequestedActivated();
-    }
-    else
-    {
-        eventStopRequestedDectivated();
-    }
-
-    ui->label_currentStopIndex->setText(QString::number(vehicleState.currentStopIndex0+1));
-
-
-    if(vehicleState.currentStopIndex0<0 )
-    {
-        popUpMessage("index zastavky je mensi nez 0");
-        return 0;
-    }
-
-    displayLabelLcd.displayLabelDestination(nazevCile);
-    displayLabelLcd.displayLabelLineName(currentDestinationPointList.at(vehicleState.currentStopIndex0),vehicleState.vehicleSubMode);
-    displayLabelLcd.displayLabelStopFareZone(currentDestinationPointList,nextDestinationPointList,vehicleState);
-    displayLabelLcd.displayLabelViaPoints(currentDestinationPointList,vehicleState);
-
-    displayLabelLcd.pageCycleList.clear();
-
-    //strankyKeStridani.push_back(ui->page_hlavni_2);
-
-
-
-    if(!xmlParser2_2CZ1_0.followingTripExists(nextDestinationPointList))
-    {
-        qDebug()<<"navazny spoj neni";
-        ui->frame_navaznySpoj->hide();
-        // ui->horizontalLayout_navaznySpoj;
-
-    }
-    else
-    {
-        QString navaznyCil="";
-        QString navaznaLinka="";
-        if(xmlParser2_2CZ1_0.followingTripLineDestination(nextDestinationPointList,navaznaLinka,navaznyCil))
-        {
-            eventLcdShowFollowingTripDestination(navaznaLinka,navaznyCil);
-        }
-    }
-
-
-
-    //konecna
-
-    if(isVehicleOnFinalStop(vehicleState,currentDestinationPointList)&&(!xmlParser2_2CZ1_0.followingTripExists(nextDestinationPointList)))
-    {
-        displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
-        displayLabelShowPageFinalStop();
-    }
-    else
-    {
-        if(isFareZone==true)
-        {
-            eventShowPageFareZoneChange(fareZoneChangeFrom,fareZoneChangeTo);
-        }
-        else
-        {
-            if(xmlParser1_0.dataChanged==true)
-            {
-                eventLcdReturnToStopList();
-            }
-            displayLabelLcd.pageCycleList.push_back(ui->page_hlavni_2);
-            // skryjZmenuPasma();
-
-            //additional text message
-
-            if(additionalTextMessageText!="")
-            {
-                eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
-
-            }
-            else
-            {
-                displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
-            }
-        }
-
-    }
-
-    if(!currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList.isEmpty())
-    {
-        displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
-        displayLabelLcd.displayLabelConnectionList(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList);
-    }
-
-    //   hlavniVykresliNasledne();
-
-    labelLcdUpdateStopBackgroundVehicleState();
-
-    displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
-    lcdLabelCurrentPageIndex=0;
-
-
-    displayLabelLcd.timerLabelPageSwitch.start();
-
-
-
-    connectionListToTable(currentDestinationPointList.at(vehicleState.currentStopIndex0).stopPoint.connectionList,ui->tableWidget_connections);
-
-    return 1;
-}
-
-void MainWindow::showReceivedDataLedVehicleState()
-{
-    if(cisSubscriber.version()=="2.3")
-    {
-        displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(displayLabelLed.ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
-
-    }
-    else if(cisSubscriber.version()=="2.3CZ1.0")
-    {
-        if(vdv301AllData.globalDisplayContentList.isEmpty())
-        {
-            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(displayLabelLed.ledUpdateCurrentStopToDisplayContentList2_3(currenVdv301StopPointList,vehicleState));
-        }
-        else
-        {
-            displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData.globalDisplayContentList);
-            return;
-        }
-
-    }
-    else
-    {
-        displayLabelLed.ledUpdateDisplayedInformation(currentDestinationPointList,vehicleState);
-    }
-}
 
 void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList)
 {
@@ -1205,19 +1048,32 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         }
         else
         {
-            if(isFareZone==true)
-            {
-                eventShowPageFareZoneChange(fareZoneChangeFrom,fareZoneChangeTo);
-            }
-            else
+
+
+            if(cisSubscriber.version()=="1.0")
             {
                 if(xmlParser1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
-                displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
-                // skryjZmenuPasma();
             }
+            else if(cisSubscriber.version()=="2.3")
+            {
+                if(xmlParser2_3.dataChanged==true)
+                {
+                    eventLcdReturnToStopList();
+                }
+            }
+            else
+            {
+                qDebug()<<"unsupported version";
+            }
+
+
+            displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+            // skryjZmenuPasma();
+
+
         }
 
         if(!currentVdvStopPoint.connectionList.isEmpty())
@@ -1239,7 +1095,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
     }
 
     //additional text message
-
+    /*
     if(additionalTextMessageText!="")
     {
         eventShowPageSpecialAnnouncement(additionalTextMessageHeadline,additionalTextMessageType,additionalTextMessageText,"");
@@ -1249,7 +1105,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
     {
         displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
     }
-
+*/
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     lcdLabelCurrentPageIndex=0;
@@ -1403,7 +1259,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             {
 
                 displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
-                if(xmlParser1_0.dataChanged==true)
+                if(xmlParser2_3CZ1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
@@ -1561,22 +1417,6 @@ void MainWindow::handleDisplayContentRear(QVector<Vdv301DisplayContent> displayC
 
 
 
-void MainWindow::debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek,bool navazny)
-{
-
-    if(!navazny)
-    {
-        eraseTable(ui->tableWidget_debugStopList);
-    }
-
-    foreach(StopPointDestination polozka, seznamZastavek)
-    {
-        debugStopPointToTable(polozka,navazny);
-    }
-}
-
-
-
 void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek,bool navazny)
 {
 
@@ -1605,56 +1445,6 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> sezn
     }
 }
 
-
-
-
-
-
-int MainWindow::setDestinationName()
-{
-    qDebug() <<  Q_FUNC_INFO;
-    // qInfo()<<"\n DoplneniPromennych";
-
-
-    if ((currentDestinationPointList.size()>stopIndex)&&(stopIndex>=0))
-    {
-        StopPointDestination aktualniZastavka=currentDestinationPointList.at(stopIndex);
-
-        if((cisSubscriber.version()=="2.3")||(cisSubscriber.version()=="2.3CZ1.0"))
-        {
-            nazevCile=displayLabelLcd.inlineFormatParser.parseTextLcd(aktualniZastavka.destination.NameLcd,ui->Lcil->font().pixelSize(),displayLabelLcd.slozkaPiktogramu);
-
-        }
-        else
-        {
-            nazevCile=displayLabelLcd.zabalHtmlDoZnacek(displayLabelLcd.doplnPiktogramyBezZacatkuKonce(aktualniZastavka.destination.NameLcd,aktualniZastavka.destination.iconList,ui->Lcil->font().pixelSize()));
-        }
-
-    }
-    else
-    {
-        qDebug()<<"indexZastavky je"<<QString::number(stopIndex)<<" velikost globSezZast="<<QString::number(currentDestinationPointList.size());
-    }
-    qInfo()<<"nazevCile "<<nazevCile;
-    return 1;
-}
-
-void MainWindow::labelLcdUpdateStopBackgroundVehicleState()
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-
-
-
-    if (vehicleState.locationState==Vdv301Enumerations::LocationStateAtStop )
-    {
-        labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
-    }
-    else
-    {
-        labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
-    }
-}
 
 
 void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState)
@@ -1707,39 +1497,6 @@ void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
     }
 }
 
-
-void MainWindow::debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    qint32 row;
-    QTableWidgetItem *cell;
-
-
-    /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
-
- */
-    row = ui->tableWidget_debugStopList->rowCount();
-    ui->tableWidget_debugStopList->insertRow(row);
-
-    QString stopName=InlineFormatParser::parseTextLed(selectedStopPointDestination.stopPoint.NameLcd);
-
-    cell = new QTableWidgetItem(stopName);
-
-    if(isFollowingTrip)
-    {
-        cell->setBackground(QColor(240,240,240));
-    }
-    ui->tableWidget_debugStopList->setItem(row, 0, cell);
-
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.line.lineName));
-    ui->tableWidget_debugStopList->setItem(row, 1, cell);
-
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(selectedStopPointDestination.destination.NameLcd));
-    ui->tableWidget_debugStopList->setItem(row, 2, cell);
-
-    ui->tableWidget_debugStopList->resizeColumnsToContents();
-}
 
 
 void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip)
@@ -1798,17 +1555,6 @@ void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestinat
 
 }
 
-void MainWindow::connectionListToTable(QVector<Connection> connectionList,QTableWidget* tableWidget)
-{
-
-    eraseTable(tableWidget);
-
-
-    foreach(Connection connection, connectionList)
-    {
-        connectionToTable(connection,tableWidget);
-    }
-}
 
 
 void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,QTableWidget* tableWidget)
@@ -1822,37 +1568,8 @@ void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,
         connectionToTable(connection,tableWidget);
     }
 }
-void MainWindow::connectionToTable(Connection connection, QTableWidget* tableWidget)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    qint32 row;
-    QTableWidgetItem *cell;
-
-    /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
-
- */
-
-    row = tableWidget->rowCount();
-    tableWidget->insertRow(row);
-
-    cell = new QTableWidgetItem(InlineFormatParser::parseTextLed( connection.line.lineName));
-
-    tableWidget->setItem(row, 0, cell);
-
-    cell = new QTableWidgetItem(connection.destinationName);
-    tableWidget->setItem(row, 1, cell);
-
-    cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
-    tableWidget->setItem(row, 2, cell);
-
-    cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
-    tableWidget->setItem(row, 3, cell);
-
-    tableWidget->resizeColumnsToContents();
 
 
-}
 
 
 void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* tableWidget)
@@ -1909,8 +1626,8 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     ui->plainTextEdit_debugReceivedXml->setPlainText(inputXmlString);
     receivedDataVariablesReset();
 
-  //  xmlParser1_0.loadXmlFile(inputXmlString);
-  //  qDebug()<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
+    //  xmlParser1_0.loadXmlFile(inputXmlString);
+    //  qDebug()<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
 
     receivedMessagesCounter++;
     ui->label_messageCounter->setText(QString::number(receivedMessagesCounter));
@@ -1922,7 +1639,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
         if(cisSubscriber.structureName()=="AllData")
         {
-            vdv301AllData=xmlParser1_0.parseAllData1_0(xmlParser1_0.receivedDataDomDocument,currenVdv301StopPointList);
+            vdv301AllData=xmlParser1_0.parseAllData1_0(xmlParser1_0.receivedDataDomDocument,currentVdv301StopPointList);
 
             if(vdv301AllData.tripInformationList.isEmpty())
             {
@@ -1954,19 +1671,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             qDebug()<<"unknown structure to parse";
         }
     }
-    else if(cisSubscriber.version()=="2.2CZ1.0")
-    {
-        xmlParser2_2CZ1_0.loadXmlFile(inputXmlString);
-        xmlParser2_2CZ1_0.domDocumentVehicleGroupToVehicleState(vehicleState,xmlParser1_0.receivedDataDomDocument);
 
-        if(!xmlParser2_2CZ1_0.createStopList2_2CZ1_0(currentDestinationPointList,nextDestinationPointList, stopIndex))
-        {
-            eventNotOnLine();
-            return;
-        }
-        isFareZone= xmlParser2_2CZ1_0.parseFareZoneChange(xmlParser2_2CZ1_0.receivedDataDomDocument,fareZoneChangeFrom,fareZoneChangeTo);
-        xmlParser2_2CZ1_0.parseAdditionalTextMessage2_2CZ1_0(xmlParser2_2CZ1_0.receivedDataDomDocument,additionalTextMessageType,additionalTextMessageHeadline, additionalTextMessageText);
-    }
 
     else if(cisSubscriber.version()=="2.3")
     {
@@ -1974,7 +1679,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
         if(cisSubscriber.structureName()=="AllData")
         {
-            vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currenVdv301StopPointList);
+            vdv301AllData=xmlParser2_3.parseAllData2_3(xmlParser2_3.receivedDataDomDocument,currentVdv301StopPointList);
 
             if(vdv301AllData.tripInformationList.isEmpty())
             {
@@ -2099,62 +1804,10 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     }
     else
     {
-        showReceivedDataVehicleState();
+        qDebug()<<"unknown VDV301 version data";
     }
 
 
-}
-
-void MainWindow::showReceivedDataVehicleState()
-{
-    eraseTable(ui->tableWidget_debugStopList);
-
-    if(stopIndex>=0)
-    {
-        if( currentDestinationPointList.size()>0)
-        {
-
-            if(isInRange(stopIndex,currentDestinationPointList.count(),Q_FUNC_INFO))
-            {
-                //normal state on route
-
-                updateMainScreenDebugLabels();
-                debugStopPointListToTable(currentDestinationPointList,false);
-                debugStopPointListToTable(nextDestinationPointList,true);
-
-                showReceivedDataLcdVehicleState();
-                showReceivedDataLedVehicleState();
-
-                svgRender();
-                qInfo()<<"CIl:"<<nazevCile;
-            }
-            else
-            {
-                //vyskakovaciOkno("index zastávky: "+QString::number(indexZastavky));
-
-                eventDisplayAbnormalStateScreen("STOP INDEX OUT OF RANGE");
-
-            }
-
-            //instanceHttpServeru.prijatoZeServeruTelo="";
-        }
-        else
-        {
-            eventDisplayAbnormalStateScreen("COULDNT PARSE STOPS");
-
-        }
-    }
-    else
-    {
-        eventDisplayAbnormalStateScreen("STOP INDEX <0");
-    }
-
-
-    if(cisSubscriber.version()=="2.3")
-    {
-
-
-    }
 }
 
 
@@ -2297,9 +1950,10 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv
 
 void MainWindow::receivedDataVariablesReset()
 {
-    currentDestinationPointList.clear();
-    nextDestinationPointList.clear();
-    debugStopPointListToTable(currentDestinationPointList,false);
+
+    currentVdv301StopPointList.clear();
+
+    debugStopPointListToTable(currentVdv301StopPointList,false);
 }
 
 
@@ -2370,18 +2024,17 @@ void MainWindow::on_pushButton_menu_svg_clicked()
 
 bool MainWindow::svgRender()
 {
-
+    /*
     if (currentDestinationPointList.length()>0)
     {
         //svgVykreslovac.svgReplaceName("Verlauf2.svg","vystup.txt",globalniSeznamZastavek.last().StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+1).StopName,globalniSeznamZastavek.at(stavSystemu.indexAktZastavky+2).StopName);
-        svgVykreslovani.aktualizujVse(currentDestinationPointList,vehicleState);
+        //svgVykreslovani.aktualizujVse(currentDestinationPointList,vehicleState);
     }
     else
     {
         qDebug()<<"seznam zastavek je prazdny";
     }
-
-    //int vysledek=svgOpenFile("./bubbles.svg");
+*/
     int vysledek=svgOpenFile(QCoreApplication::applicationDirPath()+"/vystup.svg");
     qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
 
@@ -2440,23 +2093,6 @@ void MainWindow::ledCycleDisplayContents()
 }
 */
 
-
-
-
-
-
-void MainWindow::displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList)
-{
-    qDebug() <<  Q_FUNC_INFO;
-
-    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
-
-    ui->label_fareZoneChangeFrom->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(fromFareZoneList,"PID")));
-    ui->label_fareZoneChangeTo->setText(SvgVykreslovani::pasmaDoStringu(FareZone::filterZonesFromSystem(toFareZoneList,"PID")));
-
-    displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
-}
 
 
 void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList)
@@ -2551,16 +2187,7 @@ void MainWindow::displayLabelShowPageFinalStop()
 }
 
 
-int MainWindow::isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestination> zastavky)
-{
 
-    qDebug() <<  Q_FUNC_INFO;
-    if((stav.currentStopIndex0==(zastavky.count()-1))&&(stav.locationState==Vdv301Enumerations::LocationStateAtStop))
-    {
-        return true;
-    }
-    return false;
-}
 
 /*
 bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
@@ -2792,7 +2419,7 @@ void MainWindow::on_spinBox_frontSignWidth_valueChanged(int arg1)
 }
 
 
-
+/* can be rebuilt for VDV301structures
 QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek)
 {
     QVector<StopPointDestination> vystup;
@@ -2807,7 +2434,7 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
     }
     return vystup;
 
-}
+}*/
 
 void MainWindow::on_pushButton_debugConvertInline_clicked()
 {

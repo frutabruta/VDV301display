@@ -302,44 +302,6 @@ QString DisplayLabel::nahradMetro(QString linka, QString submode, int vyska)
     return vysledek;
 }
 
-QString DisplayLabel::vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze)
-{
-    qDebug()<<Q_FUNC_INFO;
-    if (nacestneZastavky.count() == 0)
-    {
-        return "";
-    }
-
-    QString nacestyString = "";
-
-    //  nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
-    QString separator=" ";
-    for (int i = 0; i < nacestneZastavky.count(); i++)
-    {
-        if(i==0)
-        {
-            separator="";
-        }
-        else
-        {
-            separator=" - ";
-        }
-        if ((verze == "2.3")||(verze == "2.3CZ1.0"))
-        {
-            nacestyString += separator + nahradIconPiktogramem(nacestneZastavky.at(i).NameLcd, velikostPiktogramu, slozkaPiktogramu);
-        }
-        else
-        {
-            nacestyString += separator + doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(i).NameLcd, nacestneZastavky.at(i).iconList, velikostPiktogramu);
-        }
-    }
-
-
-    QString vysledek = zabalHtmlDoZnacek( nacestyString );
-    qDebug() << "vypis radku nacestnych zastavek text html" << vysledek;
-    return vysledek;
-}
-
 
 QString DisplayLabel::vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> nacestneZastavky, int velikostPiktogramu)
 {
@@ -467,31 +429,6 @@ int DisplayLabel::minimum(int cislo1, int cislo2)
     return cislo2;
 }
 
-void DisplayLabel::vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze)
-{
-    qDebug() << Q_FUNC_INFO;
-
-    //label_nacestne
-    if (globalniSeznamZastavek.isEmpty())
-    {
-        label->setText("");
-        return;
-    }
-
-    /*
-    QString oldInput=label->text();
-    if(newInput!=oldInput )
-    {
-
-    }*/
-
-    label->setText(" ");
-    int velikostTextu = label->font().pixelSize();
-    QString newInput = vykresliNacestneZastavkyText(globalniSeznamZastavek.at(stavSystemu.currentStopIndex0).viaPoints, velikostTextu, verze);
-
-    label->setText(newInput);
-
-}
 
 void DisplayLabel::vymazPoleLabelu(QVector<QLabel *> vstup)
 {

@@ -18,13 +18,19 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250405_2146
+    - complete purge of 2.2CZ1.0 support and all VehicleState variable dependent code
+    
 - 20250404_1944
     - 1.0 now parsed using Vdv301 data structures
+
 - 20250404_1837
     - XmlParser fixes of departure time
-    - **last version to support parsing 1.0 to VehicleState variables**
+    - **last version to support parsing 1.0 to VehicleState variables**    
+
 - 20250404_0039
     - renamed VehicleState 1.0 parser to XmlParser1_0
+
 - 20250403_2149
     - option to subscribe CurrentDisplayContent
     - Vdv301publisher
@@ -53,6 +59,7 @@ Program can be launched with parameter to change settings location.
 - 20250314_1857
     - DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement
         - reworked to support fare zone change etc.
+
 - 20250312_2102
     - VDV301Publisher
         - Vdv301DataStructures

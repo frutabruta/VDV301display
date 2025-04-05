@@ -4,26 +4,7 @@ DisplayLabelLed::DisplayLabelLed() {}
 
 
 
-QVector<Vdv301DisplayContent> DisplayLabelLed::ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav)
-{
-    //new approach to display viapoint from DisplayContent
-    QVector<Vdv301DisplayContent> output;
-    qDebug() <<  Q_FUNC_INFO;
-    if(!isInRange(stav.currentStopIndex0,zastavky.count()))
-    {
-        return output;
-    }
 
-    Vdv301StopPoint aktZast=zastavky.at(stav.currentStopIndex0);
-
-
-
-    output=aktZast.displayContentList;
-
-    return output;
-
-    //   ledUpdateDisplayedInformationFromDisplayContentList2_3(displayContentListAll);
-}
 
 
 void DisplayLabelLed::initializeFonts()
@@ -118,36 +99,6 @@ void DisplayLabelLed::slotTickLedPanels2_3()
 
 }
 
-
-
-
-QVector<QString> DisplayLabelLed::ledStopPointToViapointListSide(StopPointDestination selectedStopPointDestination)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    QVector<QString> output;
-    output.append("přes:");
-    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
-    {
-        output.append(viaPoint.NameSide);
-        // qDebug()<<"pridavam nacestnou na bocni"<<nacesta.NameSide;
-    }
-    return output;
-
-}
-
-QVector<QString> DisplayLabelLed::ledStopPointToViapointListInner(StopPointDestination selectedStopPointDestination)
-{
-    qDebug() <<  Q_FUNC_INFO;
-    QVector<QString> output;
-    output.append("přes:");
-    foreach (StopPoint viaPoint,selectedStopPointDestination.viaPoints)
-    {
-        output.append(viaPoint.NameInner);
-        qDebug()<<"pridavam nacestnou na bocni"<<viaPoint.NameSide;
-    }
-    return output;
-
-}
 
 
 void DisplayLabelLed::slotLedIterateAllDisplays()
@@ -367,41 +318,6 @@ void DisplayLabelLed::ledClearDisplays()
     textyVnitrniPanelkIteraci.clear();
 }
 
-void DisplayLabelLed::ledUpdateDisplayedInformation(QVector<StopPointDestination> stopPointList, VehicleState vehicleState )
-{
-    qDebug() <<  Q_FUNC_INFO;
-    if(!isInRange(vehicleState.currentStopIndex0,stopPointList.count()))
-    {
-        return;
-    }
-
-    StopPointDestination aktZast=stopPointList.at(vehicleState.currentStopIndex0);
-
-
-    if((mVdv301version=="2.3")||(mVdv301version=="2.3CZ1.0"))
-    {
-        ledSetTextFront(inlineFormatParser.parseTextLed(aktZast.line.lineName),inlineFormatParser.parseTextLed(aktZast.destination.NameFront),inlineFormatParser.parseTextLed(aktZast.destination.NameFront2));
-        ledSetTextSide(inlineFormatParser.parseTextLed(aktZast.line.lineName),inlineFormatParser.parseTextLed(aktZast.destination.NameSide),"" );
-        ledSetTextRear(inlineFormatParser.parseTextLed(aktZast.line.lineName));
-        ledSetTextInner(inlineFormatParser.parseTextLed(aktZast.line.lineName),aktZast.destination.NameInner,inlineFormatParser.parseTextLed(aktZast.stopPoint.NameInner));
-
-        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
-        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
-    }
-    else
-    {
-
-        ledSetTextFront(aktZast.line.lineName,aktZast.destination.NameFront,aktZast.destination.NameFront2);
-        ledSetTextSide(aktZast.line.lineName,aktZast.destination.NameSide,aktZast.stopPoint.NameSide );
-        ledSetTextRear(aktZast.line.lineName);
-        ledSetTextInner(aktZast.line.lineName,aktZast.destination.NameInner, aktZast.stopPoint.NameInner);
-
-        textyBocniPanelkIteraci=ledStopPointToViapointListSide(aktZast);
-        textyVnitrniPanelkIteraci=ledStopPointToViapointListInner(aktZast);
-    }
-
-    ledUpdateDisplaySizes();
-}
 
 
 

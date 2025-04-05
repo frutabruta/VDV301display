@@ -81,18 +81,13 @@ public:
      QVector<QWidget*> pageCycleList;
 
     void initializeFonts();
-    void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
     void displayLabelDestination(QString nazev);
     void displayLabelDestinationFollowing(QString nazev);
-    void displayLabelConnectionList(QVector<Connection> connectionList);
+
     void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
     void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
     void displayLabelEraseInformation();
-    void displayLabelLineName(StopPointDestination selectedStopPointDestinationstavka, QString subMode);
     void displayLabelLineName(QString lineName);
-    void displayLabelStopFareZone(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, VehicleState vehicleState);
-    void displayLabelStopList(QVector<StopPointDestination> thisStopPointDestinationList, QVector<StopPointDestination> nextStopPointDestinationList, int index);
-    void displayLabelViaPoints(QVector<StopPointDestination> currentDestinationPointList, VehicleState vehicleState);
 
 
     //constants
@@ -112,13 +107,8 @@ public:
 
     const int intervalSwitchPages=10000;
 
-
     float ratioPixelPoint=1080.0/1050.0;
 
-
-
-
-    void slotMoveScrollingText(QVector<StopPointDestination> currentDestinationPointList, VehicleState vehicleState);
     void lcdResizeLabels(int frameHeight);
     void slotDisplayLcdLabelCyclePages();
 

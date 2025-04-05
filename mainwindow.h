@@ -10,12 +10,6 @@
 #include "VDV301publisher/devicemanagementservice.h"
 #include "VDV301subscriber/cissubscriber.h"
 
-
-#include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
-#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
-#include "VDV301subscriber/VDV301DataStructures/connection.h"
-
-
 #include "svgvykreslovani.h"
 #include "displaylabelled.h"
 #include "displaylabellcd2_3cz1_0.h"
@@ -70,7 +64,6 @@ private:
 
     // complex class instances
     XmlParser1_0 xmlParser1_0;
-    XmlParser2_2CZ1_0 xmlParser2_2CZ1_0;
     XmlParser2_3 xmlParser2_3;
     XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
 
@@ -90,29 +83,17 @@ private:
 
 
     //complex variables
-    QVector<StopPointDestination> currentDestinationPointList;
-    QVector<Vdv301StopPoint> currenVdv301StopPointList;
-    QVector<StopPointDestination> nextDestinationPointList;
+
+    QVector<Vdv301StopPoint> currentVdv301StopPointList;
 
     Vdv301AllData vdv301AllData;
     Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
 
     Vdv301CurrentDisplayContent vdv301currentDisplayContent;
 
-    VehicleState vehicleState;
-
-    QString nazevCile="";
-    QString additionalTextMessageType="";
-    QString additionalTextMessageHeadline="";
-    QString additionalTextMessageText="";
-    QVector<FareZone> fareZoneChangeFrom;
-    QVector<FareZone> fareZoneChangeTo;
-
     BarvyLinek barvyLinek;
 
     //stavove promenne
-    bool isFareZone=false;
-    int stopIndex=0;
 
 
     int lcdLabelCurrentPageIndex =0;
@@ -132,13 +113,13 @@ private:
 
 
     //common functions
-    int setDestinationName ();
+
     void menuSwitchTabs(int tabNumber);
-    void labelLcdUpdateStopBackgroundVehicleState();
+
     void labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState);
 
     QString createProgramVersionString();
-    int showReceivedDataLcdVehicleState();
+
     void eraseTable(QTableWidget *tableWidget);
 
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
@@ -158,7 +139,6 @@ private:
     //functions display LCD with labels
     void displayLabelFillArray();
     void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
-    void displayLabelShowFareZoneChange(QVector<FareZone> fromFareZoneList, QVector<FareZone> toFareZoneList);
 
     //funkce led
 
@@ -167,7 +147,7 @@ private:
     bool svgOpenFile(const QString &fileName);
 
     //obecne Udalosti
-    int isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestination> zastavky);
+
     void displayLabelReturnToStopList();
 
     void loadConstants();
@@ -185,7 +165,6 @@ private:
     //void eraseDisplayedInformation();
 
     void eventShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
-    void eventShowPageFareZoneChange(QVector<FareZone> fromFareZones, QVector<FareZone> toFareZones);
     void displayLabelShowPageFinalStop();
     void eventNotOnLine();
 
@@ -207,23 +186,10 @@ private:
     bool svgRender();
 
 
-    //   QString replaceIconTagWithImage(QString vstup, int vyskaObrazku, QString slozka);
-
-
-
-    void debugStopPointListToTable(QVector<StopPointDestination> seznamZastavek, bool navazny);
-    void debugStopPointToTable(StopPointDestination selectedStopPointDestination, bool isFollowingTrip);
-    // void displayLabelStopPoint(StopPointDestination selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
-
-
-    QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);//unused
-
-
     void eventDisplayAbnormalStateScreen(QString displayState);
-    void displayNormalOnLineState();
+    void displayNormalOnLineState(); //unused
     void receivedDataVariablesReset();
-    void connectionToTable(Connection connection, QTableWidget *tableWidget);
-    void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
+
     void eventStopRequestedActivated();
     void eventStopRequestedDectivated();
 
@@ -238,7 +204,7 @@ private:
 
     void eventEraseDisplayInformation();
     void eventLcdSetMainPage();
-    void eventLcdShowFollowingTripDestination(QString followingTripLine, QString followingTripDestination);
+    void eventLcdShowFollowingTripDestination(QString followingTripLine, QString followingTripDestination); //unused
     void eventLcdReturnToStopList();
 
 
@@ -248,28 +214,24 @@ private:
     void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
     void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
 
-    void showReceivedDataLedVehicleState();
-    void showReceivedDataVehicleState();
+
+
     void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
 
     void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following);
-    void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList);
-    void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList);
-    void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList);
+    void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList); // unused
+    void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList); // unused
+    void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList); // unused
     void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList);
     void connectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
     void connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
     void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
 
-    void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> globalDisplayContent);
-
-
-
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent);
     void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
-    void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones);
+    void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones); //unused
 
     void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
     void eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage, QVector<Vdv301InternationalText> additionalTextMessage1, QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3, QVector<Vdv301InternationalText> additionalTextMessage4);

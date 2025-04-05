@@ -8,11 +8,9 @@ class DisplayLabelLcd2_3 : public DisplayLabelLcd
 {
 public:
     DisplayLabelLcd2_3();
-    using DisplayLabelLcd::displayLabelStopFareZone; // to make previous declarations visible in inherited class
-    using DisplayLabelLcd::displayLabelViaPoints;
     using DisplayLabelLcd::displayLabelDestination;
     using DisplayLabelLcd::displayLabelDestinationFollowing;
-    using DisplayLabelLcd::displayLabelConnectionList;
+
     using DisplayLabelLcd::displayLabelLineName;
     using DisplayLabelLcd::displayLabelLineNameFollowing;
 

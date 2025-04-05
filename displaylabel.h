@@ -11,7 +11,7 @@
 
 #include "VDV301subscriber/VDV301DataStructures/farezone.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h"
-#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
+
 //#include "svgvykreslovani.h"
 #include "inlineformatparser.h"
 #include "barvylinek.h"
@@ -48,12 +48,11 @@ public:
     QString vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
     void naplnAnouncementLabel(QString vstup, QLabel *label);
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe);
-    QString vykresliNacestneZastavkyText(QVector<StopPoint> nacestneZastavky, int velikostPiktogramu, QString verze);
+
     QString doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu,int vyskaObrazku);
     QString zabalHtmlDoZnacek(QString vstup);
 
     int minimum(int cislo1, int cislo2);
-    void vykresliNacestneForce(QVector<StopPointDestination> globalniSeznamZastavek, VehicleState stavSystemu, QLabel *label, QString verze);
     void zmensiCisloLinkyLabel(QLabel *label);
 
     QString nahradMetro(QString linka, QString submode, int vyska);

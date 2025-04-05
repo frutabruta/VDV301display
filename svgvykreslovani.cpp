@@ -286,7 +286,7 @@ QString SvgVykreslovani::pasmaDoStringu(QVector<FareZone> seznamPasem)
     qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
     return vysledek;
 }
-
+/*
 int SvgVykreslovani::aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav)
 {
     QString celaCesta=interniCestaSlozkaSvg+"/hlavni.svg";
@@ -306,7 +306,7 @@ int SvgVykreslovani::aktualizujVse(QVector<StopPointDestination> zastavky, Vehic
 
     qDomDocumentDoSouboru(interniCestaSlozkaSvg+"/vystup.svg",xmlko);
     return 1;
-}
+}*/
 
 void SvgVykreslovani::zobrazZmenuPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {

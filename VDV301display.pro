@@ -45,15 +45,25 @@ target.files=VDV301displayNew
 INSTALLS+=target
 
 SOURCES += \
-    VDV301subscriber/VDV301DataStructures/connectionmpv.cpp \
-    VDV301subscriber/VDV301DataStructures/additionalannoucement.cpp \
-    VDV301subscriber/VDV301DataStructures/connection.cpp \
-    VDV301subscriber/VDV301DataStructures/connectiongolemio.cpp \
-    VDV301subscriber/VDV301DataStructures/farezone.cpp \
-    VDV301subscriber/VDV301DataStructures/line.cpp \
-    VDV301subscriber/VDV301DataStructures/stoppoint.cpp \
-    VDV301subscriber/VDV301DataStructures/stoppointdestination.cpp \
-    VDV301subscriber/VDV301DataStructures/trip.cpp \
+ #  VDV301subscriber/VDV301DataStructures/connectionmpv.cpp \
+ #  VDV301subscriber/VDV301DataStructures/additionalannoucement.cpp \
+ #  VDV301subscriber/VDV301DataStructures/connection.cpp \
+ #  VDV301subscriber/VDV301DataStructures/connectiongolemio.cpp \
+ #  VDV301subscriber/VDV301DataStructures/farezone.cpp \
+ #  VDV301subscriber/VDV301DataStructures/line.cpp \
+ #   VDV301subscriber/VDV301DataStructures/stoppoint.cpp \
+ #   VDV301subscriber/VDV301DataStructures/stoppointdestination.cpp \
+ #  VDV301subscriber/VDV301DataStructures/trip.cpp \
+ #  VDV301subscriber/VDV301DataStructures/vehiclerun.cpp \
+ #  VDV301subscriber/VDV301DataStructures/vehiclestate.cpp \
+    VDV301publisher/colordisplayrules.cpp \
+    VDV301publisher/devicemanagementservice.cpp\
+    VDV301publisher/httpserverpublisher.cpp \
+    VDV301publisher/httpservice.cpp \
+    VDV301publisher/subscriber.cpp \
+    VDV301publisher/xmlcommon.cpp \
+ #   VDV301publisher/xmlcommonvehiclestate.cpp \
+    VDV301publisher/xmldevicemanagementservice.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.cpp \
@@ -72,25 +82,16 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.cpp \
-    VDV301subscriber/VDV301DataStructures/vehiclerun.cpp \
-    VDV301subscriber/VDV301DataStructures/vehiclestate.cpp \
-    VDV301publisher/colordisplayrules.cpp \
-    VDV301publisher/devicemanagementservice.cpp\
-    VDV301publisher/httpserverpublisher.cpp \
-    VDV301publisher/httpservice.cpp \
-    VDV301publisher/subscriber.cpp \
-    VDV301publisher/xmlcommon.cpp \
-    VDV301publisher/xmldevicemanagementservice.cpp \
     VDV301subscriber/cissubscriber.cpp \
     VDV301subscriber/devmgmtpublisherstruct.cpp \
     VDV301subscriber/devmgmtsubscriber.cpp \
     VDV301subscriber/httpserversubscriber.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
+    VDV301subscriber/ibisipsubscriberonepublisher.cpp \
     VDV301subscriber/xmlgeneratorsubscriber.cpp \
     VDV301subscriber/xmlparsersubscriber.cpp \
-    VDV301xmlparser/xmlparser1_0.cpp \
     VDV301xmlparser/xmlparser.cpp \
-    VDV301xmlparser/xmlparser2_2cz1_0.cpp \
+    VDV301xmlparser/xmlparser1_0.cpp \
     VDV301xmlparser/xmlparser2_3.cpp \
     VDV301xmlparser/xmlparser2_3cz1_0.cpp \
     displaylabel.cpp \
@@ -98,25 +99,34 @@ SOURCES += \
     displaylabellcd2_3.cpp \
     displaylabellcd2_3cz1_0.cpp \
     displaylabelled.cpp \
-    inlineformatparser.cpp \
-    VDV301subscriber/ibisipsubscriberonepublisher.cpp \
-        main.cpp \
-        mainwindow.cpp \
-    pasmovedvojicelcd.cpp \
+    inlineformatparser.cpp \    
+    main.cpp \
+    mainwindow.cpp \
+    #pasmovedvojicelcd.cpp \
     svgvykreslovani.cpp \
     barvylinek.cpp
 
 
 HEADERS += \
-    VDV301subscriber/VDV301DataStructures/additionalannoucement.h \
-    VDV301subscriber/VDV301DataStructures/connection.h \
-    VDV301subscriber/VDV301DataStructures/connectiongolemio.h \
-    VDV301subscriber/VDV301DataStructures/connectionmpv.h \
-    VDV301subscriber/VDV301DataStructures/farezone.h \
-    VDV301subscriber/VDV301DataStructures/line.h \
-    VDV301subscriber/VDV301DataStructures/stoppoint.h \
-    VDV301subscriber/VDV301DataStructures/stoppointdestination.h \
-    VDV301subscriber/VDV301DataStructures/trip.h \
+   # VDV301subscriber/VDV301DataStructures/additionalannoucement.h \
+  #  VDV301subscriber/VDV301DataStructures/connection.h \
+   # VDV301subscriber/VDV301DataStructures/connectiongolemio.h \
+   # VDV301subscriber/VDV301DataStructures/connectionmpv.h \
+  #  VDV301subscriber/VDV301DataStructures/farezone.h \
+  #  VDV301subscriber/VDV301DataStructures/line.h \
+  #  VDV301subscriber/VDV301DataStructures/stoppoint.h \
+  #  VDV301subscriber/VDV301DataStructures/stoppointdestination.h \
+  #  VDV301subscriber/VDV301DataStructures/trip.h \
+ #  VDV301subscriber/VDV301DataStructures/vehiclerun.h \
+  #  VDV301subscriber/VDV301DataStructures/vehiclestate.h \
+    VDV301publisher/colordisplayrules.h \
+    VDV301publisher/devicemanagementservice.h \
+    VDV301publisher/httpserverpublisher.h \
+    VDV301publisher/httpservice.h \
+    VDV301publisher/subscriber.h \
+    VDV301publisher/xmlcommon.h \
+   # VDV301publisher/xmlcommonvehiclestate.h \
+    VDV301publisher/xmldevicemanagementservice.h \
     VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement.h \
     VDV301subscriber/VDV301DataStructures/vdv301additionalannouncement2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301alldata.h \
@@ -135,15 +145,6 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.h \
-    VDV301subscriber/VDV301DataStructures/vehiclerun.h \
-    VDV301subscriber/VDV301DataStructures/vehiclestate.h \
-    VDV301publisher/colordisplayrules.h \
-    VDV301publisher/devicemanagementservice.h \
-    VDV301publisher/httpserverpublisher.h \
-    VDV301publisher/httpservice.h \
-    VDV301publisher/subscriber.h \
-    VDV301publisher/xmlcommon.h \
-    VDV301publisher/xmldevicemanagementservice.h \
     VDV301subscriber/cissubscriber.h \
     VDV301subscriber/devmgmtpublisherstruct.h \
     VDV301subscriber/devmgmtsubscriber.h \
@@ -152,8 +153,8 @@ HEADERS += \
     VDV301subscriber/ibisipsubscriberonepublisher.h \
     VDV301subscriber/xmlgeneratorsubscriber.h \
     VDV301subscriber/xmlparsersubscriber.h \
+    VDV301xmlparser/xmlparser.h \
     VDV301xmlparser/xmlparser1_0.h \
-    VDV301xmlparser/xmlparser2_2cz1_0.h \
     VDV301xmlparser/xmlparser2_3.h \
     VDV301xmlparser/xmlparser2_3cz1_0.h \
     displaylabel.h \
@@ -163,7 +164,7 @@ HEADERS += \
     displaylabelled.h \
     inlineformatparser.h \
     mainwindow.h \
-    pasmovedvojicelcd.h \
+    #pasmovedvojicelcd.h \
     svgvykreslovani.h \
     xmlparser.h \
     barvylinek.h

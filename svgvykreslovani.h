@@ -17,7 +17,7 @@ public:
     QVector<StopPointDestination> vytvorNasledujiciZastavky(QVector<StopPointDestination> vsechnyZastavky, int index, int limit);
     QDomDocument vymazZastavky(QDomDocument xmlDocument);
     QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<StopPointDestination> nasledujiciZastavky);
-    int aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav);
+ //   int aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
    // QVector<StopPointDestination> vytvorNacestneZastavky(QVector<StopPointDestination> vsechnyZastavky, int index);
     static QString pasmaDoStringu(QVector<FareZone> seznamPasem);

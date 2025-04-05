@@ -14,7 +14,6 @@ public:
 
     QTimer timerLedSideCycleViaPoints ;
 
-
     LedLabelDisplay frontDisplay;
     LedLabelDisplay sideDisplay;
     LedLabelDisplay rearDisplay;
@@ -35,12 +34,7 @@ public:
 
     float ratioPixelLed=4.105;
 
-
-    QVector<Vdv301DisplayContent> ledUpdateCurrentStopToDisplayContentList2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> displayContentListAll);
-
-    QVector<QString> ledStopPointToViapointListSide(StopPointDestination selectedStopPointDestination);
-    QVector<QString> ledStopPointToViapointListInner(StopPointDestination selectedStopPointDestination);
 
     void ledIterateSide(QVector<QString> texty, int &iteracniIndex);
     void ledIterateInner(QVector<QString> texty, int &iteracniIndex);
@@ -55,7 +49,6 @@ public:
     void initializeFonts();
     void ledClearDisplays();
     void ledSetTextFront(QString line, QString destinationTop, QString destinationBottom);
-    void ledUpdateDisplayedInformation(QVector<StopPointDestination> stopPointList, VehicleState vehicleState);
 public slots:
     void slotTickLedPanels2_3();
     void slotLedIterateAllDisplays();
