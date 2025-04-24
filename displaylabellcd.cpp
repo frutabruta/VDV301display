@@ -58,61 +58,6 @@ void DisplayLabelLcd::displayLabelDestinationFollowing(QString nazev)
 
 
 
-void DisplayLabelLcd::displayLabelDrawLineNumber( QString subMode, Line line, QLabel* label, int iconSize,bool isConnection)
-{
-    qDebug()<<Q_FUNC_INFO;
-    if(label==NULL)
-    {
-        qDebug()<<Q_FUNC_INFO<<" NULL label";
-        return;
-    }
-    QString linkaStyleSheetStandard="font-weight: bold;";
-
-    if(isConnection)
-    {
-        linkaStyleSheetStandard+="border-radius:6px;padding: 5px; ";
-    }
-
-
-    QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
-
-
-
-    QString nahrazeno=nahradMetro(line.lineName,subMode,iconSize);
-
-    //defaultni seda barva na bile pozadi, neznama kombinace
-
-    StylLinkyOld stylLinky;
-
-
-
-    stylLinky.pozadi="background-color:"+barvyLinek.barva_bila_255_255_255+";";
-
-
-    stylLinky.text="color:"+barvyLinek.barva_PozadiD_150_150_150+";";
-
-
-
-
-    if(nahrazeno==line.lineName)
-    {
-        stylLinky=barvyLinek.linkaDoStylu(subMode,line);
-
-        label->setStyleSheet(linkaStyleSheetStandard+stylLinky.text+stylLinky.pozadi);
-        label->setText(line.lineName);
-    }
-    else
-    {
-        label->setStyleSheet(linkaStyleSheetPiktogram);
-        label->setText(nahrazeno);
-        //   qDebug()<<"nahrazeny retezec metra:"<<nahrazeno;
-    }
-
-
-
-    label->show();
-}
-
 void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* label, int velikostPiktogramu,bool prestup)
 {
     qDebug()<<Q_FUNC_INFO;

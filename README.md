@@ -18,6 +18,11 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+
+- 20250424_2304
+    - VDV301subscriber
+        - refactored version of DevMGMT subscriber
+    - removed DisplayLabelLcd::displayLabelDrawLineNumber (last dependency on VehicleState variable)
 - 20250405_2146
     - complete purge of 2.2CZ1.0 support and all VehicleState variable dependent code
     

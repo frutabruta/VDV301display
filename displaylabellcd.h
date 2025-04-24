@@ -84,7 +84,6 @@ public:
     void displayLabelDestination(QString nazev);
     void displayLabelDestinationFollowing(QString nazev);
 
-    void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int iconSize, bool isConnection);
     void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
     void displayLabelEraseInformation();
     void displayLabelLineName(QString lineName);
