@@ -19,6 +19,9 @@ Program can be launched with parameter to change settings location.
 
 ## Changelog
 
+- 20250520_1319
+    - fixed Vdv301Datastructures VDV301CurrentDisplayContent dependency
+
 - 20250424_2304
     - VDV301subscriber
         - refactored version of DevMGMT subscriber
