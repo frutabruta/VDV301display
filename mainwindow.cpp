@@ -1993,8 +1993,16 @@ void MainWindow::on_pushButton_menu_quit_clicked()
 {
     qDebug() <<  Q_FUNC_INFO;
 
-    connect(&cisSubscriber,&CisSubscriber::signalIsUnsubscriptionSuccesful,this,&MainWindow::slotShutdownReady);
-    cisSubscriber.unsubscribe();
+    if(cisSubscriber.isSubscriptionActive)
+    {
+        connect(&cisSubscriber,&CisSubscriber::signalIsUnsubscriptionSuccesful,this,&MainWindow::slotShutdownReady);
+        cisSubscriber.unsubscribe();
+    }
+    else
+    {
+        slotShutdownReady(true);
+    }
+
     //   connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
 }
 

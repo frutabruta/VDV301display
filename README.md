@@ -18,6 +18,9 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250630_1558
+    - QUIT button fix when subscription is not active
+    
 - 20250630_1520
     - VDV301publisher
         - TicketValidation service drafts
