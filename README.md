@@ -18,6 +18,12 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250630_1520
+    - VDV301publisher
+        - TicketValidation service drafts
+    - VDV301subscriber
+        - updated data structures
+    - updated translations
 
 - 20250520_1319
     - fixed Vdv301Datastructures VDV301CurrentDisplayContent dependency

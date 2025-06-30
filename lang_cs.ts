@@ -26,11 +26,6 @@ obrazovka</translation>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="153"/>
-        <source>F4 xxxx</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="mainwindow.ui" line="171"/>
         <source>F5 DEBUG</source>
         <translation></translation>
@@ -92,23 +87,24 @@ obrazovka</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="707"/>
+        <location filename="mainwindow.ui" line="3492"/>
         <source>XXX</source>
         <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="726"/>
-        <location filename="mainwindow.ui" line="1631"/>
-        <location filename="mainwindow.ui" line="1754"/>
-        <location filename="mainwindow.ui" line="1877"/>
-        <location filename="mainwindow.ui" line="1997"/>
-        <location filename="mainwindow.ui" line="2120"/>
-        <location filename="mainwindow.ui" line="2240"/>
-        <location filename="mainwindow.ui" line="2370"/>
-        <location filename="mainwindow.ui" line="2490"/>
-        <location filename="mainwindow.ui" line="2613"/>
-        <location filename="mainwindow.ui" line="2733"/>
-        <location filename="mainwindow.ui" line="2856"/>
-        <location filename="mainwindow.ui" line="2976"/>
+        <location filename="mainwindow.ui" line="1653"/>
+        <location filename="mainwindow.ui" line="1776"/>
+        <location filename="mainwindow.ui" line="1899"/>
+        <location filename="mainwindow.ui" line="2019"/>
+        <location filename="mainwindow.ui" line="2142"/>
+        <location filename="mainwindow.ui" line="2262"/>
+        <location filename="mainwindow.ui" line="2392"/>
+        <location filename="mainwindow.ui" line="2512"/>
+        <location filename="mainwindow.ui" line="2635"/>
+        <location filename="mainwindow.ui" line="2755"/>
+        <location filename="mainwindow.ui" line="2878"/>
+        <location filename="mainwindow.ui" line="2998"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/resources/LCD-piktogramy_verze-LCD-5-17.svg&quot; height=&quot;30&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation></translation>
     </message>
@@ -127,7 +123,8 @@ obrazovka</translation>
         <location filename="mainwindow.ui" line="938"/>
         <location filename="mainwindow.ui" line="1023"/>
         <location filename="mainwindow.ui" line="1111"/>
-        <location filename="mainwindow.ui" line="3125"/>
+        <location filename="mainwindow.ui" line="1515"/>
+        <location filename="mainwindow.ui" line="3245"/>
         <source>P2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -136,7 +133,8 @@ obrazovka</translation>
         <location filename="mainwindow.ui" line="969"/>
         <location filename="mainwindow.ui" line="1054"/>
         <location filename="mainwindow.ui" line="1142"/>
-        <location filename="mainwindow.ui" line="3153"/>
+        <location filename="mainwindow.ui" line="1468"/>
+        <location filename="mainwindow.ui" line="3273"/>
         <source>P1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -159,7 +157,7 @@ obrazovka</translation>
         <location filename="mainwindow.ui" line="1175"/>
         <location filename="mainwindow.ui" line="1203"/>
         <location filename="mainwindow.ui" line="1231"/>
-        <location filename="mainwindow.ui" line="3183"/>
+        <location filename="mainwindow.ui" line="3303"/>
         <source>|</source>
         <translation type="unfinished"></translation>
     </message>
@@ -170,106 +168,65 @@ obrazovka</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="1306"/>
+        <location filename="mainwindow.ui" line="3124"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1331"/>
+        <location filename="mainwindow.ui" line="1334"/>
         <source>Nadpis</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1350"/>
+        <location filename="mainwindow.ui" line="1353"/>
         <source>TextCZ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1366"/>
+        <location filename="mainwindow.ui" line="1372"/>
         <source>TextEN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1408"/>
-        <source>Prosím pozor! Změna tarifního pásma.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1425"/>
-        <source>Attention please! Change of fare zone.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1452"/>
-        <source>Pasmo1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1468"/>
-        <location filename="mainwindow.ui" line="3414"/>
-        <source>-&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1493"/>
-        <source>Pasmo2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1526"/>
+        <location filename="mainwindow.ui" line="1548"/>
         <source>Konečná zastávka, prosíme, vystupte.</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1545"/>
+        <location filename="mainwindow.ui" line="1567"/>
         <source>Final stop, please leave the bus.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1615"/>
-        <location filename="mainwindow.ui" line="1738"/>
-        <location filename="mainwindow.ui" line="1861"/>
-        <location filename="mainwindow.ui" line="1981"/>
-        <location filename="mainwindow.ui" line="2104"/>
-        <location filename="mainwindow.ui" line="2224"/>
-        <location filename="mainwindow.ui" line="2354"/>
-        <location filename="mainwindow.ui" line="2474"/>
-        <location filename="mainwindow.ui" line="2597"/>
-        <location filename="mainwindow.ui" line="2717"/>
-        <location filename="mainwindow.ui" line="2840"/>
-        <location filename="mainwindow.ui" line="2960"/>
+        <location filename="mainwindow.ui" line="1637"/>
+        <location filename="mainwindow.ui" line="1760"/>
+        <location filename="mainwindow.ui" line="1883"/>
+        <location filename="mainwindow.ui" line="2003"/>
+        <location filename="mainwindow.ui" line="2126"/>
+        <location filename="mainwindow.ui" line="2246"/>
+        <location filename="mainwindow.ui" line="2376"/>
+        <location filename="mainwindow.ui" line="2496"/>
+        <location filename="mainwindow.ui" line="2619"/>
+        <location filename="mainwindow.ui" line="2739"/>
+        <location filename="mainwindow.ui" line="2862"/>
+        <location filename="mainwindow.ui" line="2982"/>
         <source>666</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="1647"/>
-        <location filename="mainwindow.ui" line="1767"/>
-        <location filename="mainwindow.ui" line="1890"/>
-        <location filename="mainwindow.ui" line="2010"/>
-        <location filename="mainwindow.ui" line="2133"/>
-        <location filename="mainwindow.ui" line="2253"/>
-        <location filename="mainwindow.ui" line="2383"/>
-        <location filename="mainwindow.ui" line="2503"/>
-        <location filename="mainwindow.ui" line="2626"/>
-        <location filename="mainwindow.ui" line="2746"/>
-        <location filename="mainwindow.ui" line="2869"/>
-        <location filename="mainwindow.ui" line="2989"/>
+        <location filename="mainwindow.ui" line="1669"/>
+        <location filename="mainwindow.ui" line="1789"/>
+        <location filename="mainwindow.ui" line="1912"/>
+        <location filename="mainwindow.ui" line="2032"/>
+        <location filename="mainwindow.ui" line="2155"/>
+        <location filename="mainwindow.ui" line="2275"/>
+        <location filename="mainwindow.ui" line="2405"/>
+        <location filename="mainwindow.ui" line="2525"/>
+        <location filename="mainwindow.ui" line="2648"/>
+        <location filename="mainwindow.ui" line="2768"/>
+        <location filename="mainwindow.ui" line="2891"/>
+        <location filename="mainwindow.ui" line="3011"/>
         <source>TestCil</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="1666"/>
-        <location filename="mainwindow.ui" line="1786"/>
-        <location filename="mainwindow.ui" line="1909"/>
-        <location filename="mainwindow.ui" line="2029"/>
-        <location filename="mainwindow.ui" line="2152"/>
-        <location filename="mainwindow.ui" line="2272"/>
-        <location filename="mainwindow.ui" line="2402"/>
-        <location filename="mainwindow.ui" line="2522"/>
-        <location filename="mainwindow.ui" line="2645"/>
-        <location filename="mainwindow.ui" line="2765"/>
-        <location filename="mainwindow.ui" line="2888"/>
-        <location filename="mainwindow.ui" line="3008"/>
-        <source>A</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -285,320 +242,529 @@ obrazovka</translation>
         <location filename="mainwindow.ui" line="2787"/>
         <location filename="mainwindow.ui" line="2910"/>
         <location filename="mainwindow.ui" line="3030"/>
+        <source>A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1710"/>
+        <location filename="mainwindow.ui" line="1830"/>
+        <location filename="mainwindow.ui" line="1953"/>
+        <location filename="mainwindow.ui" line="2073"/>
+        <location filename="mainwindow.ui" line="2196"/>
+        <location filename="mainwindow.ui" line="2316"/>
+        <location filename="mainwindow.ui" line="2446"/>
+        <location filename="mainwindow.ui" line="2566"/>
+        <location filename="mainwindow.ui" line="2689"/>
+        <location filename="mainwindow.ui" line="2809"/>
+        <location filename="mainwindow.ui" line="2932"/>
+        <location filename="mainwindow.ui" line="3052"/>
         <source> &lt;b&gt;5&lt;/b&gt; min.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3215"/>
+        <location filename="mainwindow.ui" line="3335"/>
         <source>PristiZastavka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3251"/>
+        <location filename="mainwindow.ui" line="3378"/>
         <source>NO DATA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3272"/>
+        <location filename="mainwindow.ui" line="3399"/>
         <source>FW version:</source>
         <translation>FW verze:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3291"/>
-        <location filename="mainwindow.ui" line="3333"/>
+        <location filename="mainwindow.ui" line="3418"/>
+        <location filename="mainwindow.ui" line="3460"/>
         <source>XX.YYZZ</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3314"/>
+        <location filename="mainwindow.ui" line="3441"/>
         <source>SW version:</source>
         <translation>SW verze:</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3363"/>
-        <source>Prosím pozor! Změna čísla linky.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3379"/>
-        <source>Attention please! Line number change.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3398"/>
-        <source>Linka1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3431"/>
-        <source>Linka2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.ui" line="3467"/>
+        <location filename="mainwindow.ui" line="3626"/>
         <source>LocationState</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3474"/>
+        <location filename="mainwindow.ui" line="3695"/>
         <source>unknown</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3487"/>
+        <location filename="mainwindow.ui" line="3688"/>
         <source>version:</source>
         <oldsource>verze:</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3494"/>
+        <location filename="mainwindow.ui" line="3675"/>
         <source>0</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3501"/>
+        <location filename="mainwindow.ui" line="3654"/>
         <source>verze</source>
         <translation>verze</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3508"/>
+        <location filename="mainwindow.ui" line="3647"/>
         <source>announcement</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3515"/>
+        <location filename="mainwindow.ui" line="3661"/>
         <source>change</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3522"/>
+        <location filename="mainwindow.ui" line="3668"/>
         <source>CurrentStopIndex</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3535"/>
+        <location filename="mainwindow.ui" line="3708"/>
         <source>STOP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3542"/>
+        <location filename="mainwindow.ui" line="3640"/>
         <source>subscribedVersion</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3559"/>
+        <location filename="mainwindow.ui" line="4063"/>
         <source>timeout interval setting</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3571"/>
+        <location filename="mainwindow.ui" line="4075"/>
         <source>set interval</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3581"/>
+        <location filename="mainwindow.ui" line="4000"/>
         <source>Subscribed?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3587"/>
+        <location filename="mainwindow.ui" line="3715"/>
+        <location filename="mainwindow.ui" line="3729"/>
+        <location filename="mainwindow.ui" line="3990"/>
+        <location filename="mainwindow.ui" line="4006"/>
+        <location filename="mainwindow.ui" line="4207"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3597"/>
+        <location filename="mainwindow.ui" line="3972"/>
         <source>Remaining time (s)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3608"/>
+        <location filename="mainwindow.ui" line="3983"/>
         <source>xx s</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3619"/>
-        <location filename="mainwindow.ui" line="3673"/>
+        <location filename="mainwindow.ui" line="3885"/>
+        <location filename="mainwindow.ui" line="3939"/>
         <source>Service name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3624"/>
-        <location filename="mainwindow.ui" line="3678"/>
+        <location filename="mainwindow.ui" line="153"/>
+        <source>F4 settings</source>
+        <translation type="unfinished">F4
+nastavení</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1416"/>
+        <source>X</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="1439"/>
+        <source>zmen pasma text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3145"/>
+        <source>announcementText</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3345"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt;STOP&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt; REQUESTED&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3514"/>
+        <source>Prosím pozor! Změna čísla linky. Attention please! Line number change.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3543"/>
+        <source>L1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3590"/>
+        <source>L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3633"/>
+        <source>DeviceID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3722"/>
+        <source>DeviceClass:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3752"/>
+        <source>DeviceName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3759"/>
+        <source>DeviceSerialNumber</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3766"/>
+        <source>DeviceClass</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3773"/>
+        <source>DeviceManufacturer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3783"/>
+        <source>DeviceId</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3790"/>
+        <source>Save Settings</source>
+        <translation>Uložit nastavení</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3818"/>
+        <source>Language select</source>
+        <translation>Výběr jazyka</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3824"/>
+        <source>cs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3831"/>
+        <source>en</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3847"/>
+        <source>Boot to fullscreen</source>
+        <translation>Startovat přes celou obrazovku</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3860"/>
+        <source>Default screen</source>
+        <translation>Defaultní obrazovka</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3878"/>
+        <source>Subscription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="3890"/>
+        <location filename="mainwindow.ui" line="3944"/>
         <source>Version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3629"/>
-        <location filename="mainwindow.ui" line="3683"/>
+        <location filename="mainwindow.ui" line="3895"/>
+        <location filename="mainwindow.ui" line="3949"/>
         <source>IP Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3634"/>
-        <location filename="mainwindow.ui" line="3688"/>
+        <location filename="mainwindow.ui" line="3900"/>
+        <location filename="mainwindow.ui" line="3954"/>
         <source>port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3639"/>
-        <location filename="mainwindow.ui" line="3693"/>
+        <location filename="mainwindow.ui" line="3905"/>
+        <location filename="mainwindow.ui" line="3959"/>
         <source>host</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3647"/>
+        <location filename="mainwindow.ui" line="3913"/>
         <source>Selected publisher</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybraný publisher</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3653"/>
+        <location filename="mainwindow.ui" line="3919"/>
         <source>Unsubscribe</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3706"/>
-        <source>Stop list</source>
+        <location filename="mainwindow.ui" line="4016"/>
+        <source>DeviceState</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3713"/>
+        <location filename="mainwindow.ui" line="4022"/>
+        <source>defective</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4029"/>
+        <source>warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4036"/>
+        <source>notavailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4043"/>
+        <source>running</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4053"/>
+        <source>readyForShutdown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4088"/>
+        <source>Received Data</source>
+        <translation>Přijatá data</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4096"/>
+        <source>Stop list</source>
+        <translation>Seznam zastávek</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4103"/>
         <source>Stop name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3718"/>
+        <location filename="mainwindow.ui" line="4108"/>
         <source>Line name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3723"/>
+        <location filename="mainwindow.ui" line="4113"/>
         <source>DestinationName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3734"/>
+        <location filename="mainwindow.ui" line="4124"/>
         <source>Connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Přestupy</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3741"/>
+        <location filename="mainwindow.ui" line="4131"/>
         <source>line</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3746"/>
+        <location filename="mainwindow.ui" line="4136"/>
         <source>destination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3751"/>
+        <location filename="mainwindow.ui" line="4141"/>
         <source>est. time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3756"/>
+        <location filename="mainwindow.ui" line="4146"/>
         <source>real time</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3830"/>
+        <location filename="mainwindow.ui" line="4163"/>
+        <source>Inline format tester</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4171"/>
+        <source>&lt;color bg=&quot;#ff0000&quot;&gt;&lt;font size=&quot;60&quot;&gt;&lt;color fg=&quot;#9bcaea&quot;&gt;&lt;b&gt;Terminál 1&lt;/b&gt;&lt;/color&gt;&lt;/font&gt;
+&lt;font size=&quot;40&quot;&gt;&lt;b&gt;lety do zemí mimo Schengenský prostor &lt;/b&gt;&lt;color fg=&quot;#969696&quot;&gt;/ flights to countries outside the Schengen Area&lt;/color&gt;&lt;/font&gt;&lt;/color&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4179"/>
+        <source>convert from in-line format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4189"/>
+        <source>show from HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4282"/>
+        <source>LED display scaling factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4296"/>
         <source>Front display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3869"/>
-        <location filename="mainwindow.ui" line="4094"/>
-        <location filename="mainwindow.ui" line="4276"/>
-        <location filename="mainwindow.ui" line="4361"/>
+        <location filename="mainwindow.ui" line="4335"/>
+        <location filename="mainwindow.ui" line="4560"/>
+        <location filename="mainwindow.ui" line="4794"/>
+        <location filename="mainwindow.ui" line="4879"/>
         <source>123</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3920"/>
+        <location filename="mainwindow.ui" line="4386"/>
         <source>Dest.FrontNameTop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="3960"/>
+        <location filename="mainwindow.ui" line="4426"/>
         <source>Dest.FrontNameBtm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4008"/>
+        <location filename="mainwindow.ui" line="4474"/>
         <source>DestinationFrontSingle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4049"/>
+        <location filename="mainwindow.ui" line="4515"/>
         <source>Side display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4151"/>
-        <location filename="mainwindow.ui" line="4401"/>
+        <location filename="mainwindow.ui" line="4617"/>
+        <location filename="mainwindow.ui" line="4919"/>
         <source>DestinationSideName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4197"/>
-        <location filename="mainwindow.ui" line="4466"/>
+        <location filename="mainwindow.ui" line="4663"/>
+        <location filename="mainwindow.ui" line="4984"/>
         <source>StopSideName</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4237"/>
+        <location filename="mainwindow.ui" line="4715"/>
+        <source>DestinationSideSingle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="4755"/>
         <source>Rear display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4314"/>
+        <location filename="mainwindow.ui" line="4832"/>
         <source>Inner display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4557"/>
+        <location filename="mainwindow.ui" line="5075"/>
         <source>nacti</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4565"/>
+        <location filename="mainwindow.ui" line="5083"/>
         <source>konec</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4573"/>
+        <location filename="mainwindow.ui" line="5091"/>
         <source>testPolozka</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4576"/>
+        <location filename="mainwindow.ui" line="5094"/>
         <source>Ctrl+H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4581"/>
+        <location filename="mainwindow.ui" line="5099"/>
         <source>stahnoutXML</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="4586"/>
+        <location filename="mainwindow.ui" line="5104"/>
         <source>QUIT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="24"/>
+        <source>configuration file 
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="24"/>
+        <source> 
+does not exist</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="194"/>
+        <source>language file not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="395"/>
+        <source>version </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="395"/>
+        <source> is not supported!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="708"/>
+        <source>unsubscription was unsuccessful</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QHttpServerExample</name>
     <message>
-        <location filename="VDV301publisher/httpserverpublisher.cpp" line="111"/>
-        <location filename="VDV301publisher/httpserverpublisher.cpp" line="127"/>
-        <location filename="VDV301subscriber/httpserversubscriber.cpp" line="85"/>
+        <location filename="VDV301publisher/httpserverpublisher.cpp" line="124"/>
+        <location filename="VDV301publisher/httpserverpublisher.cpp" line="140"/>
+        <location filename="VDV301subscriber/httpserversubscriber.cpp" line="97"/>
         <source>Server failed to listen on a port.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="VDV301publisher/httpserverpublisher.cpp" line="119"/>
-        <location filename="VDV301publisher/httpserverpublisher.cpp" line="134"/>
-        <location filename="VDV301subscriber/httpserversubscriber.cpp" line="99"/>
+        <location filename="VDV301publisher/httpserverpublisher.cpp" line="132"/>
+        <location filename="VDV301publisher/httpserverpublisher.cpp" line="147"/>
+        <location filename="VDV301subscriber/httpserversubscriber.cpp" line="111"/>
         <source>Running on http://127.0.0.1:%1/ (Press CTRL+C to quit)</source>
         <translation type="unfinished"></translation>
     </message>
