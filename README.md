@@ -18,6 +18,11 @@ Program can be launched with parameter to change settings location.
     - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250827_1912
+    - added locationState, currentStopIndex and announcement labels to debug window
+    - added departure times to stop debug window
+    - removed maximum window size limit to fix resizing issues
+
 - 20250630_1558
     - QUIT button fix when subscription is not active
     

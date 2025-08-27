@@ -236,9 +236,12 @@ private:
     void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
     void eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage, QVector<Vdv301InternationalText> additionalTextMessage1, QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3, QVector<Vdv301InternationalText> additionalTextMessage4);
 
+    void updateLabelCurrentStopindex(QString currentStopIndex);
+    void updateLabelLocationState(QString locationState);
+    void updateLabelAnnouncement(QString announcementText);
 private slots:
 
-    void on_actiontestPolozka_triggered();
+
     //tlacitka
 
     void on_pushButton_menu_services_clicked();

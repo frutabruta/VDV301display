@@ -154,21 +154,21 @@ void MainWindow::updateMainScreenDebugLabels()
     {
         if(!vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
         {
-            ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData2_3CZ1_0.tripInformationList.first().locationState));
+           updateLabelLocationState(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData2_3CZ1_0.tripInformationList.first().locationState));
         }
         else
         {
-            ui->label_locationState->setText("");
+            updateLabelLocationState("");
         }
     }
     else
     {
         if(!vdv301AllData.tripInformationList.isEmpty())
         {
-            ui->label_locationState->setText(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData.tripInformationList.first().locationState));
+            updateLabelLocationState(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData.tripInformationList.first().locationState));
         }
         else         {
-            ui->label_locationState->setText("");
+            updateLabelLocationState("");
         }
     }
 
@@ -629,7 +629,7 @@ void MainWindow::slotToggleFullscreen()
     }
     // hlavniAutoformat();
 
-    displayLabelLed.ledUpdateDisplaySizes();
+    //displayLabelLed.ledUpdateDisplaySizes(); //pada kdyz je odkomentovano
 
 
 
@@ -957,7 +957,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         eventStopRequestedDectivated();
     }
 
-    ui->label_currentStopIndex->setText(QString::number(vdv301AllData.currentStopIndex));
+    updateLabelCurrentStopindex(QString::number(vdv301AllData.currentStopIndex));
 
 
     if(vdv301AllData.currentStopIndex<1 )
@@ -1135,7 +1135,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         eventStopRequestedDectivated();
     }
 
-    ui->label_currentStopIndex->setText(QString::number(vdv301AllData.currentStopIndex));
+    updateLabelCurrentStopindex(QString::number(vdv301AllData.currentStopIndex));
 
 
     if(vdv301AllData.currentStopIndex<1 )
@@ -1257,8 +1257,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             }
             else
             {
-
-                displayLabelLcd.naplnAnouncementLabel("",ui->label_announcement);
+                updateLabelAnnouncement("");
                 if(xmlParser2_3CZ1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
@@ -1549,6 +1548,11 @@ void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestinat
 
     }
 
+    cell = new QTableWidgetItem(QDateTime::fromString(selectedStopPointDestination.departureScheduled,Qt::ISODate).toString("hh:mm"));
+    ui->tableWidget_debugStopList->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(QDateTime::fromString(selectedStopPointDestination.departureExpected,Qt::ISODate).toString("hh:mm"));
+    ui->tableWidget_debugStopList->setItem(row, 4, cell);
 
     ui->tableWidget_debugStopList->resizeColumnsToContents();
 
@@ -1632,6 +1636,9 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     receivedMessagesCounter++;
     ui->label_messageCounter->setText(QString::number(receivedMessagesCounter));
 
+
+
+
     if(cisSubscriber.version()=="1.0")
     {
         xmlParser1_0.loadXmlFile(inputXmlString);
@@ -1708,6 +1715,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         if(cisSubscriber.structureName()=="AllData")
         {
             vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
+            updateLabelCurrentStopindex(QString::number(vdv301AllData2_3CZ1_0.currentStopIndex));
 
             if(vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
             {
@@ -1819,6 +1827,8 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
     updateMainScreenDebugLabels();
 
     int tripCount=vdv301AllData.tripInformationList.count();
+
+    updateLabelCurrentStopindex(QString::number(vdv301AllData.currentStopIndex));
 
 
     if(tripCount==0)
@@ -2122,7 +2132,7 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
 void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
     qDebug() <<  Q_FUNC_INFO;
-    displayLabelLcd.naplnAnouncementLabel(textCz,ui->label_announcement);
+    updateLabelAnnouncement(textCz);
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
 
@@ -2140,7 +2150,7 @@ void MainWindow::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> ad
     qDebug() <<  Q_FUNC_INFO;
     if(!additionalTextMessageList.isEmpty() )
     {
-        displayLabelLcd.naplnAnouncementLabel(additionalTextMessageList.first().text,ui->label_announcement);
+        updateLabelAnnouncement(additionalTextMessageList.first().text);
     }
 
 
@@ -2295,13 +2305,28 @@ void MainWindow::popUpMessage(QString messageContent)
 }
 
 
-
-void MainWindow::on_actiontestPolozka_triggered()
+void MainWindow::updateLabelAnnouncement(QString announcementText)
 {
-    qDebug() <<  Q_FUNC_INFO;
+     displayLabelLcd.naplnAnouncementLabel(announcementText,ui->label_announcement);
 
-    slotToggleFullscreen();
+
+   // ui->label_debugAnnouncement->setText(announcementText);
+    ui->label_debugAnnouncement->setText(announcementText);
 }
+void MainWindow::updateLabelCurrentStopindex(QString currentStopIndex)
+{
+    ui->label_debugCurrentStopIndex->setText(currentStopIndex);
+    ui->label_currentStopIndex->setText(currentStopIndex);
+}
+
+void MainWindow::updateLabelLocationState(QString locationState)
+{
+    ui->label_debugLocationState->setText(locationState);
+    ui->label_locationState->setText(locationState);
+}
+
+
+
 
 void MainWindow::on_pushButton_menu_displayLed_clicked()
 {

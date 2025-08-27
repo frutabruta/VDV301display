@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>1332</width>
-    <height>965</height>
+    <height>1004</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,12 +18,6 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1920</width>
-    <height>1080</height>
-   </size>
   </property>
   <property name="windowTitle">
    <string>VDV301Display</string>
@@ -553,8 +547,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>898</width>
-                      <height>88</height>
+                      <width>170</width>
+                      <height>58</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -764,7 +758,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>2</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3620,31 +3614,10 @@ border-radius: 30px;
            <number>3</number>
           </property>
           <layout class="QGridLayout" name="gridLayout_13">
-           <item row="0" column="4">
-            <widget class="QLabel" name="label_4">
+           <item row="2" column="4">
+            <widget class="QLabel" name="label_deviceClass">
              <property name="text">
-              <string>LocationState</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="7">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>DeviceID:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="6">
-            <widget class="QLabel" name="label_subscribedVersion">
-             <property name="text">
-              <string>subscribedVersion</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_announcement">
-             <property name="text">
-              <string>announcement</string>
+              <string>TextLabel</string>
              </property>
             </widget>
            </item>
@@ -3662,17 +3635,72 @@ border-radius: 30px;
              </property>
             </widget>
            </item>
-           <item row="0" column="2">
-            <widget class="QLabel" name="label_2">
+           <item row="0" column="4">
+            <widget class="QLabel" name="label_deviceID">
              <property name="text">
-              <string>CurrentStopIndex</string>
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="7">
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>LocationState:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_stopRequested">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>STOP</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="5">
+            <widget class="QLabel" name="label_13">
+             <property name="text">
+              <string>CurrentStopIndex:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>DeviceClass:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_announcement">
+             <property name="text">
+              <string>announcement</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QLabel" name="label_currentStopIndex">
+             <property name="text">
+              <string>TextLabel</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_subscribedVersion">
+             <property name="text">
+              <string>subscribedVersion</string>
              </property>
             </widget>
            </item>
            <item row="0" column="3">
-            <widget class="QLabel" name="label_currentStopIndex">
+            <widget class="QLabel" name="label">
              <property name="text">
-              <string>0</string>
+              <string>DeviceID:</string>
              </property>
             </widget>
            </item>
@@ -3689,42 +3717,8 @@ border-radius: 30px;
              </property>
             </widget>
            </item>
-           <item row="0" column="5">
-            <widget class="QLabel" name="label_locationState">
-             <property name="text">
-              <string>unknown</string>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="6">
-            <widget class="QLabel" name="label_stopRequested">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>STOP</string>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="8">
-            <widget class="QLabel" name="label_deviceID">
-             <property name="text">
-              <string>TextLabel</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="7">
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>DeviceClass:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="8">
-            <widget class="QLabel" name="label_deviceClass">
+            <widget class="QLabel" name="label_locationState">
              <property name="text">
               <string>TextLabel</string>
              </property>
@@ -4089,6 +4083,58 @@ border-radius: 30px;
            </attribute>
            <layout class="QGridLayout" name="gridLayout_10">
             <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_37">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>CurrentStopIndex</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_debugCurrentStopIndex">
+                <property name="font">
+                 <font>
+                  <pointsize>40</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>LocationState</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_debugLocationState">
+                <property name="font">
+                 <font>
+                  <pointsize>40</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>unknown</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="0">
+             <widget class="QPlainTextEdit" name="plainTextEdit_debugReceivedXml">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
              <layout class="QHBoxLayout" name="horizontalLayout_5">
               <item>
                <widget class="QGroupBox" name="groupBox_4">
@@ -4111,6 +4157,18 @@ border-radius: 30px;
                    <column>
                     <property name="text">
                      <string>DestinationName</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Scheduled
+departure</string>
+                    </property>
+                   </column>
+                   <column>
+                    <property name="text">
+                     <string>Expected
+departure</string>
                     </property>
                    </column>
                   </widget>
@@ -4153,8 +4211,12 @@ border-radius: 30px;
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QPlainTextEdit" name="plainTextEdit_debugReceivedXml"/>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_debugAnnouncement">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
