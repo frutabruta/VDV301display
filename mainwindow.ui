@@ -4082,56 +4082,66 @@ border-radius: 30px;
             <string>Received Data</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_10">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_37">
+            <item row="7" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_38">
               <item>
-               <widget class="QLabel" name="label_2">
+               <widget class="QCheckBox" name="checkBox_logMessages">
                 <property name="text">
-                 <string>CurrentStopIndex</string>
+                 <string>log messages</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_debugCurrentStopIndex">
-                <property name="font">
-                 <font>
-                  <pointsize>40</pointsize>
-                 </font>
-                </property>
+               <widget class="QCheckBox" name="checkBox_logMessageAutoscroll">
                 <property name="text">
-                 <string>0</string>
+                 <string>autoscroll</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QPushButton" name="pushButton_messageLogReset">
                 <property name="text">
-                 <string>LocationState</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="label_debugLocationState">
-                <property name="font">
-                 <font>
-                  <pointsize>40</pointsize>
-                 </font>
-                </property>
-                <property name="text">
-                 <string>unknown</string>
+                 <string>clear message list</string>
                 </property>
                </widget>
               </item>
              </layout>
             </item>
-            <item row="3" column="0">
-             <widget class="QPlainTextEdit" name="plainTextEdit_debugReceivedXml">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+            <item row="11" column="0">
+             <widget class="QTableWidget" name="tableWidget_logMessages">
+              <column>
+               <property name="text">
+                <string>timestamp</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>CurrentStopIndex</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>StopCount</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>LocationState</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Connections count</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Announcement</string>
+               </property>
+              </column>
              </widget>
             </item>
             <item row="2" column="0">
@@ -4210,6 +4220,58 @@ departure</string>
                </widget>
               </item>
              </layout>
+            </item>
+            <item row="0" column="0">
+             <layout class="QHBoxLayout" name="horizontalLayout_37">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>CurrentStopIndex</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_debugCurrentStopIndex">
+                <property name="font">
+                 <font>
+                  <pointsize>40</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>LocationState</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_debugLocationState">
+                <property name="font">
+                 <font>
+                  <pointsize>40</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>unknown</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item row="3" column="0">
+             <widget class="QPlainTextEdit" name="plainTextEdit_debugReceivedXml">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item row="4" column="0">
              <widget class="QLabel" name="label_debugAnnouncement">

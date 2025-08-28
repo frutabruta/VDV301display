@@ -154,7 +154,7 @@ void MainWindow::updateMainScreenDebugLabels()
     {
         if(!vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
         {
-           updateLabelLocationState(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData2_3CZ1_0.tripInformationList.first().locationState));
+            updateLabelLocationState(Vdv301Enumerations::LocationStateEnumerationToQString(vdv301AllData2_3CZ1_0.tripInformationList.first().locationState));
         }
         else
         {
@@ -444,7 +444,73 @@ void MainWindow::menuSwitchTabs(int tabNumber)
 }
 
 
+void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
+{
+    qDebug() <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
 
+    QString timeStamp=QTime::currentTime().toString("hh:mm:ss.zzz");
+    QString currentStopIndex=QString::number(input.currentStopIndex);
+    QString stopCount="";
+    QString locationState="";
+    QString announcement="";
+    QString connectionCount="";
+
+    if(!input.tripInformationList.isEmpty())
+    {
+        Vdv301Trip2_3CZ1_0 selectedTrip=input.tripInformationList.first();
+
+
+        stopCount=QString::number(selectedTrip.stopPointList.count());
+        locationState=Vdv301Enumerations::LocationStateEnumerationToQString(selectedTrip.locationState);
+        if(!selectedTrip.additionalTextMessageList.isEmpty() )
+        {
+            announcement=   input.tripInformationList.first().additionalTextMessageList.first().text;
+        }
+
+        if(!selectedTrip.stopPointList.isEmpty())
+        {
+            if(isInRange(input.currentStopIndex-1,selectedTrip.stopPointList.count(),Q_FUNC_INFO))
+            {
+                Vdv301StopPoint2_3CZ1_0 selectedStopPoint=selectedTrip.stopPointList.at(input.currentStopIndex-1);
+                connectionCount=QString::number(selectedStopPoint.connectionList.count());
+            }
+
+        }
+
+    }
+
+
+    row = ui->tableWidget_logMessages->rowCount();
+    ui->tableWidget_logMessages->insertRow(row);
+    cell = new QTableWidgetItem(timeStamp);
+    ui->tableWidget_logMessages->setItem(row, 0, cell);
+
+    cell = new QTableWidgetItem(currentStopIndex);
+    ui->tableWidget_logMessages->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem(stopCount);
+    ui->tableWidget_logMessages->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(locationState);
+    ui->tableWidget_logMessages->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(connectionCount);
+    ui->tableWidget_logMessages->setItem(row, 4, cell);
+
+    cell = new QTableWidgetItem(announcement.replace("\n",""));
+    ui->tableWidget_logMessages->setItem(row, 5, cell);
+
+
+    ui->tableWidget_logMessages->resizeColumnsToContents();
+    if(ui->checkBox_logMessageAutoscroll->isChecked())
+    {
+         ui->tableWidget_logMessages->scrollToBottom();
+    }
+
+
+}
 
 
 QString MainWindow::createProgramVersionString()
@@ -1781,6 +1847,10 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         if(cisSubscriber.structureName()=="AllData")
         {
             showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
+            if(ui->checkBox_logMessages->isChecked())
+            {
+                messageToTable(vdv301AllData2_3CZ1_0);
+            }
         }
         else if(cisSubscriber.structureName()=="CurrentDisplayContent")
         {
@@ -2307,10 +2377,10 @@ void MainWindow::popUpMessage(QString messageContent)
 
 void MainWindow::updateLabelAnnouncement(QString announcementText)
 {
-     displayLabelLcd.naplnAnouncementLabel(announcementText,ui->label_announcement);
+    displayLabelLcd.naplnAnouncementLabel(announcementText,ui->label_announcement);
 
 
-   // ui->label_debugAnnouncement->setText(announcementText);
+    // ui->label_debugAnnouncement->setText(announcementText);
     ui->label_debugAnnouncement->setText(announcementText);
 }
 void MainWindow::updateLabelCurrentStopindex(QString currentStopIndex)
@@ -2480,5 +2550,14 @@ void MainWindow::on_pushButton_debugConvertInline_clicked()
 void MainWindow::on_pushButton_debugShowHtml_clicked()
 {
     ui->label_debugInLineOutput->setText(ui->plainTextEdit_debugInLineOutput->toPlainText());
+}
+
+
+
+
+
+void MainWindow::on_pushButton_messageLogReset_clicked()
+{
+    eraseTable(ui->tableWidget_logMessages);
 }
 

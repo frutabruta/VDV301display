@@ -239,6 +239,7 @@ private:
     void updateLabelCurrentStopindex(QString currentStopIndex);
     void updateLabelLocationState(QString locationState);
     void updateLabelAnnouncement(QString announcementText);
+    void messageToTable(Vdv301AllData2_3CZ1_0 input);
 private slots:
 
 
@@ -289,6 +290,8 @@ private slots:
     void on_pushButton_debugConvertInline_clicked();
 
     void on_pushButton_debugShowHtml_clicked();
+
+    void on_pushButton_messageLogReset_clicked();
 
 public slots:
 
