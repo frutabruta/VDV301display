@@ -18,6 +18,9 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250829_1123
+  - added beforeStop to MainWindow::labelLcdUpdateStopBackground 
+  
 - 20250828_1926
   - VDV301publisher
     - color rules fix

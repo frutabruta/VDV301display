@@ -1518,7 +1518,7 @@ void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateE
 
 
 
-    if (locationState==Vdv301Enumerations::LocationStateAtStop )
+    if ((locationState==Vdv301Enumerations::LocationStateAtStop)||(locationState==Vdv301Enumerations::LocationStateBeforeStop))
     {
         labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
     }
