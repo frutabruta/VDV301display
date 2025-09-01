@@ -452,6 +452,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
 
     QString timeStamp=QTime::currentTime().toString("hh:mm:ss.zzz");
     QString currentStopIndex=QString::number(input.currentStopIndex);
+    QString tripCount=QString::number(input.tripInformationList.count());
     QString stopCount="";
     QString locationState="";
     QString announcement="";
@@ -490,17 +491,20 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     cell = new QTableWidgetItem(currentStopIndex);
     ui->tableWidget_logMessages->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem(stopCount);
+    cell = new QTableWidgetItem(tripCount);
     ui->tableWidget_logMessages->setItem(row, 2, cell);
 
-    cell = new QTableWidgetItem(locationState);
+    cell = new QTableWidgetItem(stopCount);
     ui->tableWidget_logMessages->setItem(row, 3, cell);
 
-    cell = new QTableWidgetItem(connectionCount);
+    cell = new QTableWidgetItem(locationState);
     ui->tableWidget_logMessages->setItem(row, 4, cell);
 
-    cell = new QTableWidgetItem(announcement.replace("\n",""));
+    cell = new QTableWidgetItem(connectionCount);
     ui->tableWidget_logMessages->setItem(row, 5, cell);
+
+    cell = new QTableWidgetItem(announcement.replace("\n",""));
+    ui->tableWidget_logMessages->setItem(row, 6, cell);
 
 
     ui->tableWidget_logMessages->resizeColumnsToContents();
@@ -1783,6 +1787,11 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
             updateLabelCurrentStopindex(QString::number(vdv301AllData2_3CZ1_0.currentStopIndex));
 
+            if(ui->checkBox_logMessages->isChecked())
+            {
+                messageToTable(vdv301AllData2_3CZ1_0);
+            }
+
             if(vdv301AllData2_3CZ1_0.tripInformationList.isEmpty())
             {
                 eventNotOnLine();
@@ -1846,11 +1855,9 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
     {
         if(cisSubscriber.structureName()=="AllData")
         {
+
             showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
-            if(ui->checkBox_logMessages->isChecked())
-            {
-                messageToTable(vdv301AllData2_3CZ1_0);
-            }
+
         }
         else if(cisSubscriber.structureName()=="CurrentDisplayContent")
         {
@@ -1894,6 +1901,7 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
     qDebug()<<Q_FUNC_INFO;
 
     eraseTable(ui->tableWidget_debugStopList);
+    eraseTable(ui->tableWidget_connections);
     updateMainScreenDebugLabels();
 
     int tripCount=vdv301AllData.tripInformationList.count();
@@ -1955,6 +1963,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
     qDebug()<<Q_FUNC_INFO;
 
     eraseTable(ui->tableWidget_debugStopList);
+    eraseTable(ui->tableWidget_connections);
     updateMainScreenDebugLabels();
 
     int tripCount=vdv301AllData.tripInformationList.count();
@@ -2030,10 +2039,11 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv
 
 void MainWindow::receivedDataVariablesReset()
 {
-
     currentVdv301StopPointList.clear();
 
     debugStopPointListToTable(currentVdv301StopPointList,false);
+
+    eraseTable(ui->tableWidget_connections);
 }
 
 

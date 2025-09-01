@@ -18,6 +18,13 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250901_1638
+  - MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
+    - added tripcount
+  - fixed debug windows connections not resetting
+  - fixed not logging of message when the triplist is empty
+  - changed debug message font to monospace
+
 - 20250829_1123
   - added beforeStop to MainWindow::labelLcdUpdateStopBackground 
   
