@@ -24,6 +24,31 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip,
     {
         Vdv301StopPoint2_3CZ1_0 aktualniZastavka;
         bool navaznySpoj=false;
+        QLabel* labelStopName=nullptr;
+        QLabel* labelFarezoneBottom=nullptr;
+        QLabel* labelFarezoneTop=nullptr;
+
+        if(!labelListStopPointName.isEmpty())
+        {
+            labelStopName=labelListStopPointName.at(i);
+        }
+
+
+        if(!labelListFareZoneLower.isEmpty())
+        {
+            labelFarezoneBottom=labelListFareZoneLower.value(i);
+        }
+
+        if(!labelListFareZoneUpper.isEmpty())
+        {
+            labelFarezoneTop=labelListFareZoneUpper.value(i);
+        }
+
+
+
+
+
+
         if(!firstTrip.stopPointList.isEmpty())
         {
             aktualniZastavka=firstTrip.stopPointList.takeFirst();
@@ -43,7 +68,9 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip,
             }
         }
 
-        displayLabelStopPoint(aktualniZastavka,navaznySpoj,labelListStopPointName.at(i),labelListFareZoneUpper.at(i),labelListFareZoneLower.at(i));
+
+        displayLabelStopPoint(aktualniZastavka,navaznySpoj,labelStopName,labelFarezoneTop,labelFarezoneBottom);
+
 
     }
 
@@ -80,15 +107,12 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 all
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop)
 {
-    // PasmoveDvojiceLcd pasmoveDvojiceLcd;
-
     QVector<Vdv301InternationalText> fareZoneList= selectedStopPointDestination.fareZoneList;
 
 
-
-
     Vdv301InternationalText joinedStopName=vdv301InternationalTextJoinAll(selectedStopPointDestination.stopNameList,"\n");
-    labelStopName->setText(inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),slozkaPiktogramu) );
+    labelSetTextSafe(labelStopName,inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),slozkaPiktogramu) )    ;
+
     /*
     if((mVdv301version=="2.3")||(mVdv301version=="2.3CZ1.0"))
     {
@@ -105,25 +129,49 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
     switch(fareZoneList.count())
     {
     case 0:
-        labelFarezoneBottom->setText("");
-
+        labelSetTextSafe(labelFarezoneBottom,"");
         break;
     case 1:
-        labelFarezoneBottom->setText(fareZoneList.at(0).text);
-        labelFarezoneBottom->setFont(fontLabelFareZoneLarge);
+    {
 
-        labelFarezoneTop->hide();
-        labelFarezoneTop->setFont(fontLabelFareZoneLarge);
+        if(labelFarezoneBottom!=NULL)
+        {
+            labelFarezoneBottom->setText(fareZoneList.at(0).text);
+            labelFarezoneBottom->setFont(fontLabelFareZoneLarge);
+        }
+
+        if(labelFarezoneTop!=NULL)
+        {
+            labelFarezoneTop->hide();
+            labelFarezoneTop->setFont(fontLabelFareZoneLarge);
+        }
+
         break;
+    }
+
     case 2:
-        labelFarezoneBottom->setText(fareZoneList.at(0).text);
-        labelFarezoneBottom->setFont(fontLabelFareZoneSmall );
+    {
 
-        labelFarezoneTop->show();
-        labelFarezoneTop->setFont(fontLabelFareZoneSmall );
-        labelFarezoneTop->setText(fareZoneList.at(1).text);
+        if(labelFarezoneBottom!=NULL)
+        {
+            labelSetTextSafe(labelFarezoneBottom,fareZoneList.at(0).text);
+            labelFarezoneBottom->setFont(fontLabelFareZoneSmall );
+
+        }
+
+        if(labelFarezoneTop!=NULL)
+        {
+            labelFarezoneTop->show();
+            labelFarezoneTop->setFont(fontLabelFareZoneSmall );
+            labelSetTextSafe(labelFarezoneTop,fareZoneList.at(1).text);
+        }
+
 
         break;
+
+    }
+
+
     case 3:
         //prepared for case of 3 systems
         break;
@@ -134,15 +182,15 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
 
     if(isFollowingTrip==false)
     {
-        labelStopName->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
-        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelSetStylesheetSafe(labelStopName,"color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelSetStylesheetSafe(labelFarezoneTop,"color:"+barvyLinek.barva_bila_255_255_255+";");
+        labelSetStylesheetSafe(labelFarezoneBottom,"color:"+barvyLinek.barva_bila_255_255_255+";");
     }
     else
     {
-        labelStopName->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        labelFarezoneTop->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
-        labelFarezoneBottom->setStyleSheet("color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelSetStylesheetSafe(labelStopName,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelSetStylesheetSafe(labelFarezoneTop,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+        labelSetStylesheetSafe(labelFarezoneBottom,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
     }
 
 }
@@ -366,7 +414,7 @@ bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, 
 
     else
     {
-           QXmlStreamReader xmlReader("<wrapper>"+text+"</wrapper>");
+        QXmlStreamReader xmlReader("<wrapper>"+text+"</wrapper>");
 
 
         QString barvaPozadi="";

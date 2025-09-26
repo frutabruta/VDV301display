@@ -87,6 +87,7 @@ protected:
 
     bool labelSetTextSafe(QLabel *label, QString text);
     bool labelSetVisibleSafe(QLabel *label, bool visibility);
+    bool labelSetStylesheetSafe(QLabel *label, QString stylesheet);
 };
 
 #endif // DISPLAYLABEL_H

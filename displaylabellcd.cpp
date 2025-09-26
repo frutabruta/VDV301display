@@ -74,14 +74,18 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* la
     QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
 
 
-    label->setStyleSheet(linkaStyleSheetStandard);
+    if(label!=nullptr)
+    {
+        labelSetStylesheetSafe(label,linkaStyleSheetStandard);
 
-    QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),slozkaPiktogramu);
-    label->setText( vyslednyText);
+        QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),slozkaPiktogramu);
+        labelSetTextSafe(label,vyslednyText);
 
+        qDebug().noquote()<<"obsah pole linky: "<<vyslednyText;
 
-    qDebug().noquote()<<"obsah pole linky: "<<vyslednyText;
-    label->show();
+        label->show();
+    }
+
 }
 
 void DisplayLabelLcd::displayLabelEraseInformation()

@@ -68,7 +68,11 @@ void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv3
 {
     qDebug() <<  Q_FUNC_INFO;
 
-    frameFollowingTrip->show();
+    if(frameFollowingTrip!=nullptr)
+    {
+       frameFollowingTrip->show();
+    }
+
 
     int iconSize=60;
     if(labelDestination!=NULL)
@@ -155,7 +159,16 @@ void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> co
             labelListConnectionPlatform.at(i)->setText(selectedConnection.platform );
             labelListConnectionPlatform.at(i)->show();
 
-            labelListConnectionDeparture.at(i)->setText("<b>"+ QString::number( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime() ))+"</b> min.");
+            QString departureTime="";
+            if( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime())<1)
+            {
+                departureTime="&lt;1";
+            }
+            else
+            {
+                departureTime=QString::number( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime()));
+            }
+            labelListConnectionDeparture.at(i)->setText("<b>"+ departureTime+"</b> min.");
             labelListConnectionDeparture.at(i)->show();
         }
         else

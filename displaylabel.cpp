@@ -193,11 +193,26 @@ bool DisplayLabel::labelSetTextSafe(QLabel *label, QString text)
     return true;
 }
 
+bool DisplayLabel::labelSetStylesheetSafe(QLabel *label, QString stylesheet)
+{
+    if(label==NULL)
+    {
+        qDebug()<<Q_FUNC_INFO<<" failed";
+        return false;
+    }
+
+    else
+    {
+        label->setStyleSheet(stylesheet);
+    }
+    return true;
+}
+
 bool DisplayLabel::labelSetVisibleSafe(QLabel *label, bool visibility)
 {
     if(label==NULL)
     {
-        qDebug()<<"DisplayLabel::labelSetVisibleSafe failed";
+        qDebug()<<Q_FUNC_INFO<<" failed";
         return false;
     }
 

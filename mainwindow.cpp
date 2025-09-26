@@ -6,7 +6,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     ui(new Ui::MainWindow),
     settings(configurationFilePath, QSettings::IniFormat),
     svgVykreslovani(QCoreApplication::applicationDirPath()),
-    cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479),//puvodni port 48479, novy 59631
+    cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479,"xxx"),//puvodni port 48479, novy 59631
     deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
 
 {
@@ -35,6 +35,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 
     displayLabelLcd.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
+    displayLabelLcdJis.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
 
     initilializeFonts();
 
@@ -51,10 +52,12 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     //ui->prepinadloStran->setCurrentWidget(ui->page_hlavniObrazovka);
 
     displayLabelFillArray(); //naplni pointery na labely do pole, aby se nimi dalo iterovat
+    displayLabelFillArrayJis();
     ledLabelInitialize2_3();
     lcdLabelInitialize2_3();
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
+    displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
 
     eventStopRequestedDectivated();
 
@@ -108,6 +111,10 @@ void MainWindow::allConnects()
 
     connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
     connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+    connect(&displayLabelLcdJis.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
+    connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+
+
     connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
 
     connect(&displayLabelLed, &DisplayLabelLed::signalFrontDisplayWidthChanged, ui->spinBox_frontSignWidth, &QSpinBox::setValue);
@@ -204,6 +211,8 @@ void MainWindow::constantsToSettingsPage()
     ui->lineEdit_settings_deviceClass->setText(deviceManagementService.deviceClass());
     ui->lineEdit_settings_deviceId->setText(deviceManagementService.deviceId());
 
+    ui->lineEdit_settings_replyPath->setText(cisSubscriber.replyPath());
+
     QString language=settings.value("app/language").toString();
     if(language=="cs")
     {
@@ -259,6 +268,8 @@ void MainWindow::settingsWindowToSettingsFile()
     settings.setValue("deviceManagementService/deviceClass",ui->lineEdit_settings_deviceClass->text());
     settings.setValue("deviceManagementService/deviceId",ui->lineEdit_settings_deviceId->text());
 
+    settings.setValue("cisSubscriber/replyPath",ui->lineEdit_settings_replyPath->text());
+
 }
 
 
@@ -283,6 +294,7 @@ void MainWindow::initilializeFonts()
     displayLabelLed.initializeFonts();
 
     displayLabelLcd.initializeFonts();
+    displayLabelLcdJis.initializeFonts();
 
 }
 
@@ -324,6 +336,15 @@ void MainWindow::lcdLabelInitialize2_3()
     displayLabelLcd.frameFollowingTrip=ui->frame_navaznySpoj;
     displayLabelLcd.labelDestinationFollowing= ui->label_followingDestination;
     displayLabelLcd.labelLineFollowing= ui->label_followingLine;
+
+
+    displayLabelLcdJis.labelDestination=ui->Lcil_2;
+    displayLabelLcdJis.labelLine=ui->label_linka_2;
+    displayLabelLcdJis.labelViaPointsScrolling=ui->label_nacestne_2;
+    displayLabelLcdJis.labelClock=ui->label_hodiny_2;
+    //displayLabelLcdJis.frameFollowingTrip=ui->frame_navaznySpoj_;
+    //displayLabelLcdJis.labelDestinationFollowing= ui->label_followingDestination;
+    //displayLabelLcdJis.labelLineFollowing= ui->label_followingLine;
 
 }
 
@@ -389,6 +410,7 @@ void MainWindow::loadConstants()
         cisSubscriber.setVersion(vdv301version);
         displayLabelLed.setVdv301version(vdv301version);
         displayLabelLcd.setVdv301version(vdv301version);
+        displayLabelLcdJis.setVdv301version(vdv301version);
     }
     else
     {
@@ -404,6 +426,8 @@ void MainWindow::loadConstants()
     {
         cisSubscriber.setStructureName(settings.value("cisSubscriber/structure").toString());
     }
+
+    cisSubscriber.setReplyPath(settings.value("cisSubscriber/replyPath").toString());
 
 
 
@@ -898,6 +922,130 @@ void MainWindow::displayLabelFillArray()
 
 
 
+void MainWindow::displayLabelFillArrayJis()
+{
+    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna1_2);
+    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna2_2);
+    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna3_2);
+    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna4_2);
+    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna5_2);
+
+    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo1_3);
+    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo2_3);
+    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo3_3);
+    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo4_3);
+    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo5_3);
+
+    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo1_4);
+    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo2_4);
+    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo3_4);
+    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo4_4);
+    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo5_4);
+
+
+    displayLabelLcdJis.labelListConnectionDestination .push_back(ui->label_prestup0_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup1_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup2_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup3_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup4_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup5_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup6_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup7_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup8_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup9_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup10_cil_2);
+    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup11_cil_2);
+
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup0_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup1_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup2_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup3_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup4_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup5_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup6_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup7_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup8_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup9_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup10_linka_2);
+    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup11_linka_2);
+
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup0_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup1_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup2_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup3_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup4_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup5_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup6_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup7_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup8_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup9_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup10_odjezd_2);
+    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup11_odjezd_2);
+
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup0_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup1_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup2_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup3_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup4_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup5_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup6_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup7_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup8_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup9_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste_2);
+
+
+
+
+
+    /*
+    displayLabelLcdJis.pageAdditionalTextMessage=ui->page_additionalTextMessage;
+    displayLabelLcdJis.pageRoute=ui->page_route;
+
+    displayLabelLcdJis.stackedWidget_middle=ui->stackedWidget_prostredek;
+    displayLabelLcdJis.stackedWidget_onService=ui->stackedWidget_onService;
+
+    displayLabelLcdJis.labelAnnouncementLeft=ui->label_announcementLeft;
+    displayLabelLcdJis.labelAnnouncementRight=ui->label_announcementRight;
+
+    displayLabelLcdJis.pageFareZoneChange=ui->page_fareZoneChange;
+    displayLabelLcdJis.labelFareZoneAnnouncementLeft=ui->label_fareChangeAnnLeft;
+    displayLabelLcdJis.labelFareZoneAnnouncementRight=ui->label_fareChangeAnnRight;
+    displayLabelLcdJis.labelFareZoneChangeFrom=ui->label_fareZoneChangeFrom;
+    displayLabelLcdJis.labelFareZoneChangeTo=ui->label_fareZoneChangeTo;
+    */
+
+    //     displayLabelLcdJis.labelFareZoneChangeTo=ui->label_fareChangeAnnRight;
+
+
+    /*
+    displayLabelLcdJis.pageLineChange=ui->page_lineChange;
+    displayLabelLcdJis.labelLineChangeAnnouncementLeft=ui->label_lineChangeLeft;
+    displayLabelLcdJis.labelLineChangeAnnouncementRight=ui->label_lineChangeRight;
+    displayLabelLcdJis.labelLineChangeAnnouncementFrom =ui->label_lineFrom;
+    displayLabelLcdJis.labelLineChangeAnnouncementTo=ui->label_lineTo;
+    */
+
+    /*
+    seznamFramePrestup.push_back(ui->frame_odjezd0);
+    seznamFramePrestup.push_back(ui->frame_odjezd1);
+    seznamFramePrestup.push_back(ui->frame_odjezd2);
+    seznamFramePrestup.push_back(ui->frame_odjezd3);
+    seznamFramePrestup.push_back(ui->frame_odjezd4);
+    seznamFramePrestup.push_back(ui->frame_odjezd5);
+    seznamFramePrestup.push_back(ui->frame_odjezd6);
+    seznamFramePrestup.push_back(ui->frame_odjezd7);
+    seznamFramePrestup.push_back(ui->frame_odjezd8);
+    seznamFramePrestup.push_back(ui->frame_odjezd9);
+    seznamFramePrestup.push_back(ui->frame_odjezd10);
+    seznamFramePrestup.push_back(ui->frame_odjezd11);
+    */
+}
+
+
+
+
 
 
 
@@ -1152,6 +1300,9 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
             displayLabelLcd.displayLabelConnectionList(currentVdvStopPoint.connectionList);
 
+            displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
+            displayLabelLcdJis.displayLabelConnectionList(currentVdvStopPoint.connectionList);
+
             connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
         }
         else
@@ -1246,6 +1397,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
 
+        displayLabelLcdJis.displayLabelStopFareZone(vdv301AllData);
 
 
         if(xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList))
@@ -1368,6 +1520,9 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
             displayLabelLcd.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
 
+            displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
+            displayLabelLcdJis.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
+
             connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
         }
         else
@@ -1418,19 +1573,25 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
         if(destination.destinationNameList.isEmpty())
         {
             displayLabelLcd.displayLabelDestinationFollowing("");
+            displayLabelLcdJis.displayLabelDestinationFollowing("");
         }
         else
         {
             displayLabelLcd.displayLabelDestinationFollowing(destination);
+            displayLabelLcdJis.displayLabelDestinationFollowing(destination);
+
         }
 
         if(line.lineNameList.isEmpty())
         {
             displayLabelLcd.displayLabelLineNameFollowing("");
+            displayLabelLcdJis.displayLabelLineNameFollowing("");
+
         }
         else
         {
             displayLabelLcd.displayLabelLineNameFollowing(line);
+             displayLabelLcdJis.displayLabelLineNameFollowing(line);
         }
     }
     else
@@ -1438,22 +1599,27 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
         if(destination.destinationNameList.isEmpty())
         {
             displayLabelLcd.displayLabelDestination("");
+            displayLabelLcdJis.displayLabelDestination("");
         }
         else
         {
             displayLabelLcd.displayLabelDestination(destination);
+            displayLabelLcdJis.displayLabelDestination(destination);
         }
 
         if(line.lineNameList.isEmpty())
         {
             displayLabelLcd.displayLabelLineName("");
+            displayLabelLcdJis.displayLabelLineName("");
         }
         else
         {
             displayLabelLcd.displayLabelLineName(line);
+            displayLabelLcdJis.displayLabelLineName(line);
         }
 
         displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
+        displayLabelLcdJis.displayLabelViaPoints(displayContentList.first().viaPointList);
     }
 
 
@@ -2433,7 +2599,14 @@ void MainWindow::on_pushButton_menu_services_clicked()
 
 void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
-    ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
+    if(useJis)
+    {
+          ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplayJis);
+    }
+    else
+    {
+          ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
+    }
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 }
@@ -2463,8 +2636,7 @@ void MainWindow::on_pushButton_menu_refresh_clicked()
     //  CustomerInformationServiceSubscriber.odebirano=false ;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     this->eraseDisplayedInformation();
-    slotUpdateServiceTable();
-    //xmlDoPromenne(1);
+    slotUpdateServiceTable(); //xmlDoPromenne(1);
 
 
     eraseDisplayedInformation();
@@ -2569,5 +2741,11 @@ void MainWindow::on_pushButton_debugShowHtml_clicked()
 void MainWindow::on_pushButton_messageLogReset_clicked()
 {
     eraseTable(ui->tableWidget_logMessages);
+}
+
+
+void MainWindow::on_checkBox_settings_useJis_stateChanged(int arg1)
+{
+    useJis=arg1;
 }
 

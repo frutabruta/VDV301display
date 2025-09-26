@@ -69,6 +69,7 @@ private:
 
 
     DisplayLabelLcd2_3CZ1_0 displayLabelLcd;
+    DisplayLabelLcd2_3CZ1_0 displayLabelLcdJis;
 
     DisplayLabelLed displayLabelLed;
 
@@ -104,6 +105,8 @@ private:
     //constants
     const int intervalSideDisplay=2000;
     const int intervalDelayedStart=500;
+
+    bool useJis=false;
 
     //timers
 
@@ -240,6 +243,7 @@ private:
     void updateLabelLocationState(QString locationState);
     void updateLabelAnnouncement(QString announcementText);
     void messageToTable(Vdv301AllData2_3CZ1_0 input);
+    void displayLabelFillArrayJis();
 private slots:
 
 
@@ -292,6 +296,8 @@ private slots:
     void on_pushButton_debugShowHtml_clicked();
 
     void on_pushButton_messageLogReset_clicked();
+
+    void on_checkBox_settings_useJis_stateChanged(int arg1);
 
 public slots:
 

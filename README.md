@@ -18,6 +18,31 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20250926_1732
+  - VDV301subscriber
+    - added replyPath support
+    - null pointer fixed 
+
+  - VDV301publisher
+    - HttpService::slotDumpRequestContent
+    - added support for  replyPath including /
+    - fixed else if statement to prevent response clash
+  
+  - DisplayLabel
+    - DisplayLabel::labelSetStylesheetSafe
+    - DisplayLabelLcd::displayLabelDrawLineNumber2_4
+      - empty pointer checks
+    - DisplayLabelLcd2_3::displayLabelDestinationFollowing
+      - empty pointer checks
+    - DisplayLabelLcd2_3CZ1_0::displayLabelStopList
+      - empty pointer checks
+    - DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint
+      - empty pointer checks
+        
+  - added option to set replyPath (cisSubscriber/replyPath in settings.ini)
+  - MainWindow
+    - JIS preparations
+  
 - 20250901_1638
   - MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     - added tripcount
