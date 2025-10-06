@@ -18,6 +18,16 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251006_1525
+  - ui
+    - JIS graphics
+      - Stop Request sign now works
+      - added 6th stop
+    - fixed stretches
+    - moved debug frame
+  - settings.ini
+    - added option to save useJis state 
+
 - 20251006_1150
   - new class DisplayLabelLcd2_3CZ1_0_Jis with label group architecture
     - DisplayLabelStopGroup::DisplayLabelStopGroup

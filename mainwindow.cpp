@@ -435,6 +435,7 @@ void MainWindow::loadConstants()
     cisSubscriber.setReplyPath(settings.value("cisSubscriber/replyPath").toString());
 
 
+    useJis=settings.value("graphics/useJisGraphics").toBool();
 
     menuSwitchTabs(settings.value("window/defaultScreen").toInt());
     if(settings.value("window/fullscreen").toBool()==true)
@@ -955,6 +956,7 @@ void MainWindow::displayLabelFillArrayJis()
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3_2,ui->label_pasmo3_4, ui->label_pasmo3_3);
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4_2,ui->label_pasmo4_4, ui->label_pasmo4_3);
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna5_2,ui->label_pasmo5_4, ui->label_pasmo5_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna6_2,ui->label_pasmo6_4, ui->label_pasmo6_3);
 
     displayLabelLcdJis.labelListStopConnectionGroup<<DisplayLabelStopGroup(ui->Lnacestna1_3,nullptr,nullptr);
 
@@ -1131,14 +1133,19 @@ void MainWindow::eventStopRequestedActivated()
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->label_stopRequested->setText("<b>STOP</b>");
+
     ui->label_stopRequestedSymbol->show();
+    ui->label_stopRequestedSymbol_2->show();
 }
 
 void MainWindow::eventStopRequestedDectivated()
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->label_stopRequested->setText("STOP");
+
+
     ui->label_stopRequestedSymbol->hide();
+    ui->label_stopRequestedSymbol_2->hide();
 }
 
 void MainWindow::eventShowPageSpecialAnnouncement(QString title,QString type,QString textCz, QString textEn)
@@ -1160,7 +1167,7 @@ void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
     qDebug()<<Q_FUNC_INFO<<" "<<displayState;
     ui->label_lcd_state->setText(displayState);
     eraseDisplayedInformation();
-    ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
+  //  ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
 
 }
 
@@ -2803,5 +2810,6 @@ void MainWindow::on_pushButton_messageLogReset_clicked()
 void MainWindow::on_checkBox_settings_useJis_stateChanged(int arg1)
 {
     useJis=arg1;
+    settings.setValue("graphics/useJisGraphics",useJis);
 }
 
