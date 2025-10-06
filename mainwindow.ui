@@ -238,7 +238,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_labelDisplay">
        <property name="sizePolicy">
@@ -547,8 +547,8 @@ QLabel{color:#FFFFFF}</string>
                      <rect>
                       <x>0</x>
                       <y>0</y>
-                      <width>170</width>
-                      <height>58</height>
+                      <width>216</width>
+                      <height>72</height>
                      </rect>
                     </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -758,7 +758,7 @@ border-radius: 8px;
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>4</number>
+                  <number>3</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_2">
                   <property name="sizePolicy">
@@ -3759,7 +3759,7 @@ border-radius: 30px;
 QLabel{color:#FFFFFF}</string>
           </property>
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page_route_2">
            <property name="sizePolicy">
@@ -3834,7 +3834,7 @@ QLabel{color:#FFFFFF}</string>
                   </sizepolicy>
                  </property>
                  <property name="currentIndex">
-                  <number>0</number>
+                  <number>4</number>
                  </property>
                  <widget class="QWidget" name="page_hlavni_3">
                   <property name="sizePolicy">
@@ -4658,8 +4658,8 @@ QLabel{color:#FFFFFF}</string>
                              <rect>
                               <x>0</x>
                               <y>0</y>
-                              <width>170</width>
-                              <height>58</height>
+                              <width>216</width>
+                              <height>72</height>
                              </rect>
                             </property>
                             <layout class="QHBoxLayout" name="horizontalLayout_40">
@@ -5025,9 +5025,19 @@ border-radius: 140px;
                   </layout>
                  </widget>
                  <widget class="QWidget" name="page_prestupy_2M">
-                  <layout class="QGridLayout" name="gridLayout_27">
+                  <layout class="QGridLayout" name="gridLayout_27" rowstretch="1,4,0,0">
+                   <item row="2" column="0">
+                    <widget class="QFrame" name="frame">
+                     <property name="frameShape">
+                      <enum>QFrame::StyledPanel</enum>
+                     </property>
+                     <property name="frameShadow">
+                      <enum>QFrame::Raised</enum>
+                     </property>
+                    </widget>
+                   </item>
                    <item row="0" column="0">
-                    <layout class="QHBoxLayout" name="horizontalLayout_39">
+                    <layout class="QHBoxLayout" name="horizontalLayout_39" stretch="1,4">
                      <item>
                       <widget class="QLabel" name="label_linka_3">
                        <property name="sizePolicy">
@@ -5106,12 +5116,12 @@ border-radius: 140px;
                    <item row="1" column="0">
                     <widget class="QStackedWidget" name="stackedWidget_connections">
                      <property name="currentIndex">
-                      <number>1</number>
+                      <number>0</number>
                      </property>
                      <widget class="QWidget" name="page_connections_2_pt1">
                       <layout class="QVBoxLayout" name="verticalLayout_34">
                        <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_prestupy0_2" stretch="0,0,0,0,0,0">
+                        <layout class="QVBoxLayout" name="verticalLayout_prestupy0_2" stretch="0,0,0,0,0,0,0,0">
                          <item>
                           <widget class="QFrame" name="frame_odjezd0_2">
                            <property name="styleSheet">
@@ -5844,23 +5854,6 @@ border-radius: 140px;
                            </layout>
                           </widget>
                          </item>
-                        </layout>
-                       </item>
-                      </layout>
-                     </widget>
-                     <widget class="QWidget" name="page_4">
-                      <layout class="QVBoxLayout" name="verticalLayout_44">
-                       <property name="topMargin">
-                        <number>9</number>
-                       </property>
-                       <item>
-                        <layout class="QHBoxLayout" name="horizontalLayout_4"/>
-                       </item>
-                       <item>
-                        <layout class="QVBoxLayout" name="verticalLayout_prestupy1_2" stretch="1,1,0,1,1,1">
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
                          <item>
                           <widget class="QFrame" name="frame_odjezd6_2">
                            <property name="styleSheet">
@@ -5872,7 +5865,7 @@ border-radius: 140px;
                            <property name="frameShadow">
                             <enum>QFrame::Raised</enum>
                            </property>
-                           <layout class="QHBoxLayout" name="horizontalLayout_55" stretch="19,10,0,10,0">
+                           <layout class="QHBoxLayout" name="horizontalLayout_55" stretch="19,10,100,10,40">
                             <item>
                              <widget class="QLabel" name="label_prestup6_linka_2">
                               <property name="sizePolicy">
@@ -6104,6 +6097,20 @@ border-radius: 140px;
                            </layout>
                           </widget>
                          </item>
+                        </layout>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="page_4">
+                      <layout class="QVBoxLayout" name="verticalLayout_44" stretch="0">
+                       <property name="topMargin">
+                        <number>9</number>
+                       </property>
+                       <item>
+                        <layout class="QVBoxLayout" name="verticalLayout_prestupy1_2" stretch="0,1,1,1">
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
                          <item>
                           <widget class="QFrame" name="frame_odjezd8_2">
                            <property name="styleSheet">
@@ -8574,7 +8581,7 @@ departure</string>
      <x>0</x>
      <y>0</y>
      <width>1332</width>
-     <height>21</height>
+     <height>25</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

@@ -111,7 +111,7 @@ void MainWindow::allConnects()
 
     connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
     connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
-    connect(&displayLabelLcdJis.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
+    connect(&displayLabelLcdJis.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePagesJis);
     connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
 
 
@@ -340,6 +340,11 @@ void MainWindow::lcdLabelInitialize2_3()
 
     displayLabelLcdJis.labelDestination=ui->Lcil_2;
     displayLabelLcdJis.labelLine=ui->label_linka_2;
+
+    displayLabelLcdJis.labelLineConnection=ui->label_linka_3;
+    //displayLabelLcdJis.labelDestinationConnection=nullptr;
+
+
     displayLabelLcdJis.labelViaPointsScrolling=ui->label_nacestne_2;
     displayLabelLcdJis.labelClock=ui->label_hodiny_2;
     //displayLabelLcdJis.frameFollowingTrip=ui->frame_navaznySpoj_;
@@ -790,6 +795,27 @@ void MainWindow::slotDisplayLcdLabelCyclePages()
     }
 }
 
+void MainWindow::slotDisplayLcdLabelCyclePagesJis()
+{
+    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndexJis<<" v seznamu je "<<displayLabelLcdJis.pageCycleList.count();
+
+    if(lcdLabelCurrentPageIndexJis==(displayLabelLcdJis.pageCycleList.count()-1))
+    {
+        lcdLabelCurrentPageIndexJis=0;
+    }
+    else
+    {
+        lcdLabelCurrentPageIndexJis++;
+    }
+
+
+    if(lcdLabelCurrentPageIndexJis<displayLabelLcdJis.pageCycleList.count())
+    {
+        ui->stackedWidget_prostredek_2->setCurrentWidget(displayLabelLcdJis.pageCycleList.at(lcdLabelCurrentPageIndexJis));
+
+    }
+}
+
 
 void MainWindow::slotShutdownReady(bool isReady)
 {
@@ -924,25 +950,30 @@ void MainWindow::displayLabelFillArray()
 
 void MainWindow::displayLabelFillArrayJis()
 {
-    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna1_2);
-    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna2_2);
-    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna3_2);
-    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna4_2);
-    displayLabelLcdJis.labelListStopPointName.push_back(ui->Lnacestna5_2);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1_2,ui->label_pasmo1_4, ui->label_pasmo1_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna2_2,ui->label_pasmo2_4, ui->label_pasmo2_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3_2,ui->label_pasmo3_4, ui->label_pasmo3_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4_2,ui->label_pasmo4_4, ui->label_pasmo4_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna5_2,ui->label_pasmo5_4, ui->label_pasmo5_3);
 
-    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo1_3);
-    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo2_3);
-    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo3_3);
-    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo4_3);
-    displayLabelLcdJis.labelListFareZoneUpper.push_back(ui->label_pasmo5_3);
+    displayLabelLcdJis.labelListStopConnectionGroup<<DisplayLabelStopGroup(ui->Lnacestna1_3,nullptr,nullptr);
 
-    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo1_4);
-    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo2_4);
-    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo3_4);
-    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo4_4);
-    displayLabelLcdJis.labelListFareZoneLower.push_back(ui->label_pasmo5_4);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup0_linka_2,ui->label_prestup0_cil_2,ui->label_prestup0_odjezd_2,ui->label_prestup0_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup1_linka_2,ui->label_prestup1_cil_2,ui->label_prestup1_odjezd_2,ui->label_prestup1_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup2_linka_2,ui->label_prestup2_cil_2,ui->label_prestup2_odjezd_2,ui->label_prestup2_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup3_linka_2,ui->label_prestup3_cil_2,ui->label_prestup3_odjezd_2,ui->label_prestup3_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup4_linka_2,ui->label_prestup4_cil_2,ui->label_prestup4_odjezd_2,ui->label_prestup4_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup5_linka_2,ui->label_prestup5_cil_2,ui->label_prestup5_odjezd_2,ui->label_prestup5_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup6_linka_2,ui->label_prestup6_cil_2,ui->label_prestup6_odjezd_2,ui->label_prestup6_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup7_linka_2,ui->label_prestup7_cil_2,ui->label_prestup7_odjezd_2,ui->label_prestup7_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup8_linka_2,ui->label_prestup8_cil_2,ui->label_prestup8_odjezd_2,ui->label_prestup8_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup9_linka_2,ui->label_prestup9_cil_2,ui->label_prestup9_odjezd_2,ui->label_prestup9_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup10_linka_2,ui->label_prestup10_cil_2,ui->label_prestup10_odjezd_2,ui->label_prestup10_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup11_linka_2,ui->label_prestup11_cil_2,ui->label_prestup11_odjezd_2,ui->label_prestup11_nastupiste_2);
 
 
+ //   displayLabelLcdJis.labelListStopPointNameConnection.push_back(ui->Lnacestna1_3);
+/*
     displayLabelLcdJis.labelListConnectionDestination .push_back(ui->label_prestup0_cil_2);
     displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup1_cil_2);
     displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup2_cil_2);
@@ -996,39 +1027,39 @@ void MainWindow::displayLabelFillArrayJis()
     displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste_2);
 
 
+*/
 
 
 
-    /*
-    displayLabelLcdJis.pageAdditionalTextMessage=ui->page_additionalTextMessage;
-    displayLabelLcdJis.pageRoute=ui->page_route;
+    displayLabelLcdJis.pageAdditionalTextMessage=ui->page_additionalTextMessage_2;
+    displayLabelLcdJis.pageRoute=ui->page_route_2;
 
-    displayLabelLcdJis.stackedWidget_middle=ui->stackedWidget_prostredek;
-    displayLabelLcdJis.stackedWidget_onService=ui->stackedWidget_onService;
+    displayLabelLcdJis.stackedWidget_middle=ui->stackedWidget_prostredek_2;
+    displayLabelLcdJis.stackedWidget_onService=ui->stackedWidget_onService_2;
 
-    displayLabelLcdJis.labelAnnouncementLeft=ui->label_announcementLeft;
-    displayLabelLcdJis.labelAnnouncementRight=ui->label_announcementRight;
+    displayLabelLcdJis.labelAnnouncementLeft=ui->label_announcementLeft_2;
+    displayLabelLcdJis.labelAnnouncementRight=ui->label_announcementRight_2;
 
-    displayLabelLcdJis.pageFareZoneChange=ui->page_fareZoneChange;
-    displayLabelLcdJis.labelFareZoneAnnouncementLeft=ui->label_fareChangeAnnLeft;
-    displayLabelLcdJis.labelFareZoneAnnouncementRight=ui->label_fareChangeAnnRight;
-    displayLabelLcdJis.labelFareZoneChangeFrom=ui->label_fareZoneChangeFrom;
-    displayLabelLcdJis.labelFareZoneChangeTo=ui->label_fareZoneChangeTo;
-    */
+    displayLabelLcdJis.pageFareZoneChange=ui->page_fareZoneChange_2;
+    displayLabelLcdJis.labelFareZoneAnnouncementLeft=ui->label_fareChangeAnnLeft_2;
+    displayLabelLcdJis.labelFareZoneAnnouncementRight=ui->label_fareChangeAnnRight_2;
+    displayLabelLcdJis.labelFareZoneChangeFrom=ui->label_fareZoneChangeFrom_2;
+    displayLabelLcdJis.labelFareZoneChangeTo=ui->label_fareZoneChangeTo_2;
+
 
     //     displayLabelLcdJis.labelFareZoneChangeTo=ui->label_fareChangeAnnRight;
 
 
-    /*
-    displayLabelLcdJis.pageLineChange=ui->page_lineChange;
-    displayLabelLcdJis.labelLineChangeAnnouncementLeft=ui->label_lineChangeLeft;
-    displayLabelLcdJis.labelLineChangeAnnouncementRight=ui->label_lineChangeRight;
-    displayLabelLcdJis.labelLineChangeAnnouncementFrom =ui->label_lineFrom;
-    displayLabelLcdJis.labelLineChangeAnnouncementTo=ui->label_lineTo;
-    */
 
-    /*
-    seznamFramePrestup.push_back(ui->frame_odjezd0);
+    displayLabelLcdJis.pageLineChange=ui->page_lineChange_2;
+    displayLabelLcdJis.labelLineChangeAnnouncementLeft=ui->label_lineChangeLeft_2;
+    displayLabelLcdJis.labelLineChangeAnnouncementRight=ui->label_lineChangeRight_2;
+    displayLabelLcdJis.labelLineChangeAnnouncementFrom =ui->label_lineFrom_2;
+    displayLabelLcdJis.labelLineChangeAnnouncementTo=ui->label_lineTo_2;
+
+
+   /*
+    seznamFramePrestup.push_back(ui->frame_odjezd0_2);
     seznamFramePrestup.push_back(ui->frame_odjezd1);
     seznamFramePrestup.push_back(ui->frame_odjezd2);
     seznamFramePrestup.push_back(ui->frame_odjezd3);
@@ -1040,7 +1071,7 @@ void MainWindow::displayLabelFillArrayJis()
     seznamFramePrestup.push_back(ui->frame_odjezd9);
     seznamFramePrestup.push_back(ui->frame_odjezd10);
     seznamFramePrestup.push_back(ui->frame_odjezd11);
-    */
+   */
 }
 
 
@@ -1053,6 +1084,7 @@ void MainWindow::eraseDisplayedInformation()
 {
     qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_version_2);
     displayLabelLcd.displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
     displayLabelLed.ledClearDisplays();
@@ -1332,6 +1364,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
     lcdLabelCurrentPageIndex=0;
 
     displayLabelLcd.timerLabelPageSwitch.start();
+    displayLabelLcdJis.timerLabelPageSwitch.start();
 
     return 1;
 }
@@ -1542,10 +1575,12 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     if(timerOverride)
     {
         displayLabelLcd.timerLabelPageSwitch.stop();
+        displayLabelLcdJis.timerLabelPageSwitch.stop();
     }
     else
     {
         displayLabelLcd.timerLabelPageSwitch.start();
+        displayLabelLcdJis.timerLabelPageSwitch.start();
     }
 
 
@@ -2221,6 +2256,7 @@ void MainWindow::displayNormalOnLineState()
 {
 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
 }
 
 
@@ -2366,6 +2402,9 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
 
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
+    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_fareZoneChange_2);
+
     ui->label_fareZoneChangeFrom->setText(displayLabelLcd.vdv301InternationalTextJoinAll(fromFareZoneList,"\n").text);
     ui->label_fareZoneChangeTo->setText(displayLabelLcd.vdv301InternationalTextJoinAll(toFareZoneList,"\n").text);
     // displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
@@ -2382,12 +2421,23 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
 
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
+    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_oznameni_2);
+
     ui->label_oznTitle->setText(title);
     ui->label_oznType->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
     ui->label_oznTextCs->setText(textCz);
     ui->label_oznTextEn->setText(textEn);
 
+
+    ui->label_oznTitle_2->setText(title);
+    ui->label_oznType_2->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
+    ui->label_oznTextCs_2->setText(textCz);
+    ui->label_oznTextEn_2->setText(textEn);
+
+
     displayLabelLcd.pageCycleList.push_back(ui->page_oznameni);
+    displayLabelLcdJis.pageCycleList.push_back(ui->page_oznameni_2);
 }
 
 
@@ -2438,6 +2488,10 @@ void MainWindow::displayLabelReturnToStopList()
     qDebug() <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
+    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_hlavni_3);
+
     displayLabelLcd.naplnZmenaLabel("",ui->label_zmena);
 }
 
@@ -2448,6 +2502,8 @@ void MainWindow::displayLabelShowPageFinalStop()
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
 
+    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
+    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_konecna_2);
 }
 
 

@@ -86,6 +86,7 @@ SOURCES += \
     displaylabellcd.cpp \
     displaylabellcd2_3.cpp \
     displaylabellcd2_3cz1_0.cpp \
+    displaylabellcd2_3cz1_0_jis.cpp \
     displaylabelled.cpp \
     inlineformatparser.cpp \    
     main.cpp \
@@ -136,6 +137,7 @@ HEADERS += \
     displaylabellcd.h \
     displaylabellcd2_3.h \
     displaylabellcd2_3cz1_0.h \
+    displaylabellcd2_3cz1_0_jis.h \
     displaylabelled.h \
     inlineformatparser.h \
     mainwindow.h \

@@ -131,8 +131,6 @@ void DisplayLabelLcd::displayLabelLineName(QString lineName)
 {
     qDebug() <<  Q_FUNC_INFO;
     displayLabelDrawLineNumber2_4(lineName,labelLine, qFloor(ratioPixelPoint*200),false);
-
-
 }
 
 void DisplayLabelLcd::displayLabelLineNameFollowing(QString lineName)

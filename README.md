@@ -18,6 +18,26 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251006_1150
+  - new class DisplayLabelLcd2_3CZ1_0_Jis with label group architecture
+    - DisplayLabelStopGroup::DisplayLabelStopGroup
+    - DisplayLabelStopGroup::eraseContent
+    - DisplayLabelConnectionGroup::eraseContent
+    - DisplayLabelConnectionGroup::labelSetTextSafe
+    - DisplayLabelLcd2_3CZ1_0_Jis::displayLabelLineName
+    - DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew
+  - DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint 
+    - null pointer fix
+  - ui
+    - reworked JIS layout
+    - line and next stop now working
+    - added connections to total number of 8
+  - MainWindow
+    - added MainWindow::slotDisplayLcdLabelCyclePagesJis
+    - fixes to allow correct switching of JIS pages
+
+
+
 - 20250926_1732
   - VDV301subscriber
     - added replyPath support

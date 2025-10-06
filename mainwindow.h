@@ -13,6 +13,7 @@
 #include "svgvykreslovani.h"
 #include "displaylabelled.h"
 #include "displaylabellcd2_3cz1_0.h"
+#include "displaylabellcd2_3cz1_0_jis.h"
 
 #include "barvylinek.h"
 
@@ -69,7 +70,7 @@ private:
 
 
     DisplayLabelLcd2_3CZ1_0 displayLabelLcd;
-    DisplayLabelLcd2_3CZ1_0 displayLabelLcdJis;
+    DisplayLabelLcd2_3CZ1_0_Jis displayLabelLcdJis;
 
     DisplayLabelLed displayLabelLed;
 
@@ -98,6 +99,7 @@ private:
 
 
     int lcdLabelCurrentPageIndex =0;
+    int lcdLabelCurrentPageIndexJis =0;
 
     bool showTimeColon=0;
 
@@ -299,6 +301,7 @@ private slots:
 
     void on_checkBox_settings_useJis_stateChanged(int arg1);
 
+    void slotDisplayLcdLabelCyclePagesJis();
 public slots:
 
 
