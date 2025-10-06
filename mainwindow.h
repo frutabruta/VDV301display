@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "VDV301xmlparser/xmlparser1_0.h"
-#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
+//#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
 #include "VDV301xmlparser/xmlparser2_3.h"
 #include "VDV301xmlparser/xmlparser2_3cz1_0.h"
 
@@ -11,9 +11,9 @@
 #include "VDV301subscriber/cissubscriber.h"
 
 #include "svgvykreslovani.h"
-#include "displaylabelled.h"
-#include "displaylabellcd2_3cz1_0.h"
-#include "displaylabellcd2_3cz1_0_jis.h"
+#include "DisplayLabel/displaylabelled.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
 
 #include "barvylinek.h"
 

@@ -18,6 +18,8 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251006_1546
+  - move all DisplayLabel files to a separate folder
 - 20251006_1525
   - ui
     - JIS graphics

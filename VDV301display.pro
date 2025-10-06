@@ -82,12 +82,12 @@ SOURCES += \
     VDV301xmlparser/xmlparser1_0.cpp \
     VDV301xmlparser/xmlparser2_3.cpp \
     VDV301xmlparser/xmlparser2_3cz1_0.cpp \
-    displaylabel.cpp \
-    displaylabellcd.cpp \
-    displaylabellcd2_3.cpp \
-    displaylabellcd2_3cz1_0.cpp \
-    displaylabellcd2_3cz1_0_jis.cpp \
-    displaylabelled.cpp \
+    DisplayLabel/displaylabel.cpp \
+    DisplayLabel/displaylabellcd.cpp \
+    DisplayLabel/displaylabellcd2_3.cpp \
+    DisplayLabel/displaylabellcd2_3cz1_0.cpp \
+    DisplayLabel/displaylabellcd2_3cz1_0_jis.cpp \
+    DisplayLabel/displaylabelled.cpp \
     inlineformatparser.cpp \    
     main.cpp \
     mainwindow.cpp \
@@ -133,12 +133,12 @@ HEADERS += \
     VDV301xmlparser/xmlparser1_0.h \
     VDV301xmlparser/xmlparser2_3.h \
     VDV301xmlparser/xmlparser2_3cz1_0.h \
-    displaylabel.h \
-    displaylabellcd.h \
-    displaylabellcd2_3.h \
-    displaylabellcd2_3cz1_0.h \
-    displaylabellcd2_3cz1_0_jis.h \
-    displaylabelled.h \
+    DisplayLabel/displaylabel.h \
+    DisplayLabel/displaylabellcd.h \
+    DisplayLabel/displaylabellcd2_3.h \
+    DisplayLabel/displaylabellcd2_3cz1_0.h \
+    DisplayLabel/displaylabellcd2_3cz1_0_jis.h \
+    DisplayLabel/displaylabelled.h \
     inlineformatparser.h \
     mainwindow.h \
     svgvykreslovani.h \
