@@ -4,7 +4,9 @@
 #include "displaylabel.h"
 
 #include <QTimer>
+#include <QLoggingCategory>
 #include "VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h"
+
 
 class DisplayLabelLed : public DisplayLabel
 {

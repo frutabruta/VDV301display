@@ -2,6 +2,7 @@
 #define DISPLAYLABELLCD_H
 
 #include <QStackedWidget>
+#include <QLoggingCategory>
 
 #include "displaylabel.h"
 

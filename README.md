@@ -18,6 +18,19 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251007_1535
+  - ui
+    - added option to change psge switch time (not stored in settings.ini)
+  - added QLoggingCategory
+    - InlineFormatParser
+    - DisplayLabel
+    - DisplayLabelLcd
+    - DisplayLabelLed
+    - MainWindow
+  - VDV301subscriber
+    - not sending subscribe request with empty IP
+
+
 - 20251006_1546
   - move all DisplayLabel files to a separate folder
 - 20251006_1525

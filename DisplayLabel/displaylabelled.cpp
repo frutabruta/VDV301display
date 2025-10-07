@@ -1,14 +1,14 @@
 #include "displaylabelled.h"
 
+
+Q_LOGGING_CATEGORY(DisplayLabelLedLog, "DisplayLabelLed")
+
 DisplayLabelLed::DisplayLabelLed() {}
-
-
-
-
 
 
 void DisplayLabelLed::initializeFonts()
 {
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
     fontLed1.setFamily("21-PID 1");
     fontLed1.setPointSize(65);
 
@@ -32,7 +32,7 @@ void DisplayLabelLed::initializeFonts()
 void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent> displayContentListAll )
 {
     //new approach to display viapoint from DisplayContent
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
 
 
     QVector<Vdv301DisplayContent> displayContentListFront;
@@ -61,7 +61,7 @@ void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVe
             displayContentListInterior.append(selectedDisplayContent);
             break;
         case DisplayContentUndefined:
-            qDebug()<<"undefined displayContent";
+            qCDebug(DisplayLabelLedLog)<<"undefined displayContent";
             break;
         default:
             break;
@@ -103,14 +103,14 @@ void DisplayLabelLed::slotTickLedPanels2_3()
 
 void DisplayLabelLed::slotLedIterateAllDisplays()
 {
-    // qDebug()<<"MainWindow::iterujVsechnyPanely()";
+    // qCDebug(DisplayLabelLedLog)<<"MainWindow::iterujVsechnyPanely()";
     ledIterateSide(textyBocniPanelkIteraci,currentPageIndexLed);
     ledIterateInner(textyVnitrniPanelkIteraci,currentPageIndexLed);
 }
 
 void DisplayLabelLed::ledIterateSide(QVector<QString> texty, int &iteracniIndex)
 {
-    // qDebug()<<"MainWindow::iterujBocniPanel";
+    // qCDebug(DisplayLabelLedLog)<<"MainWindow::iterujBocniPanel";
 
     if(iteracniIndex<texty.length())
     {
@@ -128,7 +128,7 @@ void DisplayLabelLed::ledIterateSide(QVector<QString> texty, int &iteracniIndex)
 
 void DisplayLabelLed::ledIterateInner(QVector<QString> texty, int &iteracniIndex)
 {
-    // qDebug()<<"MainWindow::iterujBocniPanel";
+    // qCDebug(DisplayLabelLedLog)<<"MainWindow::iterujBocniPanel";
 
     if(iteracniIndex<texty.length())
     {
@@ -147,7 +147,7 @@ void DisplayLabelLed::ledIterateInner(QVector<QString> texty, int &iteracniIndex
 
 void DisplayLabelLed::ledAlignTextOverflow(QLabel* label)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
     QFontMetrics metrics(label->font());
 
     if(metrics.horizontalAdvance(label->text())> label->width())
@@ -163,7 +163,7 @@ void DisplayLabelLed::ledAlignTextOverflow(QLabel* label)
 
 void DisplayLabelLed::ledSetTextFront(QString line,QString destinationTop,QString destinationBottom)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
 
 
     if (destinationBottom!="")
@@ -194,7 +194,7 @@ void DisplayLabelLed::ledSetTextFront(QString line,QString destinationTop,QStrin
 
 void DisplayLabelLed::ledSetTextSide(QString line,QString destinationTop,QString destinationBottom)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
 
 
 
@@ -232,7 +232,7 @@ void DisplayLabelLed::ledSetTextSide(QString line,QString destinationTop,QString
 
 void DisplayLabelLed::ledSetLine(QLabel* label, QString text)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog)<<Q_FUNC_INFO;
     label->setText(text);
     if (text.length()>3)
     {
@@ -248,7 +248,7 @@ void DisplayLabelLed::ledSetLine(QLabel* label, QString text)
 
 void DisplayLabelLed::ledSetTextRear(QString line)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
 
     ledSetLine(rearDisplay.lineLabel,line);
 
@@ -256,7 +256,7 @@ void DisplayLabelLed::ledSetTextRear(QString line)
 
 void DisplayLabelLed::ledSetTextInner(QString line,QString destinationTop,QString destinationBottom)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
     innerDisplay.lineLabel->setText(line);
     innerDisplay.destination1Label->setText(destinationTop);
     innerDisplay.destination2Label->setText(destinationBottom);
@@ -265,7 +265,7 @@ void DisplayLabelLed::ledSetTextInner(QString line,QString destinationTop,QStrin
 
 void DisplayLabelLed::ledInitializeFormat()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
     /*
     ledNaplnFront("123","čelní horní","čelní dolní");
     ledNaplnSide("456","Boční cíl","Boční nácestné");
@@ -309,7 +309,7 @@ void DisplayLabelLed::ledInitializeFormat()
 
 void DisplayLabelLed::ledClearDisplays()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
     ledSetTextFront("","","");
     ledSetTextSide("","","");
     ledSetTextRear("");
@@ -332,7 +332,7 @@ void DisplayLabelLed::ledSetWindowSizeDot(QLabel * label, int lengthDotCount, in
 
 void DisplayLabelLed::ledUpdateDisplaySizes()
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLedLog)<<Q_FUNC_INFO;
 
     const int cilSirka=108;
     const int cilVyskaVelky=19;
@@ -393,7 +393,7 @@ void DisplayLabelLed::ledUpdateDisplaySizes()
 
 
 
-    qDebug()<<"pomer vysky: "<<pomerFontuKvysce; //pomer vysky:  0.833333
+    qCDebug(DisplayLabelLedLog)<<"pomer vysky: "<<pomerFontuKvysce; //pomer vysky:  0.833333
 
     fontLed1.setPointSize(novaVelikostFontu);
     fontLed3.setPointSize(novaVelikostFontu);

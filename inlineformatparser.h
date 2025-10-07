@@ -5,6 +5,7 @@
 #include <QFile>
 #include <QXmlStreamReader>
 #include <QtXml>
+#include <QLoggingCategory>
 
 
 class Icon {

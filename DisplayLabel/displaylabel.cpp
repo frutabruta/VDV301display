@@ -3,6 +3,7 @@
 
 #include <QMessageBox>
 
+Q_LOGGING_CATEGORY(DisplayLabelLog, "DisplayLabel")
 
 DisplayLabel::DisplayLabel()
 {
@@ -12,14 +13,14 @@ DisplayLabel::DisplayLabel()
 
 void DisplayLabel::naplnZmenaLabel(QString vstup, QLabel *stitek)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     stitek->setText(vstup);
 }
 
 
 void DisplayLabel::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
 {
-    qDebug()<<Q_FUNC_INFO<<" "<<" displayContentCount:"<<selectedDisplay.displayContentList.count();
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO<<" "<<" displayContentCount:"<<selectedDisplay.displayContentList.count();
 
 
 
@@ -68,7 +69,7 @@ void DisplayLabel::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
         else
         {
             selectedDisplay.ticker=0;
-           // qDebug()<<"displayContent out of range";
+           // qCDebug(myClassLog)<<"displayContent out of range";
         }
     }
 
@@ -77,7 +78,7 @@ void DisplayLabel::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
 
 void DisplayLabel::ledWriteToDisplay(LedLabelDisplay display,QString linka,QString horniRadek,QString dolniRadek)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog) <<  Q_FUNC_INFO;
 
     linka=InlineFormatParser::parseTextLed(linka);
     horniRadek=InlineFormatParser::parseTextLed(horniRadek);
@@ -138,7 +139,7 @@ void DisplayLabel::ledWriteToDisplay(LedLabelDisplay display,QString linka,QStri
 
 QString DisplayLabel::vyrobTextZmenyPasma(QVector<FareZone> zPasem, QVector<FareZone> naPasma)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     QString vysledek = "";
     vysledek += "prosím pozor! Změna tarifního pásma: " + pasmaDoStringu(zPasem) + "->" + pasmaDoStringu(naPasma);
 
@@ -152,12 +153,12 @@ void DisplayLabel::poleLabelNastavVelikost(QVector<QLabel *> labely, int bodovaV
         QFont fontLabelu = label->font();
 
         int pixelSize = qFloor(pomerBodu * bodovaVelikost * 0.6);
-        //qDebug()<<"label:"<<label->objectName()<<" pomer stran vyska pomer: "<<pomerBodu<<" pixelSize:"<<pixelSize;
+        //qCDebug(myClassLog)<<"label:"<<label->objectName()<<" pomer stran vyska pomer: "<<pomerBodu<<" pixelSize:"<<pixelSize;
         fontLabelu.setPointSize(pixelSize);
         //fontLabelu.setPixelSize(pixelSize);
         label->setFont(fontLabelu);
         //  label->font().setPointSize(pixelSize);
-        //qDebug()<<"obsah: "<<label->style ;
+        //qCDebug(myClassLog)<<"obsah: "<<label->style ;
     }
 }
 
@@ -166,13 +167,13 @@ void DisplayLabel::labelNastavVelikost(QLabel *label, int bodovaVelikost, float 
     if(label!=NULL)
     {
         QFont fontLabelu = label->font();
-        // qDebug()<<"pomer stran vyska pomer:"<<pomerBodu;
+        // qCDebug(myClassLog)<<"pomer stran vyska pomer:"<<pomerBodu;
         fontLabelu.setPointSize(qFloor(pomerBodu * bodovaVelikost * 0.6));
         label->setFont(fontLabelu);
     }
     else
     {
-        qDebug()<<"empty label pointer";
+        qCDebug(DisplayLabelLog)<<"empty label pointer";
         return;
     }
 
@@ -182,7 +183,7 @@ bool DisplayLabel::labelSetTextSafe(QLabel *label, QString text)
 {
     if(label==NULL)
     {
-        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        qCDebug(DisplayLabelLog)<<"DisplayLabel::labelSetTextSafe failed";
         return false;
     }
 
@@ -197,7 +198,7 @@ bool DisplayLabel::labelSetStylesheetSafe(QLabel *label, QString stylesheet)
 {
     if(label==NULL)
     {
-        qDebug()<<Q_FUNC_INFO<<" failed";
+        qCDebug(DisplayLabelLog)<<Q_FUNC_INFO<<" failed";
         return false;
     }
 
@@ -212,7 +213,7 @@ bool DisplayLabel::labelSetVisibleSafe(QLabel *label, bool visibility)
 {
     if(label==NULL)
     {
-        qDebug()<<Q_FUNC_INFO<<" failed";
+        qCDebug(DisplayLabelLog)<<Q_FUNC_INFO<<" failed";
         return false;
     }
 
@@ -225,10 +226,10 @@ bool DisplayLabel::labelSetVisibleSafe(QLabel *label, bool visibility)
 
 void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     if(label==NULL)
     {
-        qDebug()<<"empty label pointer";
+        qCDebug(DisplayLabelLog)<<"empty label pointer";
         return;
     }
 
@@ -242,7 +243,7 @@ void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
     int vyskaFontu = label->fontMetrics().boundingRect(label->text()).height();
     int sirkaFontu = label->fontMetrics().boundingRect(label->text()).width();
 
-    qDebug() << "V labelu " << vyskaLabelu << " V Fontu " << vyskaFontu << " S labelu " << sirkaLabelu << " S fontu " << sirkaFontu;
+    qCDebug(DisplayLabelLog) << "V labelu " << vyskaLabelu << " V Fontu " << vyskaFontu << " S labelu " << sirkaLabelu << " S fontu " << sirkaFontu;
 
     int counter = 0;
     while (((sirkaFontu > sirkaLabelu) || (vyskaFontu > vyskaLabelu)) && (counter < 4))
@@ -274,14 +275,14 @@ void DisplayLabel::zmensiCisloLinkyLabel(QLabel *label)
 
 void DisplayLabel::naplnAnouncementLabel(QString vstup, QLabel *label)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     label->setText(vstup);
     //ui->label_announcement->setText(vstup);
 }
 
 void DisplayLabel::obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, QFrame *qframe)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     //
     qframe->setStyleSheet("background-color :" + barvaPozadi + " ; color : " + barvaPisma + "; ");
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
@@ -313,14 +314,14 @@ QString DisplayLabel::nahradMetro(QString linka, QString submode, int vyska)
         vysledek=zabalHtmlDoZnacek(vysledek);
     }
 
-    qDebug() << "nahradMetro:" << vysledek;
+    qCDebug(DisplayLabelLog) << "nahradMetro:" << vysledek;
     return vysledek;
 }
 
 
 QString DisplayLabel::vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> nacestneZastavky, int velikostPiktogramu)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     if (nacestneZastavky.count() == 0)
     {
         return "";
@@ -342,7 +343,7 @@ QString DisplayLabel::vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> naces
     nacestyString = viaPointStringList.join(" - ");
 
     QString vysledek = zabalHtmlDoZnacek(nacestyString);
-    qDebug() << "vypis radku nacestnych zastavek text html" << vysledek;
+    qCDebug(DisplayLabelLog) << "vypis radku nacestnych zastavek text html" << vysledek;
 
     return vysledek;
 }
@@ -424,7 +425,7 @@ QString DisplayLabel::textNaPiktogramOznameni(QString announcementType, int vysk
 
     htmlObrazky += "<img  src=\":/images/" + announcementType + "\" height=\"" + QString::number(vyskaObrazku) + "\"  >";
 
-    qDebug() << "nastavuju piktogram oznameni:" << htmlObrazky;
+    qCDebug(DisplayLabelLog) << "nastavuju piktogram oznameni:" << htmlObrazky;
 
     vystup = htmlObrazky;
     return vystup;
@@ -456,16 +457,16 @@ void DisplayLabel::vymazPoleLabelu(QVector<QLabel *> vstup)
 QString DisplayLabel::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka)
 {
     // bude nahrazeno v inlineformatparser, jen kvuli nacestnym zastavkam
-    qDebug() << Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog) << Q_FUNC_INFO;
     QString vystup = "";
 
     QDomDocument dokument;
     dokument.setContent("<wrapper>" + vstup + "</wrapper>");
 
     QDomNodeList seznamIkon = dokument.firstChildElement().elementsByTagName("icon");
-    qDebug() << dokument.toByteArray();
+    qCDebug(DisplayLabelLog) << dokument.toByteArray();
 
-    qDebug() << "pocet ikon: " << seznamIkon.count();
+    qCDebug(DisplayLabelLog) << "pocet ikon: " << seznamIkon.count();
 
     QString jenNazev = dokument.firstChildElement().firstChild().nodeValue();
     vystup = jenNazev;
@@ -478,10 +479,10 @@ QString DisplayLabel::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QSt
         QDomNode ikona = seznamIkon.at(i);
         QString nazev = ikona.attributes().namedItem("type").firstChild().nodeValue();
         QString alternativniText = ikona.firstChild().nodeValue();
-        qDebug() << nazev;
+        qCDebug(DisplayLabelLog) << nazev;
 
         QString cesta = slozka + "/" + nazev + ".svg";
-        qDebug() << "cesta k souboru:" << cesta;
+        qCDebug(DisplayLabelLog) << "cesta k souboru:" << cesta;
 
         // if(QFile::exists(":/images/"+nazev))
         if (QFile::exists(cesta))
@@ -489,12 +490,12 @@ QString DisplayLabel::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QSt
             //resources  vystup+="<img  src=\":/images/"+nazev+"\"height=\""+QString::number(vyskaObrazku)+"\"  >";
 
             vystup += "<img  src=\"" + cesta + "\" height=\"" + QString::number(vyskaObrazku) + "\"  >";
-            qDebug() << "resource existuje";
+            qCDebug(DisplayLabelLog) << "resource existuje";
         }
         else
         {
             vystup += alternativniText;
-            qDebug() << "resource neexistuje";
+            qCDebug(DisplayLabelLog) << "resource neexistuje";
         }
     }
 
@@ -506,16 +507,16 @@ QString DisplayLabel::nahradIconPiktogramem(QString vstup, int vyskaObrazku, QSt
 QString DisplayLabel::replaceIconOuterDisplays(QString vstup)
 {
     // bude nahrazeno v inlineformatparser, jen kvuli nacestnym zastavkam
-    qDebug() << Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog) << Q_FUNC_INFO;
     QString vystup = "";
 
     QDomDocument dokument;
     dokument.setContent("<wrapper>" + vstup + "</wrapper>");
 
     QDomNodeList seznamIkon = dokument.firstChildElement().elementsByTagName("icon");
-    qDebug() << dokument.toByteArray();
+    qCDebug(DisplayLabelLog) << dokument.toByteArray();
 
-    qDebug() << "pocet ikon: " << seznamIkon.count();
+    qCDebug(DisplayLabelLog) << "pocet ikon: " << seznamIkon.count();
 
     QString jenNazev = dokument.firstChildElement().firstChild().nodeValue();
     vystup = jenNazev;
@@ -528,7 +529,7 @@ QString DisplayLabel::replaceIconOuterDisplays(QString vstup)
         QDomNode ikona = seznamIkon.at(i);
         QString nazev = ikona.attributes().namedItem("type").firstChild().nodeValue();
         QString alternativniText = ikona.firstChild().nodeValue();
-        qDebug() << nazev;
+        qCDebug(DisplayLabelLog) << nazev;
         vystup += alternativniText;
 
     }
@@ -551,7 +552,7 @@ int DisplayLabel::isInRange(int index, int limit)
         QMessageBox msgBox;
         QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit);
         msgBox.setText(errorMessage);
-        qDebug()<<" errorMessage";
+        qCDebug(DisplayLabelLog)<<" errorMessage";
         msgBox.exec();
 
 
@@ -561,7 +562,7 @@ int DisplayLabel::isInRange(int index, int limit)
 }
 QString DisplayLabel::fareZoneListToQString(QVector<FareZone> seznamPasem)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     QString vysledek;
     if (seznamPasem.size()>0)
     {
@@ -571,7 +572,7 @@ QString DisplayLabel::fareZoneListToQString(QVector<FareZone> seznamPasem)
             vysledek+=","+seznamPasem.at(i).name;
         }
     }
-    qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
+    qCDebug(DisplayLabelLog)<<"vysledek pasmaDoStringu"<<vysledek;
     return vysledek;
 }
 
@@ -588,7 +589,7 @@ QString DisplayLabel::vdv301version() const
 
 QString DisplayLabel::pasmaDoStringu(QVector<FareZone> seznamPasem)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     QString vysledek;
     if (seznamPasem.size()>0)
     {
@@ -598,6 +599,6 @@ QString DisplayLabel::pasmaDoStringu(QVector<FareZone> seznamPasem)
             vysledek+=","+seznamPasem.at(i).name;
         }
     }
-    qDebug()<<"vysledek pasmaDoStringu"<<vysledek;
+    qCDebug(DisplayLabelLog)<<"vysledek pasmaDoStringu"<<vysledek;
     return vysledek;
 }

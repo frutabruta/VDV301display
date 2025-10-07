@@ -1,5 +1,6 @@
 #include "displaylabellcd.h"
 
+Q_LOGGING_CATEGORY(DisplayLabelLcdLog, "DisplayLabelLcd")
 
 DisplayLabelLcd::DisplayLabelLcd()
 {
@@ -20,7 +21,7 @@ void DisplayLabelLcd::initializeFonts()
 
 void DisplayLabelLcd::displayLabelDestination(QString nazev)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
 
 
     labelSetTextSafe(labelDestination,nazev);
@@ -38,7 +39,7 @@ void DisplayLabelLcd::displayLabelDestination(QString nazev)
 
 void DisplayLabelLcd::displayLabelDestinationFollowing(QString nazev)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
 
 
     labelSetTextSafe(labelDestinationFollowing,nazev);
@@ -60,7 +61,7 @@ void DisplayLabelLcd::displayLabelDestinationFollowing(QString nazev)
 
 void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* label, int velikostPiktogramu,bool prestup)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog)<<Q_FUNC_INFO;
 
 
     QString linkaStyleSheetStandard="font-weight: bold; background-color:#ffffff; color:#000000; padding: 0px; margin: 0px; ";
@@ -81,7 +82,7 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* la
         QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),slozkaPiktogramu);
         labelSetTextSafe(label,vyslednyText);
 
-        qDebug().noquote()<<"obsah pole linky: "<<vyslednyText;
+        qCDebug(DisplayLabelLcdLog).noquote()<<"obsah pole linky: "<<vyslednyText;
 
         label->show();
     }
@@ -90,7 +91,7 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* la
 
 void DisplayLabelLcd::displayLabelEraseInformation()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
     labelSetTextSafe(labelDestination,"");
     labelSetTextSafe(labelDestination,"");
 
@@ -129,13 +130,13 @@ void DisplayLabelLcd::displayLabelEraseInformation()
 
 void DisplayLabelLcd::displayLabelLineName(QString lineName)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
     displayLabelDrawLineNumber2_4(lineName,labelLine, qFloor(ratioPixelPoint*200),false);
 }
 
 void DisplayLabelLcd::displayLabelLineNameFollowing(QString lineName)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
     displayLabelDrawLineNumber2_4(lineName,labelLineFollowing, qFloor(ratioPixelPoint*200),false);
 
 
@@ -145,7 +146,7 @@ void DisplayLabelLcd::displayLabelLineNameFollowing(QString lineName)
 
 void DisplayLabelLcd::lcdResizeLabels(int frameHeight)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcdLog) <<  Q_FUNC_INFO;
     //this->show();
     ratioPixelPoint=frameHeight/1050.0;
 

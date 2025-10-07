@@ -30,6 +30,7 @@
 #include <QTableWidget>
 #include <QTextStream>
 #include <QUrl>
+#include <QLoggingCategory>
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
@@ -262,6 +263,10 @@ private slots:
 
     void on_pushButton_unsubscribe_clicked();
 
+    void on_pushButton_debugConvertInline_clicked();
+    void on_pushButton_debugShowHtml_clicked();
+    void on_pushButton_messageLogReset_clicked();
+    void on_pushButton_settings_save_clicked();
 
     void on_radioButton_stateDefective_clicked();
     void on_radioButton_stateWarning_clicked();
@@ -269,11 +274,13 @@ private slots:
     void on_radioButton_stateRunning_clicked();
     void on_radioButton_stateReadyForShutdown_clicked();
 
-    void on_pushButton_settings_save_clicked();
+    
     void on_radioButton_settings_languageCs_clicked();
     void on_radioButton_settings_languageEn_clicked();
 
     void on_spinBox_frontSignWidth_valueChanged(int arg1);
+    void on_checkBox_settings_useJis_stateChanged(int arg1);
+    void on_spinBox_pageSwitchDuration_valueChanged(int arg1);
 
 
     //sloty
@@ -293,14 +300,6 @@ private slots:
     void slotDebugPublisherToTable(QZeroConfService zcs);
 
     void slotDeviceParametersToConfigFile();
-    void on_pushButton_debugConvertInline_clicked();
-
-    void on_pushButton_debugShowHtml_clicked();
-
-    void on_pushButton_messageLogReset_clicked();
-
-    void on_checkBox_settings_useJis_stateChanged(int arg1);
-
     void slotDisplayLcdLabelCyclePagesJis();
 public slots:
 

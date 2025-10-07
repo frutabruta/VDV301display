@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
+Q_LOGGING_CATEGORY(MainWindowLog, "MainWindow")
+
+
 MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -12,6 +16,17 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 {
 
     ui->setupUi(this);
+    QString loggingRules="";
+    loggingRules+="DisplayLabel=false\n";
+    loggingRules+="DisplayLabelLcd=false\n";
+    loggingRules+="DisplayLabelLed=false\n";
+    loggingRules+="InLineFormatParser=false\n";
+    loggingRules+="MainWindow=false";
+
+    QLoggingCategory::setFilterRules(loggingRules);
+
+
+
 
     /*
    * fix of program freezes when IP address is not set properly while doing HTTP POST
@@ -28,7 +43,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     //settings.setValue("General/language","en");
     QString selectedLanguage=settings.value("app/language").toString();
 
-    qDebug()<<"new language:"<<selectedLanguage;
+    qCDebug(MainWindowLog)<<"new language:"<<selectedLanguage;
 
     retranslateUi(selectedLanguage);
 
@@ -88,13 +103,13 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     delete ui;
 }
 
 void MainWindow::allConnects()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     connect(&cisSubscriber, &IbisIpSubscriber::signalDataReceived  ,this, &MainWindow::slotXmlToVehicleStateVariables);
     connect(&cisSubscriber,&IbisIpSubscriber::signalUpdateDeviceList,this,&MainWindow::slotUpdateServiceTable);
     connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
@@ -193,7 +208,7 @@ void MainWindow::retranslateUi(QString language)
     if(translator.load(":/lang_"+language+".qm"))
     {
         qApp->installTranslator(&translator);
-        qDebug()<<"language change";
+        qCDebug(MainWindowLog)<<"language change";
         ui->retranslateUi(this);
     }
     else
@@ -448,7 +463,7 @@ void MainWindow::loadConstants()
 
 void MainWindow::menuSwitchTabs(int tabNumber)
 {
-    qDebug() <<  Q_FUNC_INFO<<" "<<tabNumber;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO<<" "<<tabNumber;
 
     switch(tabNumber)
     {
@@ -476,7 +491,7 @@ void MainWindow::menuSwitchTabs(int tabNumber)
 
 void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
 
@@ -551,7 +566,7 @@ QString MainWindow::createProgramVersionString()
 {
     QDate compilationDate=QLocale("en_US").toDate(QString(__DATE__).simplified(), "MMM d yyyy");
     QTime compilationTime=QTime::fromString(__TIME__,"hh:mm:ss");
-    qDebug()<<" date:"<<compilationDate<<" time:"<<compilationTime;
+    qCDebug(MainWindowLog)<<" date:"<<compilationDate<<" time:"<<compilationTime;
     QString version=compilationDate.toString("yyyyMMdd")+"_"+compilationTime.toString("hhmm");
     return version;
 }
@@ -559,7 +574,7 @@ QString MainWindow::createProgramVersionString()
 
 void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
 
@@ -569,7 +584,7 @@ void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
     QString version=zcs.data()->txt().value("ver");
     int port=zcs->port();
 
-    qDebug() <<"service name "<<name<<" ip address"<<ipaddress<<" port "<<QString::number(port)<<" data" <<version ;
+    qCDebug(MainWindowLog) <<"service name "<<name<<" ip address"<<ipaddress<<" port "<<QString::number(port)<<" data" <<version ;
 
 
     row = ui->tableWidget_services->rowCount();
@@ -593,14 +608,14 @@ void MainWindow::slotDebugServiceToTable(QZeroConfService zcs)
     ui->tableWidget_services->resizeColumnsToContents();
 
 
-    qDebug()<<"sluzbaDoTabulky_konec";
+    qCDebug(MainWindowLog)<<"sluzbaDoTabulky_konec";
 
 }
 
 
 void MainWindow::slotDelayedStartup()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     //cisSubscriber.novePrihlaseniOdberu();
@@ -608,7 +623,7 @@ void MainWindow::slotDelayedStartup()
 
 void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_selectedSubscriber);
     qint32 row;
     QTableWidgetItem *cell;
@@ -619,7 +634,7 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
     QString version=zcs.data()->txt().value("ver");
     int port=zcs->port();
     /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+    qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
  */
 
@@ -670,7 +685,7 @@ int MainWindow::slotEverySecond()
 
 void MainWindow::slotSubscriptionLost()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_selectedSubscriber);
     receivedDataVariablesReset();
     eventDisplayAbnormalStateScreen("NO SUBSCRIPTION");
@@ -680,13 +695,13 @@ void MainWindow::slotSubscriptionLost()
 
 void MainWindow::slotUpdateServiceTable()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     debugServiceListToTable(cisSubscriber.serviceList);
 }
 
 void MainWindow::slotHeartbeatTimeout()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
 }
 
@@ -695,7 +710,7 @@ void MainWindow::slotHeartbeatTimeout()
 
 void MainWindow::slotToggleFullscreen()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     // isFullScreen() ? showNormal() : showFullScreen();
 
 
@@ -741,7 +756,7 @@ void MainWindow::slotToggleFullscreen()
 
 void MainWindow::slotDeviceParametersToConfigFile()
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
     deviceManagementServiceInternalVariablesToSettingFile();
     constantsToSettingsPage();
@@ -758,7 +773,7 @@ void MainWindow::slotMoveScrollingText()
     {
         return;
     }
-    // qDebug()<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
+    // qCDebug(MainWindowLog)<<"delka beziciho textu "<< delkaTextu << " posun rotovani: "<<posunRotovani;
 
     displayLabelLcd.scrollingTextOffset-=stepSize;
 
@@ -777,7 +792,7 @@ void MainWindow::slotMoveScrollingText()
 // move to displayLAbelLcd???
 void MainWindow::slotDisplayLcdLabelCyclePages()
 {
-    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndex<<" v seznamu je "<<displayLabelLcd.pageCycleList.count();
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndex<<" v seznamu je "<<displayLabelLcd.pageCycleList.count();
 
     if(lcdLabelCurrentPageIndex==(displayLabelLcd.pageCycleList.count()-1))
     {
@@ -798,7 +813,7 @@ void MainWindow::slotDisplayLcdLabelCyclePages()
 
 void MainWindow::slotDisplayLcdLabelCyclePagesJis()
 {
-    qDebug() <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndexJis<<" v seznamu je "<<displayLabelLcdJis.pageCycleList.count();
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndexJis<<" v seznamu je "<<displayLabelLcdJis.pageCycleList.count();
 
     if(lcdLabelCurrentPageIndexJis==(displayLabelLcdJis.pageCycleList.count()-1))
     {
@@ -832,7 +847,7 @@ void MainWindow::slotShutdownReady(bool isReady)
 
 void MainWindow::displayLabelFillArray()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna1);
     displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna2);
     displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna3);
@@ -1084,10 +1099,11 @@ void MainWindow::displayLabelFillArrayJis()
 
 void MainWindow::eraseDisplayedInformation()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_version_2);
     displayLabelLcd.displayLabelEraseInformation();
+    displayLabelLcdJis.displayLabelEraseInformation();
     svgVykreslovani.vymazObrazovku();
     displayLabelLed.ledClearDisplays();
 }
@@ -1095,20 +1111,22 @@ void MainWindow::eraseDisplayedInformation()
 
 void MainWindow::eventEraseDisplayInformation()
 {
-    qDebug() <<  Q_FUNC_INFO;
-    displayLabelLcd.displayLabelEraseInformation();
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+
+    eraseDisplayedInformation();
+    //displayLabelLcd.displayLabelEraseInformation();
 }
 
 void MainWindow::eventLcdSetMainPage()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //LCD label
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 }
 
 void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,QString followingTripDestination)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //LABEL LCD
     ui->label_followingLine->setText(followingTripLine);
     ui->label_followingDestination->setText(followingTripDestination);
@@ -1121,7 +1139,7 @@ void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,
 
 void MainWindow::eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelShowFareZoneChange(fromFareZones,toFareZones);
     svgVykreslovani.zobrazZmenuPasma(fromFareZones,toFareZones);
 }
@@ -1131,7 +1149,7 @@ void MainWindow::eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fr
 
 void MainWindow::eventStopRequestedActivated()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->label_stopRequested->setText("<b>STOP</b>");
 
     ui->label_stopRequestedSymbol->show();
@@ -1140,7 +1158,7 @@ void MainWindow::eventStopRequestedActivated()
 
 void MainWindow::eventStopRequestedDectivated()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->label_stopRequested->setText("STOP");
 
 
@@ -1150,21 +1168,21 @@ void MainWindow::eventStopRequestedDectivated()
 
 void MainWindow::eventShowPageSpecialAnnouncement(QString title,QString type,QString textCz, QString textEn)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelShowAnnoucement(title,type,textCz,textEn);
     svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
 }
 
 void MainWindow::eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage,QVector<Vdv301InternationalText> additionalTextMessage1,QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3,QVector<Vdv301InternationalText> additionalTextMessage4)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelShowAnnoucement(additionalTextMessage,additionalTextMessage1,additionalTextMessage2,additionalTextMessage3,additionalTextMessage4);
     //   svgVykreslovani.zobrazAnnoucement(title,type,textCz,textEn);
 }
 
 void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
 {
-    qDebug()<<Q_FUNC_INFO<<" "<<displayState;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO<<" "<<displayState;
     ui->label_lcd_state->setText(displayState);
     eraseDisplayedInformation();
   //  ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
@@ -1173,7 +1191,7 @@ void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
 
 void MainWindow::eventNotOnLine()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     eventDisplayAbnormalStateScreen("NOT ON LINE");
 }
 
@@ -1181,7 +1199,7 @@ void MainWindow::eventNotOnLine()
 
 void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
     if(globalDisplayContentList.isEmpty())
     {
@@ -1199,11 +1217,12 @@ void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDis
 int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 {
 
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     eventLcdSetMainPage();
     eventEraseDisplayInformation();
     displayLabelLcd.pageCycleList.clear();
+    displayLabelLcdJis.pageCycleList.clear();
 
     if(vdv301AllData.vehicleInformationGroup.vehicleStopRequested)
     {
@@ -1292,7 +1311,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         }
         else
         {
-            qDebug()<<"navazny spoj neni";
+            qCDebug(MainWindowLog)<<"navazny spoj neni";
             ui->frame_navaznySpoj->hide();
         }
 
@@ -1323,7 +1342,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             }
             else
             {
-                qDebug()<<"unsupported version";
+                qCDebug(MainWindowLog)<<"unsupported version";
             }
 
 
@@ -1379,13 +1398,15 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
 {
 
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     bool timerOverride=false;
 
     eventLcdSetMainPage();
     eventEraseDisplayInformation();
+
     displayLabelLcd.pageCycleList.clear();
+    displayLabelLcdJis.pageCycleList.clear();
 
     if(vdv301AllData.vehicleInformationGroup.vehicleStopRequested)
     {
@@ -1436,7 +1457,6 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         }
 
         displayLabelLcd.displayLabelStopFareZone(vdv301AllData);
-
         displayLabelLcdJis.displayLabelStopFareZone(vdv301AllData);
 
 
@@ -1476,7 +1496,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         }
         else
         {
-            qDebug()<<"navazny spoj neni";
+            qCDebug(MainWindowLog)<<"navazny spoj neni";
             ui->frame_navaznySpoj->hide();
         }
 
@@ -1487,11 +1507,13 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         if(vdv301AllData.isVehicleOnFinalStop()&&(!xmlParser2_3CZ1_0.followingTripExists(vdv301AllData.tripInformationList)))
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_konecna);
+            displayLabelLcdJis.pageCycleList.push_front(ui->page_konecna_2);
             displayLabelShowPageFinalStop();
         }
         else
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+            displayLabelLcdJis.pageCycleList.push_front(ui->page_hlavni_3);
 
 
             if(!currentVdv301trip.additionalTextMessageList.isEmpty())
@@ -1726,7 +1748,7 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> sezn
 
 void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
 
 
@@ -1747,7 +1769,7 @@ void MainWindow::eraseTable(QTableWidget *tableWidget)
 {
     //used to erase tablewidgets without program crash due to signals
     //  https://stackoverflow.com/a/31564541
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     tableWidget->clearSelection();
 
@@ -1764,7 +1786,7 @@ void MainWindow::eraseTable(QTableWidget *tableWidget)
 
 void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_services);
 
 
@@ -1778,13 +1800,13 @@ void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 
 void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
 
 
     /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+    qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
  */
     row = ui->tableWidget_debugStopList->rowCount();
@@ -1856,12 +1878,12 @@ void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,
 
 void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* tableWidget)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
 
     /*
-    qDebug() <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+    qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
  */
 
@@ -1902,14 +1924,14 @@ void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* ta
 // XXX FIX GlobalDisplayContent while Stop List is not empty!
 void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
 
     ui->plainTextEdit_debugReceivedXml->setPlainText(inputXmlString);
     receivedDataVariablesReset();
 
     //  xmlParser1_0.loadXmlFile(inputXmlString);
-    //  qDebug()<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
+    //  qCDebug(MainWindowLog)<<"timestamp:"<<xmlParser1_0.parseTimestamp(xmlParser1_0.receivedDataDomDocument).toString(Qt::ISODate);
 
     receivedMessagesCounter++;
     ui->label_messageCounter->setText(QString::number(receivedMessagesCounter));
@@ -1953,7 +1975,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to parse";
+            qCDebug(MainWindowLog)<<"unknown structure to parse";
         }
     }
 
@@ -1980,7 +2002,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to parse";
+            qCDebug(MainWindowLog)<<"unknown structure to parse";
         }
 
     }
@@ -2027,7 +2049,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to parse";
+            qCDebug(MainWindowLog)<<"unknown structure to parse";
         }
 
 
@@ -2055,7 +2077,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to show";
+            qCDebug(MainWindowLog)<<"unknown structure to show";
         }
 
     }
@@ -2073,7 +2095,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to show";
+            qCDebug(MainWindowLog)<<"unknown structure to show";
         }
 
 
@@ -2092,12 +2114,12 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else
         {
-            qDebug()<<"unknown structure to show";
+            qCDebug(MainWindowLog)<<"unknown structure to show";
         }
     }
     else
     {
-        qDebug()<<"unknown VDV301 version data";
+        qCDebug(MainWindowLog)<<"unknown VDV301 version data";
     }
 
 
@@ -2106,7 +2128,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
 void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
     eraseTable(ui->tableWidget_debugStopList);
     eraseTable(ui->tableWidget_connections);
@@ -2120,7 +2142,7 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
     if(tripCount==0)
     {
         // empty trip list
-        qDebug()<<"empty trip list";
+        qCDebug(MainWindowLog)<<"empty trip list";
     }
     else if(tripCount>0)
     {
@@ -2168,7 +2190,7 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
 
 void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
     eraseTable(ui->tableWidget_debugStopList);
     eraseTable(ui->tableWidget_connections);
@@ -2180,7 +2202,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
     if(tripCount==0)
     {
         // empty trip list
-        qDebug()<<"empty trip list";
+        qCDebug(MainWindowLog)<<"empty trip list";
         QVector<Vdv301DisplayContent> emptyDisplayContentList;
         showReceivedDataLedVdv301(emptyDisplayContentList,vdv301AllData.globalDisplayContentList );
 
@@ -2234,7 +2256,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 
 void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
     eraseTable(ui->tableWidget_debugStopList);
     updateMainScreenDebugLabels();
@@ -2273,9 +2295,10 @@ void MainWindow::displayNormalOnLineState()
 
 void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPozadi)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //
     displayLabelLcd.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
+    //displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
     svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
 
@@ -2290,7 +2313,7 @@ void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPoza
 
 void MainWindow::on_pushButton_menu_quit_clicked()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     if(cisSubscriber.isSubscriptionActive)
     {
@@ -2311,7 +2334,7 @@ void MainWindow::on_pushButton_menu_quit_clicked()
 
 void MainWindow::on_pushButton_menu_svg_clicked()
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
     ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_svg);
 
 
@@ -2339,11 +2362,11 @@ bool MainWindow::svgRender()
     }
     else
     {
-        qDebug()<<"seznam zastavek je prazdny";
+        qCDebug(MainWindowLog)<<"seznam zastavek je prazdny";
     }
 */
     int vysledek=svgOpenFile(QCoreApplication::applicationDirPath()+"/vystup.svg");
-    qDebug()<<"vysledek otevirani SVG je"<<QString::number(vysledek);
+    qCDebug(MainWindowLog)<<"vysledek otevirani SVG je"<<QString::number(vysledek);
 
     return true;
 }
@@ -2351,7 +2374,7 @@ bool MainWindow::svgRender()
 
 bool MainWindow::svgOpenFile(const QString &fileName)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     QGraphicsScene *s = &scene;
 
     QFile soubor;
@@ -2404,7 +2427,7 @@ void MainWindow::ledCycleDisplayContents()
 
 void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
@@ -2414,6 +2437,11 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
 
     ui->label_fareZoneChangeFrom->setText(displayLabelLcd.vdv301InternationalTextJoinAll(fromFareZoneList,"\n").text);
     ui->label_fareZoneChangeTo->setText(displayLabelLcd.vdv301InternationalTextJoinAll(toFareZoneList,"\n").text);
+
+
+
+    //ADD JIS VERSION!
+
     // displayLabelLcd.naplnZmenaLabel(displayLabelLcd.vyrobTextZmenyPasma(fromFareZoneList,toFareZoneList),ui->label_zmena);
 }
 
@@ -2423,7 +2451,7 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
 
 void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString textCz, QString textEn)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     updateLabelAnnouncement(textCz);
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
@@ -2445,12 +2473,16 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
 
     displayLabelLcd.pageCycleList.push_back(ui->page_oznameni);
     displayLabelLcdJis.pageCycleList.push_back(ui->page_oznameni_2);
+
+
+    //ADD JIS VERSION!
+
 }
 
 
 void MainWindow::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList,QVector<Vdv301InternationalText> additionalTextMessage1List,QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List,QVector<Vdv301InternationalText> additionalTextMessage4List)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     if(!additionalTextMessageList.isEmpty() )
     {
         updateLabelAnnouncement(additionalTextMessageList.first().text);
@@ -2470,13 +2502,13 @@ void MainWindow::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> ad
 
 void MainWindow::eventHideAnnouncement()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
 }
 
 void MainWindow::eventHideFareZoneChange()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     displayLabelReturnToStopList();
 }
 
@@ -2492,7 +2524,7 @@ void MainWindow::eventLcdReturnToStopList()
 }
 void MainWindow::displayLabelReturnToStopList()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
@@ -2505,7 +2537,7 @@ void MainWindow::displayLabelReturnToStopList()
 
 void MainWindow::displayLabelShowPageFinalStop()
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
     ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
 
@@ -2520,7 +2552,7 @@ void MainWindow::displayLabelShowPageFinalStop()
 bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
 {
 
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     if(allData.tripInformationList.isEmpty())
     {
@@ -2548,7 +2580,7 @@ bool MainWindow::isVehicleOnFinalStop(Vdv301AllData allData)
 bool MainWindow::isVehicleOnFinalStop(Vdv301AllData2_3CZ1_0 allData)
 {
 
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     if(allData.tripInformationList.isEmpty())
     {
@@ -2587,7 +2619,7 @@ int MainWindow::isInRange(int index, int limit, QString functionName)
         QMessageBox msgBox;
         QString errorMessage="value"+QString::number(index)+" is out of range "+ QString::number(limit)+" function:"+functionName;
         msgBox.setText(errorMessage);
-        qDebug()<<" errorMessage";
+        qCDebug(MainWindowLog)<<" errorMessage";
         msgBox.exec();
 
 
@@ -2602,7 +2634,7 @@ int MainWindow::isInRange(int index, int limit, QString functionName)
 
 void MainWindow::popUpMessage(QString messageContent)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     QMessageBox msgBox;
     msgBox.setText(messageContent);
     QFont font;
@@ -2694,7 +2726,7 @@ void MainWindow::on_pushButton_unsubscribe_clicked()
 void MainWindow::on_pushButton_menu_refresh_clicked()
 {
     //the button is disabled by default
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     //  CustomerInformationServiceSubscriber.odebirano=false ;
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
@@ -2776,7 +2808,7 @@ QVector<StopPointDestination> MainWindow::vektorZastavkaCilZahoditZacatek(QVecto
         if(i>zacatek)
         {
             vystup.push_back(vstup.at(i));
-            // qDebug()<<"orez zastavek:"<<vstup.at(i).stopPoint.NameLcd;
+            // qCDebug(MainWindowLog)<<"orez zastavek:"<<vstup.at(i).stopPoint.NameLcd;
         }
 
     }
@@ -2811,5 +2843,13 @@ void MainWindow::on_checkBox_settings_useJis_stateChanged(int arg1)
 {
     useJis=arg1;
     settings.setValue("graphics/useJisGraphics",useJis);
+}
+
+
+void MainWindow::on_spinBox_pageSwitchDuration_valueChanged(int arg1)
+{
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO<<" "<<arg1;
+    displayLabelLcd.timerLabelPageSwitch.setInterval(arg1*1000);
+    displayLabelLcdJis.timerLabelPageSwitch.setInterval(arg1*1000);
 }
 

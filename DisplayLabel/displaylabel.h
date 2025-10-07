@@ -8,6 +8,7 @@
 #include <QFont>
 #include <QFile>
 #include <QtMath>
+#include <QLoggingCategory>
 
 #include "VDV301subscriber/VDV301DataStructures/farezone.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h"

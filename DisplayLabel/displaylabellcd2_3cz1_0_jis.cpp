@@ -23,7 +23,7 @@ bool DisplayLabelStopGroup::labelSetTextSafe(QLabel *label, QString text)
 {
     if(label==NULL)
     {
-        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        qDebug()<<Q_FUNC_INFO<<" failed";
         return false;
     }
 
@@ -58,7 +58,7 @@ bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
 {
     if(label==NULL)
     {
-        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        qDebug()<<Q_FUNC_INFO<<" failed";
         return false;
     }
 

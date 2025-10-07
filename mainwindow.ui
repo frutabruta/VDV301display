@@ -243,7 +243,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_labelDisplay">
          <property name="sizePolicy">
@@ -4472,8 +4472,8 @@ QLabel{color:#FFFFFF}</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>752</width>
-                            <height>104</height>
+                            <width>170</width>
+                            <height>58</height>
                            </rect>
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_40">
@@ -7100,6 +7100,31 @@ border-radius: 30px;
           <property name="text">
            <string>use new layout (alpha)</string>
           </property>
+         </widget>
+         <widget class="QGroupBox" name="groupBox_10">
+          <property name="geometry">
+           <rect>
+            <x>320</x>
+            <y>10</y>
+            <width>141</width>
+            <height>68</height>
+           </rect>
+          </property>
+          <property name="title">
+           <string>Page Switch duration (s)</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_47">
+           <item>
+            <widget class="QSpinBox" name="spinBox_pageSwitchDuration">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </widget>
         <widget class="QWidget" name="page_timer">

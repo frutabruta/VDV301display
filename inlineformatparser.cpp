@@ -1,5 +1,8 @@
 #include "inlineformatparser.h"
 #include <QDateTime>
+
+Q_LOGGING_CATEGORY(InLineFormatParserLog, "InLineFormatParser")
+
 InlineFormatParser::InlineFormatParser()
 {
 
@@ -9,7 +12,7 @@ InlineFormatParser::InlineFormatParser()
 
 QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QString slozka)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
 
 
     QDomDocument vystup;
@@ -165,7 +168,7 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
     vystup.appendChild(html);
 
     QString vystupString=vystup.toString();
-    qDebug()<<"vystup formatovani: "<<vystupString;
+    qCDebug(InLineFormatParserLog)<<"vystup formatovani: "<<vystupString;
 
     return vystupString;
 }
@@ -174,7 +177,7 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
 
 QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka, QString &bgColor)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
 
 
     QDomDocument vystup;
@@ -195,9 +198,9 @@ QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, Q
 
 QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, QString parent, int vyskaObrazku, QString slozka, QString &bgColor)
 {
-    qDebug() << Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog) << Q_FUNC_INFO;
     QString timestamp = QDateTime::currentDateTime().toString(Qt::ISODate);
-    qDebug() << timestamp;
+    qCDebug(InLineFormatParserLog) << timestamp;
 
     QDomDocument vystup;
     QString rawContent = "";
@@ -250,7 +253,7 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
                     {
                         barva.fg = attributeValue;
                         popredi = attributeValue;
-                        qDebug() << "Setting barva.fg to" << barva.fg;
+                        qCDebug(InLineFormatParserLog) << "Setting barva.fg to" << barva.fg;
                     }
                     else if (attributeName == "size")
                     {
@@ -287,18 +290,18 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
                 }
                 else if(currentElement=="wrapper")
                 {
-                    qDebug()<<"wrapper";
+                    qCDebug(InLineFormatParserLog)<<"wrapper";
 
                 }
                 else
                 {
-                    qDebug()<<"unknown element";
+                    qCDebug(InLineFormatParserLog)<<"unknown element";
                     //  elementStart += ">";
                 }
                 /*
                 if(currentElement=="")
                 {
-                    qDebug()<<"empty start element";
+                    qCDebug(InLineFormatParserLog)<<"empty start element";
                      result += "xxx";
                 }
                 else
@@ -328,7 +331,7 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
 
                 if (elementStack.isEmpty())
                 {
-                    qDebug() << "Error: Element stack is empty!";
+                    qCDebug(InLineFormatParserLog) << "Error: Element stack is empty!";
                     return result;
                 }*/
 
@@ -374,12 +377,12 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
 
         if (xmlReader.hasError())
         {
-            qDebug() << "XML Parsing Error:" << xmlReader.errorString();
+            qCDebug(InLineFormatParserLog) << "XML Parsing Error:" << xmlReader.errorString();
         }
     }
     catch (const std::exception &e)
     {
-        qDebug() << "Exception caught:" << e.what();
+        qCDebug(InLineFormatParserLog) << "Exception caught:" << e.what();
     }
 
     return result;
@@ -400,7 +403,7 @@ QString InlineFormatParser::getDirectParent(QString input)
 
 QString InlineFormatParser::parseTextLed(QString vstup)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
 
 
     QDomDocument vystup;
@@ -530,7 +533,7 @@ QString InlineFormatParser::parseTextLed(QString vstup)
     vystup.appendChild(html);
 
     QString vystupString=vystup.toString();
-    qDebug()<<"vystup formatovani: "<<vystupString;
+    qCDebug(InLineFormatParserLog)<<"vystup formatovani: "<<vystupString;
     return vystupText2;
     //return vystupString;
 }
@@ -538,7 +541,7 @@ QString InlineFormatParser::parseTextLed(QString vstup)
 
 QDomNode InlineFormatParser::iconToQDomNode(Icon vstup, int vyskaObrazku, QString slozka)
 {
-    qDebug() << Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog) << Q_FUNC_INFO;
 
     QDomDocument dokumentVystup;
     QDomNode vystup;
@@ -546,10 +549,10 @@ QDomNode InlineFormatParser::iconToQDomNode(Icon vstup, int vyskaObrazku, QStrin
     QString alternativniText = vstup.alternative;
     QString cesta = slozka + "/" + iconType + ".svg";
 
-    qDebug() << iconType;
+    qCDebug(InLineFormatParserLog) << iconType;
 
 
-    qDebug() << "cesta k souboru:" << cesta;
+    qCDebug(InLineFormatParserLog) << "cesta k souboru:" << cesta;
 
     if (QFile::exists(cesta))
     {
@@ -558,12 +561,12 @@ QDomNode InlineFormatParser::iconToQDomNode(Icon vstup, int vyskaObrazku, QStrin
         img.setAttribute("src", cesta);
         img.setAttribute("height", QString::number(vyskaObrazku));
         vystup=img;
-        qDebug() << "resource existuje";
+        qCDebug(InLineFormatParserLog) << "resource existuje";
     }
     else
     {
         vystup = dokumentVystup.createTextNode(alternativniText);
-        qDebug() << "resource neexistuje";
+        qCDebug(InLineFormatParserLog) << "resource neexistuje";
     }
 
     // <icon type="c_RequestStop" >ŕ</icon>
@@ -575,7 +578,7 @@ QDomNode InlineFormatParser::iconToQDomNode(Icon vstup, int vyskaObrazku, QStrin
 
 QString InlineFormatParser::iconToQDomNodeStart(Icon vstup, int vyskaObrazku, QString slozka)
 {
-    qDebug() << Q_FUNC_INFO;
+    qCDebug(InLineFormatParserLog) << Q_FUNC_INFO;
 
 
     QString vystup;
@@ -583,10 +586,10 @@ QString InlineFormatParser::iconToQDomNodeStart(Icon vstup, int vyskaObrazku, QS
     QString alternativniText = vstup.alternative;
     QString cesta = slozka + "/" + iconType + ".svg";
 
-    qDebug() << iconType;
+    qCDebug(InLineFormatParserLog) << iconType;
 
 
-    qDebug() << "cesta k souboru:" << cesta;
+    qCDebug(InLineFormatParserLog) << "cesta k souboru:" << cesta;
 
     if (QFile::exists(cesta))
     {
@@ -596,8 +599,8 @@ QString InlineFormatParser::iconToQDomNodeStart(Icon vstup, int vyskaObrazku, QS
     }
     else
     {
+        qCDebug(InLineFormatParserLog) << "resource neexistuje";
         return alternativniText;
-        qDebug() << "resource neexistuje";
     }
 
 
