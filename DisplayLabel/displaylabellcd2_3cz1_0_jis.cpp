@@ -1,15 +1,18 @@
 #include "displaylabellcd2_3cz1_0_jis.h"
 
+Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0_JisLog, "DisplayLabelLcd2_3CZ1_0_Jis")
+
 DisplayLabelLcd2_3CZ1_0_Jis::DisplayLabelLcd2_3CZ1_0_Jis() {
 
 }
 
 
-DisplayLabelStopGroup::DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop)
+DisplayLabelStopGroup::DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform)
 {
     labelStopName=new_labelStopName;
     labelFarezoneBottom=new_labelFarezoneBottom;
     labelFarezoneTop=new_labelFarezoneTop;
+    labelPlatform=new_labelPlatform;
 }
 
 void DisplayLabelStopGroup::eraseContent()
@@ -21,9 +24,9 @@ void DisplayLabelStopGroup::eraseContent()
 
 bool DisplayLabelStopGroup::labelSetTextSafe(QLabel *label, QString text)
 {
-    if(label==NULL)
+    if(label==nullptr)
     {
-        qDebug()<<Q_FUNC_INFO<<" failed";
+        qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<Q_FUNC_INFO<<" failed";
         return false;
     }
 
@@ -56,9 +59,9 @@ void DisplayLabelConnectionGroup::eraseContent()
 
 bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
 {
-    if(label==NULL)
+    if(label==nullptr)
     {
-        qDebug()<<Q_FUNC_INFO<<" failed";
+        qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<Q_FUNC_INFO<<" failed";
         return false;
     }
 
@@ -74,7 +77,7 @@ bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
 
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
     int pocetPoli=labelListStopPointName.count();
     if(firstTrip.stopPointList.isEmpty())
@@ -123,7 +126,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstT
             }
             else
             {
-                qDebug()<<"pro label "<<i<<" uz nezbyly zastavky";
+                qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"pro label "<<i<<" uz nezbyly zastavky";
 
                 return;
             }
@@ -139,7 +142,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstT
 
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelLineName(Vdv301Line vdv301Line)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
 
     if(vdv301Line.lineNameList.isEmpty())
@@ -154,16 +157,17 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelLineName(Vdv301Line vdv301Line)
 
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelLineName(QString lineName)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
     displayLabelDrawLineNumber2_4(lineName,labelLine, qFloor(ratioPixelPoint*200),false);
     displayLabelDrawLineNumber2_4(lineName,labelLineConnection, qFloor(ratioPixelPoint*200),false);
 }
 
 
 
+
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
     Vdv301Trip2_3CZ1_0 firstTripCopy=firstTrip;
     Vdv301Trip2_3CZ1_0 secondTripCopy=secondTrip;
@@ -175,10 +179,12 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
 
     firstTripCopy.stopPointList.remove(0,currentStopIndex-1);
 
-    qDebug()<<"number of labels: "<<labelListStopGroup.count();
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"number of labels: "<<labelListStopGroup.count();
+
 
     for(DisplayLabelStopGroup &selectedGroup : labelListStopGroup)
     {
+
         Vdv301StopPoint2_3CZ1_0 aktualniZastavka;
         bool navaznySpoj=false;
 
@@ -196,13 +202,13 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
             }
             else
             {
-                qDebug()<<"pro label uz nezbyly zastavky";
+                qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"pro label uz nezbyly zastavky";
                 selectedGroup.eraseContent();
             }
         }
 
         displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom);
-
+        labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
 
     }
 
@@ -212,7 +218,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
 
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
     Vdv301Trip2_3CZ1_0 firstTrip;
     Vdv301Trip2_3CZ1_0 followingTrip;
@@ -244,7 +250,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0
 
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
     QVector<Vdv301Connection> connectionListCopy=connectionList;
     /*
@@ -315,7 +321,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionList(QVector<Vdv301Conne
             }
             else
             {
-                qDebug()<<"empty DisplayContent";
+                qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"empty DisplayContent";
             }
         }
         else
@@ -326,4 +332,37 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionList(QVector<Vdv301Conne
     }
 
 }
+
+
+void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4(QString lineName, QLabel* label, int velikostPiktogramu,bool prestup)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<Q_FUNC_INFO;
+
+
+    QString linkaStyleSheetStandard="font-weight: bold; background-color:rgb(200,200,200); color:rgb(29,29,27); padding: 0px; margin: 0px; ";
+
+    if(prestup)
+    {
+        linkaStyleSheetStandard="font-weight: bold; color:#ffffff; padding: 0px; margin: 0px;  ";
+    }
+
+
+
+    QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
+
+
+    if(label!=nullptr)
+    {
+        labelSetStylesheetSafe(label,linkaStyleSheetStandard);
+
+        QString vyslednyText= inlineFormatParser.parseTextLcdJis(lineName, label->font().pixelSize(),slozkaPiktogramu);
+        labelSetTextSafe(label,vyslednyText);
+
+        qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog).noquote()<<"obsah pole linky: "<<vyslednyText;
+
+        label->show();
+    }
+
+}
+
 

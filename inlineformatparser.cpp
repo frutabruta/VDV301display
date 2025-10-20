@@ -175,6 +175,171 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
 
 
 
+QString InlineFormatParser::parseTextLcdJis(QString vstup, int vyskaObrazku, QString slozka)
+{
+    qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
+
+
+    QDomDocument vystup;
+
+    QDomElement html=vystup.createElement("html");
+    QDomElement body=vystup.createElement("body");
+
+    vstup="<wrapper>"+vstup+"</wrapper>";
+    QXmlStreamReader xmlReader(vstup);
+
+
+    QString openElement="";
+
+    QString rawContent="";
+
+
+    Color barva;
+    Icon ikona;
+    Font font;
+
+
+
+    while (!xmlReader.atEnd())
+    {
+        xmlReader.readNext();
+
+        if (xmlReader.isStartElement())
+        {
+            rawContent="";
+
+            QString elementName = xmlReader.name().toString();
+
+            QXmlStreamAttributes attributes = xmlReader.attributes();
+            while (!attributes.isEmpty())
+            {
+
+                QString attributeName = attributes.front().name().toString();
+                QString attributeValue = attributes.front().value().toString();
+                // Process attribute
+
+                if(attributeName=="bg")
+                {
+                    barva.bg=attributeValue;
+                }
+                else if(attributeName=="fg")
+                {
+                    barva.fg=attributeValue;
+                }
+                else if(attributeName=="size")
+                {
+                    font.size=attributeValue;
+                }
+                else if(attributeName=="type")
+                {
+                    ikona.type=attributeValue;
+                }
+
+
+                attributes.pop_front();
+            }
+
+
+            if(elementName=="color")
+            {
+
+            }
+            else if(elementName=="icon")
+            {
+
+            }
+
+            openElement=elementName;
+        }
+        else if (xmlReader.isCharacters())
+        {
+            // Handle text content
+            QString textContent = xmlReader.text().toString();
+
+            if((openElement=="")||(openElement=="wrapper"))
+            {
+                body.appendChild(vystup.createTextNode(textContent ));
+            }
+            else if(openElement=="color")
+            {
+                barva.content=textContent;
+            }
+            else if(openElement=="font")
+            {
+                font.content=textContent;
+            }
+            else if(openElement=="icon")
+            {
+                ikona.alternative=textContent;
+            }
+            else if(openElement=="b")
+            {
+                rawContent=textContent;
+            }
+
+
+
+            // Process text content
+        }
+        else if (xmlReader.isEndElement())
+        {
+            // Handle element end tag
+            QString elementName = xmlReader.name().toString();
+
+
+            if(openElement=="")
+            {
+
+            }
+            else if(openElement=="color")
+            {
+             //  body.appendChild(colorToQDomNode(barva));
+                body.appendChild(vystup.createTextNode(barva.content));
+            }
+            else if(openElement=="font")
+            {
+                body.appendChild(fontToQDomNode(font));
+            }
+            else if(openElement=="icon")
+            {
+                body.appendChild(iconToQDomNode(ikona,vyskaObrazku,slozka));
+
+                ikona.alternative="";
+                ikona.type="";
+            }
+            else if(openElement=="font")
+            {
+                body.appendChild(fontToQDomNode(font));
+            }
+            else if(openElement=="b")
+            {
+                body.appendChild(boldToQDomNode(rawContent));
+            }
+
+
+
+
+
+            openElement="";
+
+        }
+    }
+
+    if (xmlReader.hasError()) {
+        // Handle XML parsing error
+    }
+
+
+    html.appendChild(body);
+    vystup.appendChild(html);
+
+    QString vystupString=vystup.toString();
+    qCDebug(InLineFormatParserLog)<<"vystup formatovani: "<<vystupString;
+
+    return vystupString;
+}
+
+
 QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, QString slozka, QString &bgColor)
 {
     qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;

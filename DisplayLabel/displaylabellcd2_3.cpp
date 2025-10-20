@@ -1,15 +1,17 @@
 #include "displaylabellcd2_3.h"
 
+Q_LOGGING_CATEGORY(DisplayLabelLcd2_3Log, "DisplayLabelLcd2_3")
+
 DisplayLabelLcd2_3::DisplayLabelLcd2_3() {}
 
 
 
 void DisplayLabelLcd2_3::displayLabelDestination(Vdv301Destination vdv301Destination)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
     int iconSize=60;
-    if(labelDestination!=NULL)
+    if(labelDestination!=nullptr)
     {
         iconSize=labelDestination->font().pixelSize();
     }
@@ -31,7 +33,7 @@ void DisplayLabelLcd2_3::displayLabelDestination(Vdv301Destination vdv301Destina
 
 void DisplayLabelLcd2_3::displayLabelLineName(Vdv301Line vdv301Line)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
 
     if(vdv301Line.lineNameList.isEmpty())
@@ -47,7 +49,7 @@ void DisplayLabelLcd2_3::displayLabelLineName(Vdv301Line vdv301Line)
 
 void DisplayLabelLcd2_3::displayLabelLineNameFollowing(Vdv301Line vdv301Line)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
 
     if(vdv301Line.lineNameList.isEmpty())
@@ -66,7 +68,7 @@ void DisplayLabelLcd2_3::displayLabelLineNameFollowing(Vdv301Line vdv301Line)
 
 void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv301Destination)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
     if(frameFollowingTrip!=nullptr)
     {
@@ -75,7 +77,7 @@ void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv3
 
 
     int iconSize=60;
-    if(labelDestination!=NULL)
+    if(labelDestination!=nullptr)
     {
         iconSize=labelDestination->font().pixelSize();
     }
@@ -111,7 +113,7 @@ void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv3
 
 void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
     foreach(QFrame* label,labelListConnectionDestination)
     {
@@ -173,7 +175,7 @@ void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> co
         }
         else
         {
-            qDebug()<<"empty DisplayContent";
+            qCDebug(DisplayLabelLcd2_3Log)<<"empty DisplayContent";
         }
 
 
@@ -185,7 +187,7 @@ void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> co
 
 void DisplayLabelLcd2_3::displayLabelStopFareZone(Vdv301AllData allData)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
 
     Vdv301Trip firstTrip;
     Vdv301Trip followingTrip;
@@ -208,7 +210,7 @@ void DisplayLabelLcd2_3::displayLabelStopFareZone(Vdv301AllData allData)
 
 void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip secondTrip, int currentStopIndex)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
     //stavSystemu.indexAktZastavky;
     int pocetPoli=labelListStopPointName.count();
     if(firstTrip.stopPointList.isEmpty())
@@ -239,7 +241,7 @@ void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip s
             }
             else
             {
-                qDebug()<<"pro label "<<i<<" uz nezbyly zastavky";
+                qCDebug(DisplayLabelLcd2_3Log)<<"pro label "<<i<<" uz nezbyly zastavky";
 
                 return;
             }
@@ -257,10 +259,10 @@ void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip s
 
 void DisplayLabelLcd2_3::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints)
 {
-    qDebug() <<  Q_FUNC_INFO;
-    if(labelViaPointsScrolling==NULL)
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
+    if(labelViaPointsScrolling==nullptr)
     {
-        qDebug()<<"NULL label";
+        qCDebug(DisplayLabelLcd2_3Log)<<"NULL label";
         return;
     }
 

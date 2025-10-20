@@ -2,7 +2,6 @@
 #define DISPLAYLABELLCD_H
 
 #include <QStackedWidget>
-#include <QLoggingCategory>
 
 #include "displaylabel.h"
 
@@ -26,38 +25,38 @@ public:
     QFont fontLabelFareZoneSmall;
 
     //display labels
-    QLabel *labelDestination=NULL;
-    QLabel *labelDestinationFollowing=NULL;
-    QLabel *labelLine=NULL;
-    QLabel *labelLineFollowing=NULL;
-    QLabel *labelViaPointsScrolling=NULL;
-    QLabel *labelClock=NULL;
+    QLabel *labelDestination=nullptr;
+    QLabel *labelDestinationFollowing=nullptr;
+    QLabel *labelLine=nullptr;
+    QLabel *labelLineFollowing=nullptr;
+    QLabel *labelViaPointsScrolling=nullptr;
+    QLabel *labelClock=nullptr;
 
 
     //announcement labels
     //display labels
-    QLabel *labelAnnouncementLeft=NULL;
-    QLabel *labelAnnouncementRight=NULL;
+    QLabel *labelAnnouncementLeft=nullptr;
+    QLabel *labelAnnouncementRight=nullptr;
 
-    QLabel *labelFareZoneAnnouncementLeft=NULL;
-    QLabel *labelFareZoneAnnouncementRight=NULL;
-
-
-    QLabel *labelFareZoneChangeFrom=NULL;
-    QLabel *labelFareZoneChangeTo=NULL;
+    QLabel *labelFareZoneAnnouncementLeft=nullptr;
+    QLabel *labelFareZoneAnnouncementRight=nullptr;
 
 
-    QLabel *labelLineChangeAnnouncementLeft=NULL;
-    QLabel *labelLineChangeAnnouncementRight=NULL;
+    QLabel *labelFareZoneChangeFrom=nullptr;
+    QLabel *labelFareZoneChangeTo=nullptr;
 
 
-    QLabel *labelLineChangeAnnouncementFrom=NULL;
-    QLabel *labelLineChangeAnnouncementTo=NULL;
+    QLabel *labelLineChangeAnnouncementLeft=nullptr;
+    QLabel *labelLineChangeAnnouncementRight=nullptr;
 
-    QWidget *pageAdditionalTextMessage=NULL;
-    QWidget *pageFareZoneChange=NULL;
-    QWidget *pageLineChange=NULL;
-    QWidget *pageRoute=NULL;
+
+    QLabel *labelLineChangeAnnouncementFrom=nullptr;
+    QLabel *labelLineChangeAnnouncementTo=nullptr;
+
+    QWidget *pageAdditionalTextMessage=nullptr;
+    QWidget *pageFareZoneChange=nullptr;
+    QWidget *pageLineChange=nullptr;
+    QWidget *pageRoute=nullptr;
 
 
 
@@ -71,10 +70,10 @@ public:
     QVector<QLabel*> labelListConnectionDeparture;
     QVector<QLabel*> labelListConnectionPlatform;
 
-    QFrame *frameFollowingTrip=NULL;
+    QFrame *frameFollowingTrip=nullptr;
 
-    QStackedWidget *stackedWidget_onService=NULL;
-    QStackedWidget *stackedWidget_middle=NULL;
+    QStackedWidget *stackedWidget_onService=nullptr;
+    QStackedWidget *stackedWidget_middle=nullptr;
 
 
 

@@ -1,12 +1,15 @@
 #include "displaylabellcd2_3cz1_0.h"
 
+Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0Log, "DisplayLabelLcd2_3CZ1_0")
+
+
 DisplayLabelLcd2_3CZ1_0::DisplayLabelLcd2_3CZ1_0() {}
 
 
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
 
     int pocetPoli=labelListStopPointName.count();
     if(firstTrip.stopPointList.isEmpty())
@@ -53,7 +56,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip,
             }
             else
             {
-                qDebug()<<"pro label "<<i<<" uz nezbyly zastavky";
+                qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"pro label "<<i<<" uz nezbyly zastavky";
 
                 return;
             }
@@ -67,7 +70,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip,
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
 
     Vdv301Trip2_3CZ1_0 firstTrip;
     Vdv301Trip2_3CZ1_0 followingTrip;
@@ -186,7 +189,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList,QVector<Vdv301InternationalText> additionalTextMessage1List,QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List,QVector<Vdv301InternationalText> additionalTextMessage4List)
 {
-    qDebug() <<  Q_FUNC_INFO;
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
 
     labelSetTextSafe(labelAnnouncementLeft,"");
     labelSetTextSafe(labelAnnouncementRight,"");
@@ -229,22 +232,22 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
         // ui->label_oznTextEn->setText("");
 
 
-        if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
+        if((stackedWidget_onService!=nullptr)&&(pageRoute!=nullptr))
         {
             stackedWidget_onService->setCurrentWidget(pageRoute);
         }
-        if((stackedWidget_middle!=NULL)&&(pageAdditionalTextMessage!=NULL))
+        if((stackedWidget_middle!=nullptr)&&(pageAdditionalTextMessage!=nullptr))
         {
             stackedWidget_middle->setCurrentWidget(pageAdditionalTextMessage);
         }
 
-        if(pageAdditionalTextMessage!=NULL)
+        if(pageAdditionalTextMessage!=nullptr)
         {
             pageCycleList.push_back(pageAdditionalTextMessage);
         }
         else
         {
-            qDebug("pageAnnouncement pointer is NULL");
+            qDebug("pageAnnouncement pointer is nullptr");
         }
 
         //    pageCycleList.push_back(page ui->page_oznameni);
@@ -296,22 +299,22 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
         // ui->label_oznTextEn->setText("");
 
 
-        if((stackedWidget_onService!=NULL)&&(pageRoute!=NULL))
+        if((stackedWidget_onService!=nullptr)&&(pageRoute!=nullptr))
         {
             stackedWidget_onService->setCurrentWidget(pageRoute);
         }
-        if((stackedWidget_middle!=NULL)&&(pageFareZoneChange!=NULL))
+        if((stackedWidget_middle!=nullptr)&&(pageFareZoneChange!=nullptr))
         {
             stackedWidget_middle->setCurrentWidget(pageFareZoneChange);
         }
 
-        if(pageAdditionalTextMessage!=NULL)
+        if(pageAdditionalTextMessage!=nullptr)
         {
             pageCycleList.push_back(pageFareZoneChange);
         }
         else
         {
-            qDebug("pageAnnouncement pointer is NULL");
+            qDebug("pageAnnouncement pointer is nullptr");
         }
 
         //    pageCycleList.push_back(page ui->page_oznameni);
@@ -365,25 +368,25 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
         // ui->label_oznTextEn->setText("");
 
 
-        if((stackedWidget_onService!=NULL)&&(pageLineChange!=NULL))
+        if((stackedWidget_onService!=nullptr)&&(pageLineChange!=nullptr))
         {
             stackedWidget_onService->setCurrentWidget(pageLineChange);
         }
 
-        if(pageAdditionalTextMessage!=NULL)
+        if(pageAdditionalTextMessage!=nullptr)
         {
             pageCycleList.push_back(pageLineChange);
         }
         else
         {
-            qDebug("pageAnnouncement pointer is NULL");
+            qDebug("pageAnnouncement pointer is nullptr");
         }
 
         //    pageCycleList.push_back(page ui->page_oznameni);
     }
     else
     {
-        qDebug()<<"unknown additionalTextMessage4 value";
+        qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"unknown additionalTextMessage4 value";
     }
 
 
@@ -394,9 +397,9 @@ bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, 
 {
 
 
-    if(label==NULL)
+    if(label==nullptr)
     {
-        qDebug()<<"DisplayLabel::labelSetTextSafe failed";
+        qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"DisplayLabel::labelSetTextSafe failed";
         return false;
     }
 

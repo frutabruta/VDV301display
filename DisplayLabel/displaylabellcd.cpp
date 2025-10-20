@@ -99,7 +99,7 @@ void DisplayLabelLcd::displayLabelEraseInformation()
 
 
 
-    if(frameFollowingTrip!=NULL)
+    if(frameFollowingTrip!=nullptr)
     {
         frameFollowingTrip->hide();
     }

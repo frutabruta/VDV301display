@@ -21,7 +21,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     loggingRules+="DisplayLabelLcd=false\n";
     loggingRules+="DisplayLabelLed=false\n";
     loggingRules+="InLineFormatParser=false\n";
-    loggingRules+="MainWindow=false";
+    // loggingRules+="MainWindow=false";
+    loggingRules+="DisplayLabelLcd2_3CZ1_0_Jis=false\n";
 
     QLoggingCategory::setFilterRules(loggingRules);
 
@@ -70,6 +71,9 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     displayLabelFillArrayJis();
     ledLabelInitialize2_3();
     lcdLabelInitialize2_3();
+
+    displayLabelLcd.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
+    displayLabelLcdJis.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
     displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
@@ -285,6 +289,7 @@ void MainWindow::settingsWindowToSettingsFile()
 
     settings.setValue("cisSubscriber/replyPath",ui->lineEdit_settings_replyPath->text());
 
+    settings.setValue("graphics/lcdPageSwitchTimer",intervalLcdPageSwitchSeconds);
 }
 
 
@@ -328,14 +333,14 @@ void MainWindow::ledLabelInitialize2_3()
     displayLabelLed.sideDisplay.ticker=0;
 
     displayLabelLed.rearDisplay.lineLabel=ui->labelRearLine;
-    displayLabelLed.rearDisplay.destinationLabel=NULL;
-    displayLabelLed.rearDisplay.destination1Label=NULL;
-    displayLabelLed.rearDisplay.destination2Label=NULL;
+    displayLabelLed.rearDisplay.destinationLabel=nullptr;
+    displayLabelLed.rearDisplay.destination1Label=nullptr;
+    displayLabelLed.rearDisplay.destination2Label=nullptr;
     displayLabelLed.rearDisplay.ticker=0;
 
 
     displayLabelLed.innerDisplay.lineLabel=ui->labelInnerLine;
-    displayLabelLed.innerDisplay.destinationLabel=NULL;
+    displayLabelLed.innerDisplay.destinationLabel=nullptr;
     displayLabelLed.innerDisplay.destination1Label=ui->labelInnerTopRow;
     displayLabelLed.innerDisplay.destination2Label=ui->labelInnerBottomRow;
     displayLabelLed.rearDisplay.ticker=0;
@@ -357,6 +362,7 @@ void MainWindow::lcdLabelInitialize2_3()
     displayLabelLcdJis.labelLine=ui->label_linka_2;
 
     displayLabelLcdJis.labelLineConnection=ui->label_linka_3;
+    displayLabelLcdJis.labelPlatformConnection=ui->label_nastupiste_2;
     //displayLabelLcdJis.labelDestinationConnection=nullptr;
 
 
@@ -451,6 +457,16 @@ void MainWindow::loadConstants()
 
 
     useJis=settings.value("graphics/useJisGraphics").toBool();
+    if(settings.value("graphics/lcdPageSwitchTimer").toInt()!=0)
+    {
+        intervalLcdPageSwitchSeconds=settings.value("graphics/lcdPageSwitchTimer").toInt();
+        ui->spinBox_pageSwitchDuration->setValue(intervalLcdPageSwitchSeconds);
+    }
+
+
+
+
+    ui->checkBox_settings_useJis->setChecked(useJis);
 
     menuSwitchTabs(settings.value("window/defaultScreen").toInt());
     if(settings.value("window/fullscreen").toBool()==true)
@@ -555,7 +571,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     ui->tableWidget_logMessages->resizeColumnsToContents();
     if(ui->checkBox_logMessageAutoscroll->isChecked())
     {
-         ui->tableWidget_logMessages->scrollToBottom();
+        ui->tableWidget_logMessages->scrollToBottom();
     }
 
 
@@ -668,15 +684,18 @@ int MainWindow::slotEverySecond()
 
     ui->label_remainingSeconds->setText(QString::number(cisSubscriber.timerHeartbeatCheck.remainingTime()/1000) );
     ui->label_isSubscribed->setText(QString::number(cisSubscriber.isSubscriptionActive));
+    ui->label_jisSwitchTimer->setText(QString::number(floor(displayLabelLcdJis.timerLabelPageSwitch.remainingTime()/1000)));
 
     if(showTimeColon==true)
     {
         ui->label_hodiny->setText(QTime::currentTime().toString("hh:mm") );
+        ui->label_hodiny_2->setText(QTime::currentTime().toString("hh:mm") );
         showTimeColon=false;
     }
     else
     {
         ui->label_hodiny->setText(QTime::currentTime().toString("hh mm") );
+        ui->label_hodiny_2->setText(QTime::currentTime().toString("hh mm") );
         showTimeColon=true;
     }
 
@@ -815,20 +834,33 @@ void MainWindow::slotDisplayLcdLabelCyclePagesJis()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO<<" counter ma hodnotu "<<lcdLabelCurrentPageIndexJis<<" v seznamu je "<<displayLabelLcdJis.pageCycleList.count();
 
-    if(lcdLabelCurrentPageIndexJis==(displayLabelLcdJis.pageCycleList.count()-1))
+    lcdLabelCurrentPageIndexJis++;
+
+    if(lcdLabelCurrentPageIndexJis>=(displayLabelLcdJis.pageCycleList.count()))
     {
         lcdLabelCurrentPageIndexJis=0;
+        qCDebug(MainWindowLog)<<"counter reset";
     }
+    /*
     else
     {
         lcdLabelCurrentPageIndexJis++;
     }
+*/
 
+    ui->label_jisPageCount->setText(QString::number(lcdLabelCurrentPageIndexJis+1)+"/"+QString::number(displayLabelLcdJis.pageCycleList.count()));
+
+    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(displayLabelLcdJis.pageCycleList.at(lcdLabelCurrentPageIndexJis));
 
     if(lcdLabelCurrentPageIndexJis<displayLabelLcdJis.pageCycleList.count())
     {
-        ui->stackedWidget_prostredek_2->setCurrentWidget(displayLabelLcdJis.pageCycleList.at(lcdLabelCurrentPageIndexJis));
+        qCDebug(MainWindowLog)<<"page "+QString::number(lcdLabelCurrentPageIndexJis)+" is in range";
 
+
+    }
+    else
+    {
+        qCDebug(MainWindowLog)<<"page out of range";
     }
 }
 
@@ -924,6 +956,7 @@ void MainWindow::displayLabelFillArray()
 
     displayLabelLcd.stackedWidget_middle=ui->stackedWidget_prostredek;
     displayLabelLcd.stackedWidget_onService=ui->stackedWidget_onService;
+    displayLabelLcdJis.stackedWidget_onService=ui->stackedWidget_onService_2;
 
     displayLabelLcd.labelAnnouncementLeft=ui->label_announcementLeft;
     displayLabelLcd.labelAnnouncementRight=ui->label_announcementRight;
@@ -966,7 +999,7 @@ void MainWindow::displayLabelFillArray()
 
 void MainWindow::displayLabelFillArrayJis()
 {
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1_2,ui->label_pasmo1_4, ui->label_pasmo1_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1_2,ui->label_pasmo1_4, ui->label_pasmo1_3, ui->label_nastupiste_2);
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna2_2,ui->label_pasmo2_4, ui->label_pasmo2_3);
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3_2,ui->label_pasmo3_4, ui->label_pasmo3_3);
     displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4_2,ui->label_pasmo4_4, ui->label_pasmo4_3);
@@ -989,62 +1022,6 @@ void MainWindow::displayLabelFillArrayJis()
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup11_linka_2,ui->label_prestup11_cil_2,ui->label_prestup11_odjezd_2,ui->label_prestup11_nastupiste_2);
 
 
- //   displayLabelLcdJis.labelListStopPointNameConnection.push_back(ui->Lnacestna1_3);
-/*
-    displayLabelLcdJis.labelListConnectionDestination .push_back(ui->label_prestup0_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup1_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup2_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup3_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup4_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup5_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup6_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup7_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup8_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup9_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup10_cil_2);
-    displayLabelLcdJis.labelListConnectionDestination.push_back(ui->label_prestup11_cil_2);
-
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup0_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup1_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup2_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup3_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup4_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup5_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup6_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup7_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup8_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup9_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup10_linka_2);
-    displayLabelLcdJis.labelListConnectionLine.push_back(ui->label_prestup11_linka_2);
-
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup0_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup1_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup2_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup3_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup4_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup5_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup6_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup7_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup8_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup9_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup10_odjezd_2);
-    displayLabelLcdJis.labelListConnectionDeparture.push_back(ui->label_prestup11_odjezd_2);
-
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup0_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup1_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup2_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup3_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup4_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup5_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup6_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup7_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup8_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup9_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste_2);
-    displayLabelLcdJis.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste_2);
-
-
-*/
 
 
 
@@ -1075,7 +1052,7 @@ void MainWindow::displayLabelFillArrayJis()
     displayLabelLcdJis.labelLineChangeAnnouncementTo=ui->label_lineTo_2;
 
 
-   /*
+    /*
     seznamFramePrestup.push_back(ui->frame_odjezd0_2);
     seznamFramePrestup.push_back(ui->frame_odjezd1);
     seznamFramePrestup.push_back(ui->frame_odjezd2);
@@ -1120,8 +1097,12 @@ void MainWindow::eventEraseDisplayInformation()
 void MainWindow::eventLcdSetMainPage()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+
     //LCD label
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
+    displayLabelReturnToStopList();
+
+    //SVG
+    //unused
 }
 
 void MainWindow::eventLcdShowFollowingTripDestination(QString followingTripLine,QString followingTripDestination)
@@ -1184,8 +1165,9 @@ void MainWindow::eventDisplayAbnormalStateScreen(QString displayState)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO<<" "<<displayState;
     ui->label_lcd_state->setText(displayState);
+    ui->label_lcd_state_2->setText(displayState);
     eraseDisplayedInformation();
-  //  ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
+    //  ui->stackedWidget_onService->setCurrentWidget(ui->page_version);
 
 }
 
@@ -1402,11 +1384,14 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
     bool timerOverride=false;
 
-    eventLcdSetMainPage();
-    eventEraseDisplayInformation();
+
+    //  eventEraseDisplayInformation();
 
     displayLabelLcd.pageCycleList.clear();
     displayLabelLcdJis.pageCycleList.clear();
+
+    //   eventLcdSetMainPage();
+
 
     if(vdv301AllData.vehicleInformationGroup.vehicleStopRequested)
     {
@@ -1542,10 +1527,29 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             else
             {
                 updateLabelAnnouncement("");
+                if(allDataChanged(vdv301AllData,vdv301AllData2_3CZ1_0_previous))
+                {
+                    eventLcdReturnToStopList();
+                    displayLabelLcd.timerLabelPageSwitch.start();
+                    displayLabelLcdJis.timerLabelPageSwitch.start();
+                }
+                else
+                {
+                    if(!displayLabelLcd.timerLabelPageSwitch.isActive())
+                    {
+                        displayLabelLcd.timerLabelPageSwitch.start();
+                    }
+                    if(!displayLabelLcdJis.timerLabelPageSwitch.isActive())
+                    {
+                        displayLabelLcdJis.timerLabelPageSwitch.start();
+                    }
+                }
+                /*
                 if(xmlParser2_3CZ1_0.dataChanged==true)
                 {
                     eventLcdReturnToStopList();
                 }
+*/
             }
 
             /*
@@ -1601,17 +1605,19 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
     lcdLabelCurrentPageIndex=0;
+
     if(timerOverride)
     {
         displayLabelLcd.timerLabelPageSwitch.stop();
         displayLabelLcdJis.timerLabelPageSwitch.stop();
     }
+    /*
     else
     {
         displayLabelLcd.timerLabelPageSwitch.start();
         displayLabelLcdJis.timerLabelPageSwitch.start();
     }
-
+*/
 
     return 1;
 }
@@ -1655,7 +1661,7 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
         else
         {
             displayLabelLcd.displayLabelLineNameFollowing(line);
-             displayLabelLcdJis.displayLabelLineNameFollowing(line);
+            displayLabelLcdJis.displayLabelLineNameFollowing(line);
         }
     }
     else
@@ -1755,10 +1761,12 @@ void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateE
     if ((locationState==Vdv301Enumerations::LocationStateAtStop)||(locationState==Vdv301Enumerations::LocationStateBeforeStop))
     {
         labelSetNextStopBackground(barvyLinek.barva_PozadiB_50_50_50,barvyLinek.barva_Zastavka_180_180_180 );
+        labelSetNextStopBackgroundJis("rgb(29,29,27)", "rgb(200,200,200)");
     }
     else
     {
         labelSetNextStopBackground(barvyLinek.barva_bila_255_255_255,barvyLinek.barva_PozadiB_50_50_50);
+        labelSetNextStopBackgroundJis(barvyLinek.barva_bila_255_255_255,"rgb(54,54,53)");
     }
 
 }
@@ -1935,6 +1943,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
     receivedMessagesCounter++;
     ui->label_messageCounter->setText(QString::number(receivedMessagesCounter));
+    ui->label_messageCounter2->setText(QString::number(receivedMessagesCounter));
 
 
 
@@ -2014,6 +2023,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
         if(cisSubscriber.structureName()=="AllData")
         {
+            vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
             vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
             updateLabelCurrentStopindex(QString::number(vdv301AllData2_3CZ1_0.currentStopIndex));
 
@@ -2278,27 +2288,12 @@ void MainWindow::receivedDataVariablesReset()
 
 
 
-
-
-
-void MainWindow::displayNormalOnLineState()
-{
-
-    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
-}
-
-
-
-
-
-
 void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPozadi)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //
     displayLabelLcd.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
-    //displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
+    displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
     svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
 
@@ -2306,6 +2301,21 @@ void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPoza
     ui->Lnacestna1->setStyleSheet(stylTextu);
     ui->label_pasmo1_1->setStyleSheet(stylTextu);
     ui->label_pasmo1_2->setStyleSheet(stylTextu);
+
+
+}
+
+
+void MainWindow::labelSetNextStopBackgroundJis(QString barvaPisma,QString barvaPozadi)
+{
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+    //
+    displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
+
+    QString stylTextu="color:"+barvaPisma;
+    ui->Lnacestna1_2->setStyleSheet(stylTextu);
+    ui->label_pasmo1_3->setStyleSheet(stylTextu);
+    ui->label_pasmo1_4->setStyleSheet(stylTextu);
 
 
 }
@@ -2430,10 +2440,10 @@ void MainWindow::displayLabelShowFareZoneChange(QVector<Vdv301InternationalText>
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_fareZoneChange);
+    displayLabelLcd.stackedWidget_middle->setCurrentWidget(ui->page_fareZoneChange);
 
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
-    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_fareZoneChange_2);
+    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_fareZoneChange_2);
 
     ui->label_fareZoneChangeFrom->setText(displayLabelLcd.vdv301InternationalTextJoinAll(fromFareZoneList,"\n").text);
     ui->label_fareZoneChangeTo->setText(displayLabelLcd.vdv301InternationalTextJoinAll(toFareZoneList,"\n").text);
@@ -2454,10 +2464,10 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     updateLabelAnnouncement(textCz);
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_oznameni);
+    displayLabelLcd.stackedWidget_middle->setCurrentWidget(ui->page_oznameni);
 
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
-    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_oznameni_2);
+    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_oznameni_2);
 
     ui->label_oznTitle->setText(title);
     ui->label_oznType->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
@@ -2503,13 +2513,13 @@ void MainWindow::displayLabelShowAnnoucement(QVector<Vdv301InternationalText> ad
 void MainWindow::eventHideAnnouncement()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    displayLabelReturnToStopList();
+    eventLcdSetMainPage();
 }
 
 void MainWindow::eventHideFareZoneChange()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    displayLabelReturnToStopList();
+    eventLcdSetMainPage();
 }
 
 
@@ -2518,18 +2528,22 @@ void MainWindow::eventLcdReturnToStopList()
 {
     //label
     displayLabelReturnToStopList();
-    //lcd
 
-
+    //svg
+    //unused
 }
 void MainWindow::displayLabelReturnToStopList()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_hlavni_2);
 
+    lcdLabelCurrentPageIndex=0;
+    ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
+    displayLabelLcd.stackedWidget_middle->setCurrentWidget(ui->page_hlavni_2);
+
+
+    lcdLabelCurrentPageIndexJis=0;
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
-    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_hlavni_3);
+    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_hlavni_3);
 
     displayLabelLcd.naplnZmenaLabel("",ui->label_zmena);
 }
@@ -2539,10 +2553,10 @@ void MainWindow::displayLabelShowPageFinalStop()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
-    ui->stackedWidget_prostredek->setCurrentWidget(ui->page_konecna);
+    displayLabelLcd.stackedWidget_middle->setCurrentWidget(ui->page_konecna);
 
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
-    ui->stackedWidget_prostredek_2->setCurrentWidget(ui->page_konecna_2);
+    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_konecna_2);
 }
 
 
@@ -2696,11 +2710,11 @@ void MainWindow::on_pushButton_menu_displayLabel_clicked()
 {
     if(useJis)
     {
-          ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplayJis);
+        ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplayJis);
     }
     else
     {
-          ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
+        ui->stackedWidget_menuSwitch->setCurrentWidget(ui->page_labelDisplay);
     }
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
@@ -2849,7 +2863,38 @@ void MainWindow::on_checkBox_settings_useJis_stateChanged(int arg1)
 void MainWindow::on_spinBox_pageSwitchDuration_valueChanged(int arg1)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO<<" "<<arg1;
-    displayLabelLcd.timerLabelPageSwitch.setInterval(arg1*1000);
-    displayLabelLcdJis.timerLabelPageSwitch.setInterval(arg1*1000);
+    intervalLcdPageSwitchSeconds=arg1;
+    displayLabelLcd.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
+    displayLabelLcdJis.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
 }
+
+
+
+bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData)
+{
+    if(oldAllData.currentStopIndex!=newAllData.currentStopIndex)
+    {
+        return true;
+    }
+    else if(oldAllData.tripInformationList.count()!=newAllData.tripInformationList.count())
+    {
+        return true;
+    }
+    else if(oldAllData.tripInformationList.count()>0)
+    {
+        if(oldAllData.tripInformationList.first().stopPointList.count()!=newAllData.tripInformationList.first().stopPointList.count())
+        {
+            return true;
+        }
+        if(oldAllData.tripInformationList.first().locationState!=newAllData.tripInformationList.first().locationState)
+        {
+            return true;
+        }
+    }
+
+
+
+    return false;
+}
+
 

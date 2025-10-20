@@ -18,6 +18,49 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251019_2142
+  - MainWindow
+    - added labelSetNextStopBackgroundJis
+    - added allDataChanged to compare if alldata changed and page switching should be reseted
+    - intervalLcdPageSwitchSeconds
+      - added option to save and set page switching interval
+    - added interval countdown 
+    - MainWindow::slotEverySecond
+      - JIS time fix 
+    - MainWindow::slotDisplayLcdLabelCyclePagesJis()
+        - complete rework
+    - MainWindow::eventDisplayAbnormalStateScreen
+      - JIS fix
+    - MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0
+      - page switching rework
+    - MainWindow::labelLcdUpdateStopBackground
+      - JIS fix
+    - new function MainWindow::labelSetNextStopBackgroundJis
+  - ui 
+    - added message counter to home screen
+  - settings.ini
+    - added parameter graphics/lcdPageSwitchTimer
+  - added InlineFormatParser::parseTextLcdJis to disable line colouring with JIS graphics
+
+  - DisplayLabelLcd
+    - NULL -> nullptr
+  - DisplayLabelLcd2_3
+    - NULL -> nullptr
+    - qCDebug implementation
+  - DisplayLabelLcd2_3CZ1_0_Jis  
+    - NULL -> nullptr
+    - qCDebug implementation
+    - show platform at connections screen
+    - DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4
+      - to fix of colours of JIS graphics line number
+    - DisplayLabelStopGroup
+      - added labelPlatform
+    - DisplayLabelLcd2_3CZ1_0
+      - NULL -> nullptr
+    
+    
+
+
 - 20251007_1535
   - ui
     - added option to change psge switch time (not stored in settings.ini)

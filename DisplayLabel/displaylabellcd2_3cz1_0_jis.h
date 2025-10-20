@@ -3,14 +3,16 @@
 
 #include "displaylabellcd2_3cz1_0.h"
 
+
 class DisplayLabelStopGroup
 {
 public:
-    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop);
+    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform=nullptr);
 
     QPointer<QLabel> labelStopName;
     QPointer<QLabel> labelFarezoneBottom;
     QPointer<QLabel> labelFarezoneTop;
+    QPointer<QLabel> labelPlatform;
     void eraseContent();
     bool labelSetTextSafe(QLabel *label, QString text);
 };
@@ -36,8 +38,9 @@ public:
 
     DisplayLabelLcd2_3CZ1_0_Jis();
 
-    QLabel *labelLineConnection=nullptr;
-    QLabel *labelDestinationConnection=nullptr;
+    QPointer<QLabel> labelLineConnection=nullptr;
+    QPointer<QLabel> labelDestinationConnection=nullptr;
+    QPointer<QLabel> labelPlatformConnection=nullptr;
 
 
     QVector<DisplayLabelStopGroup> labelListStopGroup;
@@ -56,6 +59,7 @@ public:
     void displayLabelConnectionList(QVector<Vdv301Connection> connectionList);
     void displayLabelLineName(Vdv301Line vdv301Line);
     void displayLabelLineName(QString lineName);
+    void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
 private:
 
 };

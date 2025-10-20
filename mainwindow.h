@@ -91,6 +91,7 @@ private:
 
     Vdv301AllData vdv301AllData;
     Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
+    Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0_previous;
 
     Vdv301CurrentDisplayContent vdv301currentDisplayContent;
 
@@ -106,8 +107,10 @@ private:
 
     int receivedMessagesCounter=0;
     //constants
-    const int intervalSideDisplay=2000;
-    const int intervalDelayedStart=500;
+    const int intervalSideDisplay=2000; //miliseconds
+    const int intervalDelayedStart=500; //miliseconds
+    int intervalLcdPageSwitchSeconds=10; //seconds
+
 
     bool useJis=false;
 
@@ -193,7 +196,6 @@ private:
 
 
     void eventDisplayAbnormalStateScreen(QString displayState);
-    void displayNormalOnLineState(); //unused
     void receivedDataVariablesReset();
 
     void eventStopRequestedActivated();
@@ -247,6 +249,8 @@ private:
     void updateLabelAnnouncement(QString announcementText);
     void messageToTable(Vdv301AllData2_3CZ1_0 input);
     void displayLabelFillArrayJis();
+    void labelSetNextStopBackgroundJis(QString barvaPisma, QString barvaPozadi);
+    bool allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData);
 private slots:
 
 
