@@ -106,14 +106,14 @@ void DisplayLabelLcd::displayLabelEraseInformation()
 
 
 
-    vymazPoleLabelu(labelListStopPointName);
-    vymazPoleLabelu(labelListFareZoneUpper);
-    vymazPoleLabelu(labelListFareZoneLower);
+  //  vymazPoleLabelu(labelListStopPointName);
+  //  vymazPoleLabelu(labelListFareZoneUpper);
+  //  vymazPoleLabelu(labelListFareZoneLower);
     //obrazovka prestupu
-    vymazPoleLabelu(labelListConnectionDestination);
-    vymazPoleLabelu(labelListConnectionLine);
-    vymazPoleLabelu(labelListConnectionPlatform);
-    vymazPoleLabelu(labelListConnectionDeparture);
+  //  vymazPoleLabelu(labelListConnectionDestination);
+  //  vymazPoleLabelu(labelListConnectionLine);
+  //  vymazPoleLabelu(labelListConnectionPlatform);
+  //  vymazPoleLabelu(labelListConnectionDeparture);
 
     timerLabelPageSwitch.stop();
     pageCycleList.clear();
@@ -156,15 +156,15 @@ void DisplayLabelLcd::lcdResizeLabels(int frameHeight)
     labelNastavVelikost(labelDestination,sizeFontDestination,ratioPixelPoint ); //100
     labelNastavVelikost(labelViaPointsScrolling,sizeFontViaPoints,ratioPixelPoint); //72
 
-    poleLabelNastavVelikost(labelListStopPointName,sizeFontFollowing,ratioPixelPoint); //100
+    //poleLabelNastavVelikost(labelListStopPointName,sizeFontFollowing,ratioPixelPoint); //100
 
-    poleLabelNastavVelikost(labelListConnectionLine,sizeFontTransferLine,ratioPixelPoint); //48
-    poleLabelNastavSirku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameWidth); //95
-    poleLabelNastavVysku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameHeight); //65
+  //  poleLabelNastavVelikost(labelListConnectionLine,sizeFontTransferLine,ratioPixelPoint); //48
+  //  poleLabelNastavSirku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameWidth); //95
+  //  poleLabelNastavVysku(labelListConnectionLine,ratioPixelPoint*sizeConnectionFrameHeight); //65
 
-    poleLabelNastavVelikost(labelListConnectionDestination,sizeFontTransferDestination,ratioPixelPoint); //36
-    poleLabelNastavVelikost(labelListConnectionPlatform,sizeFontTransferDestination,ratioPixelPoint); //36
-    poleLabelNastavVelikost(labelListConnectionDeparture,sizeFontTransferDestination,ratioPixelPoint); //36
+   // poleLabelNastavVelikost(labelListConnectionDestination,sizeFontTransferDestination,ratioPixelPoint); //36
+   // poleLabelNastavVelikost(labelListConnectionPlatform,sizeFontTransferDestination,ratioPixelPoint); //36
+   // poleLabelNastavVelikost(labelListConnectionDeparture,sizeFontTransferDestination,ratioPixelPoint); //36
 
     labelNastavVelikost(labelClock,80,ratioPixelPoint); //80
     //  labelNastavVelikost(ui->label_textPres,30,ratioPixelPoint); //30

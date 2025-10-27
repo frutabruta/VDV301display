@@ -18,6 +18,19 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251027_2101
+  - VDV301publisher
+    - added serviceNamePostfix
+  - added module GolemioClient (not used yet)
+  - usage of labelListStopGroup
+    - DisplayLabelLcd
+    - DisplayLabelLcd2_3
+    - DisplayLabelLcd2_3CZ1_0    
+  - DisplayLabelStopGroup
+    - moved to DisplayLabelLcd2_3.cpp
+  - DisplayLabelConnectionGroup
+    - moved to DisplayLabelLcd2_3.cpp
+
 - 20251019_2142
   - MainWindow
     - added labelSetNextStopBackgroundJis

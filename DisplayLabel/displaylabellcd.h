@@ -61,14 +61,14 @@ public:
 
 
     //vektory Labelu Hlavni
-    QVector<QLabel*> labelListStopPointName;
-    QVector<QLabel*> labelListFareZoneUpper;
-    QVector<QLabel*> labelListFareZoneLower;
+ //   QVector<QLabel*> labelListStopPointName;
+ //   QVector<QLabel*> labelListFareZoneUpper;
+  //  QVector<QLabel*> labelListFareZoneLower;
 
-    QVector<QLabel*> labelListConnectionLine;
-    QVector<QLabel*> labelListConnectionDestination;
-    QVector<QLabel*> labelListConnectionDeparture;
-    QVector<QLabel*> labelListConnectionPlatform;
+//    QVector<QLabel*> labelListConnectionLine;
+  //  QVector<QLabel*> labelListConnectionDestination;
+  //  QVector<QLabel*> labelListConnectionDeparture;
+  //  QVector<QLabel*> labelListConnectionPlatform;
 
     QFrame *frameFollowingTrip=nullptr;
 

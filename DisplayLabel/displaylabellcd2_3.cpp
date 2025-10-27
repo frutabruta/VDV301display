@@ -2,6 +2,72 @@
 
 Q_LOGGING_CATEGORY(DisplayLabelLcd2_3Log, "DisplayLabelLcd2_3")
 
+
+DisplayLabelStopGroup::DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform)
+{
+    labelStopName=new_labelStopName;
+    labelFarezoneBottom=new_labelFarezoneBottom;
+    labelFarezoneTop=new_labelFarezoneTop;
+    labelPlatform=new_labelPlatform;
+}
+
+void DisplayLabelStopGroup::eraseContent()
+{
+    labelSetTextSafe(labelStopName,"");
+    labelSetTextSafe(labelFarezoneBottom,"");
+    labelSetTextSafe(labelFarezoneTop,"");
+}
+
+bool DisplayLabelStopGroup::labelSetTextSafe(QLabel *label, QString text)
+{
+    if(label==nullptr)
+    {
+        qCDebug(DisplayLabelLcd2_3Log)<<Q_FUNC_INFO<<" failed";
+        return false;
+    }
+
+    else
+    {
+        label->setText(text);
+    }
+    return true;
+}
+
+
+
+
+DisplayLabelConnectionGroup::DisplayLabelConnectionGroup(QPointer<QLabel> new_labelConnectionLine, QPointer<QLabel> new_labelConnectionDestination, QPointer<QLabel> new_labelConnectionDeparture, QPointer<QLabel> new_labelConnectionPlatform)
+{
+    labelConnectionLine=new_labelConnectionLine;
+    labelConnectionDestination=new_labelConnectionDestination;
+    labelConnectionDeparture=new_labelConnectionDeparture;
+    labelConnectionPlatform=new_labelConnectionPlatform;
+}
+
+
+void DisplayLabelConnectionGroup::eraseContent()
+{
+    labelSetTextSafe(labelConnectionLine,"");
+    labelSetTextSafe(labelConnectionDestination,"");
+    labelSetTextSafe(labelConnectionDeparture,"");
+    labelSetTextSafe(labelConnectionPlatform,"");
+}
+
+bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
+{
+    if(label==nullptr)
+    {
+        qCDebug(DisplayLabelLcd2_3Log)<<Q_FUNC_INFO<<" failed";
+        return false;
+    }
+
+    else
+    {
+        label->setText(text);
+    }
+    return true;
+}
+
 DisplayLabelLcd2_3::DisplayLabelLcd2_3() {}
 
 
@@ -109,11 +175,12 @@ void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv3
 */
 }
 
-
-
 void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
 {
     qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
+
+    QVector<Vdv301Connection> connectionListCopy=connectionList;
+    /*
 
     foreach(QFrame* label,labelListConnectionDestination)
     {
@@ -140,49 +207,57 @@ void DisplayLabelLcd2_3::displayLabelConnectionList(QVector<Vdv301Connection> co
     vymazPoleLabelu(labelListConnectionPlatform);
     vymazPoleLabelu(labelListConnectionDeparture);
 
+    */
 
-
-
-
-    for (int i=0;i<minimum(connectionList.count(), labelListConnectionDestination.count()) ; i++)
+    for(DisplayLabelConnectionGroup &selectedGroup : labelListConnectionGroup)
     {
-        Vdv301Connection selectedConnection=connectionList.at(i);
-
-
-        if(!selectedConnection.vdv301displayContentList.isEmpty() )
+        if(!connectionListCopy.isEmpty())
         {
-            Vdv301DisplayContent firstDisplayContent=selectedConnection.vdv301displayContentList.first();
+            Vdv301Connection selectedConnection=connectionListCopy.takeFirst();
 
-            labelListConnectionDestination.at(i)->setText(vdv301InternationalTextJoinAll(firstDisplayContent.destination.destinationNameList,"\n").text);
-            labelListConnectionDestination.at(i)->show();
 
-            displayLabelDrawLineNumber2_4(vdv301InternationalTextJoinAll(firstDisplayContent.lineInformation.lineNameList,"\n").text, labelListConnectionLine.at(i), sizeIconConnectionDynamic,true);
-
-            labelListConnectionPlatform.at(i)->setText(selectedConnection.platform );
-            labelListConnectionPlatform.at(i)->show();
-
-            QString departureTime="";
-            if( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime())<1)
+            if(!selectedConnection.vdv301displayContentList.isEmpty() )
             {
-                departureTime="&lt;1";
+                Vdv301DisplayContent firstDisplayContent=selectedConnection.vdv301displayContentList.first();
+
+                labelSetTextSafe(selectedGroup.labelConnectionDestination,vdv301InternationalTextJoinAll(firstDisplayContent.destination.destinationNameList,"\n").text);
+                // labelListConnectionDestination.at(i)->setText();
+                // labelListConnectionDestination.at(i)->show();
+
+                displayLabelDrawLineNumber2_4(vdv301InternationalTextJoinAll(firstDisplayContent.lineInformation.lineNameList,"\n").text, selectedGroup.labelConnectionLine, sizeIconConnectionDynamic,true);
+
+                // labelListConnectionPlatform.at(i)->setText( );
+                //  labelListConnectionPlatform.at(i)->show();
+
+                labelSetTextSafe(selectedGroup.labelConnectionPlatform,selectedConnection.platform);
+
+                QString departureTime="";
+                if( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime())<1)
+                {
+                    departureTime="&lt;1";
+                }
+                else
+                {
+                    departureTime=QString::number( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime()));
+                }
+
+                labelSetTextSafe(selectedGroup.labelConnectionDeparture,"<b>"+ departureTime+"</b> min.");
+
+                //labelListConnectionDeparture.at(i)->setText();
+                //labelListConnectionDeparture.at(i)->show();
             }
             else
             {
-                departureTime=QString::number( selectedConnection.getMinutesToDeparture(QDateTime::currentDateTime()));
+                qCDebug(DisplayLabelLcd2_3Log)<<"empty DisplayContent";
             }
-            labelListConnectionDeparture.at(i)->setText("<b>"+ departureTime+"</b> min.");
-            labelListConnectionDeparture.at(i)->show();
         }
         else
         {
-            qCDebug(DisplayLabelLcd2_3Log)<<"empty DisplayContent";
+            selectedGroup.eraseContent();
         }
-
 
     }
 }
-
-
 
 
 void DisplayLabelLcd2_3::displayLabelStopFareZone(Vdv301AllData allData)
@@ -204,10 +279,10 @@ void DisplayLabelLcd2_3::displayLabelStopFareZone(Vdv301AllData allData)
             followingTrip=allData.tripInformationList.at(1);
         }
     }
-    displayLabelStopList(firstTrip,followingTrip,allData.currentStopIndex);
+    displayLabelStopList(firstTrip,followingTrip,allData.currentStopIndex,labelListStopGroup);
 
 }
-
+/*
 void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip secondTrip, int currentStopIndex)
 {
     qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
@@ -251,6 +326,56 @@ void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip s
 
     }
 
+
+
+}*/
+
+void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
+{
+    qCDebug(DisplayLabelLcd2_3Log) <<  Q_FUNC_INFO;
+
+    Vdv301Trip firstTripCopy=firstTrip;
+    Vdv301Trip secondTripCopy=secondTrip;
+
+    if(firstTripCopy.stopPointList.isEmpty())
+    {
+        return ;
+    }
+
+    firstTripCopy.stopPointList.remove(0,currentStopIndex-1);
+
+    qCDebug(DisplayLabelLcd2_3Log)<<"number of labels: "<<labelListStopGroup.count();
+
+
+    for(DisplayLabelStopGroup &selectedGroup : labelListStopGroup)
+    {
+
+        Vdv301StopPoint aktualniZastavka;
+        bool navaznySpoj=false;
+
+
+        if(!firstTripCopy.stopPointList.isEmpty())
+        {
+            aktualniZastavka=firstTripCopy.stopPointList.takeFirst();
+        }
+        else
+        {
+            if(!secondTripCopy.stopPointList.isEmpty())
+            {
+                navaznySpoj=true;
+                aktualniZastavka=secondTripCopy.stopPointList.takeFirst();
+            }
+            else
+            {
+                qCDebug(DisplayLabelLcd2_3Log)<<"pro label uz nezbyly zastavky";
+                selectedGroup.eraseContent();
+            }
+        }
+
+        displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom);
+        labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
+
+    }
 
 
 }

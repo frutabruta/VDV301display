@@ -5,7 +5,7 @@ Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0Log, "DisplayLabelLcd2_3CZ1_0")
 
 DisplayLabelLcd2_3CZ1_0::DisplayLabelLcd2_3CZ1_0() {}
 
-
+/*
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex)
 {
@@ -66,6 +66,58 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip,
     }
 }
 
+*/
+
+
+void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
+
+    Vdv301Trip2_3CZ1_0 firstTripCopy=firstTrip;
+    Vdv301Trip2_3CZ1_0 secondTripCopy=secondTrip;
+
+    if(firstTripCopy.stopPointList.isEmpty())
+    {
+        return ;
+    }
+
+    firstTripCopy.stopPointList.remove(0,currentStopIndex-1);
+
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"number of labels: "<<labelListStopGroup.count();
+
+
+    for(DisplayLabelStopGroup &selectedGroup : labelListStopGroup)
+    {
+
+        Vdv301StopPoint2_3CZ1_0 aktualniZastavka;
+        bool navaznySpoj=false;
+
+
+        if(!firstTripCopy.stopPointList.isEmpty())
+        {
+            aktualniZastavka=firstTripCopy.stopPointList.takeFirst();
+        }
+        else
+        {
+            if(!secondTripCopy.stopPointList.isEmpty())
+            {
+                navaznySpoj=true;
+                aktualniZastavka=secondTripCopy.stopPointList.takeFirst();
+            }
+            else
+            {
+                qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"pro label uz nezbyly zastavky";
+                selectedGroup.eraseContent();
+            }
+        }
+
+        displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom);
+        labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
+
+    }
+
+
+}
 
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData)
@@ -87,7 +139,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 all
             followingTrip=allData.tripInformationList.at(1);
         }
     }
-    displayLabelStopList(firstTrip,followingTrip,allData.currentStopIndex);
+    displayLabelStopList(firstTrip,followingTrip,allData.currentStopIndex,labelListStopGroup);
 
 }
 

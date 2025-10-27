@@ -4,33 +4,7 @@
 #include "displaylabellcd2_3cz1_0.h"
 
 
-class DisplayLabelStopGroup
-{
-public:
-    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform=nullptr);
 
-    QPointer<QLabel> labelStopName;
-    QPointer<QLabel> labelFarezoneBottom;
-    QPointer<QLabel> labelFarezoneTop;
-    QPointer<QLabel> labelPlatform;
-    void eraseContent();
-    bool labelSetTextSafe(QLabel *label, QString text);
-};
-
-class DisplayLabelConnectionGroup
-{
-public:
-    DisplayLabelConnectionGroup(QPointer<QLabel> new_labelConnectionLine, QPointer<QLabel> new_labelConnectionDestination, QPointer<QLabel> new_labelConnectionDeparture,QPointer<QLabel> new_labelConnectionPlatform);
-
-    QPointer<QLabel> labelConnectionLine;
-    QPointer<QLabel> labelConnectionDestination;
-    QPointer<QLabel> labelConnectionDeparture;
-    QPointer<QLabel> labelConnectionPlatform;
-
-
-    bool labelSetTextSafe(QLabel *label, QString text);
-    void eraseContent();
-};
 
 class DisplayLabelLcd2_3CZ1_0_Jis : public DisplayLabelLcd2_3CZ1_0
 {
@@ -43,11 +17,6 @@ public:
     QPointer<QLabel> labelPlatformConnection=nullptr;
 
 
-    QVector<DisplayLabelStopGroup> labelListStopGroup;
-
-    QVector<DisplayLabelStopGroup> labelListStopConnectionGroup;
-
-    QVector<DisplayLabelConnectionGroup> labelListConnectionGroup;
 
   //  QVector<DisplayLabelConnectionGroup> labelListStopPointNameConnectionNew;
 

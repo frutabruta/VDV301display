@@ -11,7 +11,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     settings(configurationFilePath, QSettings::IniFormat),
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479,"xxx"),//puvodni port 48479, novy 59631
-    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0") //49477
+    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0","_ropid_vdv301display_1_0") //49477
 
 {
 
@@ -880,76 +880,28 @@ void MainWindow::slotShutdownReady(bool isReady)
 void MainWindow::displayLabelFillArray()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna1);
-    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna2);
-    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna3);
-    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna4);
-    displayLabelLcd.labelListStopPointName.push_back(ui->Lnacestna5);
 
-    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo1_1);
-    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo2_1);
-    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo3_1);
-    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo4_1);
-    displayLabelLcd.labelListFareZoneUpper.push_back(ui->label_pasmo5_1);
-
-    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo1_2);
-    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo2_2);
-    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo3_2);
-    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo4_2);
-    displayLabelLcd.labelListFareZoneLower.push_back(ui->label_pasmo5_2);
+    displayLabelLcd.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1,ui->label_pasmo1_2, ui->label_pasmo1_1);
+    displayLabelLcd.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna2,ui->label_pasmo2_2, ui->label_pasmo2_1);
+    displayLabelLcd.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3,ui->label_pasmo3_2, ui->label_pasmo3_1);
+    displayLabelLcd.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4,ui->label_pasmo4_2, ui->label_pasmo4_1);
+    displayLabelLcd.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna5,ui->label_pasmo5_2, ui->label_pasmo5_1);
 
 
-    displayLabelLcd.labelListConnectionDestination .push_back(ui->label_prestup0_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup1_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup2_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup3_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup4_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup5_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup6_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup7_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup8_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup9_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup10_cil);
-    displayLabelLcd.labelListConnectionDestination.push_back(ui->label_prestup11_cil);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup0_linka,ui->label_prestup0_cil,ui->label_prestup0_odjezd,ui->label_prestup0_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup1_linka,ui->label_prestup1_cil,ui->label_prestup1_odjezd,ui->label_prestup1_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup2_linka,ui->label_prestup2_cil,ui->label_prestup2_odjezd,ui->label_prestup2_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup3_linka,ui->label_prestup3_cil,ui->label_prestup3_odjezd,ui->label_prestup3_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup4_linka,ui->label_prestup4_cil,ui->label_prestup4_odjezd,ui->label_prestup4_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup5_linka,ui->label_prestup5_cil,ui->label_prestup5_odjezd,ui->label_prestup5_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup6_linka,ui->label_prestup6_cil,ui->label_prestup6_odjezd,ui->label_prestup6_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup7_linka,ui->label_prestup7_cil,ui->label_prestup7_odjezd,ui->label_prestup7_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup8_linka,ui->label_prestup8_cil,ui->label_prestup8_odjezd,ui->label_prestup8_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup9_linka,ui->label_prestup9_cil,ui->label_prestup9_odjezd,ui->label_prestup9_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup10_linka,ui->label_prestup10_cil,ui->label_prestup10_odjezd,ui->label_prestup10_nastupiste);
+    displayLabelLcd.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup11_linka,ui->label_prestup11_cil,ui->label_prestup11_odjezd,ui->label_prestup11_nastupiste);
 
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup0_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup1_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup2_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup3_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup4_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup5_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup6_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup7_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup8_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup9_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup10_linka);
-    displayLabelLcd.labelListConnectionLine.push_back(ui->label_prestup11_linka);
 
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup0_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup1_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup2_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup3_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup4_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup5_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup6_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup7_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup8_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup9_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup10_odjezd);
-    displayLabelLcd.labelListConnectionDeparture.push_back(ui->label_prestup11_odjezd);
-
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup0_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup1_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup2_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup3_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup4_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup5_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup6_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup7_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup8_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup9_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup10_nastupiste);
-    displayLabelLcd.labelListConnectionPlatform.push_back(ui->label_prestup11_nastupiste);
 
     displayLabelLcd.pageAdditionalTextMessage=ui->page_additionalTextMessage;
     displayLabelLcd.pageRoute=ui->page_route;

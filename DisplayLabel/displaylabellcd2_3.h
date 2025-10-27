@@ -5,6 +5,34 @@
 #include "displaylabellcd.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301alldata.h"
 
+class DisplayLabelStopGroup
+{
+public:
+    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform=nullptr);
+
+    QPointer<QLabel> labelStopName;
+    QPointer<QLabel> labelFarezoneBottom;
+    QPointer<QLabel> labelFarezoneTop;
+    QPointer<QLabel> labelPlatform;
+    void eraseContent();
+    bool labelSetTextSafe(QLabel *label, QString text);
+};
+
+class DisplayLabelConnectionGroup
+{
+public:
+    DisplayLabelConnectionGroup(QPointer<QLabel> new_labelConnectionLine, QPointer<QLabel> new_labelConnectionDestination, QPointer<QLabel> new_labelConnectionDeparture,QPointer<QLabel> new_labelConnectionPlatform);
+
+    QPointer<QLabel> labelConnectionLine;
+    QPointer<QLabel> labelConnectionDestination;
+    QPointer<QLabel> labelConnectionDeparture;
+    QPointer<QLabel> labelConnectionPlatform;
+
+
+    bool labelSetTextSafe(QLabel *label, QString text);
+    void eraseContent();
+};
+
 class DisplayLabelLcd2_3 : public DisplayLabelLcd
 {
 public:
@@ -15,9 +43,16 @@ public:
     using DisplayLabelLcd::displayLabelLineName;
     using DisplayLabelLcd::displayLabelLineNameFollowing;
 
+
+    QVector<DisplayLabelStopGroup> labelListStopGroup;
+
+    QVector<DisplayLabelStopGroup> labelListStopConnectionGroup;
+
+    QVector<DisplayLabelConnectionGroup> labelListConnectionGroup;
+
     void displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints);
     void displayLabelDestination(Vdv301Destination vdv301Destination);
-    void displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip secondTrip, int currentStopIndex);
+    void displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip secondTrip, int currentStopIndex, QVector<DisplayLabelStopGroup> labelListStopGroup);
     void displayLabelStopFareZone(Vdv301AllData allData);
     void displayLabelStopPoint(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop);
 

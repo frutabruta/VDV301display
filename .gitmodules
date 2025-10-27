@@ -7,3 +7,6 @@
 [submodule "VDV301publisher"]
 	path = VDV301publisher
 	url = https://github.com/frutabruta/VDV301publisher
+[submodule "GolemioClient"]
+	path = GolemioClient
+	url = https://github.com/frutabruta/GolemioClient
