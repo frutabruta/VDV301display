@@ -18,6 +18,13 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251028_1925
+  - Vdv301publisher and Vdv301subscriber
+    - Vdv301DataStructures Trip == operator fix
+  - Connections header table fix
+  - MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0 
+    - standalone Connections fix
+
 - 20251028_0134
   - added standalone mode to download connection directly from GolemioClient and bypass connections from AllData
   - added ConnectionBasic to DisplayLabelLcd2_3CZ1_0_Jis 
@@ -25,7 +32,7 @@ Program can be launched with parameter to change settings location.
     - new parameter app/connectionsStandalone
   - MainWindow::slotDebugPublisherToTable
     - now uses PublisherStruct
-    
+
 
 - 20251027_2101
   - VDV301publisher

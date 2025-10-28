@@ -7697,12 +7697,12 @@ departure</string>
                      </column>
                      <column>
                       <property name="text">
-                       <string>est. time</string>
+                       <string>platform</string>
                       </property>
                      </column>
                      <column>
                       <property name="text">
-                       <string>platform</string>
+                       <string>est. time</string>
                       </property>
                      </column>
                      <column>

@@ -1631,7 +1631,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         {
             if(!golemioConnections.isEmpty())
             {
-                connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
+                connectionListToTable(golemioConnections,ui->tableWidget_connections);
 
                 //displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
                 //displayLabelLcd.displayLabelConnectionListBasic(currentVdv301StopPoint.connectionList);
@@ -2060,10 +2060,10 @@ void MainWindow::connectionToTable(ConnectionGolemioV4 connection, QTableWidget*
     cell = new QTableWidgetItem(destinationName);
     tableWidget->setItem(row, 1, cell);
 
-    cell = new QTableWidgetItem("");
+    cell = new QTableWidgetItem(connection.stopPlatformCode);
     tableWidget->setItem(row, 2, cell);
 
-    cell = new QTableWidgetItem(connection.stopPlatformCode);
+    cell = new QTableWidgetItem("");
     tableWidget->setItem(row, 3, cell);
 
     cell = new QTableWidgetItem(connection.departureTimestampMinutes.join(","));
