@@ -11,8 +11,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     settings(configurationFilePath, QSettings::IniFormat),
     svgVykreslovani(QCoreApplication::applicationDirPath()),
     cisSubscriber("CustomerInformationService","AllData","2.2CZ1.0","_ibisip_http._tcp",48479,"xxx"),//puvodni port 48479, novy 59631
-    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0","_ropid_vdv301display_1_0") //49477
-
+    deviceManagementService("DeviceManagementService","_ibisip_http._tcp",49477,"1.0","_ropid_vdv301display_1_0"), //49477
+    golemio("")
 {
 
     ui->setupUi(this);
@@ -103,6 +103,18 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     timerDelayedStart.setInterval(intervalDelayedStart);
     timerDelayedStart.setSingleShot(true);
     timerDelayedStart.start();
+
+    if(connectionsStandalone)
+    {
+
+        connect(&golemio,&Golemio::stazeniHotovo,this,&MainWindow::slotGolemioReady);
+        connect(&timerUpdateGolemio,&QTimer::timeout,this,&MainWindow::slotDownloadGolemio);
+
+        timerUpdateGolemio.setInterval(5000);
+        timerUpdateGolemio.start();
+    }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -119,6 +131,9 @@ void MainWindow::allConnects()
     connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
     connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
     connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotDebugPublisherToTable);
+
+    connect(this,&MainWindow::signalStopRefUpdate,this,&MainWindow::slotStopRefUpdate);
+    connect(this,&MainWindow::signalVehicleRefUpdate,this,&MainWindow::slotVehicleRefUpdate);
 
 
     connect(&deviceManagementService,&DeviceManagementService::signalParametersChanged,this,&MainWindow::slotDeviceParametersToConfigFile);
@@ -474,6 +489,16 @@ void MainWindow::loadConstants()
         slotToggleFullscreen();
     }
 
+    connectionsStandalone=settings.value("app/connectionsStandalone").toBool();
+    golemioAddress=settings.value("golemio/address").toString();
+    golemio.setAdresa(golemioAddress);
+
+    golemioKey=settings.value("golemio/key").toString().toUtf8();
+    golemio.setKlic(golemioKey.toUtf8());
+
+    golemioParametry=settings.value("golemio/parameters").toString();
+    golemio.setParametry(golemioParametry);
+
 }
 
 
@@ -637,18 +662,18 @@ void MainWindow::slotDelayedStartup()
     //cisSubscriber.novePrihlaseniOdberu();
 }
 
-void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
+void MainWindow::slotDebugPublisherToTable(PublisherStruct publisher)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     eraseTable(ui->tableWidget_selectedSubscriber);
     qint32 row;
     QTableWidgetItem *cell;
 
-    QString name=zcs->name();
-    QString ipAddress=zcs->ip().toString();
-    QString host=zcs->host();
-    QString version=zcs.data()->txt().value("ver");
-    int port=zcs->port();
+    QString name=publisher.serviceName;
+    QString ipAddress=publisher.hostAddress.toString();
+    QString host=publisher.hostname;
+    QString version=publisher.ibisIpVersion;
+    int port=publisher.portNumber;
     /*
     qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
 
@@ -677,6 +702,13 @@ void MainWindow::slotDebugPublisherToTable(QZeroConfService zcs)
     eventDisplayAbnormalStateScreen("SUBSCRIBED");
 }
 
+bool MainWindow::slotDownloadGolemio()
+{
+    golemioParametry=golemioRequestCompose(golemioStopRef,golemioVehicleRef,golemioVehicleType);
+    golemio.startDataDownload(golemioParametry);
+    return true;
+}
+
 
 
 int MainWindow::slotEverySecond()
@@ -702,6 +734,34 @@ int MainWindow::slotEverySecond()
     return 1;
 }
 
+
+void MainWindow::slotGolemioReady()
+{
+    qDebug() <<  Q_FUNC_INFO;
+    //qDebug()<<"povypisu "<<xmlMpvParser.stazenaData.length();
+
+    golemio.naplnVstupDokument(golemio.stazenaData);
+    golemioConnections=golemio.parseDomDocumentDepartures();
+    golemioStops=golemio.parseDomDocumentStops();
+    golemioInfotexts=golemio.parseDomDocumentInfotexts();
+
+    qDebug()<<"bum10";
+
+
+    qDebug()<<"bum11";
+    /* if(filterConnections)
+    {
+        //   prestupy=xmlMpvParser.vyfiltrujPrestupy(prestupy,stavSystemu.aktlinka);
+    }*/
+    qDebug()<<"pocet Prestupu ve vektoru: "<<golemioConnections.count();
+
+
+    //createScene(prestupyGolemio);
+
+    connectionListToTable(golemioConnections,ui->tableWidget_connections);
+}
+
+
 void MainWindow::slotSubscriptionLost()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
@@ -716,6 +776,35 @@ void MainWindow::slotUpdateServiceTable()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     debugServiceListToTable(cisSubscriber.serviceList);
+}
+
+void MainWindow::slotVehicleRefUpdate(QString vehicleRef)
+{
+    golemioVehicleRef=vehicleRef;
+    ui->label_debugVehicleRef->setText(golemioVehicleRef);
+    slotDownloadGolemio();
+
+}
+
+void MainWindow::slotStopRefUpdate(QString stopRef)
+{
+    golemioStopRef=stopRef;
+    ui->label_debugStopRef->setText(golemioStopRef);
+    slotDownloadGolemio();
+
+
+}
+
+QString MainWindow::golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType)
+{
+    QString output="?aswId=";
+    output+=aswId;
+    output+="&vehicleRegistrationNumber=";
+    output+=vehicleRef;
+    output+="&routeType=";
+    output+=QString::number(vehicleType);
+
+    return output;
 }
 
 void MainWindow::slotHeartbeatTimeout()
@@ -1289,13 +1378,18 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         if(!currentVdvStopPoint.connectionList.isEmpty())
         {
 
-            displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
-            displayLabelLcd.displayLabelConnectionList(currentVdvStopPoint.connectionList);
 
-            displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
-            displayLabelLcdJis.displayLabelConnectionList(currentVdvStopPoint.connectionList);
+            if(!connectionsStandalone)
+            {
+                connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
 
-            connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
+                displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
+                displayLabelLcd.displayLabelConnectionList(currentVdvStopPoint.connectionList);
+
+                displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
+                displayLabelLcdJis.displayLabelConnectionList(currentVdvStopPoint.connectionList);
+            }
+
         }
         else
         {
@@ -1532,21 +1626,51 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         }
 
-        if(!currentVdv301StopPoint.connectionList.isEmpty())
+
+        if(connectionsStandalone)
         {
+            if(!golemioConnections.isEmpty())
+            {
+                connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
 
-            displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
-            displayLabelLcd.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
+                //displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
+                //displayLabelLcd.displayLabelConnectionListBasic(currentVdv301StopPoint.connectionList);
 
-            displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
-            displayLabelLcdJis.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
+                QVector<ConnectionBasic> basicConnections;
+                foreach (ConnectionGolemioV4 connection, golemioConnections ) {
+                    basicConnections<<connectionGolemioV4toConnectionBasic(connection);
+                }
 
-            connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
+                displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
+                displayLabelLcdJis.displayLabelConnectionListBasic(basicConnections);
+            }
+            else
+            {
+                eraseTable(ui->tableWidget_connections);
+            }
         }
         else
         {
-            eraseTable(ui->tableWidget_connections);
+            if(!currentVdv301StopPoint.connectionList.isEmpty())
+            {
+                connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
+
+                displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
+                displayLabelLcd.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
+
+                displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
+                displayLabelLcdJis.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
+
+            }
+            else
+            {
+                eraseTable(ui->tableWidget_connections);
+            }
         }
+
+
+
+
     }
     else
     {
@@ -1572,6 +1696,38 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 */
 
     return 1;
+}
+
+ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio)
+{
+    ConnectionBasic output;
+
+    output.lineName=lineToIconJisUnderGround("C",1);
+    output.lineName=lineToIconJisUnderGround(connectionGolemio.routeShortName,connectionGolemio.routeType);
+    output.destinationName=connectionGolemio.tripHeadsign;
+    output.departureTime=connectionGolemio.departureTimestampMinutes.join(",");
+    output.platform=connectionGolemio.stopPlatformCode;
+
+
+    return output;
+}
+
+
+QString MainWindow::lineToIconJisUnderGround(QString routeShortName,int routeType)
+{
+    QString output="";
+
+    if(routeType==1)
+    {
+        output="<icon type=\"c_Underground"+routeShortName+"\">["+routeShortName+"]</icon>";
+    }
+    else
+    {
+        output=routeShortName;
+    }
+
+
+    return output;
 }
 
 void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following)
@@ -1833,6 +1989,18 @@ void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,
     }
 }
 
+void MainWindow::connectionListToTable(QVector<ConnectionGolemioV4> connectionList,QTableWidget* tableWidget)
+{
+
+    eraseTable(tableWidget);
+
+
+    foreach(ConnectionGolemioV4 connection, connectionList)
+    {
+        connectionToTable(connection,tableWidget);
+    }
+}
+
 
 
 
@@ -1841,11 +2009,6 @@ void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* ta
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     qint32 row;
     QTableWidgetItem *cell;
-
-    /*
-    qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
-
- */
 
     if(connection.vdv301displayContentList.isEmpty())
     {
@@ -1866,18 +2029,47 @@ void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* ta
         cell = new QTableWidgetItem(destinationName);
         tableWidget->setItem(row, 1, cell);
 
-        cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
+        cell = new QTableWidgetItem(connection.platform);
         tableWidget->setItem(row, 2, cell);
 
-        cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
+        cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
         tableWidget->setItem(row, 3, cell);
 
+        cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
+        tableWidget->setItem(row, 4, cell);
+
         tableWidget->resizeColumnsToContents();
-
     }
+}
 
+void MainWindow::connectionToTable(ConnectionGolemioV4 connection, QTableWidget* tableWidget)
+{
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
 
+    row = tableWidget->rowCount();
+    tableWidget->insertRow(row);
 
+    QString lineName=connection.routeShortName;
+    cell = new QTableWidgetItem(lineName);
+
+    tableWidget->setItem(row, 0, cell);
+
+    QString destinationName=connection.tripHeadsign;
+    cell = new QTableWidgetItem(destinationName);
+    tableWidget->setItem(row, 1, cell);
+
+    cell = new QTableWidgetItem("");
+    tableWidget->setItem(row, 2, cell);
+
+    cell = new QTableWidgetItem(connection.stopPlatformCode);
+    tableWidget->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(connection.departureTimestampMinutes.join(","));
+    tableWidget->setItem(row, 4, cell);
+
+    tableWidget->resizeColumnsToContents();
 }
 
 
@@ -2160,6 +2352,8 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 
     int tripCount=vdv301AllData.tripInformationList.count();
 
+    emit signalVehicleRefUpdate(vdv301AllData.vehicleRef);
+
 
     if(tripCount==0)
     {
@@ -2188,6 +2382,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
                 {
                     //normal state on route
                     Vdv301StopPoint2_3CZ1_0 currentVdv301StopPoint=currentVdv301Trip.stopPointList.at(vdv301AllData.currentStopIndex-1);
+                    emit signalStopRefUpdate(currentVdv301StopPoint.stopRef);
 
                     showReceivedDataLcdVdv301_2_3CZ1_0(vdv301AllData);
                     showReceivedDataLedVdv301(currentVdv301StopPoint.displayContentList,vdv301AllData.globalDisplayContentList );

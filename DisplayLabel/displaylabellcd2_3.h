@@ -31,6 +31,7 @@ public:
 
     bool labelSetTextSafe(QLabel *label, QString text);
     void eraseContent();
+    bool labelSetVisibleSafe(QLabel *label, bool visibility);
 };
 
 class DisplayLabelLcd2_3 : public DisplayLabelLcd

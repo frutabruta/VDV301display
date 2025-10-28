@@ -45,6 +45,12 @@ target.files=VDV301displayNew
 INSTALLS+=target
 
 SOURCES += \
+    GolemioClient/connectiongolemio.cpp \
+    GolemioClient/connectiongolemiov4.cpp \
+    GolemioClient/golemio.cpp \
+    GolemioClient/golemioresultv4.cpp \
+    GolemioClient/golemiov4.cpp \
+    GolemioClient/stopgolemio.cpp \
     VDV301publisher/colordisplayrules.cpp \
     VDV301publisher/devicemanagementservice.cpp\
     VDV301publisher/httpserverpublisher.cpp \
@@ -96,6 +102,12 @@ SOURCES += \
 
 
 HEADERS += \
+    GolemioClient/connectiongolemio.h \
+    GolemioClient/connectiongolemiov4.h \
+    GolemioClient/golemio.h \
+    GolemioClient/golemioresultv4.h \
+    GolemioClient/golemiov4.h \
+    GolemioClient/stopgolemio.h \
     VDV301publisher/colordisplayrules.h \
     VDV301publisher/devicemanagementservice.h \
     VDV301publisher/httpserverpublisher.h \

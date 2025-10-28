@@ -112,10 +112,6 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0
 
 
 
-
-
-
-
 void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionList(QVector<Vdv301Connection> connectionList)
 {
     qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
@@ -199,6 +195,45 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionList(QVector<Vdv301Conne
 
     }
 
+}
+
+
+void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<ConnectionBasic> connectionList)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
+
+    QVector<ConnectionBasic> connectionListCopy=connectionList;
+
+    for(DisplayLabelConnectionGroup &selectedGroup : labelListConnectionGroup)
+    {
+        if(!connectionListCopy.isEmpty())
+        {
+            ConnectionBasic selectedConnection=connectionListCopy.takeFirst();
+
+            labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
+
+            displayLabelDrawLineNumber2_4(selectedConnection.lineName , selectedGroup.labelConnectionLine, sizeIconConnectionDynamic,true);
+
+            if(selectedConnection.platform=="")
+            {
+                labelSetVisibleSafe(selectedGroup.labelConnectionPlatform,false);
+            }
+            else
+            {
+                labelSetTextSafe(selectedGroup.labelConnectionPlatform,selectedConnection.platform);
+                labelSetVisibleSafe(selectedGroup.labelConnectionPlatform,true);
+            }
+
+            QString departureTime="";
+            departureTime=selectedConnection.departureTime;
+            labelSetTextSafe(selectedGroup.labelConnectionDeparture,"<b>"+ departureTime+"</b> min.");
+
+        }
+        else
+        {
+            selectedGroup.eraseContent();
+        }
+    }
 }
 
 

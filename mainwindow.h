@@ -15,6 +15,8 @@
 #include "DisplayLabel/displaylabellcd2_3cz1_0.h"
 #include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
 
+#include "GolemioClient/golemiov4.h"
+
 #include "barvylinek.h"
 
 #include <QApplication>
@@ -79,8 +81,9 @@ private:
     SvgVykreslovani svgVykreslovani;
 
     CisSubscriber cisSubscriber;
-
     DeviceManagementService deviceManagementService;
+
+    GolemioV4 golemio;
 
 
 
@@ -114,10 +117,26 @@ private:
 
     bool useJis=false;
 
+    bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
+
+
+    QString golemioParametry="";
+    QString golemioAddress="";
+    QString golemioKey="";
+    QString golemioVehicleRef="";
+    QString golemioStopRef="";
+    int golemioVehicleType=3;
+    QVector<ConnectionGolemioV4> golemioConnections;
+    QVector<StopGolemio> golemioStops;
+    QVector<GolemioInfotext> golemioInfotexts;
+
+
     //timers
 
     QTimer timerUpdateSeconds;
     QTimer timerDelayedStart;
+
+    QTimer timerUpdateGolemio;
 
 
 
@@ -251,6 +270,11 @@ private:
     void displayLabelFillArrayJis();
     void labelSetNextStopBackgroundJis(QString barvaPisma, QString barvaPozadi);
     bool allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData);
+    void connectionToTable(ConnectionGolemioV4 connection, QTableWidget *tableWidget);
+    void connectionListToTable(QVector<ConnectionGolemioV4> connectionList, QTableWidget *tableWidget);
+    ConnectionBasic connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
+    QString lineToIconJisUnderGround(QString routeShortName, int routeType);
+    QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
 private slots:
 
 
@@ -301,11 +325,19 @@ private slots:
     void slotHeartbeatTimeout();
     void slotShutdownReady(bool isReady);
 
-    void slotDebugPublisherToTable(QZeroConfService zcs);
+    void slotDebugPublisherToTable(PublisherStruct publisher);
 
     void slotDeviceParametersToConfigFile();
     void slotDisplayLcdLabelCyclePagesJis();
+    void slotGolemioReady();
+    bool slotDownloadGolemio();
+    void slotVehicleRefUpdate(QString vehicleRef);
+    void slotStopRefUpdate(QString stopRef);
 public slots:
+signals:
+    void signalVehicleRefUpdate(QString vehicleRef);
+    void signalStopRefUpdate(QString stopRef);
+
 
 
 };

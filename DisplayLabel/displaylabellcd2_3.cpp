@@ -51,6 +51,7 @@ void DisplayLabelConnectionGroup::eraseContent()
     labelSetTextSafe(labelConnectionDestination,"");
     labelSetTextSafe(labelConnectionDeparture,"");
     labelSetTextSafe(labelConnectionPlatform,"");
+    labelSetVisibleSafe(labelConnectionPlatform,false);
 }
 
 bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
@@ -67,6 +68,23 @@ bool DisplayLabelConnectionGroup::labelSetTextSafe(QLabel *label, QString text)
     }
     return true;
 }
+
+
+bool DisplayLabelConnectionGroup::labelSetVisibleSafe(QLabel *label, bool visibility)
+{
+    if(label==NULL)
+    {
+        qCDebug(DisplayLabelLcd2_3Log)<<Q_FUNC_INFO<<" failed";
+        return false;
+    }
+
+    else
+    {
+        label->setVisible(visibility);
+    }
+    return true;
+}
+
 
 DisplayLabelLcd2_3::DisplayLabelLcd2_3() {}
 
