@@ -145,7 +145,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 all
 
 
 
-void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop)
+void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip, QLabel* labelStopName, QLabel* labelFarezoneBottom, QLabel* labelFarezoneTop, bool invert)
 {
     QVector<Vdv301InternationalText> fareZoneList= selectedStopPointDestination.fareZoneList;
 
@@ -234,6 +234,13 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
         labelSetStylesheetSafe(labelStopName,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
         labelSetStylesheetSafe(labelFarezoneTop,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
         labelSetStylesheetSafe(labelFarezoneBottom,"color:"+barvyLinek.barva_PozadiC_100_100_100+";");
+    }
+
+    if(invert)
+    {
+        labelSetStylesheetSafe(labelStopName,"color:"+barvyLinek.barva_PozadiA_25_25_25+";");
+        labelSetStylesheetSafe(labelFarezoneTop,"color:"+barvyLinek.barva_PozadiA_25_25_25+";");
+        labelSetStylesheetSafe(labelFarezoneBottom,"color:"+barvyLinek.barva_PozadiA_25_25_25+";");
     }
 
 }

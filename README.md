@@ -18,6 +18,9 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251031_1717
+  - displayLabelStopListNew
+    - added parameter to invert text color when AtStop or BeforeStop
 - 20251030_1638
   - added block bonjour functionality
   - MainWindow::slotDownloadGolemio()

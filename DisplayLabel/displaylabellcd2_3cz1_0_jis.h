@@ -17,22 +17,14 @@ public:
 class DisplayLabelLcd2_3CZ1_0_Jis : public DisplayLabelLcd2_3CZ1_0
 {
 public:
-
     DisplayLabelLcd2_3CZ1_0_Jis();
 
     QPointer<QLabel> labelLineConnection=nullptr;
     QPointer<QLabel> labelDestinationConnection=nullptr;
     QPointer<QLabel> labelPlatformConnection=nullptr;
 
-
-
-  //  QVector<DisplayLabelConnectionGroup> labelListStopPointNameConnectionNew;
-
-
-
-  //  void displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex);
     void displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData);
-    void displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex, QVector<DisplayLabelStopGroup> labelListStopGroup);
+    void displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex, QVector<DisplayLabelStopGroup> labelListStopGroup, bool invertFirstStop=false);
     void displayLabelConnectionList(QVector<Vdv301Connection> connectionList);
     void displayLabelLineName(Vdv301Line vdv301Line);
     void displayLabelLineName(QString lineName);

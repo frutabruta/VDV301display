@@ -33,7 +33,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelLineName(QString lineName)
 
 
 
-void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
+void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup, bool invertFirstStop)
 {
     qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
 
@@ -50,12 +50,38 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
     qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"number of labels: "<<labelListStopGroup.count();
 
 
+    bool isFirst=true;
+    bool invert=false;
+
     for(DisplayLabelStopGroup &selectedGroup : labelListStopGroup)
     {
 
         Vdv301StopPoint2_3CZ1_0 aktualniZastavka;
         bool navaznySpoj=false;
+        if(invertFirstStop)
+        {
+            if(isFirst)
+            {
+                isFirst=false;
 
+                if((firstTrip.locationState==Vdv301Enumerations::LocationStateAtStop)||(firstTrip.locationState==Vdv301Enumerations::LocationStateBeforeStop))
+                {
+                    invert=true;
+                }
+                else
+                {
+                    invert=false;
+                }
+            }
+            else
+            {
+                invert=false;
+            }
+        }
+        else
+        {
+            invert=false;
+        }
 
         if(!firstTripCopy.stopPointList.isEmpty())
         {
@@ -75,7 +101,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
             }
         }
 
-        displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom);
+        displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom,invert);
         labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
 
     }
@@ -104,10 +130,8 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopFareZone(Vdv301AllData2_3CZ1_0
         }
     }
 
-    displayLabelStopListNew(firstTrip,followingTrip,allData.currentStopIndex, labelListStopGroup);
-    displayLabelStopListNew(firstTrip,followingTrip,allData.currentStopIndex, labelListStopConnectionGroup);
-
-
+    displayLabelStopListNew(firstTrip,followingTrip,allData.currentStopIndex, labelListStopGroup,true);
+    displayLabelStopListNew(firstTrip,followingTrip,allData.currentStopIndex, labelListStopConnectionGroup,false);
 }
 
 
@@ -222,6 +246,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<Connec
             {
                 labelSetTextSafe(selectedGroup.labelConnectionPlatform,selectedConnection.platform);
                 labelSetVisibleSafe(selectedGroup.labelConnectionPlatform,true);
+               // selectedGroup.labelConnectionPlatform.setBa
             }
 
             QString departureTime="";
