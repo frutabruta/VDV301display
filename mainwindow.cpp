@@ -58,6 +58,12 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     initilializeShortcuts();
 
     loadConstants();
+
+    if(blockBonjour)
+    {
+        setWindowTitle(windowTitle()+" | "+tr("režim bez Bonjour"));
+    }
+
     constantsToSettingsPage();
     updateMainScreenDebugLabels();
 
@@ -76,7 +82,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     displayLabelLcdJis.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
-    displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
+  //  displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
 
     eventStopRequestedDectivated();
 
@@ -103,6 +109,18 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     timerDelayedStart.setInterval(intervalDelayedStart);
     timerDelayedStart.setSingleShot(true);
     timerDelayedStart.start();
+
+    if(blockBonjour)
+    {
+        PublisherStruct manualPublisher;
+        manualPublisher.hostAddress=QHostAddress::LocalHost;
+        manualPublisher.ibisIpVersion=cisSubscriber.version();
+        manualPublisher.serviceName="CustomerInformationService";
+        manualPublisher.portNumber=47482;
+
+        cisSubscriber.slotAddServiceManual(manualPublisher.serviceName,manualPublisher.ibisIpVersion,manualPublisher.hostAddress.toString(),manualPublisher.portNumber);
+    }
+
 
     if(connectionsStandalone)
     {
@@ -427,6 +445,8 @@ void MainWindow::initilializeShortcuts()
 
 void MainWindow::loadConstants()
 {
+    blockBonjour=settings.value("app/blockBonjour").toBool();
+
     deviceManagementService.setDeviceName(settings.value("deviceManagementService/deviceName").toString());
     deviceManagementService.setDeviceManufacturer(settings.value("deviceManagementService/deviceManufacturer").toString());
     deviceManagementService.setDeviceSerialNumber(settings.value("deviceManagementService/deviceSerialNumber").toString());
@@ -435,6 +455,9 @@ void MainWindow::loadConstants()
     deviceManagementService.setSwVersion(createProgramVersionString());
     deviceManagementService.setPortNumber(settings.value("deviceManagementService/port").toInt() ); //47477
     deviceManagementService.setVersion(settings.value("deviceManagementService/version").toString());
+
+
+    deviceManagementService.blockBonjour=blockBonjour;
 
     deviceManagementService.slotDataUpdate();
     deviceManagementService.slotStartServer();
@@ -469,7 +492,7 @@ void MainWindow::loadConstants()
     }
 
     cisSubscriber.setReplyPath(settings.value("cisSubscriber/replyPath").toString());
-
+    cisSubscriber.blockBonjour=blockBonjour;
 
     useJis=settings.value("graphics/useJisGraphics").toBool();
     if(settings.value("graphics/lcdPageSwitchTimer").toInt()!=0)
@@ -706,6 +729,7 @@ bool MainWindow::slotDownloadGolemio()
 {
     golemioParametry=golemioRequestCompose(golemioStopRef,golemioVehicleRef,golemioVehicleType);
     golemio.startDataDownload(golemioParametry);
+    timerUpdateGolemio.start();
     return true;
 }
 
@@ -717,6 +741,7 @@ int MainWindow::slotEverySecond()
     ui->label_remainingSeconds->setText(QString::number(cisSubscriber.timerHeartbeatCheck.remainingTime()/1000) );
     ui->label_isSubscribed->setText(QString::number(cisSubscriber.isSubscriptionActive));
     ui->label_jisSwitchTimer->setText(QString::number(floor(displayLabelLcdJis.timerLabelPageSwitch.remainingTime()/1000)));
+    ui->label_jisPageCount->setText(QString::number(lcdLabelCurrentPageIndexJis+1)+"/"+QString::number(displayLabelLcdJis.pageCycleList.count()));
 
     if(showTimeColon==true)
     {
@@ -759,6 +784,8 @@ void MainWindow::slotGolemioReady()
     //createScene(prestupyGolemio);
 
     connectionListToTable(golemioConnections,ui->tableWidget_connections);
+
+    showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
 }
 
 
@@ -780,19 +807,22 @@ void MainWindow::slotUpdateServiceTable()
 
 void MainWindow::slotVehicleRefUpdate(QString vehicleRef)
 {
-    golemioVehicleRef=vehicleRef;
-    ui->label_debugVehicleRef->setText(golemioVehicleRef);
-    slotDownloadGolemio();
-
+    if(golemioVehicleRef!=vehicleRef)
+    {
+        golemioVehicleRef=vehicleRef;
+        ui->label_debugVehicleRef->setText(golemioVehicleRef);
+        slotDownloadGolemio();
+    }
 }
 
 void MainWindow::slotStopRefUpdate(QString stopRef)
 {
-    golemioStopRef=stopRef;
-    ui->label_debugStopRef->setText(golemioStopRef);
-    slotDownloadGolemio();
-
-
+    if(golemioStopRef!=stopRef)
+    {
+        golemioStopRef=stopRef;
+        ui->label_debugStopRef->setText(golemioStopRef);
+        slotDownloadGolemio();
+    }
 }
 
 QString MainWindow::golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType)
@@ -939,13 +969,11 @@ void MainWindow::slotDisplayLcdLabelCyclePagesJis()
 
     ui->label_jisPageCount->setText(QString::number(lcdLabelCurrentPageIndexJis+1)+"/"+QString::number(displayLabelLcdJis.pageCycleList.count()));
 
-    displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(displayLabelLcdJis.pageCycleList.at(lcdLabelCurrentPageIndexJis));
 
     if(lcdLabelCurrentPageIndexJis<displayLabelLcdJis.pageCycleList.count())
     {
         qCDebug(MainWindowLog)<<"page "+QString::number(lcdLabelCurrentPageIndexJis)+" is in range";
-
-
+        displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(displayLabelLcdJis.pageCycleList.at(lcdLabelCurrentPageIndexJis));
     }
     else
     {
@@ -1374,12 +1402,9 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
 
 
         }
-
-        if(!currentVdvStopPoint.connectionList.isEmpty())
+        if(!connectionsStandalone)
         {
-
-
-            if(!connectionsStandalone)
+            if(!currentVdvStopPoint.connectionList.isEmpty())
             {
                 connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
 
@@ -1389,12 +1414,12 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
                 displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
                 displayLabelLcdJis.displayLabelConnectionList(currentVdvStopPoint.connectionList);
             }
+            else
+            {
+                eraseTable(ui->tableWidget_connections);
+            }
+        }
 
-        }
-        else
-        {
-            eraseTable(ui->tableWidget_connections);
-        }
     }
     else
     {
@@ -1575,6 +1600,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
                 updateLabelAnnouncement("");
                 if(allDataChanged(vdv301AllData,vdv301AllData2_3CZ1_0_previous))
                 {
+                    qCDebug(MainWindowLog)<<"all data changed";
                     eventLcdReturnToStopList();
                     displayLabelLcd.timerLabelPageSwitch.start();
                     displayLabelLcdJis.timerLabelPageSwitch.start();
@@ -1629,6 +1655,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
         if(connectionsStandalone)
         {
+
+
             if(!golemioConnections.isEmpty())
             {
                 connectionListToTable(golemioConnections,ui->tableWidget_connections);
@@ -1680,13 +1708,12 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
 
-    lcdLabelCurrentPageIndex=0;
+    // lcdLabelCurrentPageIndex=0;
 
-    if(timerOverride)
-    {
-        displayLabelLcd.timerLabelPageSwitch.stop();
-        displayLabelLcdJis.timerLabelPageSwitch.stop();
-    }
+
+
+
+
     /*
     else
     {
@@ -1695,6 +1722,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     }
 */
 
+    vdv301AllData2_3CZ1_0_previous=vdv301AllData;
     return 1;
 }
 
@@ -1702,11 +1730,19 @@ ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolem
 {
     ConnectionBasic output;
 
-    output.lineName=lineToIconJisUnderGround("C",1);
+    // output.lineName=lineToIconJisUnderGround("C",1);
     output.lineName=lineToIconJisUnderGround(connectionGolemio.routeShortName,connectionGolemio.routeType);
+    if(connectionGolemio.routeType==1)
+    {
+        output.platform="";
+    }
+    else
+    {
+        output.platform=connectionGolemio.stopPlatformCode;
+    }
     output.destinationName=connectionGolemio.tripHeadsign;
-    output.departureTime=connectionGolemio.departureTimestampMinutes.join(",");
-    output.platform=connectionGolemio.stopPlatformCode;
+    output.departureTime=connectionGolemio.departureTimestampMinutes.join(" min.    ");
+
 
 
     return output;
@@ -2167,7 +2203,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
 
         if(cisSubscriber.structureName()=="AllData")
         {
-            vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
+            //vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
             vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
             updateLabelCurrentStopindex(QString::number(vdv301AllData2_3CZ1_0.currentStopIndex));
 
@@ -2673,6 +2709,7 @@ void MainWindow::eventHideFareZoneChange()
 
 void MainWindow::eventLcdReturnToStopList()
 {
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
     //label
     displayLabelReturnToStopList();
 
@@ -3019,27 +3056,31 @@ void MainWindow::on_spinBox_pageSwitchDuration_valueChanged(int arg1)
 
 bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData)
 {
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
     if(oldAllData.currentStopIndex!=newAllData.currentStopIndex)
     {
+        qCDebug(MainWindowLog)<<"stop index changed";
         return true;
     }
     else if(oldAllData.tripInformationList.count()!=newAllData.tripInformationList.count())
     {
+        qCDebug(MainWindowLog)<<"trip count changed";
         return true;
     }
     else if(oldAllData.tripInformationList.count()>0)
     {
         if(oldAllData.tripInformationList.first().stopPointList.count()!=newAllData.tripInformationList.first().stopPointList.count())
         {
+            qCDebug(MainWindowLog)<<"stop point count changed";
             return true;
         }
         if(oldAllData.tripInformationList.first().locationState!=newAllData.tripInformationList.first().locationState)
         {
+            qCDebug(MainWindowLog)<<"location state changed";
             return true;
         }
     }
-
-
+    qCDebug(MainWindowLog)<<"nothing changed";
 
     return false;
 }

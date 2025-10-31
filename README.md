@@ -18,6 +18,17 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251030_1638
+  - added block bonjour functionality
+  - MainWindow::slotDownloadGolemio()
+    - start golemioTimer
+  - MainWindow::slotEverySecond
+    - added page count updates
+  - MainWindow::slotGolemioReady
+    - updates display 
+  - line resize temporary fix
+  - fixed new data check for Vdv301 2.3CZ1.0 and page switching
+
 - 20251028_1925
   - Vdv301publisher and Vdv301subscriber
     - Vdv301DataStructures Trip == operator fix

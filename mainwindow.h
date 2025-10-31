@@ -117,6 +117,8 @@ private:
 
     bool useJis=false;
 
+    bool blockBonjour=false;
+
     bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
 
 
