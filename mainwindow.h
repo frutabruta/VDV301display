@@ -122,9 +122,12 @@ private:
     bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
 
 
+    bool golemioUseTestServer=false;
     QString golemioParametry="";
     QString golemioAddress="";
+    QString golemioAddressTest="";
     QString golemioKey="";
+     QString golemioKeyTest="";
     QString golemioVehicleRef="";
     QString golemioStopRef="";
     int golemioVehicleType=3;
@@ -277,6 +280,7 @@ private:
     ConnectionBasic connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
     QString lineToIconJisUnderGround(QString routeShortName, int routeType);
     QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
+    void golemioUpdateVariables();
 private slots:
 
 
@@ -335,6 +339,10 @@ private slots:
     bool slotDownloadGolemio();
     void slotVehicleRefUpdate(QString vehicleRef);
     void slotStopRefUpdate(QString stopRef);
+    void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
+
+    void on_checkBox_settings_golemioTestServer_stateChanged(int arg1);
+
 public slots:
 signals:
     void signalVehicleRefUpdate(QString vehicleRef);

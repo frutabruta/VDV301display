@@ -18,6 +18,16 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251103_
+  - switched to QtCreator 18.0.0 (change of .ui file syntax)
+  - changed layout of settings page
+  - settings.ini
+    - added app/blockBonjour
+    - added golemio/useTestServer
+  - added golemio test server settings
+  - added golemio key line text edits
+  - updated translations
+
 - 20251031_1717
   - displayLabelStopListNew
     - added parameter to invert text color when AtStop or BeforeStop

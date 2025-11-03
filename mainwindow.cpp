@@ -82,7 +82,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     displayLabelLcdJis.timerLabelPageSwitch.setInterval(intervalLcdPageSwitchSeconds*1000);
 
     displayLabelLcd.lcdResizeLabels(ui->frame_hlavni->height());
-  //  displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
+    //  displayLabelLcdJis.lcdResizeLabels(ui->frame_hlavni->height());
 
     eventStopRequestedDectivated();
 
@@ -323,6 +323,16 @@ void MainWindow::settingsWindowToSettingsFile()
     settings.setValue("cisSubscriber/replyPath",ui->lineEdit_settings_replyPath->text());
 
     settings.setValue("graphics/lcdPageSwitchTimer",intervalLcdPageSwitchSeconds);
+
+    settings.setValue("app/connectionsStandalone",connectionsStandalone);
+
+    golemioKey=ui->lineEdit_settings_golemio_apiKey->text();
+    golemioKeyTest=ui->lineEdit_settings_golemio_rabinKey->text();
+
+    settings.setValue("golemio/key",golemioKey);
+    settings.setValue("golemio/keyTest",golemioKeyTest);
+    settings.setValue("golemio/useTestServer",golemioUseTestServer);
+    golemioUpdateVariables();
 }
 
 
@@ -349,6 +359,20 @@ void MainWindow::initilializeFonts()
     displayLabelLcd.initializeFonts();
     displayLabelLcdJis.initializeFonts();
 
+}
+
+void MainWindow::golemioUpdateVariables()
+{
+    if(golemioUseTestServer)
+    {
+        golemio.setKlic(golemioKeyTest.toUtf8());
+        golemio.setAdresa(golemioAddressTest);
+    }
+    else
+    {
+        golemio.setKlic(golemioKey.toUtf8());
+        golemio.setAdresa(golemioAddress);
+    }
 }
 
 void MainWindow::ledLabelInitialize2_3()
@@ -513,15 +537,27 @@ void MainWindow::loadConstants()
     }
 
     connectionsStandalone=settings.value("app/connectionsStandalone").toBool();
+    ui->checkBox_settings_useGolemioConnections->setChecked(connectionsStandalone);
+
+
     golemioAddress=settings.value("golemio/address").toString();
-    golemio.setAdresa(golemioAddress);
+    golemioAddressTest=settings.value("golemio/addressTest").toString();
+
 
     golemioKey=settings.value("golemio/key").toString().toUtf8();
-    golemio.setKlic(golemioKey.toUtf8());
+    ui->lineEdit_settings_golemio_apiKey->setText(golemioKey);
+
+    golemioKeyTest=settings.value("golemio/keyTest").toString().toUtf8();
+    ui->lineEdit_settings_golemio_rabinKey->setText(golemioKeyTest);
 
     golemioParametry=settings.value("golemio/parameters").toString();
     golemio.setParametry(golemioParametry);
 
+    golemioUseTestServer=settings.value("golemio/useTestServer").toBool();
+    ui->checkBox_settings_golemioTestServer->setChecked(golemioUseTestServer);
+
+
+    golemioUpdateVariables();
 }
 
 
@@ -3085,4 +3121,20 @@ bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2
     return false;
 }
 
+
+
+void MainWindow::on_checkBox_settings_useGolemioConnections_stateChanged(int arg1)
+{
+    connectionsStandalone=arg1;
+    settings.setValue("app/connectionsStandalone",connectionsStandalone);
+}
+
+
+void MainWindow::on_checkBox_settings_golemioTestServer_stateChanged(int arg1)
+{
+    golemioUseTestServer=arg1;
+    settings.setValue("golemio/useTestServer",golemioUseTestServer);
+
+    golemioUpdateVariables();
+}
 
