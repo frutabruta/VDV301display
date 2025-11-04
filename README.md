@@ -18,7 +18,12 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
-- 20251103_
+- 20251104_0203
+  - set golemio type from received vehicleMode
+    - new function MainWindow::vehicleSubmodeToGolemioType
+    - MainWindow::showReceivedDataVdv301_2_3CZ1_0
+      - set golemioVehicleType
+- 20251103_1714
   - switched to QtCreator 18.0.0 (change of .ui file syntax)
   - changed layout of settings page
   - settings.ini

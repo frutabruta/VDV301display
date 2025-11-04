@@ -824,6 +824,22 @@ void MainWindow::slotGolemioReady()
     showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
 }
 
+int MainWindow::vehicleSubmodeToGolemioType(QString subMode)
+{
+    QMap<QString,int> types;
+
+    types.insert("TramSubmode",0);
+    types.insert("MetroSubmode",1);
+    types.insert("RailSubmode",2);
+    types.insert("BusSubmode",3);
+    types.insert("WaterSubmode",4);
+    types.insert("FunicularSubmode",7);
+    types.insert("TrolleybusSubmode",11);
+
+    return types.value(subMode);
+
+}
+
 
 void MainWindow::slotSubscriptionLost()
 {
@@ -2424,8 +2440,8 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 
     int tripCount=vdv301AllData.tripInformationList.count();
 
+    golemioVehicleType=vehicleSubmodeToGolemioType(vdv301AllData.vehicleInformationGroup.vehicleMode);
     emit signalVehicleRefUpdate(vdv301AllData.vehicleRef);
-
 
     if(tripCount==0)
     {

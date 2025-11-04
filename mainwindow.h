@@ -127,7 +127,7 @@ private:
     QString golemioAddress="";
     QString golemioAddressTest="";
     QString golemioKey="";
-     QString golemioKeyTest="";
+    QString golemioKeyTest="";
     QString golemioVehicleRef="";
     QString golemioStopRef="";
     int golemioVehicleType=3;
@@ -281,6 +281,7 @@ private:
     QString lineToIconJisUnderGround(QString routeShortName, int routeType);
     QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
     void golemioUpdateVariables();
+    int vehicleSubmodeToGolemioType(QString subMode);
 private slots:
 
 
