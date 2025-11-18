@@ -18,6 +18,12 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251118_1429
+  - VDV301subscriber
+    - fixed replyPath
+  - VDV301publisher
+    - fixed Qt5 support
+    
 - 20251104_0203
   - set golemio type from received vehicleMode
     - new function MainWindow::vehicleSubmodeToGolemioType
