@@ -19,10 +19,16 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     QString loggingRules="";
     loggingRules+="DisplayLabel=false\n";
     loggingRules+="DisplayLabelLcd=false\n";
+    loggingRules+="DisplayLabelLcd2_3=false\n";
+    loggingRules+="DisplayLabelLcd2_3CZ1_0=false\n";
+    loggingRules+="DisplayLabelLcd2_3CZ1_0_Jis=false\n";
     loggingRules+="DisplayLabelLed=false\n";
     loggingRules+="InLineFormatParser=false\n";
+    loggingRules+="XmlParser=false\n";
+    loggingRules+="MainWindow=false\n";
+    loggingRules+="SvgVykreslovani=false\n";
     // loggingRules+="MainWindow=false";
-    loggingRules+="DisplayLabelLcd2_3CZ1_0_Jis=false\n";
+
 
     QLoggingCategory::setFilterRules(loggingRules);
 
@@ -798,26 +804,18 @@ int MainWindow::slotEverySecond()
 
 void MainWindow::slotGolemioReady()
 {
-    qDebug() <<  Q_FUNC_INFO;
-    //qDebug()<<"povypisu "<<xmlMpvParser.stazenaData.length();
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
     golemio.naplnVstupDokument(golemio.stazenaData);
     golemioConnections=golemio.parseDomDocumentDepartures();
     golemioStops=golemio.parseDomDocumentStops();
     golemioInfotexts=golemio.parseDomDocumentInfotexts();
 
-    qDebug()<<"bum10";
-
-
-    qDebug()<<"bum11";
     /* if(filterConnections)
     {
         //   prestupy=xmlMpvParser.vyfiltrujPrestupy(prestupy,stavSystemu.aktlinka);
     }*/
-    qDebug()<<"pocet Prestupu ve vektoru: "<<golemioConnections.count();
-
-
-    //createScene(prestupyGolemio);
+    qCDebug(MainWindowLog)<<"pocet Prestupu ve vektoru: "<<golemioConnections.count();
 
     connectionListToTable(golemioConnections,ui->tableWidget_connections);
 

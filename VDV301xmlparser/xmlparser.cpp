@@ -2,17 +2,17 @@
 #include <QDebug>
 #include <QMainWindow>
 
-
+Q_LOGGING_CATEGORY(XmlParserLog, "XmlParser")
 
 
 XmlParser::XmlParser()
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(XmlParserLog)<<Q_FUNC_INFO;
 }
 
 void XmlParser::loadXmlFile(QString input)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(XmlParserLog)<<Q_FUNC_INFO;
 
     if(input!=previousXmlData)
     {
@@ -29,7 +29,7 @@ void XmlParser::loadXmlFile(QString input)
 
 QDateTime XmlParser::parseTimestamp(QDomDocument vstupniDokument)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(XmlParserLog)<<Q_FUNC_INFO;
 
     QDateTime timestamp =  QDateTime::fromString(vstupniDokument.firstChildElement("CustomerInformationService.GetAllDataResponse").firstChildElement("AllData").firstChildElement("TimeStamp").firstChildElement("Value").firstChild().nodeValue() ,Qt::ISODate);
 
@@ -40,7 +40,7 @@ QDateTime XmlParser::parseTimestamp(QDomDocument vstupniDokument)
 
 QDateTime XmlParser::parseTimestamp(QString input)
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(XmlParserLog)<<Q_FUNC_INFO;
 
     QDateTime timestamp =  QDateTime::fromString(input ,Qt::ISODate);
 
@@ -57,12 +57,12 @@ QVector<QString> XmlParser::propertyDomToStringList(QDomNode domNode,QString ele
     QVector<QString> output;
 
     QDomNodeList propertyNodes=domNode.toElement().elementsByTagName(elementName+"Property");
-    // qDebug()<<"naplnVektor Zastavka ma tolik priznaku:"<<priznaky.count();
+    // qCDebug(XmlParserLog)<<"naplnVektor Zastavka ma tolik priznaku:"<<priznaky.count();
 
     for (int j=0;j<propertyNodes.count();j++)
     {
         QString propertyValue=propertyNodes.at(j).firstChild().nodeValue();
-        //     qDebug()<<"priznak "<<hodnotaPriznaku;
+        //     qCDebug(XmlParserLog)<<"priznak "<<hodnotaPriznaku;
         output.push_back(propertyValue);
     }
     return output;
@@ -72,7 +72,7 @@ QVector<QString> XmlParser::propertyDomToStringList(QDomNode domNode,QString ele
 
 void XmlParser::Test()
 {
-    qDebug()<<Q_FUNC_INFO;
+    qCDebug(XmlParserLog)<<Q_FUNC_INFO;
     qInfo()<<"xmlParserTestPoint2";
 }
 

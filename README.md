@@ -18,6 +18,14 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20251129_0134
+  - VDV301subscriber
+    - added qCDebug implementation
+  - SvgVykreslovani
+    - added qCDebug implementation
+  - XmlParser
+    - added qCDebug implementation
+    
 - 20251118_1429
   - VDV301subscriber
     - fixed replyPath

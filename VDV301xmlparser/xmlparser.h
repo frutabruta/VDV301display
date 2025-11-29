@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include <QObject>
 #include <QtXml>
+#include <QLoggingCategory>
 
 
 
