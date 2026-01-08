@@ -18,6 +18,25 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260108_1416
+  - GolemioClient
+    - icons parsing
+  - new class TypeConvertor
+  - InlineFormatParser::parseTextLcd
+    - remove gaps between icons
+  - LedLabelDisplay
+    - QPointer usage
+  - DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic
+    - usage of inlineFormatParser.parseTextLcd
+    - empty ptr check
+  - MainWindow::slotDownloadGolemio
+    - empty stop number check
+  - MainWindow::connectionGolemioV4toConnectionBasic
+    - added icon
+  - Logging rules set using a plaintextEdit on Debug tab
+  - VDV301subscriber
+    - response handling rewrite 
+
 - 20251129_0134
   - VDV301subscriber
     - added qCDebug implementation

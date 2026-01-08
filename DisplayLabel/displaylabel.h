@@ -21,10 +21,10 @@ class LedLabelDisplay
 {
 
 public:
-    QLabel* lineLabel=NULL;
-    QLabel* destination1Label=NULL;
-    QLabel* destination2Label=NULL;
-    QLabel* destinationLabel=NULL;
+    QPointer<QLabel> lineLabel=NULL;
+    QPointer<QLabel> destination1Label=NULL;
+    QPointer<QLabel> destination2Label=NULL;
+    QPointer<QLabel> destinationLabel=NULL;
 
     int ticker=0;
     QVector<Vdv301DisplayContent> displayContentList;

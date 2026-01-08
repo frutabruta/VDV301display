@@ -25,12 +25,15 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     loggingRules+="DisplayLabelLed=false\n";
     loggingRules+="InLineFormatParser=false\n";
     loggingRules+="XmlParser=false\n";
+    loggingRules+="XmlParser2_3=false\n";
     loggingRules+="MainWindow=false\n";
     loggingRules+="SvgVykreslovani=false\n";
     // loggingRules+="MainWindow=false";
 
 
     QLoggingCategory::setFilterRules(loggingRules);
+
+    ui->plainTextEdit_debugLogLevel->setPlainText(loggingRules);
 
 
 
@@ -769,9 +772,19 @@ void MainWindow::slotDebugPublisherToTable(PublisherStruct publisher)
 
 bool MainWindow::slotDownloadGolemio()
 {
-    golemioParametry=golemioRequestCompose(golemioStopRef,golemioVehicleRef,golemioVehicleType);
-    golemio.startDataDownload(golemioParametry);
-    timerUpdateGolemio.start();
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+
+    if(!golemioStopRef.isEmpty())
+    {
+        golemioParametry=golemioRequestCompose(golemioStopRef,golemioVehicleRef,golemioVehicleType);
+        golemio.startDataDownload(golemioParametry);
+        timerUpdateGolemio.start();
+    }
+    else
+    {
+       qCDebug(MainWindowLog)<<"invalid stopRef";
+    }
+
     return true;
 }
 
@@ -1781,7 +1794,7 @@ ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolem
     ConnectionBasic output;
 
     // output.lineName=lineToIconJisUnderGround("C",1);
-    output.lineName=lineToIconJisUnderGround(connectionGolemio.routeShortName,connectionGolemio.routeType);
+    output.lineName=lineToIconJisUnderground(connectionGolemio.routeShortName,connectionGolemio.routeType);
     if(connectionGolemio.routeType==1)
     {
         output.platform="";
@@ -1791,6 +1804,7 @@ ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolem
         output.platform=connectionGolemio.stopPlatformCode;
     }
     output.destinationName=connectionGolemio.tripHeadsign;
+    output.destinationName+=TypeConvertor::golemioIconListToInlineFormattingString(connectionGolemio.icons);
     output.departureTime=connectionGolemio.departureTimestampMinutes.join(" min.    ");
 
 
@@ -1799,7 +1813,7 @@ ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolem
 }
 
 
-QString MainWindow::lineToIconJisUnderGround(QString routeShortName,int routeType)
+QString MainWindow::lineToIconJisUnderground(QString routeShortName,int routeType)
 {
     QString output="";
 
@@ -1815,6 +1829,8 @@ QString MainWindow::lineToIconJisUnderGround(QString routeShortName,int routeTyp
 
     return output;
 }
+
+
 
 void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following)
 {
@@ -2154,6 +2170,9 @@ void MainWindow::connectionToTable(ConnectionGolemioV4 connection, QTableWidget*
 
     cell = new QTableWidgetItem(connection.departureTimestampMinutes.join(","));
     tableWidget->setItem(row, 4, cell);
+
+    cell = new QTableWidgetItem(connection.icons.join(","));
+    tableWidget->setItem(row, 5, cell);
 
     tableWidget->resizeColumnsToContents();
 }
@@ -3150,5 +3169,12 @@ void MainWindow::on_checkBox_settings_golemioTestServer_stateChanged(int arg1)
     settings.setValue("golemio/useTestServer",golemioUseTestServer);
 
     golemioUpdateVariables();
+}
+
+
+void MainWindow::on_pushButton_debugLogLevel_clicked()
+{
+
+    QLoggingCategory::setFilterRules(ui->plainTextEdit_debugLogLevel->toPlainText());
 }
 

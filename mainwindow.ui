@@ -267,7 +267,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="page_labelDisplay">
          <property name="sizePolicy">
@@ -727,8 +727,8 @@ border-radius: 8px;
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>871</width>
-                        <height>83</height>
+                        <width>173</width>
+                        <height>58</height>
                        </rect>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -4367,8 +4367,8 @@ QLabel{color:#FFFFFF}</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>216</width>
-                            <height>72</height>
+                            <width>173</width>
+                            <height>58</height>
                            </rect>
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_40">
@@ -7337,7 +7337,7 @@ border-radius: 30px;
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>1</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tab_subscription">
              <attribute name="title">
@@ -7792,6 +7792,11 @@ departure</string>
                        <string>real time</string>
                       </property>
                      </column>
+                     <column>
+                      <property name="text">
+                       <string>icons</string>
+                      </property>
+                     </column>
                     </widget>
                    </item>
                   </layout>
@@ -7855,6 +7860,62 @@ departure</string>
                </widget>
               </item>
              </layout>
+            </widget>
+            <widget class="QWidget" name="tab_logLevel">
+             <attribute name="title">
+              <string>Log</string>
+             </attribute>
+             <widget class="QPlainTextEdit" name="plainTextEdit_debugLogLevel">
+              <property name="geometry">
+               <rect>
+                <x>140</x>
+                <y>70</y>
+                <width>291</width>
+                <height>331</height>
+               </rect>
+              </property>
+              <property name="plainText">
+               <string>DisplayLabel=false
+DisplayLabelLcd=false
+DisplayLabelLcd2_3=false
+DisplayLabelLcd2_3CZ1_0=false
+DisplayLabelLcd2_3CZ1_0_Jis=false
+DisplayLabelLed=false
+InLineFormatParser=false
+XmlParser=false
+XmlParser2_3=false
+MainWindow=false
+SvgVykreslovani=false</string>
+              </property>
+             </widget>
+             <widget class="QPushButton" name="pushButton_debugLogLevel">
+              <property name="geometry">
+               <rect>
+                <x>460</x>
+                <y>80</y>
+                <width>80</width>
+                <height>24</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>Set log level</string>
+              </property>
+             </widget>
+             <widget class="QLabel" name="label_36">
+              <property name="geometry">
+               <rect>
+                <x>70</x>
+                <y>460</y>
+                <width>551</width>
+                <height>71</height>
+               </rect>
+              </property>
+              <property name="text">
+               <string>&lt;html&gt;
+ &lt;body&gt;Kačerov&lt;img height=&quot;-1&quot; src=&quot;C:/Users/Eichler536/github/build-VDV301display-Desktop_Qt_6_6_1_MinGW_64_bit-Ladu011bnu00ed/debug/icons/c_Underground.svg&quot;/&gt;&lt;img height=&quot;-1&quot; src=&quot;C:/Users/Eichler536/github/build-VDV301display-Desktop_Qt_6_6_1_MinGW_64_bit-Ladu011bnu00ed/debug/icons/c_UndergroundC.svg&quot;/&gt;&lt;img height=&quot;-1&quot; src=&quot;C:/Users/Eichler536/github/build-VDV301display-Desktop_Qt_6_6_1_MinGW_64_bit-Ladu011bnu00ed/debug/icons/c_Train.svg&quot;/&gt;&lt;img height=&quot;-1&quot; src=&quot;C:/Users/Eichler536/github/build-VDV301display-Desktop_Qt_6_6_1_MinGW_64_bit-Ladu011bnu00ed/debug/icons/c_SBahn.svg&quot;/&gt;&lt;/body&gt;
+&lt;/html&gt;</string>
+              </property>
+             </widget>
             </widget>
            </widget>
           </item>
@@ -8927,7 +8988,7 @@ departure</string>
      <x>0</x>
      <y>0</y>
      <width>1318</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <property name="nativeMenuBar">

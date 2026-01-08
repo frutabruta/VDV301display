@@ -234,7 +234,12 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<Connec
         {
             ConnectionBasic selectedConnection=connectionListCopy.takeFirst();
 
-            labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
+            if(selectedGroup.labelConnectionDestination!=nullptr)
+            {
+                labelSetTextSafe(selectedGroup.labelConnectionDestination,inlineFormatParser.parseTextLcd(selectedConnection.destinationName, selectedGroup.labelConnectionDestination->font().pixelSize(),slozkaPiktogramu) )    ;
+            }
+
+          //  labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
 
             displayLabelDrawLineNumber2_4(selectedConnection.lineName , selectedGroup.labelConnectionLine, sizeIconConnectionDynamic,true);
 

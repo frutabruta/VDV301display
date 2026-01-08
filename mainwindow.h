@@ -19,6 +19,8 @@
 
 #include "barvylinek.h"
 
+#include "typeconvertor.h"
+
 #include <QApplication>
 #include <QCoreApplication>
 //#include <QtDebug>
@@ -278,7 +280,7 @@ private:
     void connectionToTable(ConnectionGolemioV4 connection, QTableWidget *tableWidget);
     void connectionListToTable(QVector<ConnectionGolemioV4> connectionList, QTableWidget *tableWidget);
     ConnectionBasic connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
-    QString lineToIconJisUnderGround(QString routeShortName, int routeType);
+    QString lineToIconJisUnderground(QString routeShortName, int routeType);
     QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
     void golemioUpdateVariables();
     int vehicleSubmodeToGolemioType(QString subMode);
@@ -343,6 +345,8 @@ private slots:
     void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
 
     void on_checkBox_settings_golemioTestServer_stateChanged(int arg1);
+
+    void on_pushButton_debugLogLevel_clicked();
 
 public slots:
 signals:

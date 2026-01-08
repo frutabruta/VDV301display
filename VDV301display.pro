@@ -94,7 +94,8 @@ SOURCES += \
     DisplayLabel/displaylabellcd2_3cz1_0.cpp \
     DisplayLabel/displaylabellcd2_3cz1_0_jis.cpp \
     DisplayLabel/displaylabelled.cpp \
-    inlineformatparser.cpp \    
+    inlineformatparser.cpp \
+    typeconvertor.cpp \
     main.cpp \
     mainwindow.cpp \
     svgvykreslovani.cpp \
@@ -154,6 +155,7 @@ HEADERS += \
     inlineformatparser.h \
     mainwindow.h \
     svgvykreslovani.h \
+    typeconvertor.h \
     xmlparser.h \
     barvylinek.h
 

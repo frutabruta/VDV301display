@@ -13,7 +13,8 @@ InlineFormatParser::InlineFormatParser()
 QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QString slozka)
 {
     qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
-
+    qCDebug(InLineFormatParserLog)<<"input: ";
+    qCDebug(InLineFormatParserLog).noquote()<<vstup;
 
     QDomDocument vystup;
 
@@ -141,10 +142,6 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
                 ikona.alternative="";
                 ikona.type="";
             }
-            else if(openElement=="font")
-            {
-                body.appendChild(fontToQDomNode(font));
-            }
             else if(openElement=="b")
             {
                 body.appendChild(boldToQDomNode(rawContent));
@@ -167,8 +164,18 @@ QString InlineFormatParser::parseTextLcd(QString vstup, int vyskaObrazku, QStrin
     html.appendChild(body);
     vystup.appendChild(html);
 
-    QString vystupString=vystup.toString();
-    qCDebug(InLineFormatParserLog)<<"vystup formatovani: "<<vystupString;
+
+
+    QString vystupString;
+
+    //remove gaps between icons
+    QTextStream ts(&vystupString);
+    vystup.save(ts, 0);
+    vystupString.remove('\n');
+    vystupString.remove('\r');
+    vystupString.remove('\t');
+
+    qCDebug(InLineFormatParserLog).noquote()<<"vystup formatovani: "<<vystupString;
 
     return vystupString;
 }
