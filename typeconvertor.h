@@ -16,6 +16,7 @@ public:
     static QString golemioIconListToInlineFormattingString(QStringList iconList);
     static ConnectionBasic connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
     static QString lineToIconJisUnderground(QString routeShortName, int routeType);
+    static int vehicleSubmodeToGolemioType(QString subMode);
 };
 
 #endif // TYPECONVERTOR_H

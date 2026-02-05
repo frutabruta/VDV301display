@@ -86,3 +86,20 @@ QString TypeConvertor::lineToIconJisUnderground(QString routeShortName,int route
 
     return output;
 }
+
+
+int TypeConvertor::vehicleSubmodeToGolemioType(QString subMode)
+{
+    QMap<QString,int> types;
+
+    types.insert("TramSubmode",0);
+    types.insert("MetroSubmode",1);
+    types.insert("RailSubmode",2);
+    types.insert("BusSubmode",3);
+    types.insert("WaterSubmode",4);
+    types.insert("FunicularSubmode",7);
+    types.insert("TrolleybusSubmode",11);
+
+    return types.value(subMode);
+
+}

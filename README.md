@@ -18,6 +18,10 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260205_1707
+  - MainWindow
+    - complete functions reorder
+    - vehicleSubmodeToGolemioType moved to TypeConvertor
 - 20260205_1507
   - GolemioClient
     - icon parsing
