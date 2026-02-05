@@ -43,3 +43,46 @@ QString TypeConvertor::golemioIconToInlineFormattingIcon(QString input)
 
     return output;
 }
+
+
+
+ConnectionBasic TypeConvertor::connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio)
+{
+    ConnectionBasic output;
+
+    // output.lineName=lineToIconJisUnderGround("C",1);
+    output.lineName=lineToIconJisUnderground(connectionGolemio.routeShortName,connectionGolemio.routeType);
+    if(connectionGolemio.routeType==1)
+    {
+        output.platform="";
+    }
+    else
+    {
+        output.platform=connectionGolemio.stopPlatformCode;
+    }
+    output.destinationName=connectionGolemio.tripHeadsign;
+    output.destinationName+=TypeConvertor::golemioIconListToInlineFormattingString(connectionGolemio.icons);
+    output.departureTime=connectionGolemio.departureTimestampMinutes.join(" min.    ");
+
+
+
+    return output;
+}
+
+
+QString TypeConvertor::lineToIconJisUnderground(QString routeShortName,int routeType)
+{
+    QString output="";
+
+    if(routeType==1)
+    {
+        output="<icon type=\"c_Underground"+routeShortName+"\">["+routeShortName+"]</icon>";
+    }
+    else
+    {
+        output=routeShortName;
+    }
+
+
+    return output;
+}

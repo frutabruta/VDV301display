@@ -212,6 +212,39 @@ void MainWindow::allConnects()
 }
 
 
+bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData)
+{
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
+    if(oldAllData.currentStopIndex!=newAllData.currentStopIndex)
+    {
+        qCDebug(MainWindowLog)<<"stop index changed";
+        return true;
+    }
+    else if(oldAllData.tripInformationList.count()!=newAllData.tripInformationList.count())
+    {
+        qCDebug(MainWindowLog)<<"trip count changed";
+        return true;
+    }
+    else if(oldAllData.tripInformationList.count()>0)
+    {
+        if(oldAllData.tripInformationList.first().stopPointList.count()!=newAllData.tripInformationList.first().stopPointList.count())
+        {
+            qCDebug(MainWindowLog)<<"stop point count changed";
+            return true;
+        }
+        if(oldAllData.tripInformationList.first().locationState!=newAllData.tripInformationList.first().locationState)
+        {
+            qCDebug(MainWindowLog)<<"location state changed";
+            return true;
+        }
+    }
+    qCDebug(MainWindowLog)<<"nothing changed";
+
+    return false;
+}
+
+
+
 void MainWindow::updateMainScreenDebugLabels()
 {
     ui->label_subscribedVersion->setText(cisSubscriber.version());
@@ -733,7 +766,7 @@ void MainWindow::slotDelayedStartup()
 void MainWindow::slotDebugPublisherToTable(PublisherStruct publisher)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_selectedSubscriber);
+    mainWindowHelper.eraseTable(ui->tableWidget_selectedSubscriber);
     qint32 row;
     QTableWidgetItem *cell;
 
@@ -830,7 +863,7 @@ void MainWindow::slotGolemioReady()
     }*/
     qCDebug(MainWindowLog)<<"pocet Prestupu ve vektoru: "<<golemioConnections.count();
 
-    connectionListToTable(golemioConnections,ui->tableWidget_connections);
+    mainWindowHelper.connectionListToTable(golemioConnections,ui->tableWidget_connections);
 
     showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
 }
@@ -855,7 +888,7 @@ int MainWindow::vehicleSubmodeToGolemioType(QString subMode)
 void MainWindow::slotSubscriptionLost()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_selectedSubscriber);
+    mainWindowHelper.eraseTable(ui->tableWidget_selectedSubscriber);
     receivedDataVariablesReset();
     eventDisplayAbnormalStateScreen("NO SUBSCRIPTION");
 }
@@ -1469,7 +1502,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
         {
             if(!currentVdvStopPoint.connectionList.isEmpty())
             {
-                connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
+                mainWindowHelper.connectionListToTable(currentVdvStopPoint.connectionList,ui->tableWidget_connections);
 
                 displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
                 displayLabelLcd.displayLabelConnectionList(currentVdvStopPoint.connectionList);
@@ -1479,7 +1512,7 @@ int MainWindow::showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData)
             }
             else
             {
-                eraseTable(ui->tableWidget_connections);
+                mainWindowHelper.eraseTable(ui->tableWidget_connections);
             }
         }
 
@@ -1722,14 +1755,14 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
             if(!golemioConnections.isEmpty())
             {
-                connectionListToTable(golemioConnections,ui->tableWidget_connections);
+                mainWindowHelper.connectionListToTable(golemioConnections,ui->tableWidget_connections);
 
                 //displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
                 //displayLabelLcd.displayLabelConnectionListBasic(currentVdv301StopPoint.connectionList);
 
                 QVector<ConnectionBasic> basicConnections;
                 foreach (ConnectionGolemioV4 connection, golemioConnections ) {
-                    basicConnections<<connectionGolemioV4toConnectionBasic(connection);
+                    basicConnections<<TypeConvertor::connectionGolemioV4toConnectionBasic(connection);
                 }
 
                 displayLabelLcdJis.pageCycleList.push_back(ui->page_prestupy_2M);
@@ -1737,14 +1770,14 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             }
             else
             {
-                eraseTable(ui->tableWidget_connections);
+                mainWindowHelper.eraseTable(ui->tableWidget_connections);
             }
         }
         else
         {
             if(!currentVdv301StopPoint.connectionList.isEmpty())
             {
-                connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
+                mainWindowHelper.connectionListToTable(currentVdv301StopPoint.connectionList,ui->tableWidget_connections);
 
                 displayLabelLcd.pageCycleList.push_back(ui->page_prestupy);
                 displayLabelLcd.displayLabelConnectionList(currentVdv301StopPoint.connectionList);
@@ -1755,7 +1788,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             }
             else
             {
-                eraseTable(ui->tableWidget_connections);
+                mainWindowHelper.eraseTable(ui->tableWidget_connections);
             }
         }
 
@@ -1789,46 +1822,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     return 1;
 }
 
-ConnectionBasic MainWindow::connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio)
-{
-    ConnectionBasic output;
 
-    // output.lineName=lineToIconJisUnderGround("C",1);
-    output.lineName=lineToIconJisUnderground(connectionGolemio.routeShortName,connectionGolemio.routeType);
-    if(connectionGolemio.routeType==1)
-    {
-        output.platform="";
-    }
-    else
-    {
-        output.platform=connectionGolemio.stopPlatformCode;
-    }
-    output.destinationName=connectionGolemio.tripHeadsign;
-    output.destinationName+=TypeConvertor::golemioIconListToInlineFormattingString(connectionGolemio.icons);
-    output.departureTime=connectionGolemio.departureTimestampMinutes.join(" min.    ");
-
-
-
-    return output;
-}
-
-
-QString MainWindow::lineToIconJisUnderground(QString routeShortName,int routeType)
-{
-    QString output="";
-
-    if(routeType==1)
-    {
-        output="<icon type=\"c_Underground"+routeShortName+"\">["+routeShortName+"]</icon>";
-    }
-    else
-    {
-        output=routeShortName;
-    }
-
-
-    return output;
-}
 
 
 
@@ -1937,7 +1931,7 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastav
 
     if(!navazny)
     {
-        eraseTable(ui->tableWidget_debugStopList);
+        mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
     }
 
     foreach(Vdv301StopPoint polozka, seznamZastavek)
@@ -1951,7 +1945,7 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> sezn
 
     if(!navazny)
     {
-        eraseTable(ui->tableWidget_debugStopList);
+        mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
     }
 
     foreach(Vdv301StopPoint polozka, seznamZastavek)
@@ -1983,29 +1977,12 @@ void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateE
 
 
 
-void MainWindow::eraseTable(QTableWidget *tableWidget)
-{
-    //used to erase tablewidgets without program crash due to signals
-    //  https://stackoverflow.com/a/31564541
-    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
-    tableWidget->clearSelection();
-
-    // Disconnect all signals from table widget ! important !
-    tableWidget->disconnect();
-
-    // Remove all items
-    tableWidget->clearContents();
-
-    // Set row count to 0 (remove rows)
-    tableWidget->setRowCount(0);
-
-}
 
 void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    eraseTable(ui->tableWidget_services);
+    mainWindowHelper.eraseTable(ui->tableWidget_services);
 
 
     foreach(QZeroConfService selectedService, serviceList)
@@ -2079,103 +2056,7 @@ void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestinat
 
 
 
-void MainWindow::connectionListToTable(QVector<Vdv301Connection> connectionList,QTableWidget* tableWidget)
-{
 
-    eraseTable(tableWidget);
-
-
-    foreach(Vdv301Connection connection, connectionList)
-    {
-        connectionToTable(connection,tableWidget);
-    }
-}
-
-void MainWindow::connectionListToTable(QVector<ConnectionGolemioV4> connectionList,QTableWidget* tableWidget)
-{
-
-    eraseTable(tableWidget);
-
-
-    foreach(ConnectionGolemioV4 connection, connectionList)
-    {
-        connectionToTable(connection,tableWidget);
-    }
-}
-
-
-
-
-void MainWindow::connectionToTable(Vdv301Connection connection, QTableWidget* tableWidget)
-{
-    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    qint32 row;
-    QTableWidgetItem *cell;
-
-    if(connection.vdv301displayContentList.isEmpty())
-    {
-        return;
-    }
-    else
-    {
-        Vdv301DisplayContent firstDisplayContent=connection.vdv301displayContentList.first();
-        row = tableWidget->rowCount();
-        tableWidget->insertRow(row);
-
-        QString lineName=InlineFormatParser::parseTextLed(displayLabelLcd.vdv301InternationalTextJoinAll(firstDisplayContent.lineInformation.lineNameList,"\n").text);
-        cell = new QTableWidgetItem(lineName);
-
-        tableWidget->setItem(row, 0, cell);
-
-        QString destinationName=InlineFormatParser::parseTextLed(displayLabelLcd.vdv301InternationalTextJoinAll(firstDisplayContent.destination.destinationNameList,"\n").text);
-        cell = new QTableWidgetItem(destinationName);
-        tableWidget->setItem(row, 1, cell);
-
-        cell = new QTableWidgetItem(connection.platform);
-        tableWidget->setItem(row, 2, cell);
-
-        cell = new QTableWidgetItem(connection.scheduledDepartureTime.toString("hh:mm") );
-        tableWidget->setItem(row, 3, cell);
-
-        cell = new QTableWidgetItem(connection.expectedDepartureTime.toString("hh:mm") );
-        tableWidget->setItem(row, 4, cell);
-
-        tableWidget->resizeColumnsToContents();
-    }
-}
-
-void MainWindow::connectionToTable(ConnectionGolemioV4 connection, QTableWidget* tableWidget)
-{
-    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    qint32 row;
-    QTableWidgetItem *cell;
-
-    row = tableWidget->rowCount();
-    tableWidget->insertRow(row);
-
-    QString lineName=connection.routeShortName;
-    cell = new QTableWidgetItem(lineName);
-
-    tableWidget->setItem(row, 0, cell);
-
-    QString destinationName=connection.tripHeadsign;
-    cell = new QTableWidgetItem(destinationName);
-    tableWidget->setItem(row, 1, cell);
-
-    cell = new QTableWidgetItem(connection.stopPlatformCode);
-    tableWidget->setItem(row, 2, cell);
-
-    cell = new QTableWidgetItem("");
-    tableWidget->setItem(row, 3, cell);
-
-    cell = new QTableWidgetItem(connection.departureTimestampMinutes.join(","));
-    tableWidget->setItem(row, 4, cell);
-
-    cell = new QTableWidgetItem(connection.icons.join(","));
-    tableWidget->setItem(row, 5, cell);
-
-    tableWidget->resizeColumnsToContents();
-}
 
 
 // XXX FIX GlobalDisplayContent while Stop List is not empty!
@@ -2389,8 +2270,8 @@ void MainWindow::showReceivedDataVdv301(Vdv301AllData vdv301AllData)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
-    eraseTable(ui->tableWidget_debugStopList);
-    eraseTable(ui->tableWidget_connections);
+    mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
+    mainWindowHelper.eraseTable(ui->tableWidget_connections);
     updateMainScreenDebugLabels();
 
     int tripCount=vdv301AllData.tripInformationList.count();
@@ -2451,8 +2332,8 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
-    eraseTable(ui->tableWidget_debugStopList);
-    eraseTable(ui->tableWidget_connections);
+    mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
+    mainWindowHelper.eraseTable(ui->tableWidget_connections);
     updateMainScreenDebugLabels();
 
     int tripCount=vdv301AllData.tripInformationList.count();
@@ -2520,7 +2401,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
-    eraseTable(ui->tableWidget_debugStopList);
+    mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
     updateMainScreenDebugLabels();
 
 
@@ -2535,7 +2416,7 @@ void MainWindow::receivedDataVariablesReset()
 
     debugStopPointListToTable(currentVdv301StopPointList,false);
 
-    eraseTable(ui->tableWidget_connections);
+    mainWindowHelper.eraseTable(ui->tableWidget_connections);
 }
 
 
@@ -3102,7 +2983,7 @@ void MainWindow::on_pushButton_debugShowHtml_clicked()
 
 void MainWindow::on_pushButton_messageLogReset_clicked()
 {
-    eraseTable(ui->tableWidget_logMessages);
+    mainWindowHelper.eraseTable(ui->tableWidget_logMessages);
 }
 
 
@@ -3123,36 +3004,6 @@ void MainWindow::on_spinBox_pageSwitchDuration_valueChanged(int arg1)
 
 
 
-bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData)
-{
-    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
-    if(oldAllData.currentStopIndex!=newAllData.currentStopIndex)
-    {
-        qCDebug(MainWindowLog)<<"stop index changed";
-        return true;
-    }
-    else if(oldAllData.tripInformationList.count()!=newAllData.tripInformationList.count())
-    {
-        qCDebug(MainWindowLog)<<"trip count changed";
-        return true;
-    }
-    else if(oldAllData.tripInformationList.count()>0)
-    {
-        if(oldAllData.tripInformationList.first().stopPointList.count()!=newAllData.tripInformationList.first().stopPointList.count())
-        {
-            qCDebug(MainWindowLog)<<"stop point count changed";
-            return true;
-        }
-        if(oldAllData.tripInformationList.first().locationState!=newAllData.tripInformationList.first().locationState)
-        {
-            qCDebug(MainWindowLog)<<"location state changed";
-            return true;
-        }
-    }
-    qCDebug(MainWindowLog)<<"nothing changed";
-
-    return false;
-}
 
 
 

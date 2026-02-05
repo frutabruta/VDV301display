@@ -16,10 +16,9 @@
 #include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
 
 #include "GolemioClient/golemiov4.h"
-
 #include "barvylinek.h"
-
 #include "typeconvertor.h"
+#include "mainwindowhelper.h"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -102,6 +101,8 @@ private:
 
     BarvyLinek barvyLinek;
 
+    MainWindowHelper mainWindowHelper;
+
     //stavove promenne
 
 
@@ -155,7 +156,7 @@ private:
 
     QString createProgramVersionString();
 
-    void eraseTable(QTableWidget *tableWidget);
+
 
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
 
@@ -257,8 +258,8 @@ private:
     void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList); // unused
     void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList); // unused
     void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList);
-    void connectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
-    void connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
+
+
     void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
 
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
@@ -277,10 +278,8 @@ private:
     void displayLabelFillArrayJis();
     void labelSetNextStopBackgroundJis(QString barvaPisma, QString barvaPozadi);
     bool allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData);
-    void connectionToTable(ConnectionGolemioV4 connection, QTableWidget *tableWidget);
-    void connectionListToTable(QVector<ConnectionGolemioV4> connectionList, QTableWidget *tableWidget);
-    ConnectionBasic connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
-    QString lineToIconJisUnderground(QString routeShortName, int routeType);
+
+  
     QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
     void golemioUpdateVariables();
     int vehicleSubmodeToGolemioType(QString subMode);

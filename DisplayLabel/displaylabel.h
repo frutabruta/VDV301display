@@ -77,7 +77,7 @@ public:
 
     QString vykresliNacestneZastavkyText(QVector<Vdv301ViaPoint> nacestneZastavky, int velikostPiktogramu);
     QVector<Vdv301InternationalText> vdv301InternationalTextJoinByLanguage(QVector<Vdv301InternationalText> internationalTextList, QString separator);
-    Vdv301InternationalText vdv301InternationalTextJoinAll(QVector<Vdv301InternationalText> internationalTextList, QString separator);
+    static Vdv301InternationalText vdv301InternationalTextJoinAll(QVector<Vdv301InternationalText> internationalTextList, QString separator);
     QString pasmaDoStringu(QVector<FareZone> seznamPasem);
 signals:
 

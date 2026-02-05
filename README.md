@@ -18,6 +18,21 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260205_1507
+  - GolemioClient
+    - icon parsing
+  - VDV301subscriber
+    - reply fix
+  - functions moved from MainWindow to new class MainWindowHelper
+    - onnectionListToTable(QVector<Vdv301Connection> connectionList, QTableWidget *tableWidget);
+    - eraseTable(QTableWidget *tableWidget);
+    - connectionListToTable(QVector<ConnectionGolemioV4> connectionList, QTableWidget *tableWidget);
+    - connectionToTable(Vdv301Connection connection, QTableWidget *tableWidget);
+    - connectionToTable(ConnectionGolemioV4 connection, QTableWidget *tableWidget);
+  - function moved to TypeConvertor
+    - connectionGolemioV4toConnectionBasic(ConnectionGolemioV4 connectionGolemio);
+    - lineToIconJisUnderground(QString routeShortName, int routeType);
+
 - 20260108_1416
   - GolemioClient
     - icons parsing
