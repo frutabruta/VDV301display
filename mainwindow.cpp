@@ -3,6 +3,8 @@
 
 #include "typeconvertor.h"
 
+
+
 Q_LOGGING_CATEGORY(MainWindowLog, "MainWindow")
 
 
@@ -16,8 +18,32 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     golemio("")
 {
 
+
+    // qInstallMessageHandler(customMessageHandlerInner);
+
+    logHandler.setRelay(&relay);
+    logHandler.setIncludeContextFileLine(false);
+    logHandler.install();
+    logHandler.setTimestampFormat(QStringLiteral("dd/MM/yyyy hh:mm:ss"));
+    logHandler.setCategoryLevels(QStringLiteral("app.net"), 1, 1, 1, 1);
+
     ui->setupUi(this);
     QString loggingRules="";
+    loggingRules+="*=false\n";
+    loggingRules+="IbisIpSubscriber=true\n";
+    loggingRules+="IbisIpSubscriberOnePublisher=true\n";
+    loggingRules+="HttpServerSubscriber=true\n";
+
+    /*
+
+rules += "*.debug=false\n";
+rules += "*.info=true\n";
+rules += "*.warning=false\n";
+rules += "*.critical=false\n"
+
+*/
+
+    /*
     loggingRules+="DisplayLabel=false\n";
     loggingRules+="DisplayLabelLcd=false\n";
     loggingRules+="DisplayLabelLcd2_3=false\n";
@@ -29,12 +55,11 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     loggingRules+="XmlParser2_3=false\n";
     loggingRules+="MainWindow=false\n";
     loggingRules+="SvgVykreslovani=false\n";
-    // loggingRules+="MainWindow=false";
+    */
 
 
-    QLoggingCategory::setFilterRules(loggingRules);
-
-    ui->plainTextEdit_debugLogLevel->setPlainText(loggingRules);
+    //  QLoggingCategory::setFilterRules(loggingRules);
+    logHandler.clearCategoryLevels();
 
 
 
@@ -58,7 +83,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     retranslateUi(selectedLanguage);
 
-
+    ui->plainTextEdit_debugLogLevel->setPlainText(loggingRules);
 
     displayLabelLcd.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
     displayLabelLcdJis.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
@@ -154,6 +179,9 @@ MainWindow::~MainWindow()
 void MainWindow::allConnects()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+
+
+
     connect(&cisSubscriber, &IbisIpSubscriber::signalDataReceived  ,this, &MainWindow::slotXmlToVehicleStateVariables);
     connect(&cisSubscriber,&IbisIpSubscriber::signalUpdateDeviceList,this,&MainWindow::slotUpdateServiceTable);
     connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
@@ -1237,6 +1265,17 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
 
 }
 
+void MainWindow::on_checkBox_debugLogEnable_stateChanged(int arg1)
+{
+    if(arg1)
+    {
+        connect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend,Qt::QueuedConnection);
+    }
+    else
+    {
+        disconnect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend);
+    }
+}
 
 void MainWindow::on_checkBox_settings_useGolemioConnections_stateChanged(int arg1)
 {
@@ -1268,11 +1307,18 @@ void MainWindow::on_pushButton_debugConvertInline_clicked()
 
 }
 
+void MainWindow::on_pushButton_debugLogClear_clicked()
+{
+    ui->plainTextEdit_debugLogContent->clear();
+}
+
 void MainWindow::on_pushButton_debugLogLevel_clicked()
 {
-
     QLoggingCategory::setFilterRules(ui->plainTextEdit_debugLogLevel->toPlainText());
 }
+
+
+
 
 void MainWindow::on_pushButton_debugShowHtml_clicked()
 {
@@ -2406,6 +2452,12 @@ void MainWindow::slotHeartbeatTimeout()
 }
 
 
+void MainWindow::slotLogWindowAppend(const QString &text)
+{
+    ui->plainTextEdit_debugLogContent->appendPlainText(text);
+}
+
+
 
 void MainWindow::slotMoveScrollingText()
 {
@@ -2934,4 +2986,3 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_lcd_version->setText(createProgramVersionString());
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
-

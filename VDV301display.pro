@@ -95,6 +95,8 @@ SOURCES += \
     DisplayLabel/displaylabellcd2_3cz1_0_jis.cpp \
     DisplayLabel/displaylabelled.cpp \
     inlineformatparser.cpp \
+    LogHandler/loggerrelay.cpp \
+    LogHandler/loghandler.cpp \
     mainwindowhelper.cpp \
     typeconvertor.cpp \
     main.cpp \
@@ -154,6 +156,8 @@ HEADERS += \
     DisplayLabel/displaylabellcd2_3cz1_0_jis.h \
     DisplayLabel/displaylabelled.h \
     inlineformatparser.h \
+    LogHandler/loggerrelay.h \
+    LogHandler/loghandler.h \
     mainwindow.h \
     mainwindowhelper.h \
     svgvykreslovani.h \

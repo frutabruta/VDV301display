@@ -1,25 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "VDV301xmlparser/xmlparser1_0.h"
-//#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
-#include "VDV301xmlparser/xmlparser2_3.h"
-#include "VDV301xmlparser/xmlparser2_3cz1_0.h"
-
-
-#include "VDV301publisher/devicemanagementservice.h"
-#include "VDV301subscriber/cissubscriber.h"
-
-#include "svgvykreslovani.h"
-#include "DisplayLabel/displaylabelled.h"
-#include "DisplayLabel/displaylabellcd2_3cz1_0.h"
-#include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
-
-#include "GolemioClient/golemiov4.h"
-#include "barvylinek.h"
-
-#include "mainwindowhelper.h"
-
 #include <QApplication>
 #include <QCoreApplication>
 //#include <QtDebug>
@@ -43,6 +24,33 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+
+
+#include "VDV301xmlparser/xmlparser1_0.h"
+//#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
+#include "VDV301xmlparser/xmlparser2_3.h"
+#include "VDV301xmlparser/xmlparser2_3cz1_0.h"
+
+
+#include "VDV301publisher/devicemanagementservice.h"
+#include "VDV301subscriber/cissubscriber.h"
+
+#include "svgvykreslovani.h"
+#include "DisplayLabel/displaylabelled.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
+
+#include "GolemioClient/golemiov4.h"
+#include "barvylinek.h"
+
+#include "mainwindowhelper.h"
+
+#include "LogHandler/loggerrelay.h"
+#include "LogHandler/loghandler.h"
+
+
+
+
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -81,6 +89,8 @@ private:
 
     GolemioV4 golemio;
 
+    LoggerRelay relay;
+    LogHandler logHandler;
 
     //complex variables
 
@@ -168,7 +178,7 @@ private:
     QString createProgramVersionString();
 
     void deviceManagementServiceInternalVariablesToSettingFile();
-        void debugServiceListToTable(QVector<QZeroConfService> serviceList);
+    void debugServiceListToTable(QVector<QZeroConfService> serviceList);
     void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
     void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
 
@@ -245,10 +255,12 @@ private:
     void updateMainScreenDebugLabels();
 
 private slots:
+    void on_checkBox_debugLogEnable_stateChanged(int arg1);
     void on_checkBox_settings_useJis_stateChanged(int arg1);
     void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
     void on_checkBox_settings_golemioTestServer_stateChanged(int arg1);
 
+    void on_pushButton_debugLogClear_clicked();
     void on_pushButton_debugConvertInline_clicked();
     void on_pushButton_debugLogLevel_clicked();
     void on_pushButton_debugShowHtml_clicked();
@@ -299,10 +311,16 @@ private slots:
 
     void slotXmlToVehicleStateVariables(QString inputXmlString);
 
+    void slotLogWindowAppend(const QString &text);
+
+
+
+
 public slots:
 signals:
     void signalVehicleRefUpdate(QString vehicleRef);
     void signalStopRefUpdate(QString stopRef);
+    void signalToLog(QString text);
 
 };
 
