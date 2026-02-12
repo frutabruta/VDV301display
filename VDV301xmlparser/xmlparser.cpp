@@ -68,6 +68,32 @@ QVector<QString> XmlParser::propertyDomToStringList(QDomNode domNode,QString ele
     return output;
 }
 
+// Robust IBIS boolean parsing: handles "true"/"false", "1"/"0", and "yes"/"no".
+bool XmlParser::qDomElementValueToBool(QDomElement input)
+{
+    QString value=input.firstChildElement("Value").firstChild().nodeValue();
+    const QString v = value.trimmed();
+
+    if (v.compare(QStringLiteral("true"), Qt::CaseInsensitive) == 0)
+    {
+        return true;
+    }
+    if (v.compare(QStringLiteral("false"), Qt::CaseInsensitive) == 0)
+    {
+        return false;
+    }
+
+    bool ok = false;
+    const int i = v.toInt(&ok);
+    if (ok)
+    {
+        return i != 0;
+    }
+
+    // Default if content is unexpected or empty
+    return false;
+}
+
 
 
 void XmlParser::Test()

@@ -29,6 +29,7 @@ public:
 
 
     QDateTime parseTimestamp(QString input);
+    bool qDomElementValueToBool(QDomElement input);
 private:
     QString previousXmlData="";
 };

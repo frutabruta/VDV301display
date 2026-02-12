@@ -18,9 +18,6 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     golemio("")
 {
 
-
-    // qInstallMessageHandler(customMessageHandlerInner);
-
     logHandler.setRelay(&relay);
     logHandler.setIncludeContextFileLine(false);
     logHandler.install();
@@ -33,6 +30,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     loggingRules+="IbisIpSubscriber=true\n";
     loggingRules+="IbisIpSubscriberOnePublisher=true\n";
     loggingRules+="HttpServerSubscriber=true\n";
+    loggingRules+= "*.debug=false\n";
 
     /*
 
@@ -58,9 +56,14 @@ rules += "*.critical=false\n"
     */
 
 
-    //  QLoggingCategory::setFilterRules(loggingRules);
+
+
     logHandler.clearCategoryLevels();
 
+    if(logOnStartup)
+    {
+        QLoggingCategory::setFilterRules(loggingRules);
+    }
 
 
 
@@ -153,7 +156,7 @@ rules += "*.critical=false\n"
         manualPublisher.serviceName="CustomerInformationService";
         manualPublisher.portNumber=47482;
 
-        cisSubscriber.slotAddServiceManual(manualPublisher.serviceName,manualPublisher.ibisIpVersion,manualPublisher.hostAddress.toString(),manualPublisher.portNumber);
+        cisSubscriber.slotAddServiceManual(manualPublisher);
     }
 
 
@@ -180,6 +183,12 @@ void MainWindow::allConnects()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
+    if(logOnStartup)
+    {
+      //  connect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend,Qt::QueuedConnection);
+        ui->checkBox_debugLogEnable->setChecked(logOnStartup);
+    }
+
 
 
     connect(&cisSubscriber, &IbisIpSubscriber::signalDataReceived  ,this, &MainWindow::slotXmlToVehicleStateVariables);
@@ -187,6 +196,7 @@ void MainWindow::allConnects()
     connect(&cisSubscriber.timerHeartbeatCheck,&QTimer::timeout ,this,&MainWindow::slotHeartbeatTimeout);
     connect(&cisSubscriber,&IbisIpSubscriber::signalSubscriptionLost ,this,&MainWindow::slotSubscriptionLost);
     connect(&cisSubscriber,&IbisIpSubscriberOnePublisher::signalSubscriptionSuccessful,this,&MainWindow::slotDebugPublisherToTable);
+    connect(&cisSubscriber,&IbisIpSubscriber::signalAddressUpdate,this,&MainWindow::slotDeviceIpUpdated);
 
     connect(this,&MainWindow::signalStopRefUpdate,this,&MainWindow::slotStopRefUpdate);
     connect(this,&MainWindow::signalVehicleRefUpdate,this,&MainWindow::slotVehicleRefUpdate);
@@ -501,6 +511,7 @@ void MainWindow::displayLabelFillArrayJis()
 
     displayLabelLcdJis.labelListStopConnectionGroup<<DisplayLabelStopGroup(ui->Lnacestna1_3,nullptr,nullptr);
 
+    //page 1
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup0_linka_2,ui->label_prestup0_cil_2,ui->label_prestup0_odjezd_2,ui->label_prestup0_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup1_linka_2,ui->label_prestup1_cil_2,ui->label_prestup1_odjezd_2,ui->label_prestup1_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup2_linka_2,ui->label_prestup2_cil_2,ui->label_prestup2_odjezd_2,ui->label_prestup2_nastupiste_2);
@@ -509,10 +520,15 @@ void MainWindow::displayLabelFillArrayJis()
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup5_linka_2,ui->label_prestup5_cil_2,ui->label_prestup5_odjezd_2,ui->label_prestup5_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup6_linka_2,ui->label_prestup6_cil_2,ui->label_prestup6_odjezd_2,ui->label_prestup6_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup7_linka_2,ui->label_prestup7_cil_2,ui->label_prestup7_odjezd_2,ui->label_prestup7_nastupiste_2);
+    //page 2
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup8_linka_2,ui->label_prestup8_cil_2,ui->label_prestup8_odjezd_2,ui->label_prestup8_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup9_linka_2,ui->label_prestup9_cil_2,ui->label_prestup9_odjezd_2,ui->label_prestup9_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup10_linka_2,ui->label_prestup10_cil_2,ui->label_prestup10_odjezd_2,ui->label_prestup10_nastupiste_2);
     displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup11_linka_2,ui->label_prestup11_cil_2,ui->label_prestup11_odjezd_2,ui->label_prestup11_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup12_linka_2,ui->label_prestup12_cil_2,ui->label_prestup12_odjezd_2,ui->label_prestup12_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup13_linka_2,ui->label_prestup13_cil_2,ui->label_prestup13_odjezd_2,ui->label_prestup13_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup14_linka_2,ui->label_prestup14_cil_2,ui->label_prestup14_odjezd_2,ui->label_prestup14_nastupiste_2);
+    displayLabelLcdJis.labelListConnectionGroup<<DisplayLabelConnectionGroup(ui->label_prestup15_linka_2,ui->label_prestup15_cil_2,ui->label_prestup15_odjezd_2,ui->label_prestup15_nastupiste_2);
 
     displayLabelLcdJis.pageAdditionalTextMessage=ui->page_additionalTextMessage_2;
     displayLabelLcdJis.pageRoute=ui->page_route_2;
@@ -1206,6 +1222,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     QString locationState="";
     QString announcement="";
     QString connectionCount="";
+    QString stopRequested=QString::number(input.vehicleInformationGroup.vehicleStopRequested);
 
     if(!input.tripInformationList.isEmpty())
     {
@@ -1252,8 +1269,11 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     cell = new QTableWidgetItem(connectionCount);
     ui->tableWidget_logMessages->setItem(row, 5, cell);
 
-    cell = new QTableWidgetItem(announcement.replace("\n",""));
+    cell = new QTableWidgetItem(stopRequested);
     ui->tableWidget_logMessages->setItem(row, 6, cell);
+
+    cell = new QTableWidgetItem(announcement.replace("\n",""));
+    ui->tableWidget_logMessages->setItem(row, 7, cell);
 
 
     ui->tableWidget_logMessages->resizeColumnsToContents();
@@ -2311,6 +2331,11 @@ void MainWindow::slotDelayedStartup()
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",0);
     //  CustomerInformationServiceSubscriber.hledejSluzby("_ibisip_http._tcp.",1);
     //cisSubscriber.novePrihlaseniOdberu();
+}
+
+void MainWindow::slotDeviceIpUpdated(QHostAddress input)
+{
+    ui->label_subscriptionDeviceIp->setText(input.toString());
 }
 
 

@@ -74,7 +74,9 @@ Vdv301VehicleInformationGroup XmlParser2_3::domAllDataToVdv301VehicleInformation
     //output.routeDeviation
     output.vehicleMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement("PtMainMode").firstChild().nodeValue();
     output.vehicleSubMode=input.firstChildElement("MyOwnVehicleMode").firstChildElement(output.vehicleMode).firstChild().nodeValue();
-    output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+
+    output.vehicleStopRequested=qDomElementValueToBool( input.firstChildElement("VehicleStopRequested"));
+    //output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
 
 
     return output;

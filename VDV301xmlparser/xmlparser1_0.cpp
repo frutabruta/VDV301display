@@ -74,7 +74,10 @@ Vdv301VehicleInformationGroup XmlParser1_0::domAllDataToVdv301VehicleInformation
     // InPanic" type="IBIS-IP.boolean" minOccurs="0">
     output.inPanic=input.firstChildElement("InPanic").firstChildElement("Value").firstChild().nodeValue().toInt() ;
     // VehicleStopRequested" type="IBIS-IP.boolean" minOccurs="0">
-    output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
+
+
+    output.vehicleStopRequested=qDomElementValueToBool( input.firstChildElement("VehicleStopRequested")); //.firstChildElement("Value").firstChild().nodeValue().toInt();
+    //     output.vehicleStopRequested=input.firstChildElement("VehicleStopRequested").firstChildElement("Value").firstChild().nodeValue().toInt();
 
     // ExitSide" type="ExitSideEnumeration" minOccurs="0">
  //   output.exitSide=input.firstChildElement("ExitSide").firstChild().nodeValue();

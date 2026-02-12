@@ -18,6 +18,27 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260212_1929
+  - MainWindow
+    - log on startup enabled (will be added as asetting in future versions)
+    - added MainWindow::slotDeviceIpUpdated
+    - MainWindow::displayLabelFillArrayJis
+      - added newly created connection label for hidden page 2 of connections
+    - MainWindow::messageToTable
+      - added stop request indication to the table
+    - mainwindow.ui
+      - fixed second page of connections (prepared for future use)
+
+    - VDV301subscriber
+      - added a queue for publishers on multiple IPs
+    - XmlParser
+      - fixed handling of Bool types (true/false/1/0)
+      - added XmlParser::qDomElementValueToBool
+    - XmlParser1_0::domAllDataToVdv301VehicleInformationGroup
+      - vehicle stop request fix
+    - XmlParser2_3::domAllDataToVdv301VehicleInformationGroup
+      - vehicle stop request fix
+
 - 20260206_1456
   - New realtime log window
     - new class LogHandler

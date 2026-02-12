@@ -127,6 +127,8 @@ private:
 
     bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
 
+    bool logOnStartup=true;
+
     bool golemioUseTestServer=false;
     QString golemioParametry="";
     QString golemioAddress="";
@@ -292,6 +294,7 @@ private slots:
     void slotDebugPublisherToTable(PublisherStruct publisher);
     void slotDebugServiceToTable(QZeroConfService zcs);
     void slotDelayedStartup();
+    void slotDeviceIpUpdated(QHostAddress input);
     void slotDeviceParametersToConfigFile();
     void slotDisplayLcdLabelCyclePages();
     void slotDisplayLcdLabelCyclePagesJis();
@@ -312,10 +315,7 @@ private slots:
     void slotXmlToVehicleStateVariables(QString inputXmlString);
 
     void slotLogWindowAppend(const QString &text);
-
-
-
-
+    
 public slots:
 signals:
     void signalVehicleRefUpdate(QString vehicleRef);
