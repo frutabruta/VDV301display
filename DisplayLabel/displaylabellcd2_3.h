@@ -8,12 +8,13 @@
 class DisplayLabelStopGroup
 {
 public:
-    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform=nullptr);
+    DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform=nullptr, QPointer<QLabel> new_labelMinutes=nullptr);
 
     QPointer<QLabel> labelStopName;
     QPointer<QLabel> labelFarezoneBottom;
     QPointer<QLabel> labelFarezoneTop;
     QPointer<QLabel> labelPlatform;
+    QPointer<QLabel> labelMinutes;
     void eraseContent();
     bool labelSetTextSafe(QLabel *label, QString text);
 };
@@ -62,6 +63,7 @@ public:
     QVector<Vdv301DisplayContent> filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent> displayContentList, DisplayContentClass displayContentType);
     void displayLabelLineName(Vdv301Line vdv301Line);
     void displayLabelLineNameFollowing(Vdv301Line vdv301Line);
+    QString arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix);
 };
 
 #endif // DISPLAYLABELLCD2_3_H

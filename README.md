@@ -18,6 +18,26 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260225_1936
+  - GolemioClient 
+    - is_guaranteed implementation
+  - VDV301publisher
+    - dynamic expectedDepartureTime implemented
+  - VDV301subscriber 
+    - dataStructures update (delaySeconds)
+  - MainWindowHelper::connectionToTable
+    - added guaranteed connection column
+  - MainWindow.ui
+    - JIS connections aecond page overhaul
+  - DisplayLabelStopGroup
+    - added departure minutes to JIS design
+  - DisplayLabelLcd2_3
+    - new function arrivalTimeDifferenceToText
+  - DisplayLabelLcd2_3CZ1_0_Jis
+    - displayLabelStopListNew
+      - improved handling of empty stop
+
+
 - 20260212_1929
   - MainWindow
     - log on startup enabled (will be added as asetting in future versions)

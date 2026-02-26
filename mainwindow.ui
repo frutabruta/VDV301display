@@ -3732,7 +3732,7 @@ QLabel{color:#FFFFFF}</string>
                     </sizepolicy>
                    </property>
                    <property name="currentIndex">
-                    <number>4</number>
+                    <number>0</number>
                    </property>
                    <widget class="QWidget" name="page_hlavni_3">
                     <property name="sizePolicy">
@@ -4586,6 +4586,57 @@ QLabel{color:#FFFFFF}</string>
                          </property>
                          <layout class="QGridLayout" name="gridLayout_18">
                           <item row="0" column="2">
+                           <widget class="QLabel" name="label_stopRequestedSymbol_2">
+                            <property name="text">
+                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt;STOP&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt; REQUESTED&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="1">
+                           <widget class="QLabel" name="label_stopMinutes1">
+                            <property name="font">
+                             <font>
+                              <family>Roboto</family>
+                              <pointsize>20</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>6 min.</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="5">
+                           <widget class="QLabel" name="label_pasmo1_4">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>175</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>24</pointsize>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>P1</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                           </widget>
+                          </item>
+                          <item row="0" column="4">
                            <widget class="QLabel" name="label_pasmo1_3">
                             <property name="sizePolicy">
                              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -4619,10 +4670,31 @@ QLabel{color:#FFFFFF}</string>
                             </property>
                            </widget>
                           </item>
-                          <item row="0" column="1">
-                           <widget class="QLabel" name="label_stopRequestedSymbol_2">
+                          <item row="0" column="0" rowspan="2">
+                           <widget class="QLabel" name="sipka_9">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>50</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>roboto</family>
+                              <pointsize>50</pointsize>
+                             </font>
+                            </property>
                             <property name="text">
-                             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt;STOP&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#ff0000;&quot;&gt; REQUESTED&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                             <string>|</string>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -4658,63 +4730,87 @@ QLabel{color:#FFFFFF}</string>
                             </property>
                            </widget>
                           </item>
-                          <item row="0" column="3">
-                           <widget class="QLabel" name="label_pasmo1_4">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="maximumSize">
-                             <size>
-                              <width>175</width>
-                              <height>16777215</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <family>roboto</family>
-                              <pointsize>24</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>P1</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
-                           </widget>
-                          </item>
-                          <item row="0" column="0" rowspan="2">
-                           <widget class="QLabel" name="sipka_9">
-                            <property name="sizePolicy">
-                             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                              <horstretch>0</horstretch>
-                              <verstretch>0</verstretch>
-                             </sizepolicy>
-                            </property>
-                            <property name="maximumSize">
-                             <size>
-                              <width>50</width>
-                              <height>16777215</height>
-                             </size>
-                            </property>
-                            <property name="font">
-                             <font>
-                              <family>roboto</family>
-                              <pointsize>50</pointsize>
-                             </font>
-                            </property>
-                            <property name="text">
-                             <string>|</string>
-                            </property>
-                            <property name="alignment">
-                             <set>Qt::AlignCenter</set>
-                            </property>
-                           </widget>
-                          </item>
                          </layout>
+                        </widget>
+                       </item>
+                       <item row="3" column="0">
+                        <widget class="QLabel" name="label_stopMinutes2">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="4" column="0">
+                        <widget class="QLabel" name="label_stopMinutes3">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="5" column="0">
+                        <widget class="QLabel" name="label_stopMinutes4">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="6" column="0">
+                        <widget class="QLabel" name="label_stopMinutes5">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="7" column="0">
+                        <widget class="QLabel" name="label_stopMinutes6">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
                         </widget>
                        </item>
                       </layout>
@@ -7893,7 +7989,7 @@ border-radius: 30px;
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>2</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab_subscription">
              <attribute name="title">
@@ -8367,6 +8463,11 @@ departure</string>
                      <column>
                       <property name="text">
                        <string>real time</string>
+                      </property>
+                     </column>
+                     <column>
+                      <property name="text">
+                       <string>guaranteed</string>
                       </property>
                      </column>
                      <column>

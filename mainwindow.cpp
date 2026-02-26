@@ -502,12 +502,12 @@ void MainWindow::displayLabelFillArray()
 
 void MainWindow::displayLabelFillArrayJis()
 {
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1_2,ui->label_pasmo1_4, ui->label_pasmo1_3, ui->label_nastupiste_2);
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna2_2,ui->label_pasmo2_4, ui->label_pasmo2_3);
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3_2,ui->label_pasmo3_4, ui->label_pasmo3_3);
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4_2,ui->label_pasmo4_4, ui->label_pasmo4_3);
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna5_2,ui->label_pasmo5_4, ui->label_pasmo5_3);
-    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna6_2,ui->label_pasmo6_4, ui->label_pasmo6_3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna1_2,ui->label_pasmo1_4, ui->label_pasmo1_3, ui->label_nastupiste_2, ui->label_stopMinutes1);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna2_2,ui->label_pasmo2_4, ui->label_pasmo2_3, nullptr, ui->label_stopMinutes2);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna3_2,ui->label_pasmo3_4, ui->label_pasmo3_3, nullptr, ui->label_stopMinutes3);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna4_2,ui->label_pasmo4_4, ui->label_pasmo4_3, nullptr, ui->label_stopMinutes4);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna5_2,ui->label_pasmo5_4, ui->label_pasmo5_3, nullptr, ui->label_stopMinutes5);
+    displayLabelLcdJis.labelListStopGroup<<DisplayLabelStopGroup(ui->Lnacestna6_2,ui->label_pasmo6_4, ui->label_pasmo6_3, nullptr, ui->label_stopMinutes6);
 
     displayLabelLcdJis.labelListStopConnectionGroup<<DisplayLabelStopGroup(ui->Lnacestna1_3,nullptr,nullptr);
 

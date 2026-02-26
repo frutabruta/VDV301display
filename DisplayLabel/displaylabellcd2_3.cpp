@@ -3,12 +3,13 @@
 Q_LOGGING_CATEGORY(DisplayLabelLcd2_3Log, "DisplayLabelLcd2_3")
 
 
-DisplayLabelStopGroup::DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform)
+DisplayLabelStopGroup::DisplayLabelStopGroup(QPointer<QLabel> new_labelStopName, QPointer<QLabel> new_labelFarezoneBottom, QPointer<QLabel> new_labelFarezoneTop, QPointer<QLabel> new_labelPlatform, QPointer<QLabel> new_labelMinutes)
 {
     labelStopName=new_labelStopName;
     labelFarezoneBottom=new_labelFarezoneBottom;
     labelFarezoneTop=new_labelFarezoneTop;
     labelPlatform=new_labelPlatform;
+    labelMinutes=new_labelMinutes;
 }
 
 void DisplayLabelStopGroup::eraseContent()
@@ -16,6 +17,7 @@ void DisplayLabelStopGroup::eraseContent()
     labelSetTextSafe(labelStopName,"");
     labelSetTextSafe(labelFarezoneBottom,"");
     labelSetTextSafe(labelFarezoneTop,"");
+    labelSetTextSafe(labelMinutes,"");
 }
 
 bool DisplayLabelStopGroup::labelSetTextSafe(QLabel *label, QString text)
@@ -87,6 +89,27 @@ bool DisplayLabelConnectionGroup::labelSetVisibleSafe(QLabel *label, bool visibi
 
 
 DisplayLabelLcd2_3::DisplayLabelLcd2_3() {}
+
+
+QString DisplayLabelLcd2_3::arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix)
+{
+    QString output="";
+
+    int minutes=earlierTime.secsTo(laterTime)/60;
+
+    if(minutes<1)
+    {
+        //output="";
+        output=QString::number(minutes)+postFix;
+    }
+    else
+    {
+       output=QString::number(minutes)+postFix;
+    }
+
+    return output;
+}
+
 
 
 
@@ -392,11 +415,10 @@ void DisplayLabelLcd2_3::displayLabelStopList(Vdv301Trip firstTrip, Vdv301Trip s
 
         displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom);
         labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
-
     }
-
-
 }
+
+
 
 
 

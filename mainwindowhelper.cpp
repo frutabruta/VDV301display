@@ -100,8 +100,11 @@ void MainWindowHelper::connectionToTable(ConnectionGolemioV4 connection, QTableW
     cell = new QTableWidgetItem(connection.departureTimestampMinutes.join(","));
     tableWidget->setItem(row, 4, cell);
 
-    cell = new QTableWidgetItem(connection.icons.join(","));
+    cell = new QTableWidgetItem(QString::number(connection.tripIsGuaranteed));
     tableWidget->setItem(row, 5, cell);
+
+    cell = new QTableWidgetItem(connection.icons.join(","));
+    tableWidget->setItem(row, 6, cell);
 
     tableWidget->resizeColumnsToContents();
 }

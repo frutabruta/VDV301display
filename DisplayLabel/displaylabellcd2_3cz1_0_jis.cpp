@@ -52,6 +52,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
 
     bool isFirst=true;
     bool invert=false;
+    bool isEmpty=false;
 
     for(DisplayLabelStopGroup &selectedGroup : labelListStopGroup)
     {
@@ -97,12 +98,26 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
             else
             {
                 qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"pro label uz nezbyly zastavky";
-                selectedGroup.eraseContent();
+                isEmpty=true;
+
             }
         }
 
-        displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom,invert);
-        labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
+
+
+        if(isEmpty)
+        {
+            selectedGroup.eraseContent();
+        }
+        else
+        {
+            displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom,invert);
+            labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
+            labelSetTextSafe(selectedGroup.labelMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(aktualniZastavka.arrivalExpected,Qt::ISODate)," min."));
+        }
+
+
+
 
     }
 
