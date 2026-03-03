@@ -100,6 +100,8 @@ private:
     Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
     Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0_previous;
 
+    int previousAnnouncementCount=0;
+
     Vdv301CurrentDisplayContent vdv301currentDisplayContent;
 
     BarvyLinek barvyLinek;
@@ -234,6 +236,8 @@ private:
     void lcdLabelInitialize2_3();
     void loadConstants();
 
+    void manualSubscription();
+
     void menuSwitchTabs(int tabNumber);
 
     void messageToTable(Vdv301AllData2_3CZ1_0 input);
@@ -255,6 +259,7 @@ private:
     void updateLabelLocationState(QString locationState);
     void updateLabelAnnouncement(QString announcementText);
     void updateMainScreenDebugLabels();
+
 
 private slots:
     void on_checkBox_debugLogEnable_stateChanged(int arg1);
@@ -316,6 +321,8 @@ private slots:
 
     void slotLogWindowAppend(const QString &text);
     
+    void on_pushButton_subscriptitionManual_clicked();
+
 public slots:
 signals:
     void signalVehicleRefUpdate(QString vehicleRef);

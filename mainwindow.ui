@@ -267,7 +267,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_labelDisplay">
          <property name="sizePolicy">
@@ -7989,7 +7989,7 @@ border-radius: 30px;
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab_subscription">
              <attribute name="title">
@@ -8031,6 +8031,34 @@ border-radius: 30px;
                  <string>Selected publisher</string>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_23">
+                 <item>
+                  <layout class="QHBoxLayout" name="horizontalLayout_43" stretch="15,3,1">
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_subscriptionManualIp">
+                     <property name="text">
+                      <string>127.0.0.1</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLineEdit" name="lineEdit_subscriptionManualPort">
+                     <property name="text">
+                      <string>47482</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="pushButton_subscriptitionManual">
+                     <property name="text">
+                      <string>Manual subscription</string>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </item>
                  <item>
                   <widget class="QPushButton" name="pushButton_unsubscribe">
                    <property name="text">

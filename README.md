@@ -18,6 +18,13 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260303_1836
+  - MainWindow
+    - new function manualSubscription
+    - showReceivedDataLcdVdv301_2_3CZ1_0
+      - fix of screen not returning back to stopList after special announcement
+  - mainWindow.ui
+    - added button on settings page to initialize manual subscription
 - 20260225_1936
   - GolemioClient 
     - is_guaranteed implementation

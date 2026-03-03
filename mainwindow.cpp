@@ -150,13 +150,7 @@ rules += "*.critical=false\n"
 
     if(blockBonjour)
     {
-        PublisherStruct manualPublisher;
-        manualPublisher.hostAddress=QHostAddress::LocalHost;
-        manualPublisher.ibisIpVersion=cisSubscriber.version();
-        manualPublisher.serviceName="CustomerInformationService";
-        manualPublisher.portNumber=47482;
-
-        cisSubscriber.slotAddServiceManual(manualPublisher);
+        manualSubscription();
     }
 
 
@@ -1180,6 +1174,18 @@ void MainWindow::loadConstants()
     golemioUpdateVariables();
 }
 
+void MainWindow::manualSubscription()
+{
+    PublisherStruct manualPublisher;
+   // manualPublisher.hostAddress=QHostAddress::LocalHost;
+    manualPublisher.hostAddress=QHostAddress(ui->lineEdit_subscriptionManualIp->text());
+    manualPublisher.ibisIpVersion=cisSubscriber.version();
+    manualPublisher.serviceName="CustomerInformationService";
+    manualPublisher.portNumber=ui->lineEdit_subscriptionManualPort->text().toInt();
+
+    cisSubscriber.slotAddServiceManual(manualPublisher);
+}
+
 void MainWindow::menuSwitchTabs(int tabNumber)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO<<" "<<tabNumber;
@@ -1446,6 +1452,13 @@ void MainWindow::on_pushButton_settings_save_clicked()
 {
     settingsWindowToSettingsFile();
 }
+
+
+void MainWindow::on_pushButton_subscriptitionManual_clicked()
+{
+    manualSubscription();
+}
+
 
 void MainWindow::on_pushButton_unsubscribe_clicked()
 {
@@ -1930,11 +1943,19 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         else
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
+          //  ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
+
+            //workaround for not returning to stop list after special announcements
+            //displayLabelLcd.stackedWidget_onService->setCurrentWidget(ui->page_route);
+            //displayLabelLcd.stackedWidget_middle->setCurrentWidget(ui->page_hlavni_2);
+
             displayLabelLcdJis.pageCycleList.push_front(ui->page_hlavni_3);
 
+            int currentAnnouncementCount=currentVdv301trip.additionalTextMessageList.count();
 
-            if(!currentVdv301trip.additionalTextMessageList.isEmpty())
+            if(currentAnnouncementCount>0)
             {
+                previousAnnouncementCount=currentAnnouncementCount;
                 eventShowPageSpecialAnnouncement(currentVdv301trip.additionalTextMessageList,currentVdv301trip.additionalTextMessage1List,currentVdv301trip.additionalTextMessage2List,currentVdv301trip.additionalTextMessage3List,currentVdv301trip.additionalTextMessage4List);
                 /*
                 if(!currentVdv301trip.additionalTextMessage4List.isEmpty())
@@ -1960,7 +1981,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             else
             {
                 updateLabelAnnouncement("");
-                if(allDataChanged(vdv301AllData,vdv301AllData2_3CZ1_0_previous))
+                if(allDataChanged(vdv301AllData,vdv301AllData2_3CZ1_0_previous)||(previousAnnouncementCount!=currentAnnouncementCount))
                 {
                     qCDebug(MainWindowLog)<<"all data changed";
                     eventLcdReturnToStopList();
@@ -1978,6 +1999,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
                         displayLabelLcdJis.timerLabelPageSwitch.start();
                     }
                 }
+
+                previousAnnouncementCount=0;
                 /*
                 if(xmlParser2_3CZ1_0.dataChanged==true)
                 {
@@ -3011,3 +3034,4 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_lcd_version->setText(createProgramVersionString());
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
+
