@@ -19,6 +19,9 @@ Program can be launched with parameter to change settings location.
 
 ## Changelog
 - 20260303_1836
+  - VDV301publisher
+    - updated AllData generating to prevent crashes
+- 20260303_1836
   - MainWindow
     - new function manualSubscription
     - showReceivedDataLcdVdv301_2_3CZ1_0
