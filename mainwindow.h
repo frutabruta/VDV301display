@@ -263,6 +263,7 @@ private:
 
 private slots:
     void on_checkBox_debugLogEnable_stateChanged(int arg1);
+    void on_checkBox_settings_jisMinutes_stateChanged(int arg1);
     void on_checkBox_settings_useJis_stateChanged(int arg1);
     void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
     void on_checkBox_settings_golemioTestServer_stateChanged(int arg1);
@@ -322,6 +323,7 @@ private slots:
     void slotLogWindowAppend(const QString &text);
     
     void on_pushButton_subscriptitionManual_clicked();
+  
 
 public slots:
 signals:

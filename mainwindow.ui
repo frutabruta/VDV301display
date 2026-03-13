@@ -267,7 +267,7 @@
          <number>0</number>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_labelDisplay">
          <property name="sizePolicy">
@@ -727,8 +727,8 @@ border-radius: 8px;
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>871</width>
-                        <height>68</height>
+                        <width>173</width>
+                        <height>58</height>
                        </rect>
                       </property>
                       <layout class="QHBoxLayout" name="horizontalLayout_11">
@@ -787,7 +787,7 @@ border-radius: 8px;
                     </sizepolicy>
                    </property>
                    <property name="currentIndex">
-                    <number>4</number>
+                    <number>0</number>
                    </property>
                    <widget class="QWidget" name="page_hlavni_2">
                     <property name="sizePolicy">
@@ -3419,7 +3419,7 @@ border-radius: 140px;
                      </font>
                     </property>
                     <property name="text">
-                     <string>FW version:</string>
+                     <string>FW version 1:</string>
                     </property>
                    </widget>
                   </item>
@@ -4412,6 +4412,19 @@ QLabel{color:#FFFFFF}</string>
                              </property>
                             </widget>
                            </item>
+                           <item>
+                            <spacer name="horizontalSpacer_7">
+                             <property name="orientation">
+                              <enum>Qt::Horizontal</enum>
+                             </property>
+                             <property name="sizeHint" stdset="0">
+                              <size>
+                               <width>40</width>
+                               <height>20</height>
+                              </size>
+                             </property>
+                            </spacer>
+                           </item>
                           </layout>
                          </widget>
                         </widget>
@@ -4807,6 +4820,22 @@ QLabel{color:#FFFFFF}</string>
                          </property>
                          <property name="text">
                           <string>6 min.</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                         </property>
+                        </widget>
+                       </item>
+                       <item row="8" column="0">
+                        <widget class="QLabel" name="label_viaPointMinutes">
+                         <property name="font">
+                          <font>
+                           <family>Roboto</family>
+                           <pointsize>20</pointsize>
+                          </font>
+                         </property>
+                         <property name="text">
+                          <string/>
                          </property>
                          <property name="alignment">
                           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -7539,7 +7568,7 @@ border-radius: 30px;</string>
                      </font>
                     </property>
                     <property name="text">
-                     <string>FW version:</string>
+                     <string>FW version _2:</string>
                     </property>
                    </widget>
                   </item>
@@ -7822,6 +7851,13 @@ border-radius: 30px;
                <widget class="QCheckBox" name="checkBox_settings_useJis">
                 <property name="text">
                  <string>use new layout (alpha)</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_settings_jisMinutes">
+                <property name="text">
+                 <string>hide negative minutes</string>
                 </property>
                </widget>
               </item>

@@ -18,6 +18,19 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260314_0026
+  - mainWindow.ui
+    - added hide negative minutes checkbox
+  - DisplayLabelLcd2_3::arrivalTimeDifferenceToText
+    - added parameter hideNegativeMinutes
+  - DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew
+    - using hideNegativeMinutes
+  - MainWindow::slotXmlToVehicleStateVariables
+    - fixed AllData comparing and switching back to stop list layout
+  - DisplayLabelLcd2_3CZ1_0_Jis
+    - functions to support viapoints switching
+
+
 - 20260303_1836
   - VDV301publisher
     - updated AllData generating to prevent crashes

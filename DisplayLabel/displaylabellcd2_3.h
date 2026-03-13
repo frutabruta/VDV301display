@@ -63,7 +63,7 @@ public:
     QVector<Vdv301DisplayContent> filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent> displayContentList, DisplayContentClass displayContentType);
     void displayLabelLineName(Vdv301Line vdv301Line);
     void displayLabelLineNameFollowing(Vdv301Line vdv301Line);
-    QString arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix);
+    QString arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix, bool hideNegativeMinutes=true);
 };
 
 #endif // DISPLAYLABELLCD2_3_H

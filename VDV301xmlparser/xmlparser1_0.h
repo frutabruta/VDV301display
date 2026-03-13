@@ -29,12 +29,6 @@ private:
     Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
     Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
-
-
-
-
-
-
 };
 
 #endif // XMLPARSER1_0_H

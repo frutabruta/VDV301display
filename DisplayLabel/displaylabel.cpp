@@ -398,6 +398,7 @@ QVector<Vdv301InternationalText> DisplayLabel::vdv301InternationalTextJoinByLang
     }
     return output;
 }
+
 QString DisplayLabel::doplnPiktogramyBezZacatkuKonce(QString nazevZastavky, QVector<QString> seznamPiktogramu, int vyskaObrazku)
 {
     QString vystup = "";

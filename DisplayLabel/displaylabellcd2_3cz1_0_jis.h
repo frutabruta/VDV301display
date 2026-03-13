@@ -22,6 +22,9 @@ public:
     QPointer<QLabel> labelLineConnection=nullptr;
     QPointer<QLabel> labelDestinationConnection=nullptr;
     QPointer<QLabel> labelPlatformConnection=nullptr;
+    QPointer<QLabel> labelViaPointMinutes=nullptr;
+
+    bool hideNegativeMinutes=true;
 
     void displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData);
     void displayLabelStopListNew(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex, QVector<DisplayLabelStopGroup> labelListStopGroup, bool invertFirstStop=false);
@@ -30,8 +33,18 @@ public:
     void displayLabelLineName(QString lineName);
     void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
     void displayLabelConnectionListBasic(QVector<ConnectionBasic> connectionList);
-private:
+    void displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints);
 
+    QVector<Vdv301ViaPoint> viaPointList;
+    int viaPointListIterator=0;
+
+    QTimer timerViaPoint;
+
+public slots:
+    void slotViapointTick();
+    
+protected:
+QString viaPointToQString(Vdv301ViaPoint viaPoint, int velikostPiktogramu);    
 };
 
 #endif // DISPLAYLABELLCD2_3CZ1_0_JIS_H

@@ -91,16 +91,15 @@ bool DisplayLabelConnectionGroup::labelSetVisibleSafe(QLabel *label, bool visibi
 DisplayLabelLcd2_3::DisplayLabelLcd2_3() {}
 
 
-QString DisplayLabelLcd2_3::arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix)
+QString DisplayLabelLcd2_3::arrivalTimeDifferenceToText(QDateTime earlierTime, QDateTime laterTime, QString postFix, bool hideNegativeMinutes)
 {
     QString output="";
 
     int minutes=earlierTime.secsTo(laterTime)/60;
 
-    if(minutes<1)
+    if((minutes<1)&&(hideNegativeMinutes))
     {
-        //output="";
-        output=QString::number(minutes)+postFix;
+        output="";
     }
     else
     {

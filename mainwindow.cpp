@@ -142,6 +142,9 @@ rules += "*.critical=false\n"
     timerUpdateSeconds.start(1000); //refresh vterin
     displayLabelLed.timerLedSideCycleViaPoints.start(intervalSideDisplay);
 
+    displayLabelLcdJis.timerViaPoint.start(intervalSideDisplay);
+
+
 
 
     timerDelayedStart.setInterval(intervalDelayedStart);
@@ -206,7 +209,7 @@ void MainWindow::allConnects()
     connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
     connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
     connect(&displayLabelLcdJis.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePagesJis);
-    connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+  //  connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
 
 
     connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
@@ -248,6 +251,7 @@ void MainWindow::allConnects()
 bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
+    qCDebug(MainWindowLog)<<" old TripCount:"<<oldAllData.tripInformationList.count()<<" new: "<<newAllData.tripInformationList.count();
     if(oldAllData.currentStopIndex!=newAllData.currentStopIndex)
     {
         qCDebug(MainWindowLog)<<"stop index changed";
@@ -258,8 +262,10 @@ bool MainWindow::allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2
         qCDebug(MainWindowLog)<<"trip count changed";
         return true;
     }
-    else if(oldAllData.tripInformationList.count()>0)
+    else if((oldAllData.tripInformationList.count()>0)&&(oldAllData.tripInformationList.count()>0))
     {
+        qCDebug(MainWindowLog)<<" old stopCount:"<<oldAllData.tripInformationList.first().stopPointList.count()<<" new: "<<newAllData.tripInformationList.first().stopPointList.count();
+
         if(oldAllData.tripInformationList.first().stopPointList.count()!=newAllData.tripInformationList.first().stopPointList.count())
         {
             qCDebug(MainWindowLog)<<"stop point count changed";
@@ -1140,8 +1146,7 @@ void MainWindow::loadConstants()
     }
 
 
-
-
+    ui->checkBox_settings_jisMinutes->setChecked(displayLabelLcdJis.hideNegativeMinutes);
     ui->checkBox_settings_useJis->setChecked(useJis);
 
     menuSwitchTabs(settings.value("window/defaultScreen").toInt());
@@ -1302,6 +1307,12 @@ void MainWindow::on_checkBox_debugLogEnable_stateChanged(int arg1)
         disconnect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend);
     }
 }
+
+void MainWindow::on_checkBox_settings_jisMinutes_stateChanged(int arg1)
+{
+    displayLabelLcdJis.hideNegativeMinutes=arg1;
+}
+
 
 void MainWindow::on_checkBox_settings_useGolemioConnections_stateChanged(int arg1)
 {
@@ -1830,6 +1841,10 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     bool timerOverride=false;
 
 
+    qCDebug(MainWindowLog)<<"trip count:"<<vdv301AllData.tripInformationList.count();
+    qCDebug(MainWindowLog)<<"old trip count:"<<vdv301AllData2_3CZ1_0_previous.tripInformationList.count();
+
+
     //  eventEraseDisplayInformation();
 
     displayLabelLcd.pageCycleList.clear();
@@ -1853,11 +1868,13 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     if(vdv301AllData.currentStopIndex<1 )
     {
         popUpMessage("stop index is smaller than 0");
+        //vdv301AllData2_3CZ1_0_previous=vdv301AllData;
         return 0;
     }
     else if(vdv301AllData.currentStopIndex<1 )
     {
         popUpMessage("stop index is 0");
+        //vdv301AllData2_3CZ1_0_previous=vdv301AllData;
         return 0;
     }
     else if(isInRange(vdv301AllData.currentStopIndex-1,vdv301AllData.tripInformationList.first().stopPointList.count(),Q_FUNC_INFO))
@@ -2107,7 +2124,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
     }
 */
 
-    vdv301AllData2_3CZ1_0_previous=vdv301AllData;
+    //vdv301AllData2_3CZ1_0_previous=vdv301AllData;
     return 1;
 }
 
@@ -2187,6 +2204,12 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 
     int tripCount=vdv301AllData.tripInformationList.count();
 
+
+
+    qCDebug(MainWindowLog)<<"trip count:"<<vdv301AllData.tripInformationList.count();
+    qCDebug(MainWindowLog)<<"old trip count:"<<vdv301AllData2_3CZ1_0_previous.tripInformationList.count();
+
+
     golemioVehicleType=TypeConvertor::vehicleSubmodeToGolemioType(vdv301AllData.vehicleInformationGroup.vehicleMode);
     emit signalVehicleRefUpdate(vdv301AllData.vehicleRef);
 
@@ -2241,6 +2264,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
             eventDisplayAbnormalStateScreen("STOP INDEX <=0");
         }
     }
+    //vdv301AllData2_3CZ1_0_previous=vdv301AllData;
 }
 
 
@@ -2739,6 +2763,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             {
                 eventNotOnLine();
                 displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(vdv301AllData2_3CZ1_0.globalDisplayContentList);
+                vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
                 return;
             }
             /*
@@ -2782,6 +2807,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         if(cisSubscriber.structureName()=="AllData")
         {
             showReceivedDataVdv301(vdv301AllData);
+            vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
         }
         else if(cisSubscriber.structureName()=="CurrentDisplayContent")
         {
@@ -3034,4 +3060,3 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_lcd_version->setText(createProgramVersionString());
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
-

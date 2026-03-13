@@ -4,6 +4,8 @@ Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0_JisLog, "DisplayLabelLcd2_3CZ1_0_Jis"
 
 DisplayLabelLcd2_3CZ1_0_Jis::DisplayLabelLcd2_3CZ1_0_Jis() {
 
+    connect(&timerViaPoint, &QTimer::timeout,this, &DisplayLabelLcd2_3CZ1_0_Jis::slotViapointTick );
+    labelSetTextSafe(labelViaPointMinutes,"");
 }
 
 
@@ -103,8 +105,6 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
             }
         }
 
-
-
         if(isEmpty)
         {
             selectedGroup.eraseContent();
@@ -113,15 +113,9 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelStopListNew(Vdv301Trip2_3CZ1_0 fir
         {
             displayLabelStopPoint(aktualniZastavka,navaznySpoj,selectedGroup.labelStopName,selectedGroup.labelFarezoneTop,selectedGroup.labelFarezoneBottom,invert);
             labelSetTextSafe(selectedGroup.labelPlatform,aktualniZastavka.platform);
-            labelSetTextSafe(selectedGroup.labelMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(aktualniZastavka.arrivalExpected,Qt::ISODate)," min."));
+            labelSetTextSafe(selectedGroup.labelMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(aktualniZastavka.arrivalExpected,Qt::ISODate)," min.",hideNegativeMinutes));
         }
-
-
-
-
     }
-
-
 }
 
 
@@ -254,7 +248,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<Connec
                 labelSetTextSafe(selectedGroup.labelConnectionDestination,inlineFormatParser.parseTextLcd(selectedConnection.destinationName, selectedGroup.labelConnectionDestination->font().pixelSize(),slozkaPiktogramu) )    ;
             }
 
-          //  labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
+            //  labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
 
             displayLabelDrawLineNumber2_4(selectedConnection.lineName , selectedGroup.labelConnectionLine, sizeIconConnectionDynamic,true);
 
@@ -266,7 +260,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<Connec
             {
                 labelSetTextSafe(selectedGroup.labelConnectionPlatform,selectedConnection.platform);
                 labelSetVisibleSafe(selectedGroup.labelConnectionPlatform,true);
-               // selectedGroup.labelConnectionPlatform.setBa
+                // selectedGroup.labelConnectionPlatform.setBa
             }
 
             QString departureTime="";
@@ -294,8 +288,6 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4(QString lineName
         linkaStyleSheetStandard="font-weight: bold; color:#ffffff; padding: 0px; margin: 0px;  ";
     }
 
-
-
     QString linkaStyleSheetPiktogram="border-radius:6px; padding: 0px; margin: 0px; font-weight: bold;";
 
 
@@ -314,3 +306,61 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4(QString lineName
 }
 
 
+
+void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
+    if(labelViaPointsScrolling==nullptr)
+    {
+        qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<"NULL label";
+        return;
+    }
+
+    viaPointList=viaPoints;
+
+}
+
+
+void DisplayLabelLcd2_3CZ1_0_Jis::slotViapointTick()
+{
+    if(viaPointList.isEmpty())
+    {
+        return;
+    }
+
+    if(viaPointListIterator>=viaPointList.count())
+    {
+        viaPointListIterator=0;
+    }
+
+    Vdv301ViaPoint currentViapoint=viaPointList.value(viaPointListIterator);
+    QString viaPointText=viaPointToQString(currentViapoint,labelViaPointsScrolling->font().pixelSize());
+    labelSetTextSafe(labelViaPointsScrolling,viaPointText);
+
+    //prepared for implementation of currentViapoint.arrivalExpected
+    //labelSetTextSafe(labelViaPointMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(currentViapoint.arrivalExpected,Qt::ISODate)," min.",hideNegativeMinutes));
+
+    viaPointListIterator++;
+}
+
+
+QString DisplayLabelLcd2_3CZ1_0_Jis::viaPointToQString(Vdv301ViaPoint viaPoint, int velikostPiktogramu)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog)<<Q_FUNC_INFO;
+
+    QString nacestyString = "";
+
+    //  nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
+    QString separator=" ";
+
+    QStringList viaPointStringList;
+
+    Vdv301InternationalText viaPointNameJoin=vdv301InternationalTextJoinAll(viaPoint.placeNameList," x ") ;
+    // viaPointStringList<<viaPointNameJoin.text;
+    nacestyString=nahradIconPiktogramem(viaPointNameJoin.text, velikostPiktogramu, slozkaPiktogramu);
+
+    QString output = zabalHtmlDoZnacek(nacestyString);
+    qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) << "viapoint HTML: " << output;
+
+    return output;
+}
