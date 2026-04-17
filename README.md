@@ -18,6 +18,15 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260417_1603
+  - page switching hotfix
+    - MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0
+      - change order of attributes while calling  allDataChanged
+    - MainWindow::slotXmlToVehicleStateVariables 
+      - added update of vdv301AllData2_3CZ1_0_previous
+  - VDV301publisher
+    - updated Vdv301DataStructures submodule 
+
 - 20260314_0026
   - mainWindow.ui
     - added hide negative minutes checkbox

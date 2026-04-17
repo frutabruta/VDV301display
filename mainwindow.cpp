@@ -1998,7 +1998,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
             else
             {
                 updateLabelAnnouncement("");
-                if(allDataChanged(vdv301AllData,vdv301AllData2_3CZ1_0_previous)||(previousAnnouncementCount!=currentAnnouncementCount))
+                if(allDataChanged(vdv301AllData2_3CZ1_0_previous,vdv301AllData)||(previousAnnouncementCount!=currentAnnouncementCount))
                 {
                     qCDebug(MainWindowLog)<<"all data changed";
                     eventLcdReturnToStopList();
@@ -2825,6 +2825,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         {
 
             showReceivedDataVdv301_2_3CZ1_0(vdv301AllData2_3CZ1_0);
+            vdv301AllData2_3CZ1_0_previous=vdv301AllData2_3CZ1_0;
 
         }
         else if(cisSubscriber.structureName()=="CurrentDisplayContent")
