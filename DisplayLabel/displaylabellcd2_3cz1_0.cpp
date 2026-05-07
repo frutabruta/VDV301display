@@ -5,68 +5,6 @@ Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0Log, "DisplayLabelLcd2_3CZ1_0")
 
 DisplayLabelLcd2_3CZ1_0::DisplayLabelLcd2_3CZ1_0() {}
 
-/*
-
-void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex)
-{
-    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
-
-    int pocetPoli=labelListStopPointName.count();
-    if(firstTrip.stopPointList.isEmpty())
-    {
-        return ;
-    }
-
-    firstTrip.stopPointList.remove(0,currentStopIndex-1);
-
-    for(int i=0;i<pocetPoli;i++)
-    {
-        Vdv301StopPoint2_3CZ1_0 aktualniZastavka;
-        bool navaznySpoj=false;
-        QLabel* labelStopName=nullptr;
-        QLabel* labelFarezoneBottom=nullptr;
-        QLabel* labelFarezoneTop=nullptr;
-
-        if(!labelListStopPointName.isEmpty())
-        {
-            labelStopName=labelListStopPointName.at(i);
-        }
-
-
-        if(!labelListFareZoneLower.isEmpty())
-        {
-            labelFarezoneBottom=labelListFareZoneLower.value(i);
-        }
-
-        if(!labelListFareZoneUpper.isEmpty())
-        {
-            labelFarezoneTop=labelListFareZoneUpper.value(i);
-        }
-
-        if(!firstTrip.stopPointList.isEmpty())
-        {
-            aktualniZastavka=firstTrip.stopPointList.takeFirst();
-        }
-        else
-        {
-            if(!secondTrip.stopPointList.isEmpty())
-            {
-                navaznySpoj=true;
-                aktualniZastavka=secondTrip.stopPointList.takeFirst();
-            }
-            else
-            {
-                qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"pro label "<<i<<" uz nezbyly zastavky";
-
-                return;
-            }
-        }
-
-        displayLabelStopPoint(aktualniZastavka,navaznySpoj,labelStopName,labelFarezoneTop,labelFarezoneBottom);
-    }
-}
-
-*/
 
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
@@ -451,6 +389,21 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelShowAnnoucement(QVector<Vdv301Internat
 
 }
 
+QVector<Vdv301DisplayContent2_3CZ1_0> DisplayLabelLcd2_3CZ1_0::filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, DisplayContentClass displayContentType)
+{
+    QVector<Vdv301DisplayContent2_3CZ1_0> output;
+    foreach (Vdv301DisplayContent2_3CZ1_0 displayContent, displayContentList)
+    {
+
+        if(displayContent.displayContentType==displayContentType)
+        {
+            output<<displayContent;
+        }
+
+    }
+
+    return output;
+}
 
 bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, bool ignoreBackground )
 {

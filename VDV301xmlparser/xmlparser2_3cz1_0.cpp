@@ -37,6 +37,24 @@ Vdv301AllData2_3CZ1_0 XmlParser2_3CZ1_0::parseAllData2_3CZ1_0(QDomDocument input
     return vdv301AllData;
 }
 
+Vdv301CurrentDisplayContent2_3CZ1_0 XmlParser2_3CZ1_0::parseCurrentDisplayContent2_3(QDomDocument input)
+{
+    QDomElement root = input.firstChildElement();
+    QDomElement domCurrentDisplayContentData=root.firstChildElement("CurrentDisplayContentData");
+    QDomNodeList domDisplayContentList=domCurrentDisplayContentData.elementsByTagName("CurrentDisplayContent");
+
+
+    Vdv301CurrentDisplayContent2_3CZ1_0 currentDisplayContentData;
+
+    currentDisplayContentData.timeStamp=parseTimestamp(domCurrentDisplayContentData.firstChildElement("TimeStamp").firstChildElement("Value").text());
+
+    for(int i=0;i<domDisplayContentList.count();i++)
+    {
+        currentDisplayContentData.displayContentList<<domDisplayContentToVdv301DisplayContent(domDisplayContentList.at(i).toElement());
+    }
+
+    return currentDisplayContentData;
+}
 
 Vdv301AdditionalAnnouncement2_3CZ1_0 XmlParser2_3CZ1_0::domAdditionalAnnouncementToVdv301AdditionalAnnouncement(QDomElement input)
 {
@@ -70,6 +88,51 @@ Vdv301AdditionalAnnouncement2_3CZ1_0 XmlParser2_3CZ1_0::domAdditionalAnnouncemen
     //farezonechange
 
     return additionalAnnouncement;
+}
+
+Vdv301DisplayContent2_3CZ1_0 XmlParser2_3CZ1_0::domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom)
+{
+    Vdv301DisplayContent2_3CZ1_0 temporaryDisplayContent;
+    temporaryDisplayContent.displayContentRef=selectedDisplayContentDom.firstChildElement("DisplayContentRef").text();
+    temporaryDisplayContent.displayContentType=Vdv301DisplayContent::qStringToDisplayContentClass(selectedDisplayContentDom.firstChildElement("DisplayContentRef").text());
+    //QStringList temporaryDestinationList;
+    QDomElement lineInformationDom=selectedDisplayContentDom.firstChildElement("LineInformation");
+    Vdv301Line temporaryLine;
+    temporaryLine.lineRef=lineInformationDom.firstChildElement("LineRef").firstChildElement("Value").text();
+
+    QDomNodeList lineNameListDom=lineInformationDom.elementsByTagName("LineName");
+    for(int k=0;k<lineNameListDom.count();k++)
+    {
+        Vdv301InternationalText temporaryLineName = qDomNodeToVdv301InternationalText(lineNameListDom.at(k));
+        temporaryLine.lineNameList.append(temporaryLineName);
+    }
+    temporaryLine.lineNumber=lineInformationDom.firstChildElement("LineNumber").firstChildElement("Value").text();
+
+
+    temporaryDisplayContent.lineInformation=temporaryLine;
+
+
+    QDomNode destinationDom=selectedDisplayContentDom.firstChildElement("Destination");
+    Vdv301Destination temporaryDestination;
+    temporaryDestination.destinationRef=destinationDom.firstChildElement("DestinationRef").text();
+
+    QDomNodeList destinationNameListDom=selectedDisplayContentDom.elementsByTagName("DestinationName");
+
+    for(int k=0;k<destinationNameListDom.count();k++)
+    {
+        QDomElement temporaryDestinationName=destinationNameListDom.at(k).toElement();
+        temporaryDestination.destinationNameList<<qDomNodeToVdv301InternationalText(destinationNameListDom.at(k));
+    }
+    temporaryDisplayContent.destination=temporaryDestination;
+
+    QDomNodeList viaPointDomList=selectedDisplayContentDom.elementsByTagName("ViaPoint");
+    for(int k=0;k<viaPointDomList.count();k++)
+    {
+        temporaryDisplayContent.viaPointList.append(domViaPointToVdv301ViaPoint(viaPointDomList.at(k).toElement()));
+    }
+
+
+    return temporaryDisplayContent;
 }
 
 Vdv301Trip2_3CZ1_0 XmlParser2_3CZ1_0::domTripInformationToVdv301Trip( QDomElement input)
@@ -231,6 +294,33 @@ QVector<Vdv301StopPoint2_3CZ1_0> XmlParser2_3CZ1_0::domStopListToVdv301TripStopL
 
     return tripStopPointList;
 
+}
+
+Vdv301ViaPoint2_3CZ1_0 XmlParser2_3CZ1_0::domViaPointToVdv301ViaPoint( QDomElement domViaPoint)
+{
+    Vdv301ViaPoint2_3CZ1_0 temporaryViaPoint;
+    temporaryViaPoint.viaPointRef=domViaPoint.firstChildElement("ViaPointRef").firstChildElement().text();
+
+    QDomNodeList viaPointNameListDom=domViaPoint.elementsByTagName("PlaceName");
+    for(int j=0;j<viaPointNameListDom.count();j++)
+    {
+        temporaryViaPoint.placeNameList<<qDomNodeToVdv301InternationalText(viaPointNameListDom.at(j));
+    }
+
+    // ArrivalScheduled minOccurs="0"
+    temporaryViaPoint.arrivalScheduled=domViaPoint.firstChildElement("ArrivalScheduled").firstChildElement("Value").text();
+
+    // ArrivalExpected minOccurs="0"
+    temporaryViaPoint.arrivalExpected=domViaPoint.firstChildElement("ArrivalExpected").firstChildElement("Value").text();
+
+    // DepartureScheduled minOccurs="0"
+    temporaryViaPoint.departureScheduled=domViaPoint.firstChildElement("DepartureScheduled").firstChildElement("Value").text();
+
+    // DepartureExpected minOccurs="0"
+    temporaryViaPoint.departureExpected=domViaPoint.firstChildElement("DepartureExpected").firstChildElement("Value").text();
+
+
+    return temporaryViaPoint;
 }
 
 

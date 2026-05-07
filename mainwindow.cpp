@@ -160,7 +160,7 @@ rules += "*.critical=false\n"
     if(connectionsStandalone)
     {
 
-        connect(&golemio,&Golemio::stazeniHotovo,this,&MainWindow::slotGolemioReady);
+        connect(&golemio,&GolemioDepartureBoardsV4::stazeniHotovo,this,&MainWindow::slotGolemioReady);
         connect(&timerUpdateGolemio,&QTimer::timeout,this,&MainWindow::slotDownloadGolemio);
 
         timerUpdateGolemio.setInterval(5000);
@@ -182,7 +182,7 @@ void MainWindow::allConnects()
 
     if(logOnStartup)
     {
-      //  connect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend,Qt::QueuedConnection);
+        //  connect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend,Qt::QueuedConnection);
         ui->checkBox_debugLogEnable->setChecked(logOnStartup);
     }
 
@@ -209,7 +209,7 @@ void MainWindow::allConnects()
     connect(&displayLabelLcd.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePages);
     connect(&displayLabelLcd.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
     connect(&displayLabelLcdJis.timerLabelPageSwitch, &QTimer::timeout, this, &MainWindow::slotDisplayLcdLabelCyclePagesJis);
-  //  connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
+    //  connect(&displayLabelLcdJis.timerScrollingText, &QTimer::timeout, this, &MainWindow::slotMoveScrollingText);
 
 
     connect(&timerDelayedStart, &QTimer::timeout, this, &MainWindow::slotDelayedStartup);
@@ -796,16 +796,15 @@ void MainWindow::golemioUpdateVariables()
 {
     if(golemioUseTestServer)
     {
-        golemio.setKlic(golemioKeyTest.toUtf8());
-        golemio.setAdresa(golemioAddressTest);
+        golemio.setKey(golemioKeyTest.toUtf8());
+        golemio.setAddress(golemioAddressTest);
     }
     else
     {
-        golemio.setKlic(golemioKey.toUtf8());
-        golemio.setAdresa(golemioAddress);
+        golemio.setKey(golemioKey.toUtf8());
+        golemio.setAddress(golemioAddress);
     }
 }
-
 
 
 
@@ -815,6 +814,7 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
     {
         return;
     }
+    
 
     //handles only one row of destination and one displaycontent per class. Switching will be in future revisions
 
@@ -875,8 +875,81 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
             displayLabelLcdJis.displayLabelLineName(line);
         }
 
-        displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
-        displayLabelLcdJis.displayLabelViaPoints(displayContentList.first().viaPointList);
+        displayLabelLcd.displayLabelViaPoints(firstDisplayContent.viaPointList);
+        //  displayLabelLcdJis.displayLabelViaPoints(displayContentList.first().viaPointList);
+    }
+
+}
+
+void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, bool following)
+{
+    if(displayContentList.isEmpty())
+    {
+        return;
+    }
+    //displayContentList.first().viaPointList.first();
+
+    //handles only one row of destination and one displaycontent per class. Switching will be in future revisions
+
+    Vdv301DisplayContent2_3CZ1_0 firstDisplayContent=displayContentList.first();
+
+
+    Vdv301Destination destination=firstDisplayContent.destination;
+    Vdv301Line line=firstDisplayContent.lineInformation;
+
+
+    if(following)
+    {
+        if(destination.destinationNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelDestinationFollowing("");
+            displayLabelLcdJis.displayLabelDestinationFollowing("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelDestinationFollowing(destination);
+            displayLabelLcdJis.displayLabelDestinationFollowing(destination);
+
+        }
+
+        if(line.lineNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelLineNameFollowing("");
+            displayLabelLcdJis.displayLabelLineNameFollowing("");
+
+        }
+        else
+        {
+            displayLabelLcd.displayLabelLineNameFollowing(line);
+            displayLabelLcdJis.displayLabelLineNameFollowing(line);
+        }
+    }
+    else
+    {
+        if(destination.destinationNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelDestination("");
+            displayLabelLcdJis.displayLabelDestination("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelDestination(destination);
+            displayLabelLcdJis.displayLabelDestination(destination);
+        }
+
+        if(line.lineNameList.isEmpty())
+        {
+            displayLabelLcd.displayLabelLineName("");
+            displayLabelLcdJis.displayLabelLineName("");
+        }
+        else
+        {
+            displayLabelLcd.displayLabelLineName(line);
+            displayLabelLcdJis.displayLabelLineName(line);
+        }
+
+        //displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
+        displayLabelLcdJis.displayLabelViaPoints(firstDisplayContent.viaPointList);
     }
 
 }
@@ -1020,6 +1093,7 @@ void MainWindow::labelSetNextStopBackgroundJis(QString barvaPisma,QString barvaP
     //
     displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
 
+    //Prevent empty pointers in the future!
     QString stylTextu="color:"+barvaPisma;
     ui->Lnacestna1_2->setStyleSheet(stylTextu);
     ui->label_pasmo1_3->setStyleSheet(stylTextu);
@@ -1049,6 +1123,7 @@ void MainWindow::lcdLabelInitialize2_3()
 
 
     displayLabelLcdJis.labelViaPointsScrolling=ui->label_nacestne_2;
+    displayLabelLcdJis.labelViaPointMinutes=ui->label_viaPointMinutes;
     displayLabelLcdJis.labelClock=ui->label_hodiny_2;
     //displayLabelLcdJis.frameFollowingTrip=ui->frame_navaznySpoj_;
     //displayLabelLcdJis.labelDestinationFollowing= ui->label_followingDestination;
@@ -1170,7 +1245,7 @@ void MainWindow::loadConstants()
     ui->lineEdit_settings_golemio_rabinKey->setText(golemioKeyTest);
 
     golemioParametry=settings.value("golemio/parameters").toString();
-    golemio.setParametry(golemioParametry);
+    golemio.setParameters(golemioParametry);
 
     golemioUseTestServer=settings.value("golemio/useTestServer").toBool();
     ui->checkBox_settings_golemioTestServer->setChecked(golemioUseTestServer);
@@ -1182,7 +1257,7 @@ void MainWindow::loadConstants()
 void MainWindow::manualSubscription()
 {
     PublisherStruct manualPublisher;
-   // manualPublisher.hostAddress=QHostAddress::LocalHost;
+    // manualPublisher.hostAddress=QHostAddress::LocalHost;
     manualPublisher.hostAddress=QHostAddress(ui->lineEdit_subscriptionManualIp->text());
     manualPublisher.ibisIpVersion=cisSubscriber.version();
     manualPublisher.serviceName="CustomerInformationService";
@@ -1632,7 +1707,7 @@ void MainWindow::settingsWindowToSettingsFile()
 
 
 
-
+/*
 void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
@@ -1646,7 +1721,28 @@ void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDis
         displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(globalDisplayContentList);
 
     }
+}*/
 
+void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList)
+{
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
+
+    if(globalDisplayContentList.isEmpty())
+    {
+        displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(stopDisplayContentList);
+    }
+    else
+    {
+        displayLabelLed.ledUpdateDisplayedInformationFromDisplayContentList2_3(globalDisplayContentList);
+
+    }
+}
+
+void MainWindow::showReceivedDataLedVdv301(QVector<Vdv301DisplayContent2_3CZ1_0> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList)
+{
+    qCDebug(MainWindowLog)<<Q_FUNC_INFO;
+    QVector<Vdv301DisplayContent> reducedDisplayContentList= Vdv301DisplayContent2_3CZ1_0::vdv301DisplayContent2_3CZ1_0ListToVdv301DisplayContentList(stopDisplayContentList);
+    showReceivedDataLedVdv301(reducedDisplayContentList , globalDisplayContentList);
 
 }
 
@@ -1890,8 +1986,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
 
 
 
-        QVector<Vdv301DisplayContent> displayContentListInterior=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentInterior);
-        QVector<Vdv301DisplayContent> displayContentListLcd=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentLcd);
+        QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListInterior=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentInterior);
+        QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListLcd=displayLabelLcd.filterVdv301DisplayContentByClass(currentVdv301StopPoint.displayContentList,DisplayContentLcd);
 
 
         if(displayContentListLcd.isEmpty())
@@ -1915,8 +2011,8 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
                 Vdv301StopPoint2_3CZ1_0 firstVdv301StopPointOfNextTrip=nextVdv301trip.stopPointList.first();
                 //replace
 
-                QVector<Vdv301DisplayContent> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
-                QVector<Vdv301DisplayContent> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
+                QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListInteriorNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentInterior);
+                QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListLcdNext=displayLabelLcd.filterVdv301DisplayContentByClass(firstVdv301StopPointOfNextTrip.displayContentList,DisplayContentLcd);
 
                 /*
                   if(displayContentListLcdNext.isEmpty())
@@ -1960,7 +2056,7 @@ int MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301A
         else
         {
             displayLabelLcd.pageCycleList.push_front(ui->page_hlavni_2);
-          //  ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
+            //  ui->stackedWidget_onService->setCurrentWidget(ui->page_route);
 
             //workaround for not returning to stop list after special announcements
             //displayLabelLcd.stackedWidget_onService->setCurrentWidget(ui->page_route);
@@ -2270,7 +2366,7 @@ void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301All
 
 
 
-void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent)
+void MainWindow::showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent)
 {
     qCDebug(MainWindowLog)<<Q_FUNC_INFO;
 
@@ -2458,6 +2554,7 @@ bool MainWindow::slotDownloadGolemio()
     if(!golemioStopRef.isEmpty())
     {
         golemioParametry=golemioRequestCompose(golemioStopRef,golemioVehicleRef,golemioVehicleType);
+        golemio.setParameters(golemioParametry);
         golemio.startDataDownload(golemioParametry);
         timerUpdateGolemio.start();
     }
@@ -2500,7 +2597,7 @@ void MainWindow::slotGolemioReady()
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
 
-    golemio.naplnVstupDokument(golemio.stazenaData);
+    golemio.fillJsonFromQByteArray();
     golemioConnections=golemio.parseDomDocumentDepartures();
     golemioStops=golemio.parseDomDocumentStops();
     golemioInfotexts=golemio.parseDomDocumentInfotexts();
@@ -2783,7 +2880,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else if (cisSubscriber.structureName()=="CurrentDisplayContent")
         {
-            vdv301currentDisplayContent=xmlParser2_3CZ1_0.parseCurrentDisplayContent2_3(xmlParser2_3CZ1_0.receivedDataDomDocument);
+            vdv301currentDisplayContent2_3CZ1_0=xmlParser2_3CZ1_0.parseCurrentDisplayContent2_3(xmlParser2_3CZ1_0.receivedDataDomDocument);
         }
         else
         {
@@ -2830,7 +2927,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
         }
         else if(cisSubscriber.structureName()=="CurrentDisplayContent")
         {
-            showReceivedDataVdv301_2_3CZ1_0(vdv301currentDisplayContent);
+            showReceivedDataVdv301_2_3CZ1_0(vdv301currentDisplayContent2_3CZ1_0);
         }
         else
         {

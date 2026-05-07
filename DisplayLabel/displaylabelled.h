@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QLoggingCategory>
 #include "VDV301subscriber/VDV301DataStructures/vdv301stoppoint.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301displaycontent2_3cz1_0.h"
 
 
 class DisplayLabelLed : public DisplayLabel
@@ -51,6 +52,7 @@ public:
     void initializeFonts();
     void ledClearDisplays();
     void ledSetTextFront(QString line, QString destinationTop, QString destinationBottom);
+    void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListAll);
 public slots:
     void slotTickLedPanels2_3();
     void slotLedIterateAllDisplays();

@@ -40,7 +40,7 @@
 #include "DisplayLabel/displaylabellcd2_3cz1_0.h"
 #include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
 
-#include "GolemioClient/golemiov4.h"
+#include "GolemioClient/golemiodepartureboardsv4.h"
 #include "barvylinek.h"
 
 #include "mainwindowhelper.h"
@@ -87,7 +87,7 @@ private:
     CisSubscriber cisSubscriber;
     DeviceManagementService deviceManagementService;
 
-    GolemioV4 golemio;
+    GolemioDepartureBoardsV4 golemio;
 
     LoggerRelay relay;
     LogHandler logHandler;
@@ -103,6 +103,7 @@ private:
     int previousAnnouncementCount=0;
 
     Vdv301CurrentDisplayContent vdv301currentDisplayContent;
+    Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent2_3CZ1_0;
 
     BarvyLinek barvyLinek;
 
@@ -219,7 +220,8 @@ private:
 
     QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
     void golemioUpdateVariables();
-
+    
+    void handleDisplayContentInner(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, bool following);
     void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following);
     void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList); // unused
     void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList); // unused
@@ -245,10 +247,11 @@ private:
     void settingsWindowToSettingsFile();
     int showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData);
     void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
-    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent> globalDisplayContentList);
+    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList);
+    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent2_3CZ1_0> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList);
     void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
     int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
-    void showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent vdv301currentDisplayContent);
+    void showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent);
 
     bool svgOpenFile(const QString &fileName);
 
@@ -261,7 +264,7 @@ private:
     void updateMainScreenDebugLabels();
 
 
-private slots:
+ private slots:
     void on_checkBox_debugLogEnable_stateChanged(int arg1);
     void on_checkBox_settings_jisMinutes_stateChanged(int arg1);
     void on_checkBox_settings_useJis_stateChanged(int arg1);

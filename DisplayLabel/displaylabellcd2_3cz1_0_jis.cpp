@@ -307,7 +307,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4(QString lineName
 
 
 
-void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints)
+void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelViaPoints(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints)
 {
     qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) <<  Q_FUNC_INFO;
     if(labelViaPointsScrolling==nullptr)
@@ -333,9 +333,13 @@ void DisplayLabelLcd2_3CZ1_0_Jis::slotViapointTick()
         viaPointListIterator=0;
     }
 
-    Vdv301ViaPoint currentViapoint=viaPointList.value(viaPointListIterator);
+    Vdv301ViaPoint2_3CZ1_0 currentViapoint=viaPointList.value(viaPointListIterator);
     QString viaPointText=viaPointToQString(currentViapoint,labelViaPointsScrolling->font().pixelSize());
     labelSetTextSafe(labelViaPointsScrolling,viaPointText);
+
+
+    labelSetTextSafe(labelViaPointMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(currentViapoint.arrivalExpected,Qt::ISODate)," min.",hideNegativeMinutes));
+
 
     //prepared for implementation of currentViapoint.arrivalExpected
     //labelSetTextSafe(labelViaPointMinutes,arrivalTimeDifferenceToText(QDateTime::currentDateTime(),QDateTime::fromString(currentViapoint.arrivalExpected,Qt::ISODate)," min.",hideNegativeMinutes));

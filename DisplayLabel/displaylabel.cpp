@@ -284,7 +284,11 @@ void DisplayLabel::obarviPozadiPristi(QString barvaPisma, QString barvaPozadi, Q
 {
     qCDebug(DisplayLabelLog)<<Q_FUNC_INFO;
     //
-    qframe->setStyleSheet("background-color :" + barvaPozadi + " ; color : " + barvaPisma + "; ");
+    if(qframe!=nullptr)
+    {
+          qframe->setStyleSheet("background-color :" + barvaPozadi + " ; color : " + barvaPisma + "; ");
+    }
+
     //  ui->frame_spodniRadek->setStyleSheet("background-color :"+barvaPozadi+" ; color : "+barvaPisma+"; ");
 }
 

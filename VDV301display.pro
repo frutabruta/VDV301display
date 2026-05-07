@@ -47,9 +47,10 @@ INSTALLS+=target
 SOURCES += \
     GolemioClient/connectiongolemio.cpp \
     GolemioClient/connectiongolemiov4.cpp \
-    GolemioClient/golemio.cpp \
+    GolemioClient/golemiodepartureboardsv2.cpp \
+    GolemioClient/golemiodepartureboardsv4.cpp \
+    GolemioClient/golemiorequesthandler.cpp \
     GolemioClient/golemioresultv4.cpp \
-    GolemioClient/golemiov4.cpp \
     GolemioClient/stopgolemio.cpp \
     VDV301publisher/colordisplayrules.cpp \
     VDV301publisher/devicemanagementservice.cpp\
@@ -64,8 +65,10 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301connection.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301destination.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301displaycontent2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301farezonechange2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301internationaltext.cpp \
@@ -76,6 +79,7 @@ SOURCES += \
     VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.cpp \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.cpp \
+    VDV301subscriber/VDV301DataStructures/vdv301viapoint2_3cz1_0.cpp \
     VDV301subscriber/cissubscriber.cpp \
     VDV301subscriber/httpserversubscriber.cpp \
     VDV301subscriber/ibisipsubscriber.cpp \
@@ -108,9 +112,10 @@ SOURCES += \
 HEADERS += \
     GolemioClient/connectiongolemio.h \
     GolemioClient/connectiongolemiov4.h \
-    GolemioClient/golemio.h \
+    GolemioClient/golemiodepartureboardsv2.h \
+    GolemioClient/golemiodepartureboardsv4.h \
+    GolemioClient/golemiorequesthandler.h \
     GolemioClient/golemioresultv4.h \
-    GolemioClient/golemiov4.h \
     GolemioClient/stopgolemio.h \
     VDV301publisher/colordisplayrules.h \
     VDV301publisher/devicemanagementservice.h \
@@ -125,8 +130,10 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301connection.h \
     VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent.h \
+    VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301destination.h \
     VDV301subscriber/VDV301DataStructures/vdv301displaycontent.h \
+    VDV301subscriber/VDV301DataStructures/vdv301displaycontent2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301enumerations.h \
     VDV301subscriber/VDV301DataStructures/vdv301farezonechange2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301internationaltext.h \
@@ -137,6 +144,7 @@ HEADERS += \
     VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.h \
     VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h \
     VDV301subscriber/VDV301DataStructures/vdv301viapoint.h \
+    VDV301subscriber/VDV301DataStructures/vdv301viapoint2_3cz1_0.h \
     VDV301subscriber/cissubscriber.h \
     VDV301subscriber/httpserversubscriber.h \
     VDV301subscriber/ibisipsubscriber.h \
@@ -162,7 +170,6 @@ HEADERS += \
     mainwindowhelper.h \
     svgvykreslovani.h \
     typeconvertor.h \
-    xmlparser.h \
     barvylinek.h
 
 FORMS += \

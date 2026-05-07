@@ -8,6 +8,7 @@
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301vehicleinformationgroup.h"
 
+
 class XmlParser2_3 : public XmlParser1_0
 {
 public:
@@ -16,7 +17,7 @@ public:
     Vdv301AllData parseAllData2_3(QDomDocument input, QVector<Vdv301StopPoint> &testStopList);
     Vdv301CurrentDisplayContent parseCurrentDisplayContent2_3(QDomDocument input);
 
-    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);    
+    bool followingTripExists(QVector<Vdv301Trip> vdv301tripList);
 protected:
     Vdv301DisplayContent domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
     Vdv301VehicleInformationGroup domAllDataToVdv301VehicleInformationGroup(QDomElement input);
@@ -27,12 +28,6 @@ private:
     Vdv301Trip domTripInformationToVdv301Trip(QDomElement input);
     Vdv301StopPoint domStopPointToVdv301StopPoint(QDomElement domStopPoint);
     Vdv301ViaPoint domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
-
-
-
-
-
-
 };
 
 #endif // XMLPARSER2_3_H

@@ -2,6 +2,7 @@
 #define DISPLAYLABELLCD2_3CZ1_0_JIS_H
 
 #include "displaylabellcd2_3cz1_0.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301viapoint2_3cz1_0.h"
 
 
 class ConnectionBasic
@@ -33,9 +34,9 @@ public:
     void displayLabelLineName(QString lineName);
     void displayLabelDrawLineNumber2_4(QString lineName, QLabel *label, int velikostPiktogramu, bool prestup);
     void displayLabelConnectionListBasic(QVector<ConnectionBasic> connectionList);
-    void displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints);
+    void displayLabelViaPoints(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints);
 
-    QVector<Vdv301ViaPoint> viaPointList;
+    QVector<Vdv301ViaPoint2_3CZ1_0> viaPointList;
     int viaPointListIterator=0;
 
     QTimer timerViaPoint;

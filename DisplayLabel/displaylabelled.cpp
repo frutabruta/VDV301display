@@ -88,6 +88,14 @@ void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVe
 
 }
 
+void DisplayLabelLed::ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListAll )
+{
+    QVector<Vdv301DisplayContent> result=Vdv301DisplayContent2_3CZ1_0::vdv301DisplayContent2_3CZ1_0ListToVdv301DisplayContentList(displayContentListAll);
+
+
+    ledUpdateDisplayedInformationFromDisplayContentList2_3(result);
+}
+
 
 void DisplayLabelLed::slotTickLedPanels2_3()
 {

@@ -4,6 +4,9 @@
 #include "xmlparser2_3.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301trip2_3cz1_0.h"
 #include "VDV301subscriber/VDV301DataStructures/vdv301alldata2_3cz1_0.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301viapoint2_3cz1_0.h"
+#include "VDV301subscriber/VDV301DataStructures/vdv301currentdisplaycontent2_3cz1_0.h"
+
 
 class XmlParser2_3CZ1_0 : public XmlParser2_3
 {
@@ -14,7 +17,9 @@ public:
     Vdv301AllData2_3CZ1_0 parseAllData2_3CZ1_0(QDomDocument input);
     bool followingTripExists(QVector<Vdv301Trip2_3CZ1_0> vdv301tripList);
     Vdv301AdditionalAnnouncement2_3CZ1_0 domAdditionalAnnouncementToVdv301AdditionalAnnouncement(QDomElement input);
-
+    Vdv301DisplayContent2_3CZ1_0 domDisplayContentToVdv301DisplayContent(QDomElement selectedDisplayContentDom);
+    Vdv301ViaPoint2_3CZ1_0 domViaPointToVdv301ViaPoint(QDomElement domViaPoint);
+    Vdv301CurrentDisplayContent2_3CZ1_0 parseCurrentDisplayContent2_3(QDomDocument input);
 private:
     QVector<Vdv301StopPoint2_3CZ1_0> domStopListToVdv301TripStopList(QDomElement domTrip);
     Vdv301Trip2_3CZ1_0 domTripInformationToVdv301Trip(QDomElement input);

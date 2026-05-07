@@ -18,6 +18,29 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260507_1440
+  - fixed crash with empty viaPoint list 
+  - JIS viaPoint minutes
+  - MainWindow
+    - added MainWindow::handleDisplayContentInner
+      - fixed crash with empty viaPoint list 
+    - added Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent2_3CZ1_0;
+    - MainWindow::showReceivedDataLedVdv301
+      - reworked Vdv301DisplayContent2_3CZ1_0 support
+  - GolemioClient
+    - refactoring
+  - VDV301subscriber
+    - VDV301DataStructures 
+      - added Vdv301CurrentDisplayContent2_3CZ1_0
+  - DisplayLabelLcd2_3CZ1_0_Jis
+    - Vdv301DisplayContent2_3CZ1_0  implementation
+    - slotViapointTick 
+      - added viapoint minutes
+  - added DisplayLabelLcd2_3CZ1_0::filterVdv301DisplayContentByClass
+  -  DisplayLabel::obarviPozadiPristi
+     - added empty pointer check
+  - added XmlParser2_3CZ1_0::parseCurrentDisplayContent2_3 
+
 - 20260417_1603
   - page switching hotfix
     - MainWindow::showReceivedDataLcdVdv301_2_3CZ1_0
