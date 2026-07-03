@@ -341,6 +341,67 @@ void MainWindow::debugServiceListToTable(QVector<QZeroConfService> serviceList)
 
 
 
+void MainWindow::debugStopPointToTable(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip)
+{
+    qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
+    qint32 row;
+    QTableWidgetItem *cell;
+
+
+    /*
+    qCDebug(MainWindowLog) <<"nazev sluzby "<<nazev<<" ip adresa "<<ipadresa<<" port "<<QString::number(port)<<" data" <<verze ;
+
+ */
+    row = ui->tableWidget_debugStopList->rowCount();
+    ui->tableWidget_debugStopList->insertRow(row);
+
+
+    if(!selectedStopPointDestination.stopNameList.isEmpty())
+    {
+        Vdv301InternationalText firstName=selectedStopPointDestination.stopNameList.first();
+
+        QString stopName=InlineFormatParser::parseTextLed(firstName.text);
+
+        cell = new QTableWidgetItem(stopName);
+
+        if(isFollowingTrip)
+        {
+            cell->setBackground(QColor(240,240,240));
+        }
+
+        ui->tableWidget_debugStopList->setItem(row, 0, cell);
+    }
+
+
+    if(!selectedStopPointDestination.displayContentList.isEmpty())
+    {
+        Vdv301DisplayContent2_3CZ1_0 firstDisplayContent=selectedStopPointDestination.displayContentList.first();
+
+        if(!firstDisplayContent.lineInformation.lineNameList.isEmpty())
+        {
+            cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(firstDisplayContent.lineInformation.lineNameList.first().text));
+            ui->tableWidget_debugStopList->setItem(row, 1, cell);
+        }
+
+        if(!firstDisplayContent.destination.destinationNameList.isEmpty())
+        {
+            cell = new QTableWidgetItem(InlineFormatParser::parseTextLed(firstDisplayContent.destination.destinationNameList.first().text));
+            ui->tableWidget_debugStopList->setItem(row, 2, cell);
+        }
+
+    }
+
+    cell = new QTableWidgetItem(QDateTime::fromString(selectedStopPointDestination.departureScheduled,Qt::ISODate).toString("hh:mm"));
+    ui->tableWidget_debugStopList->setItem(row, 3, cell);
+
+    cell = new QTableWidgetItem(QDateTime::fromString(selectedStopPointDestination.departureExpected,Qt::ISODate).toString("hh:mm"));
+    ui->tableWidget_debugStopList->setItem(row, 4, cell);
+
+    ui->tableWidget_debugStopList->resizeColumnsToContents();
+
+
+}
+
 void MainWindow::debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
@@ -412,6 +473,7 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastav
 
     foreach(Vdv301StopPoint polozka, seznamZastavek)
     {
+        Vdv301StopPoint stopPoint=polozka;
         debugStopPointToTable(polozka,navazny);
     }
 }
@@ -424,7 +486,7 @@ void MainWindow::debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> sezn
         mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
     }
 
-    foreach(Vdv301StopPoint polozka, seznamZastavek)
+    foreach(Vdv301StopPoint2_3CZ1_0 polozka, seznamZastavek)
     {
         debugStopPointToTable(polozka,navazny);
     }
@@ -881,6 +943,7 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent> display
 
 }
 
+
 void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, bool following)
 {
     if(displayContentList.isEmpty())
@@ -948,7 +1011,8 @@ void MainWindow::handleDisplayContentInner(QVector<Vdv301DisplayContent2_3CZ1_0>
             displayLabelLcdJis.displayLabelLineName(line);
         }
 
-        //displayLabelLcd.displayLabelViaPoints(displayContentList.first().viaPointList);
+
+        displayLabelLcd.displayLabelViaPoints(firstDisplayContent.viaPointList);
         displayLabelLcdJis.displayLabelViaPoints(firstDisplayContent.viaPointList);
     }
 
@@ -1640,8 +1704,9 @@ void MainWindow::receivedDataVariablesReset()
 {
     currentVdv301StopPointList.clear();
 
-    debugStopPointListToTable(currentVdv301StopPointList,false);
+   // debugStopPointListToTable(currentVdv301StopPointList,false);
 
+    mainWindowHelper.eraseTable(ui->tableWidget_debugStopList);
     mainWindowHelper.eraseTable(ui->tableWidget_connections);
 }
 

@@ -13,9 +13,12 @@ public:
     void displayLabelStopFareZone(Vdv301AllData2_3CZ1_0 allData);
     void displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip, QLabel *labelStopName, QLabel *labelFarezoneBottom, QLabel *labelFarezoneTop, bool invert=false);
     void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
+    using DisplayLabelLcd2_3::displayLabelViaPoints;
+    void displayLabelViaPoints(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints);
     bool labelSetTextBgInline(QLabel *label, QString text, bool ignoreBackground = false );
     using DisplayLabelLcd2_3::filterVdv301DisplayContentByClass;
-    QVector<Vdv301DisplayContent2_3CZ1_0> filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, DisplayContentClass displayContentType);
+    QVector<Vdv301DisplayContent2_3CZ1_0> filterVdv301DisplayContentByClass(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, DisplayContentClass displayContentType);    
+    QString joinViaPointsToText(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints, int iconSize);
 public slots:
 
 };

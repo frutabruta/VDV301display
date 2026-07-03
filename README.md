@@ -18,6 +18,26 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260703_1353
+  - MainWindow
+    - MainWindow::debugStopPointToTable 2.3CZ1.0 fix
+    - ViaPoints 2.3CZ1.0 display fix
+    - receivedDataVariablesReset
+      - 2.3CZ1.0 table delete fix
+  - DisplayLabelLcd2_3CZ1_0::displayLabelViaPoints
+    - new function
+  - DisplayLabelLcd2_3CZ1_0::joinViaPointsToText
+    - new function
+  - library updates unrelated to VDV301display
+    - GolemioClient
+      - GolemioVehiclePositions::slotMessageReceived
+        - empty result fix
+    - Vdv301publisher
+      - TicketValidationService improvements
+    - Vdv301Subscriber
+      - VDV301DataStructures
+        - added VehicleState::getCurrentStopPointDestination  
+  
 - 20260507_1440
   - fixed crash with empty viaPoint list 
   - JIS viaPoint minutes

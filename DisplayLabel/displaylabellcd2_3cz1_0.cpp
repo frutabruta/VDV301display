@@ -5,6 +5,41 @@ Q_LOGGING_CATEGORY(DisplayLabelLcd2_3CZ1_0Log, "DisplayLabelLcd2_3CZ1_0")
 
 DisplayLabelLcd2_3CZ1_0::DisplayLabelLcd2_3CZ1_0() {}
 
+void DisplayLabelLcd2_3CZ1_0::displayLabelViaPoints(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) <<  Q_FUNC_INFO;
+    if(labelViaPointsScrolling==nullptr)
+    {
+        qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<"NULL label";
+        return;
+    }
+
+    /*
+    if(currentDestinationPointList.isEmpty())
+    {
+        ui->label_nacestne->setText("");
+        return;
+    }
+    */
+
+    QString newViapointString=joinViaPointsToText(viaPoints, labelViaPointsScrolling->font().pixelSize());
+
+    if(oldViapointString!=newViapointString)
+    {
+        labelSetTextSafe(labelViaPointsScrolling,newViapointString);
+        timerScrollingText.start(intervalScrollingText);
+        oldViapointString=newViapointString;
+    }
+    else
+    {
+        if(labelViaPointsScrolling->text()=="")
+        {
+            labelSetTextSafe(labelViaPointsScrolling,newViapointString);
+        }
+
+    }
+}
+
 
 
 void DisplayLabelLcd2_3CZ1_0::displayLabelStopList(Vdv301Trip2_3CZ1_0 firstTrip, Vdv301Trip2_3CZ1_0 secondTrip, int currentStopIndex,  QVector<DisplayLabelStopGroup> labelListStopGroup)
@@ -445,3 +480,31 @@ bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, 
 }
 
 
+QString DisplayLabelLcd2_3CZ1_0::joinViaPointsToText(QVector<Vdv301ViaPoint2_3CZ1_0> viaPoints, int iconSize)
+{
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log)<<Q_FUNC_INFO;
+    if (viaPoints.count() == 0)
+    {
+        return "";
+    }
+
+    QString viapointsString = "";
+
+    //  nacestyString+=  doplnPiktogramyBezZacatkuKonce(nacestneZastavky.at(0).NameLcd,nacestneZastavky.at(0).seznamPiktogramu,velikostPiktogramu);
+    QString separator=" ";
+
+
+    QStringList viaPointStringList;
+    foreach(Vdv301ViaPoint viaPoint, viaPoints)
+    {
+        Vdv301InternationalText viaPointNameJoin=vdv301InternationalTextJoinAll(viaPoint.placeNameList," x ") ;
+        // viaPointStringList<<viaPointNameJoin.text;
+        viaPointStringList<<nahradIconPiktogramem(viaPointNameJoin.text, iconSize, slozkaPiktogramu);
+    }
+    viapointsString = viaPointStringList.join(" - ");
+
+    QString result = zabalHtmlDoZnacek(viapointsString);
+    qCDebug(DisplayLabelLcd2_3CZ1_0Log) << "vypis radku nacestnych zastavek text html" << result;
+
+    return result;
+}

@@ -440,8 +440,6 @@ void DisplayLabelLcd2_3::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints
 
     QString newViapointString=vykresliNacestneZastavkyText(viaPoints, labelViaPointsScrolling->font().pixelSize());
 
-
-
     if(oldViapointString!=newViapointString)
     {
         labelSetTextSafe(labelViaPointsScrolling,newViapointString);
@@ -456,8 +454,6 @@ void DisplayLabelLcd2_3::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints
         }
 
     }
-
-
 }
 
 

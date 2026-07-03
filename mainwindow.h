@@ -184,10 +184,12 @@ private:
 
     void deviceManagementServiceInternalVariablesToSettingFile();
     void debugServiceListToTable(QVector<QZeroConfService> serviceList);
+
     void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
     void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
-
+    
     void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
+    void debugStopPointToTable(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip);
 
     //functions display LCD with labels
     void displayLabelFillArray();
