@@ -18,6 +18,11 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260723_1414
+  - added c_Exclamation icon
+  - Special announcements <br> tag fix
+    - InlineFormatParser::parseTextLcdOuter
+    - InlineFormatParser::parseTextLcdRecursive
 - 20260703_1353
   - MainWindow
     - MainWindow::debugStopPointToTable 2.3CZ1.0 fix

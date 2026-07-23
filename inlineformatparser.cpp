@@ -300,7 +300,6 @@ QString InlineFormatParser::parseTextLcdJis(QString vstup, int vyskaObrazku, QSt
             }
             else if(openElement=="color")
             {
-             //  body.appendChild(colorToQDomNode(barva));
                 body.appendChild(vystup.createTextNode(barva.content));
             }
             else if(openElement=="font")
@@ -352,15 +351,8 @@ QString InlineFormatParser::parseTextLcdOuter(QString vstup, int vyskaObrazku, Q
     qCDebug(InLineFormatParserLog)<<Q_FUNC_INFO;
 
 
-    QDomDocument vystup;
-
-    QDomElement html=vystup.createElement("html");
-    QDomElement body=vystup.createElement("body");
-
-    vstup="<wrapper>"+vstup+"</wrapper>";
+    vstup="<wrapper>"+vstup.replace("<br>","<br/>")+"</wrapper>";
     QXmlStreamReader xmlReader(vstup);
-  //  Color color;
-
 
     QString output= "<html><body>"+parseTextLcdRecursive(xmlReader,"",vyskaObrazku,slozka,bgColor)+"</body></html>";
 
@@ -392,85 +384,98 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
         {
             xmlReader.readNext();
             QXmlStreamReader::TokenType typTokenu = xmlReader.tokenType();
+
+            //    QString temporaryElement= xmlReader.name().toString();
+
             QString currentElement = xmlReader.name().toString();
 
-            switch (xmlReader.tokenType())
+            if(currentElement=="br")
             {
-            case QXmlStreamReader::StartElement:
+                result+="<br>";
+            }
+            else
             {
-                rawContent = "";
-                elementStack.push(currentElement);
-                QXmlStreamAttributes attributes = xmlReader.attributes();
-                QString elementStart ="";
 
-
-
-                // + currentElement;
-
-                while (!attributes.isEmpty())
+                switch (xmlReader.tokenType())
                 {
-                    QString attributeName = attributes.front().name().toString();
-                    QString attributeValue = attributes.front().value().toString();
+                case QXmlStreamReader::StartElement:
+                {
+                    rawContent = "";
+                    elementStack.push(currentElement);
+                    QXmlStreamAttributes attributes = xmlReader.attributes();
+                    QString elementStart ="";
 
-                    if (attributeName == "bg")
+
+
+                    // + currentElement;
+
+                    while (!attributes.isEmpty())
                     {
+                        QString attributeName = attributes.front().name().toString();
+                        QString attributeValue = attributes.front().value().toString();
 
-                        barva.bg = attributeValue;
-                        if(parent==".wrapper")
+                        if (attributeName == "bg")
                         {
-                            bgColor=barva.bg;
+
+                            barva.bg = attributeValue;
+                            if(parent==".wrapper")
+                            {
+                                bgColor=barva.bg;
+                            }
                         }
-                    }
-                    else if (attributeName == "fg")
-                    {
-                        barva.fg = attributeValue;
-                        popredi = attributeValue;
-                        qCDebug(InLineFormatParserLog) << "Setting barva.fg to" << barva.fg;
-                    }
-                    else if (attributeName == "size")
-                    {
-                        font.size = attributeValue;
-                    }
-                    else if (attributeName == "type")
-                    {
-                        ikona.type = attributeValue;
+                        else if (attributeName == "fg")
+                        {
+                            barva.fg = attributeValue;
+                            popredi = attributeValue;
+                            qCDebug(InLineFormatParserLog) << "Setting barva.fg to" << barva.fg;
+                        }
+                        else if (attributeName == "size")
+                        {
+                            font.size = attributeValue;
+                        }
+                        else if (attributeName == "type")
+                        {
+                            ikona.type = attributeValue;
+                        }
+
+                        //  elementStart += " " + attributeName + "=\"" + attributeValue + "\"";
+                        attributes.pop_front();
                     }
 
-                    //  elementStart += " " + attributeName + "=\"" + attributeValue + "\"";
-                    attributes.pop_front();
-                }
+                    if(currentElement=="color")
+                    {
+                        elementStart=colorToQDomNodeStart(barva.fg,barva.bg);
+                    }
+                    else if(currentElement=="font")
+                    {
+                        elementStart=fontToQDomNodeStart(font);
+                    }
+                    else if(currentElement=="b")
+                    {
+                        elementStart="<b>";
+                    }
+                    /*
+                    else if(currentElement=="br")
+                    {
+                        // elementStart="<br>";
+                        result+="<br>";
+                    }
+                    */
+                    else if(currentElement=="icon")
+                    {
+                        elementStart=iconToQDomNodeStart(ikona,vyskaObrazku,slozka);
+                    }
+                    else if(currentElement=="wrapper")
+                    {
+                        qCDebug(InLineFormatParserLog)<<"wrapper";
 
-                if(currentElement=="color")
-                {
-                    elementStart=colorToQDomNodeStart(barva.fg,barva.bg);
-                }
-                else if(currentElement=="font")
-                {
-                    elementStart=fontToQDomNodeStart(font);
-                }
-                else if(currentElement=="b")
-                {
-                    elementStart="<b>";
-                }
-                else if(currentElement=="br")
-                {
-                    elementStart="<br>";
-                }
-                else if(currentElement=="icon")
-                {
-                    elementStart=iconToQDomNodeStart(ikona,vyskaObrazku,slozka);
-                }
-                else if(currentElement=="wrapper")
-                {
-                    qCDebug(InLineFormatParserLog)<<"wrapper";
-
-                }
-                else
-                {
-                    qCDebug(InLineFormatParserLog)<<"unknown element";
-                    //  elementStart += ">";
-                }
-                /*
+                    }
+                    else
+                    {
+                        qCDebug(InLineFormatParserLog)<<"unknown element";
+                        //  elementStart += ">";
+                    }
+                    /*
                 if(currentElement=="")
                 {
                     qCDebug(InLineFormatParserLog)<<"empty start element";
@@ -481,25 +486,32 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
 
                 }
 */
-                result += elementStart;
-                result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, bgColor);
-                break;
-            }
+                    /*
+                    if(currentElement=="br")
+                    {
+                        currentElement=parent;
+                    }
+*/
 
-            case QXmlStreamReader::Characters:
-            {
-                QString textContent = xmlReader.text().toString();
-                if(getDirectParent(parent)!="icon")
-                {
-                    result += textContent; //need to be fixed to support replacement characters
+                    result += elementStart;
+                    result += parseTextLcdRecursive(xmlReader, parent + "." + currentElement, vyskaObrazku, slozka, bgColor);
+                    break;
                 }
 
-                break;
-            }
+                case QXmlStreamReader::Characters:
+                {
+                    QString textContent = xmlReader.text().toString();
+                    if(getDirectParent(parent)!="icon")
+                    {
+                        result += textContent; //need to be fixed to support replacement characters
+                    }
 
-            case QXmlStreamReader::EndElement:
-            {
-                /*
+                    break;
+                }
+
+                case QXmlStreamReader::EndElement:
+                {
+                    /*
 
                 if (elementStack.isEmpty())
                 {
@@ -507,44 +519,48 @@ QString InlineFormatParser::parseTextLcdRecursive(QXmlStreamReader &xmlReader, Q
                     return result;
                 }*/
 
-                // QString closingElement = elementStack.pop();
+                    // QString closingElement = elementStack.pop();
 
-                QString closingElement = currentElement;
+                    QString closingElement = currentElement;
 
 
-                if (closingElement == "color")
-                {
-                    return result+"</span>";
+                    if (closingElement == "color")
+                    {
+                        return result+"</span>";
+                    }
+                    else if (closingElement == "font")
+                    {
+                        return result+"</span>";
+                    }
+                    else if (closingElement == "b")
+                    {
+                        return result+"</b>";
+
+                    }
+                    else if (closingElement == "icon")
+                    {
+                        vystup.appendChild(iconToQDomNode(ikona, vyskaObrazku, slozka));
+                        ikona.alternative = "";
+                        ikona.type = "";
+                    }
+                    else if (closingElement == "wrapper")
+                    {
+                        return result;
+
+                    }
+
+
+                    result += "</" + closingElement + ">";
+                    break;
                 }
-                else if (closingElement == "font")
-                {
-                    return result+"</span>";
-                }
-                else if (closingElement == "b")
-                {
-                    return result+"</b>";
 
-                }
-                else if (closingElement == "icon")
-                {
-                    vystup.appendChild(iconToQDomNode(ikona, vyskaObrazku, slozka));
-                    ikona.alternative = "";
-                    ikona.type = "";
-                }
-                else if (closingElement == "wrapper")
-                {
-                    return result;
-
+                default:
+                    break;
                 }
 
-
-                result += "</" + closingElement + ">";
-                break;
             }
 
-            default:
-                break;
-            }
+
         }
 
         if (xmlReader.hasError())
