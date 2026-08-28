@@ -18,6 +18,12 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260828_1503
+  - VDV301subscriber
+    - all Subscriber instances now share one instance of QZeroConf, fixed some issues with lost signals
+  - VDV301publisher
+    - fixed unsubscription with replyPath
+
 - 20260821_2145
   - VDV301subscriber
     - new example
