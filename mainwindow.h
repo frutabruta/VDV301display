@@ -48,6 +48,8 @@
 #include "LogHandler/loggerrelay.h"
 #include "LogHandler/loghandler.h"
 
+#include "vdv301messagelogger.h"
+
 
 
 
@@ -92,6 +94,7 @@ private:
     LoggerRelay relay;
     LogHandler logHandler;
 
+    Vdv301MessageLogger vdv301MessageLogHandler;
     //complex variables
 
     QVector<Vdv301StopPoint> currentVdv301StopPointList;
@@ -131,6 +134,11 @@ private:
     bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
 
     bool logOnStartup=true;
+
+    bool logVdv301Messages=false;
+    bool logVdv301MessagesDeleteDbOnStartup=false;
+    QString loggingRules="";
+
 
     bool golemioUseTestServer=false;
     QString golemioParametry="";
@@ -266,8 +274,11 @@ private:
     void updateMainScreenDebugLabels();
 
 
- private slots:
+private slots:
     void on_checkBox_debugLogEnable_stateChanged(int arg1);
+    void on_checkBox_logMessages_stateChanged(int arg1);
+    void on_checkBox_logMessagesDeleteDbOnStartup_stateChanged(int arg1);
+
     void on_checkBox_settings_jisMinutes_stateChanged(int arg1);
     void on_checkBox_settings_useJis_stateChanged(int arg1);
     void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
@@ -328,7 +339,13 @@ private:
     void slotLogWindowAppend(const QString &text);
     
     void on_pushButton_subscriptitionManual_clicked();
-  
+
+
+    void on_pushButton_logMessagesClearDB_clicked();
+
+
+
+    void on_pushButton_debugLogSaveToConfig_clicked();
 
 public slots:
 signals:

@@ -9,6 +9,7 @@ QT += xml
 QT += core gui network
 QT += httpserver
 QT += svg
+QT+= sql
 #CONFIG   += console
 
 
@@ -98,6 +99,7 @@ SOURCES += \
     DisplayLabel/displaylabellcd2_3cz1_0.cpp \
     DisplayLabel/displaylabellcd2_3cz1_0_jis.cpp \
     DisplayLabel/displaylabelled.cpp \
+    XmlRopidImportStream/sqlitebase.cpp \
     inlineformatparser.cpp \
     LogHandler/loggerrelay.cpp \
     LogHandler/loghandler.cpp \
@@ -106,7 +108,8 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     svgvykreslovani.cpp \
-    barvylinek.cpp
+    barvylinek.cpp \
+    vdv301messagelogger.cpp
 
 
 HEADERS += \
@@ -163,6 +166,7 @@ HEADERS += \
     DisplayLabel/displaylabellcd2_3cz1_0.h \
     DisplayLabel/displaylabellcd2_3cz1_0_jis.h \
     DisplayLabel/displaylabelled.h \
+    XmlRopidImportStream/sqlitebase.h \
     inlineformatparser.h \
     LogHandler/loggerrelay.h \
     LogHandler/loghandler.h \
@@ -170,7 +174,8 @@ HEADERS += \
     mainwindowhelper.h \
     svgvykreslovani.h \
     typeconvertor.h \
-    barvylinek.h
+    barvylinek.h \
+    vdv301messagelogger.h
 
 FORMS += \
         mainwindow.ui

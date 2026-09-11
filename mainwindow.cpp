@@ -25,12 +25,28 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
     logHandler.setCategoryLevels(QStringLiteral("app.net"), 1, 1, 1, 1);
 
     ui->setupUi(this);
-    QString loggingRules="";
+
+
+    QNetworkProxyFactory::setUseSystemConfiguration(false);
+
+    if(!QFile::exists(configurationFilePath))
+    {
+        popUpMessage(tr("configuration file \n")+configurationFilePath+tr(" \ndoes not exist"));
+    }
+
+    loadConstants();
+    constantsToSettingsPage();
+
+    /*
+    loggingRules="";
     loggingRules+="*=false\n";
     loggingRules+="IbisIpSubscriber=true\n";
     loggingRules+="IbisIpSubscriberOnePublisher=true\n";
     loggingRules+="HttpServerSubscriber=true\n";
+    loggingRules+="Vdv301MessageLogger=true\n";
     loggingRules+= "*.debug=false\n";
+    */
+
 
     /*
     rules += "*.debug=false\n";
@@ -61,16 +77,14 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
         QLoggingCategory::setFilterRules(loggingRules);
     }
 
+
+
+
     /*
    * fix of program freezes when IP address is not set properly while doing HTTP POST
    * https://bugreports.qt.io/browse/QTBUG-10106
    */
-    QNetworkProxyFactory::setUseSystemConfiguration(false);
 
-    if(!QFile::exists(configurationFilePath))
-    {
-        popUpMessage(tr("configuration file \n")+configurationFilePath+tr(" \ndoes not exist"));
-    }
 
     QTranslator translator;
     //settings.setValue("General/language","en");
@@ -89,14 +103,12 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     initilializeShortcuts();
 
-    loadConstants();
 
     if(blockBonjour)
     {
         setWindowTitle(windowTitle()+" | "+tr("režim bez Bonjour"));
     }
 
-    constantsToSettingsPage();
     updateMainScreenDebugLabels();
 
     allConnects();
@@ -149,6 +161,12 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
         timerUpdateGolemio.setInterval(5000);
         timerUpdateGolemio.start();
+    }
+
+    vdv301MessageLogHandler.initialize();
+    if(logVdv301MessagesDeleteDbOnStartup)
+    {
+        vdv301MessageLogHandler.truncateDb();
     }
 }
 
@@ -284,6 +302,11 @@ void MainWindow::constantsToSettingsPage()
 
     ui->checkBox_settings_startFullscreen->setChecked(settings.value("window/fullscreen").toBool());
     ui->spinBox_defaultScreen->setValue(settings.value("window/defaultScreen").toInt());
+
+    ui->checkBox_logMessages->setChecked(logVdv301Messages);
+    ui->checkBox_logMessagesDeleteDbOnStartup->setChecked(logVdv301MessagesDeleteDbOnStartup);
+
+    ui->plainTextEdit_debugLogLevel->setPlainText(loggingRules);
 }
 
 
@@ -1225,6 +1248,11 @@ void MainWindow::loadConstants()
     golemioUseTestServer=settings.value("golemio/useTestServer").toBool();
     ui->checkBox_settings_golemioTestServer->setChecked(golemioUseTestServer);
 
+    logVdv301Messages=settings.value("log/logVdv301Messages").toBool();
+    logVdv301MessagesDeleteDbOnStartup=settings.value("log/logVdv301MessagesDeleteDbOnStartup").toBool();
+    loggingRules=settings.value("log/loggingRules").toString();
+
+
     golemioUpdateVariables();
 }
 
@@ -1276,12 +1304,12 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     QTableWidgetItem *cell;
 
     QString timeStamp=QTime::currentTime().toString("hh:mm:ss.zzz");
-    QString currentStopIndex=QString::number(input.currentStopIndex);
+    int currentStopIndex=input.currentStopIndex;
     QString tripCount=QString::number(input.tripInformationList.count());
-    QString stopCount="";
+    int stopCount=0;
     QString locationState="";
     QString announcement="";
-    QString connectionCount="";
+    int connectionCount=0;
     QString stopRequested=QString::number(input.vehicleInformationGroup.vehicleStopRequested);
 
     if(!input.tripInformationList.isEmpty())
@@ -1289,7 +1317,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
         Vdv301Trip2_3CZ1_0 selectedTrip=input.tripInformationList.first();
 
 
-        stopCount=QString::number(selectedTrip.stopPointList.count());
+        stopCount=selectedTrip.stopPointList.count();
         locationState=Vdv301Enumerations::LocationStateEnumerationToQString(selectedTrip.locationState);
         if(!selectedTrip.additionalTextMessageList.isEmpty() )
         {
@@ -1301,7 +1329,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
             if(isInRange(input.currentStopIndex-1,selectedTrip.stopPointList.count(),Q_FUNC_INFO))
             {
                 Vdv301StopPoint2_3CZ1_0 selectedStopPoint=selectedTrip.stopPointList.at(input.currentStopIndex-1);
-                connectionCount=QString::number(selectedStopPoint.connectionList.count());
+                connectionCount=selectedStopPoint.connectionList.count();
             }
 
         }
@@ -1312,19 +1340,19 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
     cell = new QTableWidgetItem(timeStamp);
     ui->tableWidget_logMessages->setItem(row, 0, cell);
 
-    cell = new QTableWidgetItem(currentStopIndex);
+    cell = new QTableWidgetItem(QString::number(currentStopIndex));
     ui->tableWidget_logMessages->setItem(row, 1, cell);
 
     cell = new QTableWidgetItem(tripCount);
     ui->tableWidget_logMessages->setItem(row, 2, cell);
 
-    cell = new QTableWidgetItem(stopCount);
+    cell = new QTableWidgetItem(QString::number(stopCount));
     ui->tableWidget_logMessages->setItem(row, 3, cell);
 
     cell = new QTableWidgetItem(locationState);
     ui->tableWidget_logMessages->setItem(row, 4, cell);
 
-    cell = new QTableWidgetItem(connectionCount);
+    cell = new QTableWidgetItem(QString::number(connectionCount));
     ui->tableWidget_logMessages->setItem(row, 5, cell);
 
     cell = new QTableWidgetItem(stopRequested);
@@ -1340,7 +1368,7 @@ void MainWindow::messageToTable(Vdv301AllData2_3CZ1_0 input)
         ui->tableWidget_logMessages->scrollToBottom();
     }
 
-
+    vdv301MessageLogHandler.addRecord(QDateTime::currentDateTime(),ui->plainTextEdit_debugReceivedXml->toPlainText(),stopCount,currentStopIndex, locationState, connectionCount);
 }
 
 void MainWindow::on_checkBox_debugLogEnable_stateChanged(int arg1)
@@ -1353,6 +1381,17 @@ void MainWindow::on_checkBox_debugLogEnable_stateChanged(int arg1)
     {
         disconnect(&relay, &LoggerRelay::message,this,&MainWindow::slotLogWindowAppend);
     }
+}
+
+void MainWindow::on_checkBox_logMessages_stateChanged(int arg1)
+{
+    settings.setValue("log/logVdv301Messages",arg1);
+}
+
+void MainWindow::on_checkBox_logMessagesDeleteDbOnStartup_stateChanged(int arg1)
+{
+    settings.setValue("log/logVdv301MessagesDeleteDbOnStartup",arg1);
+
 }
 
 void MainWindow::on_checkBox_settings_jisMinutes_stateChanged(int arg1)
@@ -1397,7 +1436,8 @@ void MainWindow::on_pushButton_debugLogClear_clicked()
 
 void MainWindow::on_pushButton_debugLogLevel_clicked()
 {
-    QLoggingCategory::setFilterRules(ui->plainTextEdit_debugLogLevel->toPlainText());
+    loggingRules=ui->plainTextEdit_debugLogLevel->toPlainText();
+    QLoggingCategory::setFilterRules(loggingRules);
 }
 
 void MainWindow::on_pushButton_debugShowHtml_clicked()
@@ -2642,7 +2682,7 @@ void MainWindow::slotXmlToVehicleStateVariables(QString inputXmlString)
             vdv301AllData2_3CZ1_0=xmlParser2_3CZ1_0.parseAllData2_3CZ1_0(xmlParser2_3CZ1_0.receivedDataDomDocument);
             updateLabelCurrentStopindex(QString::number(vdv301AllData2_3CZ1_0.currentStopIndex));
 
-            if(ui->checkBox_logMessages->isChecked())
+            if(logVdv301Messages)
             {
                 messageToTable(vdv301AllData2_3CZ1_0);
             }
@@ -2918,3 +2958,15 @@ void MainWindow::updateMainScreenDebugLabels()
     ui->label_lcd_version->setText(createProgramVersionString());
     ui->label_build->setTextInteractionFlags(Qt::TextSelectableByMouse);
 }
+
+void MainWindow::on_pushButton_logMessagesClearDB_clicked()
+{
+    vdv301MessageLogHandler.truncateDb();
+}
+
+
+void MainWindow::on_pushButton_debugLogSaveToConfig_clicked()
+{
+    settings.setValue("log/loggingRules",ui->plainTextEdit_debugLogLevel->toPlainText());
+}
+

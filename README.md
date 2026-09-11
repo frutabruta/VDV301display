@@ -18,6 +18,15 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20260831_1841
+  - Vdv301subscriber 
+    - added Qt 6.11 compatibility
+  - Vdv301publisher 
+    - added Qt 6.11 compatibility
+  
+  - Vdv301MessageLogger
+    - added logging to sqlite capability
+
 - 20260828_1503
   - VDV301subscriber
     - all Subscriber instances now share one instance of QZeroConf, fixed some issues with lost signals
