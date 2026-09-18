@@ -29,14 +29,17 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context, con
 
 
    QFile outFile("E:/LogFile.log");
-   outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+   bool result = outFile.open(QIODevice::WriteOnly | QIODevice::Append);
+   if(result)
+   {
+       // outFile.open(QIODevice::WriteOnly);
 
-  // outFile.open(QIODevice::WriteOnly);
+       QTextStream textStream(&outFile);
+       textStream << txt << Qt::endl;
 
-   QTextStream textStream(&outFile);
-   textStream << txt << Qt::endl;
+       outFile.close();
+   }
 
-   outFile.close();
 }
 
 

@@ -6,7 +6,7 @@
 
 QT += core gui
 QT += xml
-QT += core gui network
+QT += network
 QT += httpserver
 QT += svg
 QT+= sql
@@ -41,9 +41,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES+= QZEROCONF_STATIC
 include(VDV301subscriber/QtZeroConf/qtzeroconf.pri)
 
-target.path=/home/pi
-target.files=VDV301displayNew
-INSTALLS+=target
 
 SOURCES += \
     GolemioClient/connectiongolemio.cpp \
@@ -188,10 +185,6 @@ RESOURCES += \
 TRANSLATIONS += \
     lang_en.ts\
     lang_cs.ts
-
-
-RESOURCES += \
-    lang.qrc
 
 
 RC_ICONS = vdv301display_K17_icon.ico
