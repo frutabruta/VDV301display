@@ -53,6 +53,10 @@ public:
     void ledClearDisplays();
     void ledSetTextFront(QString line, QString destinationTop, QString destinationBottom);
     void ledUpdateDisplayedInformationFromDisplayContentList2_3(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentListAll);
+    void ledWriteToDisplay(LedLabelDisplay display, QString linka, QString horniRadek, QString dolniRadek);
+    void ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay);
+
+
 public slots:
     void slotTickLedPanels2_3();
     void slotLedIterateAllDisplays();

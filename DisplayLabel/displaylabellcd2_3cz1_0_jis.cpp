@@ -245,7 +245,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelConnectionListBasic(QVector<Connec
 
             if(selectedGroup.labelConnectionDestination!=nullptr)
             {
-                labelSetTextSafe(selectedGroup.labelConnectionDestination,inlineFormatParser.parseTextLcd(selectedConnection.destinationName, selectedGroup.labelConnectionDestination->font().pixelSize(),slozkaPiktogramu) )    ;
+                labelSetTextSafe(selectedGroup.labelConnectionDestination,inlineFormatParser.parseTextLcd(selectedConnection.destinationName, selectedGroup.labelConnectionDestination->font().pixelSize(),iconDirectory) )    ;
             }
 
             //  labelSetTextSafe(selectedGroup.labelConnectionDestination,selectedConnection.destinationName);
@@ -295,7 +295,7 @@ void DisplayLabelLcd2_3CZ1_0_Jis::displayLabelDrawLineNumber2_4(QString lineName
     {
         labelSetStylesheetSafe(label,linkaStyleSheetStandard);
 
-        QString vyslednyText= inlineFormatParser.parseTextLcdJis(lineName, label->font().pixelSize(),slozkaPiktogramu);
+        QString vyslednyText= inlineFormatParser.parseTextLcdJis(lineName, label->font().pixelSize(),iconDirectory);
         labelSetTextSafe(label,vyslednyText);
 
         qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog).noquote()<<"obsah pole linky: "<<vyslednyText;
@@ -361,9 +361,9 @@ QString DisplayLabelLcd2_3CZ1_0_Jis::viaPointToQString(Vdv301ViaPoint viaPoint, 
 
     Vdv301InternationalText viaPointNameJoin=vdv301InternationalTextJoinAll(viaPoint.placeNameList," x ") ;
     // viaPointStringList<<viaPointNameJoin.text;
-    nacestyString=nahradIconPiktogramem(viaPointNameJoin.text, velikostPiktogramu, slozkaPiktogramu);
+    nacestyString=iconToHtmlImage(viaPointNameJoin.text, velikostPiktogramu, iconDirectory);
 
-    QString output = zabalHtmlDoZnacek(nacestyString);
+    QString output = wrapInHtml(nacestyString);
     qCDebug(DisplayLabelLcd2_3CZ1_0_JisLog) << "viapoint HTML: " << output;
 
     return output;

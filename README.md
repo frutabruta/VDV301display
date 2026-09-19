@@ -4,7 +4,7 @@
 Ctrl+F fullscreen mode
 F1-F8 menu switching
 
-Setting are in file nastaveni.ini
+Setting are in file settings.ini
 
 
 Logging to file: 
@@ -17,7 +17,17 @@ Program can be launched with parameter to change settings location.
 - Planned features
   - debug window with VDV301subscriber log
 
+## Before compiling
+- Android: copy *QZeroConfNsdManager.java* from *VDV301tester\VDV301publisher\QtZeroConf* to *VDV301tester\android\src*
+
 ## Changelog
+- 20260919_1324
+  - added limited compatibility with Android
+    - settings.ini gets copies automatically on first start
+  - DisplayLabel
+    - more functions translated to English
+  - Mainwindow.ui
+    - new syntax
 - 20260831_1841
   - Vdv301subscriber 
     - added Qt 6.11 compatibility

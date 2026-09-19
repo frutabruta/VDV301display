@@ -411,3 +411,95 @@ void DisplayLabelLed::ledUpdateDisplaySizes()
 
     ledInitializeFormat();
 }
+
+
+
+
+void DisplayLabelLed::ledDisplaySetDisplayContent(LedLabelDisplay &selectedDisplay)
+{
+    qCDebug(DisplayLabelLedLog)<<Q_FUNC_INFO<<" "<<" displayContentCount:"<<selectedDisplay.displayContentList.count();
+
+
+
+    if(selectedDisplay.displayContentList.isEmpty())
+    {
+        return; //display clear
+    }
+    else
+    {
+        if(selectedDisplay.ticker<selectedDisplay.displayContentList.length())
+        {
+            Vdv301DisplayContent selectedDisplayContent=selectedDisplay.displayContentList.at(selectedDisplay.ticker);
+            QString lineText="";
+            QString destinationTopRow="";
+            QString destinationBottomRow="";
+
+            if(selectedDisplayContent.lineInformation.lineNameList.isEmpty())
+            {
+                lineText="";
+            }
+            else
+            {
+                lineText=selectedDisplayContent.lineInformation.lineNameList.first().text;
+            }
+
+            switch (selectedDisplayContent.destination.destinationNameList.count()) {
+            case 0:
+
+                break;
+            case 1:
+                destinationTopRow=selectedDisplayContent.destination.destinationNameList.first().text;
+                break;
+            case 2:
+                destinationTopRow=selectedDisplayContent.destination.destinationNameList.at(0).text;
+                destinationBottomRow=selectedDisplayContent.destination.destinationNameList.at(1).text;
+                break;
+
+            default:
+                break;
+            }
+
+
+            ledWriteToDisplay(selectedDisplay,lineText,destinationTopRow,destinationBottomRow);
+            selectedDisplay.ticker++;
+        }
+        else
+        {
+            selectedDisplay.ticker=0;
+            // qCDebug(myClassLog)<<"displayContent out of range";
+        }
+    }
+
+}
+
+
+void DisplayLabelLed::ledWriteToDisplay(LedLabelDisplay display,QString linka,QString horniRadek,QString dolniRadek)
+{
+    qCDebug(DisplayLabelLedLog) <<  Q_FUNC_INFO;
+
+    linka=InlineFormatParser::parseTextLed(linka);
+    horniRadek=InlineFormatParser::parseTextLed(horniRadek);
+    dolniRadek=InlineFormatParser::parseTextLed(dolniRadek);
+
+    if (dolniRadek!="")
+    {
+        labelSetVisibleSafe(display.destinationLabel,false);
+        labelSetVisibleSafe(display.destination1Label,true);
+        labelSetVisibleSafe(display.destination2Label,true);
+    }
+    else
+    {
+        labelSetVisibleSafe(display.destinationLabel,true);
+        labelSetVisibleSafe(display.destination1Label,false);
+        labelSetVisibleSafe(display.destination2Label,false);
+
+
+    }
+
+    labelSetTextSafe(display.lineLabel,linka);
+    labelSetTextSafe(display.destinationLabel,horniRadek);
+    labelSetTextSafe(display.destination1Label,horniRadek);
+    labelSetTextSafe(display.destination2Label,dolniRadek);
+}
+
+

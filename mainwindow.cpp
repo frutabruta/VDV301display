@@ -96,8 +96,8 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     ui->plainTextEdit_debugLogLevel->setPlainText(loggingRules);
 
-    displayLabelLcd.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
-    displayLabelLcdJis.slozkaPiktogramu=QCoreApplication::applicationDirPath()+"/icons";
+    displayLabelLcd.iconDirectory=QCoreApplication::applicationDirPath()+"/icons";
+    displayLabelLcdJis.iconDirectory=QCoreApplication::applicationDirPath()+"/icons";
 
     initilializeFonts();
 
@@ -600,8 +600,6 @@ void MainWindow::displayLabelReturnToStopList()
     lcdLabelCurrentPageIndexJis=0;
     ui->stackedWidget_onService_2->setCurrentWidget(ui->page_route_2);
     displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_hlavni_3);
-
-    displayLabelLcd.naplnZmenaLabel("",ui->label_zmena);
 }
 
 
@@ -639,13 +637,13 @@ void MainWindow::displayLabelShowAnnoucement(QString title,QString type,QString 
     displayLabelLcdJis.stackedWidget_middle->setCurrentWidget(ui->page_oznameni_2);
 
     ui->label_oznTitle->setText(title);
-    ui->label_oznType->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
+    ui->label_oznType->setText(  displayLabelLcd.textToAnnouncementIcon(type,100*displayLabelLcd.ratioPixelPoint));
     ui->label_oznTextCs->setText(textCz);
     ui->label_oznTextEn->setText(textEn);
 
 
     ui->label_oznTitle_2->setText(title);
-    ui->label_oznType_2->setText(  displayLabelLcd.textNaPiktogramOznameni(type,100*displayLabelLcd.ratioPixelPoint));
+    ui->label_oznType_2->setText(  displayLabelLcd.textToAnnouncementIcon(type,100*displayLabelLcd.ratioPixelPoint));
     ui->label_oznTextCs_2->setText(textCz);
     ui->label_oznTextEn_2->setText(textEn);
 
@@ -1086,8 +1084,8 @@ void MainWindow::labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateE
 void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPozadi)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    displayLabelLcd.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
-    displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
+    displayLabelLcd.setNextStopBackground(barvaPisma,barvaPozadi,ui->frame_spodniRadek);
+    displayLabelLcdJis.setNextStopBackground(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
     svgVykreslovani.obarviPozadiPristi(barvaPisma,barvaPozadi);
 
     QString stylTextu="color:"+barvaPisma;
@@ -1100,7 +1098,7 @@ void MainWindow::labelSetNextStopBackground(QString barvaPisma,QString barvaPoza
 void MainWindow::labelSetNextStopBackgroundJis(QString barvaPisma,QString barvaPozadi)
 {
     qCDebug(MainWindowLog) <<  Q_FUNC_INFO;
-    displayLabelLcdJis.obarviPozadiPristi(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
+    displayLabelLcdJis.setNextStopBackground(barvaPisma,barvaPozadi,ui->frame_spodniRadek_2);
 
     //Prevent empty pointers in the future!
     QString stylTextu="color:"+barvaPisma;
@@ -2908,7 +2906,7 @@ bool MainWindow::isVehicleOnFinalStop(Vdv301AllData2_3CZ1_0 allData)
 
 void MainWindow::updateLabelAnnouncement(QString announcementText)
 {
-    displayLabelLcd.naplnAnouncementLabel(announcementText,ui->label_announcement);
+    displayLabelLcd.setAnouncementLabel(announcementText,ui->label_announcement);
 
 
     // ui->label_debugAnnouncement->setText(announcementText);

@@ -41,6 +41,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 DEFINES+= QZEROCONF_STATIC
 include(VDV301subscriber/QtZeroConf/qtzeroconf.pri)
 
+ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 SOURCES += \
     GolemioClient/connectiongolemio.cpp \

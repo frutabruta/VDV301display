@@ -79,7 +79,7 @@ void DisplayLabelLcd::displayLabelDrawLineNumber2_4(QString lineName, QLabel* la
     {
         labelSetStylesheetSafe(label,linkaStyleSheetStandard);
 
-        QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),slozkaPiktogramu);
+        QString vyslednyText= inlineFormatParser.parseTextLcd(lineName, label->font().pixelSize(),iconDirectory);
         labelSetTextSafe(label,vyslednyText);
 
         qCDebug(DisplayLabelLcdLog).noquote()<<"obsah pole linky: "<<vyslednyText;
@@ -153,8 +153,8 @@ void DisplayLabelLcd::lcdResizeLabels(int frameHeight)
     sizeIconConnectionDynamic=qFloor(sizeIconConnection*ratioPixelPoint);
 
 
-    labelNastavVelikost(labelDestination,sizeFontDestination,ratioPixelPoint ); //100
-    labelNastavVelikost(labelViaPointsScrolling,sizeFontViaPoints,ratioPixelPoint); //72
+    resizeLabelPointCoeficient(labelDestination,sizeFontDestination,ratioPixelPoint ); //100
+    resizeLabelPointCoeficient(labelViaPointsScrolling,sizeFontViaPoints,ratioPixelPoint); //72
 
     //poleLabelNastavVelikost(labelListStopPointName,sizeFontFollowing,ratioPixelPoint); //100
 
@@ -166,7 +166,7 @@ void DisplayLabelLcd::lcdResizeLabels(int frameHeight)
    // poleLabelNastavVelikost(labelListConnectionPlatform,sizeFontTransferDestination,ratioPixelPoint); //36
    // poleLabelNastavVelikost(labelListConnectionDeparture,sizeFontTransferDestination,ratioPixelPoint); //36
 
-    labelNastavVelikost(labelClock,80,ratioPixelPoint); //80
+    resizeLabelPointCoeficient(labelClock,80,ratioPixelPoint); //80
     //  labelNastavVelikost(ui->label_textPres,30,ratioPixelPoint); //30
     //  labelNastavVelikost(ui->label_textVia ,30,ratioPixelPoint); //30
 
@@ -176,6 +176,6 @@ void DisplayLabelLcd::lcdResizeLabels(int frameHeight)
     labelVykreslovani.labelNastavVelikost(,,);
     labelVykreslovani.labelNastavVelikost(,,);
     */
-    zmensiCisloLinkyLabel(labelLine);
+    resizeLineLabel(labelLine);
 
 }

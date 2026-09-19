@@ -122,7 +122,7 @@ void DisplayLabelLcd2_3::displayLabelDestination(Vdv301Destination vdv301Destina
         iconSize=labelDestination->font().pixelSize();
     }
 
-    QString text=nahradIconPiktogramem(vdv301InternationalTextJoinAll(vdv301Destination.destinationNameList,"\n").text, iconSize, slozkaPiktogramu);
+    QString text=iconToHtmlImage(vdv301InternationalTextJoinAll(vdv301Destination.destinationNameList,"\n").text, iconSize, iconDirectory);
     labelSetTextSafe(labelDestination,text);
     /* if(cisSubscriber.verze()=="2.3")
     {
@@ -188,7 +188,7 @@ void DisplayLabelLcd2_3::displayLabelDestinationFollowing(Vdv301Destination vdv3
         iconSize=labelDestination->font().pixelSize();
     }
 
-    QString text=nahradIconPiktogramem(vdv301InternationalTextJoinAll(vdv301Destination.destinationNameList,"\n").text, iconSize, slozkaPiktogramu);
+    QString text=iconToHtmlImage(vdv301InternationalTextJoinAll(vdv301Destination.destinationNameList,"\n").text, iconSize, iconDirectory);
     labelSetTextSafe(labelDestinationFollowing,text);
 
 
@@ -438,7 +438,7 @@ void DisplayLabelLcd2_3::displayLabelViaPoints(QVector<Vdv301ViaPoint> viaPoints
     }
     */
 
-    QString newViapointString=vykresliNacestneZastavkyText(viaPoints, labelViaPointsScrolling->font().pixelSize());
+    QString newViapointString=viaPointListToFormattedString(viaPoints, labelViaPointsScrolling->font().pixelSize());
 
     if(oldViapointString!=newViapointString)
     {
@@ -467,7 +467,7 @@ void DisplayLabelLcd2_3::displayLabelStopPoint(Vdv301StopPoint selectedStopPoint
 
 
     Vdv301InternationalText joinedStopName=vdv301InternationalTextJoinAll(selectedStopPointDestination.stopNameList,"\n");
-    labelStopName->setText(inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),slozkaPiktogramu) );
+    labelStopName->setText(inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),iconDirectory) );
     /*
     if((mVdv301version=="2.3")||(mVdv301version=="2.3CZ1.0"))
     {
