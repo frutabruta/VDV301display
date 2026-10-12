@@ -156,7 +156,7 @@ MainWindow::MainWindow(QString configurationFilePath, QWidget *parent) :
 
     if(connectionsStandalone)
     {
-        connect(&golemio,&GolemioDepartureBoardsV4::stazeniHotovo,this,&MainWindow::slotGolemioReady);
+        connect(&golemio,&GolemioDepartureBoardsV4::signalDownloadFinished,this,&MainWindow::slotGolemioReady);
         connect(&timerUpdateGolemio,&QTimer::timeout,this,&MainWindow::slotDownloadGolemio);
 
         timerUpdateGolemio.setInterval(5000);
