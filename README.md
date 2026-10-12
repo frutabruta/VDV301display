@@ -18,6 +18,14 @@ Program can be launched with parameter to change settings location.
   - debug window with VDV301subscriber log
 
 ## Changelog
+- 20261012_2151
+  - GolemioClient
+    - added new StopGolemio attributes
+  - VDV301publisher
+    - remote control fix
+  - VDV301Subscriber
+    - remote control related fixes
+    
 - 20260831_1841
   - Vdv301subscriber 
     - added Qt 6.11 compatibility

@@ -1,6 +1,7 @@
 release/
 debug/
 ignorovat/
+build/
 
 VDV301display.pro.user*
 
