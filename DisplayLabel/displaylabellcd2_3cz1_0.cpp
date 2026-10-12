@@ -126,7 +126,7 @@ void DisplayLabelLcd2_3CZ1_0::displayLabelStopPoint(Vdv301StopPoint2_3CZ1_0 sele
     Vdv301InternationalText joinedStopName=vdv301InternationalTextJoinAll(selectedStopPointDestination.stopNameList,"\n");
     if(labelStopName!=nullptr)
     {
-        labelSetTextSafe(labelStopName,inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),slozkaPiktogramu) )    ;
+        labelSetTextSafe(labelStopName,inlineFormatParser.parseTextLcd(joinedStopName.text, labelStopName->font().pixelSize(),iconDirectory) )    ;
     }
 
     /*
@@ -456,7 +456,7 @@ bool DisplayLabelLcd2_3CZ1_0::labelSetTextBgInline(QLabel *label, QString text, 
 
 
         QString barvaPozadi="";
-        QString result=inlineFormatParser.parseTextLcdOuter(text,100,slozkaPiktogramu,barvaPozadi);
+        QString result=inlineFormatParser.parseTextLcdOuter(text,100,iconDirectory,barvaPozadi);
 
 
         QString barvaPozadiCss="background-color:"+barvaPozadi+";";
@@ -499,11 +499,11 @@ QString DisplayLabelLcd2_3CZ1_0::joinViaPointsToText(QVector<Vdv301ViaPoint2_3CZ
     {
         Vdv301InternationalText viaPointNameJoin=vdv301InternationalTextJoinAll(viaPoint.placeNameList," x ") ;
         // viaPointStringList<<viaPointNameJoin.text;
-        viaPointStringList<<nahradIconPiktogramem(viaPointNameJoin.text, iconSize, slozkaPiktogramu);
+        viaPointStringList<<iconToHtmlImage(viaPointNameJoin.text, iconSize, iconDirectory);
     }
     viapointsString = viaPointStringList.join(" - ");
 
-    QString result = zabalHtmlDoZnacek(viapointsString);
+    QString result = wrapInHtml(viapointsString);
     qCDebug(DisplayLabelLcd2_3CZ1_0Log) << "vypis radku nacestnych zastavek text html" << result;
 
     return result;

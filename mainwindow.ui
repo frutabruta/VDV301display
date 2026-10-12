@@ -54,10 +54,10 @@
        </size>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Shape::StyledPanel</enum>
       </property>
       <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
+       <enum>QFrame::Shadow::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_13">
        <property name="spacing">
@@ -359,10 +359,10 @@ QLabel{color:#FFFFFF}</string>
                  <string notr="true">*{background-color:rgb(25,25,25); color: rgb(255,255,255)}</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
+                 <enum>QFrame::Shape::StyledPanel</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_3" stretch="300,485,265">
                  <property name="spacing">
@@ -438,10 +438,10 @@ QLabel{color:#FFFFFF}</string>
                        <item>
                         <widget class="QFrame" name="frame_navaznySpoj">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_13">
                           <item>
@@ -568,7 +568,7 @@ border-radius: 8px;
                         <string>16:14</string>
                        </property>
                        <property name="alignment">
-                        <set>Qt::AlignCenter</set>
+                        <set>Qt::AlignmentFlag::AlignCenter</set>
                        </property>
                       </widget>
                      </item>
@@ -578,7 +578,7 @@ border-radius: 8px;
                         <number>0</number>
                        </property>
                        <property name="sizeConstraint">
-                        <enum>QLayout::SetDefaultConstraint</enum>
+                        <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
                        </property>
                        <item>
                         <widget class="QLabel" name="label_textVia">
@@ -607,7 +607,7 @@ border-radius: 8px;
                           <string>Přes:</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -638,7 +638,7 @@ border-radius: 8px;
                           <string>Via:</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -683,7 +683,7 @@ border-radius: 8px;
                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;741&lt;/span&gt;&lt;•img src=&quot;:/images/request&quot;&gt;&lt;/body&gt;&lt;/html&gt;</string>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignCenter</set>
+                      <set>Qt::AlignmentFlag::AlignCenter</set>
                      </property>
                     </widget>
                    </item>
@@ -705,19 +705,19 @@ border-radius: 8px;
                       <string notr="true">*{background-color: rgb(50,50,50)}</string>
                      </property>
                      <property name="frameShape">
-                      <enum>QFrame::NoFrame</enum>
+                      <enum>QFrame::Shape::NoFrame</enum>
                      </property>
                      <property name="frameShadow">
-                      <enum>QFrame::Plain</enum>
+                      <enum>QFrame::Shadow::Plain</enum>
                      </property>
                      <property name="lineWidth">
                       <number>0</number>
                      </property>
                      <property name="verticalScrollBarPolicy">
-                      <enum>Qt::ScrollBarAlwaysOff</enum>
+                      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
                      </property>
                      <property name="horizontalScrollBarPolicy">
-                      <enum>Qt::ScrollBarAlwaysOff</enum>
+                      <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
                      </property>
                      <property name="widgetResizable">
                       <bool>true</bool>
@@ -727,7 +727,7 @@ border-radius: 8px;
                        <rect>
                         <x>0</x>
                         <y>0</y>
-                        <width>173</width>
+                        <width>172</width>
                         <height>58</height>
                        </rect>
                       </property>
@@ -768,7 +768,7 @@ border-radius: 8px;
                           <string>Šanghaj</string>
                          </property>
                          <property name="textFormat">
-                          <enum>Qt::AutoText</enum>
+                          <enum>Qt::TextFormat::AutoText</enum>
                          </property>
                         </widget>
                        </item>
@@ -876,7 +876,7 @@ border-radius: 8px;
                               <string>P2</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -907,7 +907,7 @@ border-radius: 8px;
                               <string>P1</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -961,7 +961,7 @@ border-radius: 8px;
                               <string>P2</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -992,7 +992,7 @@ border-radius: 8px;
                               <string>P1</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -1046,7 +1046,7 @@ border-radius: 8px;
                               <string>P2</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -1077,7 +1077,7 @@ border-radius: 8px;
                               <string>P1</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -1134,7 +1134,7 @@ border-radius: 8px;
                               <string>P2</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -1165,7 +1165,7 @@ border-radius: 8px;
                               <string>P1</string>
                              </property>
                              <property name="alignment">
-                              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                              <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                              </property>
                              <property name="margin">
                               <number>0</number>
@@ -1198,7 +1198,7 @@ border-radius: 8px;
                             <string>|</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1226,7 +1226,7 @@ border-radius: 8px;
                             <string>|</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1254,7 +1254,7 @@ border-radius: 8px;
                             <string>|</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1282,7 +1282,7 @@ border-radius: 8px;
                             <string>↑</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1305,10 +1305,10 @@ border-radius: 8px;
                        <item>
                         <widget class="QFrame" name="frame_2">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout">
                           <item>
@@ -1329,7 +1329,7 @@ border-radius: 8px;
                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                             </property>
                            </widget>
                           </item>
@@ -1357,7 +1357,7 @@ border-radius: 8px;
                                <string>Nadpis</string>
                               </property>
                               <property name="alignment">
-                               <set>Qt::AlignCenter</set>
+                               <set>Qt::AlignmentFlag::AlignCenter</set>
                               </property>
                               <property name="wordWrap">
                                <bool>true</bool>
@@ -1439,7 +1439,7 @@ border-radius: 8px;
                             <string>X</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1462,7 +1462,7 @@ border-radius: 8px;
                             <string>zmen pasma text</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1491,7 +1491,7 @@ border-radius: 140px;
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1513,7 +1513,7 @@ border-radius: 140px;
                             <bool>false</bool>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1538,7 +1538,7 @@ border-radius: 140px;
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -1571,7 +1571,7 @@ border-radius: 140px;
                           <string>Konečná zastávka, prosíme, vystupte.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="wordWrap">
                           <bool>true</bool>
@@ -1590,7 +1590,7 @@ border-radius: 140px;
                           <string>Final stop, please leave the bus.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="wordWrap">
                           <bool>true</bool>
@@ -1620,10 +1620,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_22" stretch="19,10,100,10,40">
                           <item>
@@ -1660,7 +1660,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1711,7 +1711,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1733,7 +1733,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1743,10 +1743,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd1">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_23" stretch="19,10,100,10,40">
                           <item>
@@ -1783,7 +1783,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1831,7 +1831,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1853,7 +1853,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1866,10 +1866,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="19,10,100,10,40">
                           <item>
@@ -1906,7 +1906,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1954,7 +1954,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1976,7 +1976,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -1986,10 +1986,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd3">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_28" stretch="19,10,100,10,40">
                           <item>
@@ -2026,7 +2026,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2074,7 +2074,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2096,7 +2096,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2109,10 +2109,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_27" stretch="19,10,100,10,40">
                           <item>
@@ -2149,7 +2149,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2197,7 +2197,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2219,7 +2219,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2229,10 +2229,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd5">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_26" stretch="19,10,100,10,40">
                           <item>
@@ -2269,7 +2269,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2317,7 +2317,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2339,7 +2339,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2359,10 +2359,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_29" stretch="19,10,100,10,40">
                           <item>
@@ -2399,7 +2399,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2447,7 +2447,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2469,7 +2469,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2479,10 +2479,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd7">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_30" stretch="19,10,100,10,40">
                           <item>
@@ -2519,7 +2519,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2567,7 +2567,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2589,7 +2589,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2602,10 +2602,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_31" stretch="19,10,100,10,40">
                           <item>
@@ -2642,7 +2642,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2690,7 +2690,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2712,7 +2712,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2722,10 +2722,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd9">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_32" stretch="19,10,100,10,40">
                           <item>
@@ -2762,7 +2762,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2810,7 +2810,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2832,7 +2832,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2845,10 +2845,10 @@ border-radius: 140px;
                           <string notr="true">background-color:rgb(50,50,50);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_33" stretch="19,10,100,10,40">
                           <item>
@@ -2885,7 +2885,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2933,7 +2933,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2955,7 +2955,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -2965,10 +2965,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_odjezd11">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_34" stretch="19,10,100,10,40">
                           <item>
@@ -3005,7 +3005,7 @@ border-radius: 140px;
                              <string>666</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -3053,7 +3053,7 @@ border-radius: 140px;
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -3075,7 +3075,7 @@ border-radius: 140px;
                              <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -3108,10 +3108,10 @@ border-radius: 140px;
                        <item>
                         <widget class="QFrame" name="frame_3">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_12">
                           <property name="spacing">
@@ -3147,7 +3147,7 @@ border-radius: 140px;
                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                             </property>
                            </widget>
                           </item>
@@ -3168,7 +3168,7 @@ border-radius: 140px;
                                <string>announcementText</string>
                               </property>
                               <property name="alignment">
-                               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                               </property>
                               <property name="wordWrap">
                                <bool>true</bool>
@@ -3210,10 +3210,10 @@ border-radius: 140px;
                     <string notr="true">*{background-color: rgb(50,50,50)}</string>
                    </property>
                    <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
+                    <enum>QFrame::Shape::StyledPanel</enum>
                    </property>
                    <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
+                    <enum>QFrame::Shadow::Raised</enum>
                    </property>
                    <layout class="QGridLayout" name="gridLayout_11">
                     <property name="leftMargin">
@@ -3268,7 +3268,7 @@ border-radius: 140px;
                            <string>P2</string>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignCenter</set>
+                           <set>Qt::AlignmentFlag::AlignCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -3296,7 +3296,7 @@ border-radius: 140px;
                            <string>P1</string>
                           </property>
                           <property name="alignment">
-                           <set>Qt::AlignCenter</set>
+                           <set>Qt::AlignmentFlag::AlignCenter</set>
                           </property>
                          </widget>
                         </item>
@@ -3326,7 +3326,7 @@ border-radius: 140px;
                          <string>|</string>
                         </property>
                         <property name="alignment">
-                         <set>Qt::AlignCenter</set>
+                         <set>Qt::AlignmentFlag::AlignCenter</set>
                         </property>
                        </widget>
                       </item>
@@ -3515,7 +3515,7 @@ border-radius: 140px;
                      <string>XXX</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3537,7 +3537,7 @@ border-radius: 140px;
                      <string>Prosím pozor! Změna čísla linky. Attention please! Line number change.</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3566,7 +3566,7 @@ border-radius: 30px;
                      <string>L1</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3588,7 +3588,7 @@ border-radius: 30px;
                      <bool>false</bool>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3613,7 +3613,7 @@ border-radius: 30px;
                      <string>L2</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -3702,10 +3702,10 @@ QLabel{color:#FFFFFF}</string>
                  <string notr="true">*{background-color:rgb(54,54,53); color: rgb(255,255,255)}</string>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
+                 <enum>QFrame::Shape::StyledPanel</enum>
                 </property>
                 <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
+                 <enum>QFrame::Shadow::Raised</enum>
                 </property>
                 <layout class="QVBoxLayout" name="verticalLayout_32" stretch="485">
                  <property name="spacing">
@@ -3813,7 +3813,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -3844,7 +3844,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -3879,7 +3879,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -3910,7 +3910,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -3943,7 +3943,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>|</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4029,7 +4029,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>741</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4057,7 +4057,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>|</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4087,7 +4087,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4118,7 +4118,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4154,7 +4154,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>16:14</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4182,7 +4182,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>|</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4231,7 +4231,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4262,7 +4262,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4295,7 +4295,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>|</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4323,7 +4323,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; color:#ffffff;&quot;&gt;⚫&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4345,19 +4345,19 @@ QLabel{color:#FFFFFF}</string>
                           <string notr="true">*{background-color: rgb(87,87,87)}</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::NoFrame</enum>
+                          <enum>QFrame::Shape::NoFrame</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Plain</enum>
+                          <enum>QFrame::Shadow::Plain</enum>
                          </property>
                          <property name="lineWidth">
                           <number>0</number>
                          </property>
                          <property name="verticalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
+                          <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
                          </property>
                          <property name="horizontalScrollBarPolicy">
-                          <enum>Qt::ScrollBarAlwaysOff</enum>
+                          <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
                          </property>
                          <property name="widgetResizable">
                           <bool>true</bool>
@@ -4367,8 +4367,8 @@ QLabel{color:#FFFFFF}</string>
                            <rect>
                             <x>0</x>
                             <y>0</y>
-                            <width>723</width>
-                            <height>114</height>
+                            <width>172</width>
+                            <height>58</height>
                            </rect>
                           </property>
                           <layout class="QHBoxLayout" name="horizontalLayout_40">
@@ -4408,14 +4408,14 @@ QLabel{color:#FFFFFF}</string>
                               <string>Šanghaj</string>
                              </property>
                              <property name="textFormat">
-                              <enum>Qt::AutoText</enum>
+                              <enum>Qt::TextFormat::AutoText</enum>
                              </property>
                             </widget>
                            </item>
                            <item>
                             <spacer name="horizontalSpacer_7">
                              <property name="orientation">
-                              <enum>Qt::Horizontal</enum>
+                              <enum>Qt::Orientation::Horizontal</enum>
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
@@ -4474,7 +4474,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4505,7 +4505,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                            </property>
                            <property name="margin">
                             <number>0</number>
@@ -4557,7 +4557,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>⭭</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4585,17 +4585,17 @@ QLabel{color:#FFFFFF}</string>
                           <string>|</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
                        <item row="1" column="1" colspan="4">
                         <widget class="QFrame" name="frame_spodniRadek_2">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QGridLayout" name="gridLayout_18">
                           <item row="0" column="2">
@@ -4617,7 +4617,7 @@ QLabel{color:#FFFFFF}</string>
                              <string>6 min.</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -4645,7 +4645,7 @@ QLabel{color:#FFFFFF}</string>
                              <string>P1</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -4679,7 +4679,7 @@ QLabel{color:#FFFFFF}</string>
                              <string>P2</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -4707,7 +4707,7 @@ QLabel{color:#FFFFFF}</string>
                              <string>|</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -4758,7 +4758,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>6 min.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4774,7 +4774,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>6 min.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4790,7 +4790,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>6 min.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4806,7 +4806,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>6 min.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4822,7 +4822,7 @@ QLabel{color:#FFFFFF}</string>
                           <string>6 min.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4838,7 +4838,7 @@ QLabel{color:#FFFFFF}</string>
                           <string/>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                          <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -4859,10 +4859,10 @@ QLabel{color:#FFFFFF}</string>
                        <item>
                         <widget class="QFrame" name="frame_4">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_45">
                           <item>
@@ -4883,7 +4883,7 @@ QLabel{color:#FFFFFF}</string>
                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                             </property>
                            </widget>
                           </item>
@@ -4911,7 +4911,7 @@ QLabel{color:#FFFFFF}</string>
                                <string>Nadpis</string>
                               </property>
                               <property name="alignment">
-                               <set>Qt::AlignCenter</set>
+                               <set>Qt::AlignmentFlag::AlignCenter</set>
                               </property>
                               <property name="wordWrap">
                                <bool>true</bool>
@@ -4993,7 +4993,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>X</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -5016,7 +5016,7 @@ QLabel{color:#FFFFFF}</string>
                             <string>zmen pasma text</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -5045,7 +5045,7 @@ border-radius: 140px;
                             <string>P1</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -5067,7 +5067,7 @@ border-radius: 140px;
                             <bool>false</bool>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -5092,7 +5092,7 @@ border-radius: 140px;
                             <string>P2</string>
                            </property>
                            <property name="alignment">
-                            <set>Qt::AlignCenter</set>
+                            <set>Qt::AlignmentFlag::AlignCenter</set>
                            </property>
                           </widget>
                          </item>
@@ -5125,7 +5125,7 @@ border-radius: 140px;
                           <string>Konečná zastávka, prosíme, vystupte.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="wordWrap">
                           <bool>true</bool>
@@ -5144,7 +5144,7 @@ border-radius: 140px;
                           <string>Final stop, please leave the bus.</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                          <property name="wordWrap">
                           <bool>true</bool>
@@ -5214,7 +5214,7 @@ border-radius: 140px;
                           <string>741</string>
                          </property>
                          <property name="alignment">
-                          <set>Qt::AlignCenter</set>
+                          <set>Qt::AlignmentFlag::AlignCenter</set>
                          </property>
                         </widget>
                        </item>
@@ -5224,10 +5224,10 @@ border-radius: 140px;
                           <string notr="true">background-color: rgb(29,29,27);</string>
                          </property>
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="1,7">
                           <item>
@@ -5255,7 +5255,7 @@ margin:20px;</string>
                              <string>A</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignCenter</set>
+                             <set>Qt::AlignmentFlag::AlignCenter</set>
                             </property>
                            </widget>
                           </item>
@@ -5349,10 +5349,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_49" stretch="19,100,10,40">
                               <item>
@@ -5389,7 +5389,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5434,7 +5434,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5456,7 +5456,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5480,10 +5480,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_50" stretch="19,100,10,40">
                               <item>
@@ -5520,7 +5520,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5562,7 +5562,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5584,7 +5584,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5608,10 +5608,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_51" stretch="19,100,10,40">
                               <item>
@@ -5648,7 +5648,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5690,7 +5690,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5712,7 +5712,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5736,10 +5736,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_52" stretch="19,100,10,40">
                               <item>
@@ -5776,7 +5776,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5818,7 +5818,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5840,7 +5840,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5864,10 +5864,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_53" stretch="19,100,10,40">
                               <item>
@@ -5904,7 +5904,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5946,7 +5946,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5968,7 +5968,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -5992,10 +5992,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_54" stretch="19,100,10,40">
                               <item>
@@ -6032,7 +6032,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6074,7 +6074,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6096,7 +6096,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6120,10 +6120,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_55" stretch="19,100,10,40">
                               <item>
@@ -6160,7 +6160,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6202,7 +6202,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6224,7 +6224,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6248,10 +6248,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_56" stretch="19,100,10,40">
                               <item>
@@ -6288,7 +6288,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6330,7 +6330,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6352,7 +6352,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6408,10 +6408,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -6448,7 +6448,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6490,7 +6490,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6512,7 +6512,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6536,10 +6536,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -6576,7 +6576,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6618,7 +6618,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6640,7 +6640,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6664,10 +6664,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -6704,7 +6704,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6746,7 +6746,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6768,7 +6768,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6792,10 +6792,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -6832,7 +6832,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6874,7 +6874,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6896,7 +6896,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -6920,10 +6920,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -6960,7 +6960,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7002,7 +7002,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7024,7 +7024,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7048,10 +7048,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -7088,7 +7088,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7130,7 +7130,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7152,7 +7152,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7176,10 +7176,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -7216,7 +7216,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7258,7 +7258,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7280,7 +7280,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7304,10 +7304,10 @@ QLabel {
 </string>
                              </property>
                              <property name="frameShape">
-                              <enum>QFrame::StyledPanel</enum>
+                              <enum>QFrame::Shape::StyledPanel</enum>
                              </property>
                              <property name="frameShadow">
-                              <enum>QFrame::Raised</enum>
+                              <enum>QFrame::Shadow::Raised</enum>
                              </property>
                              <layout class="QHBoxLayout" name="horizontalLayout_63" stretch="19,100,10,40">
                               <item>
@@ -7344,7 +7344,7 @@ QLabel {
                                  <string>666</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7386,7 +7386,7 @@ border-radius: 30px;</string>
                                  <string>A</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7408,7 +7408,7 @@ border-radius: 30px;</string>
                                  <string> &lt;b&gt;5&lt;/b&gt; min.</string>
                                 </property>
                                 <property name="alignment">
-                                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                                 <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                                 </property>
                                </widget>
                               </item>
@@ -7445,10 +7445,10 @@ border-radius: 30px;</string>
                        <item>
                         <widget class="QFrame" name="frame_5">
                          <property name="frameShape">
-                          <enum>QFrame::StyledPanel</enum>
+                          <enum>QFrame::Shape::StyledPanel</enum>
                          </property>
                          <property name="frameShadow">
-                          <enum>QFrame::Raised</enum>
+                          <enum>QFrame::Shadow::Raised</enum>
                          </property>
                          <layout class="QHBoxLayout" name="horizontalLayout_62">
                           <property name="spacing">
@@ -7484,7 +7484,7 @@ border-radius: 30px;</string>
                              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/images/WheelChair&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                             </property>
                             <property name="alignment">
-                             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                             <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                             </property>
                            </widget>
                           </item>
@@ -7505,7 +7505,7 @@ border-radius: 30px;</string>
                                <string>announcementText</string>
                               </property>
                               <property name="alignment">
-                               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                               </property>
                               <property name="wordWrap">
                                <bool>true</bool>
@@ -7664,7 +7664,7 @@ border-radius: 30px;</string>
                      <string>XXX</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -7686,7 +7686,7 @@ border-radius: 30px;</string>
                      <string>Prosím pozor! Změna čísla linky. Attention please! Line number change.</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -7715,7 +7715,7 @@ border-radius: 30px;
                      <string>L1</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -7737,7 +7737,7 @@ border-radius: 30px;
                      <bool>false</bool>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -7762,7 +7762,7 @@ border-radius: 30px;
                      <string>L2</string>
                     </property>
                     <property name="alignment">
-                     <set>Qt::AlignCenter</set>
+                     <set>Qt::AlignmentFlag::AlignCenter</set>
                     </property>
                    </widget>
                   </item>
@@ -7866,7 +7866,7 @@ border-radius: 30px;
             <item>
              <spacer name="horizontalSpacer_6">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -8006,7 +8006,7 @@ border-radius: 30px;
             <item>
              <spacer name="verticalSpacer_2">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -8075,7 +8075,7 @@ border-radius: 30px;
                       <string>127.0.0.1</string>
                      </property>
                      <property name="alignment">
-                      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                      <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                      </property>
                     </widget>
                    </item>
@@ -8625,7 +8625,7 @@ departure</string>
               <item>
                <widget class="QSplitter" name="splitter">
                 <property name="orientation">
-                 <enum>Qt::Vertical</enum>
+                 <enum>Qt::Orientation::Vertical</enum>
                 </property>
                 <widget class="QWidget" name="horizontalLayoutWidget">
                  <layout class="QHBoxLayout" name="horizontalLayout_42">
@@ -8725,25 +8725,25 @@ HttpServerSubscriber=true</string>
                </sizepolicy>
               </property>
               <property name="frameShape">
-               <enum>QFrame::NoFrame</enum>
+               <enum>QFrame::Shape::NoFrame</enum>
               </property>
               <property name="frameShadow">
-               <enum>QFrame::Plain</enum>
+               <enum>QFrame::Shadow::Plain</enum>
               </property>
               <property name="lineWidth">
                <number>0</number>
               </property>
               <property name="verticalScrollBarPolicy">
-               <enum>Qt::ScrollBarAlwaysOff</enum>
+               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
               </property>
               <property name="horizontalScrollBarPolicy">
-               <enum>Qt::ScrollBarAlwaysOff</enum>
+               <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
               </property>
               <property name="sizeAdjustPolicy">
-               <enum>QAbstractScrollArea::AdjustIgnored</enum>
+               <enum>QAbstractScrollArea::SizeAdjustPolicy::AdjustIgnored</enum>
               </property>
               <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
               </property>
              </widget>
             </item>
@@ -8812,7 +8812,7 @@ HttpServerSubscriber=true</string>
                <string>123</string>
               </property>
               <property name="alignment">
-               <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+               <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
               </property>
              </widget>
             </item>
@@ -8863,7 +8863,7 @@ HttpServerSubscriber=true</string>
                    <string>Dest.FrontNameTop</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -8903,7 +8903,7 @@ HttpServerSubscriber=true</string>
                    <string>Dest.FrontNameBtm</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -8939,7 +8939,7 @@ HttpServerSubscriber=true</string>
                  </font>
                 </property>
                 <property name="layoutDirection">
-                 <enum>Qt::LeftToRight</enum>
+                 <enum>Qt::LayoutDirection::LeftToRight</enum>
                 </property>
                 <property name="autoFillBackground">
                  <bool>false</bool>
@@ -8951,7 +8951,7 @@ HttpServerSubscriber=true</string>
                  <string>DestinationFrontSingle</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                 </property>
                </widget>
               </item>
@@ -8960,7 +8960,7 @@ HttpServerSubscriber=true</string>
             <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+               <enum>Qt::Orientation::Horizontal</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -8978,7 +8978,7 @@ HttpServerSubscriber=true</string>
              <number>0</number>
             </property>
             <property name="sizeConstraint">
-             <enum>QLayout::SetDefaultConstraint</enum>
+             <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
             </property>
             <item>
              <widget class="QLabel" name="bocniTabloNazev">
@@ -9040,7 +9040,7 @@ HttpServerSubscriber=true</string>
                  <bool>false</bool>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                 </property>
                </widget>
               </item>
@@ -9050,7 +9050,7 @@ HttpServerSubscriber=true</string>
                  <number>0</number>
                 </property>
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetDefaultConstraint</enum>
+                 <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
                 </property>
                 <item>
                  <widget class="QLabel" name="labelSideTopRow">
@@ -9094,7 +9094,7 @@ HttpServerSubscriber=true</string>
                    <string>DestinationSideName</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                   </property>
                  </widget>
                 </item>
@@ -9140,7 +9140,7 @@ HttpServerSubscriber=true</string>
                    <string>StopSideName</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -9180,7 +9180,7 @@ HttpServerSubscriber=true</string>
                    </font>
                   </property>
                   <property name="layoutDirection">
-                   <enum>Qt::LeftToRight</enum>
+                   <enum>Qt::LayoutDirection::LeftToRight</enum>
                   </property>
                   <property name="autoFillBackground">
                    <bool>false</bool>
@@ -9192,7 +9192,7 @@ HttpServerSubscriber=true</string>
                    <string>DestinationSideSingle</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -9201,7 +9201,7 @@ HttpServerSubscriber=true</string>
               <item>
                <spacer name="horizontalSpacer">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -9271,14 +9271,14 @@ HttpServerSubscriber=true</string>
                  <string>123</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+                 <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
                 </property>
                </widget>
               </item>
               <item>
                <spacer name="horizontalSpacer_5">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -9321,7 +9321,7 @@ HttpServerSubscriber=true</string>
                  <number>0</number>
                 </property>
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetDefaultConstraint</enum>
+                 <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
                 </property>
                 <item>
                  <widget class="QLabel" name="labelInnerLine">
@@ -9356,7 +9356,7 @@ HttpServerSubscriber=true</string>
                    <string>123</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                  </widget>
                 </item>
@@ -9396,7 +9396,7 @@ HttpServerSubscriber=true</string>
                    <string>DestinationSideName</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                   <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                   </property>
                   <property name="margin">
                    <number>0</number>
@@ -9406,7 +9406,7 @@ HttpServerSubscriber=true</string>
                 <item>
                  <spacer name="horizontalSpacer_3">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -9461,14 +9461,14 @@ HttpServerSubscriber=true</string>
                  <string>StopSideName</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+                 <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                 </property>
                </widget>
               </item>
               <item>
                <spacer name="horizontalSpacer_4">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Orientation::Horizontal</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
@@ -9483,7 +9483,7 @@ HttpServerSubscriber=true</string>
             <item>
              <spacer name="verticalSpacer">
               <property name="orientation">
-               <enum>Qt::Vertical</enum>
+               <enum>Qt::Orientation::Vertical</enum>
               </property>
               <property name="sizeHint" stdset="0">
                <size>
@@ -9508,91 +9508,19 @@ HttpServerSubscriber=true</string>
          </sizepolicy>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Shape::StyledPanel</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Shadow::Raised</enum>
         </property>
         <property name="lineWidth">
          <number>3</number>
         </property>
         <layout class="QGridLayout" name="gridLayout_13">
-         <item row="2" column="7">
-          <widget class="QLabel" name="label_16">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Pages count:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="5">
-          <widget class="QLabel" name="label_14">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Time to switch:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="5">
-          <widget class="QLabel" name="label_13">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>CurrentStopIndex:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="9">
-          <widget class="QLabel" name="label_18">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Messsage count:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="6">
-          <widget class="QLabel" name="label_currentStopIndex">
+         <item row="0" column="4">
+          <widget class="QLabel" name="label_deviceID">
            <property name="text">
             <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="3">
-          <widget class="QLabel" name="label_3">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>DeviceClass:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="7">
-          <widget class="QLabel" name="label_15">
-           <property name="font">
-            <font>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>LocationState:</string>
            </property>
           </widget>
          </item>
@@ -9609,31 +9537,29 @@ HttpServerSubscriber=true</string>
            </property>
           </widget>
          </item>
-         <item row="2" column="6">
-          <widget class="QLabel" name="label_jisSwitchTimer">
+         <item row="2" column="4">
+          <widget class="QLabel" name="label_deviceClass">
            <property name="text">
             <string>TextLabel</string>
            </property>
           </widget>
          </item>
-         <item row="7" column="0">
-          <widget class="QLabel" name="label_zmena">
-           <property name="text">
-            <string>change</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_build">
-           <property name="text">
-            <string>verze</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="8">
-          <widget class="QLabel" name="label_jisPageCount">
+         <item row="2" column="10">
+          <widget class="QLabel" name="label_messageCounter2">
            <property name="text">
             <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="9">
+          <widget class="QLabel" name="label_18">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Messsage count:</string>
            </property>
           </widget>
          </item>
@@ -9655,6 +9581,82 @@ HttpServerSubscriber=true</string>
            </property>
           </widget>
          </item>
+         <item row="2" column="3">
+          <widget class="QLabel" name="label_3">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>DeviceClass:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="6">
+          <widget class="QLabel" name="label_jisSwitchTimer">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="7">
+          <widget class="QLabel" name="label_15">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>LocationState:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QLabel" name="label_13">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>CurrentStopIndex:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="8">
+          <widget class="QLabel" name="label_locationState">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="8">
+          <widget class="QLabel" name="label_jisPageCount">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="label_build">
+           <property name="text">
+            <string>verze</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="5">
+          <widget class="QLabel" name="label_14">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Time to switch:</string>
+           </property>
+          </widget>
+         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_announcement">
            <property name="font">
@@ -9664,20 +9666,6 @@ HttpServerSubscriber=true</string>
            </property>
            <property name="text">
             <string>announcement</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="4">
-          <widget class="QLabel" name="label_deviceClass">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="8">
-          <widget class="QLabel" name="label_locationState">
-           <property name="text">
-            <string>TextLabel</string>
            </property>
           </widget>
          </item>
@@ -9693,10 +9681,22 @@ HttpServerSubscriber=true</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="4">
-          <widget class="QLabel" name="label_deviceID">
+         <item row="0" column="6">
+          <widget class="QLabel" name="label_currentStopIndex">
            <property name="text">
             <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="7">
+          <widget class="QLabel" name="label_16">
+           <property name="font">
+            <font>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Pages count:</string>
            </property>
           </widget>
          </item>
@@ -9704,13 +9704,6 @@ HttpServerSubscriber=true</string>
           <widget class="QLabel" name="label_subscribedVersion">
            <property name="text">
             <string>subscribedVersion</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="10">
-          <widget class="QLabel" name="label_messageCounter2">
-           <property name="text">
-            <string>TextLabel</string>
            </property>
           </widget>
          </item>
