@@ -21,6 +21,10 @@ Program can be launched with parameter to change settings location.
 - Android: copy *QZeroConfNsdManager.java* from *VDV301tester\VDV301publisher\QtZeroConf* to *VDV301tester\android\src*
 
 ## Changelog
+- 20261013_2132
+  - VDV301Subcriber
+    - QZeroconf submodule fixed
+    
 - 20261012_2156
   - VDV301Subscriber
     - httpserver invalid port announcement changed to qCCritial
