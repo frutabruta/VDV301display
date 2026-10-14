@@ -7,6 +7,9 @@
 [submodule "VDV301publisher"]
 	path = VDV301publisher
 	url = https://github.com/frutabruta/VDV301publisher
-[submodule "VDV301DataStructures"]
-	path = VDV301DataStructures
-	url = https://github.com/frutabruta/VDV301DataStructures
+[submodule "GolemioClient"]
+	path = GolemioClient
+	url = https://github.com/frutabruta/GolemioClient
+[submodule "XmlRopidImportStream"]
+	path = XmlRopidImportStream
+	url = https://github.com/frutabruta/XmlRopidImportStream

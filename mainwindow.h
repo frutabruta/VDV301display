@@ -1,24 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "xmlparser.h"
-//#include "httpserver2/myhttpserver.h"
-//#include "VDV301subscriber/ibisipsubscriber.h"
-
-#include "VDV301publisher/devicemanagementservice.h"
-#include "VDV301subscriber/cissubscriber.h"
-
-
-#include "VDV301DataStructures/stoppointdestination.h"
-#include "VDV301DataStructures/vehiclestate.h"
-#include "VDV301DataStructures/connection.h"
-
-#include "pasmovedvojicelcd.h"
-#include "svgvykreslovani.h"
-#include "labelvykreslovani.h"
-#include "barvylinek.h"
-
-
 #include <QApplication>
 #include <QCoreApplication>
 //#include <QtDebug>
@@ -32,9 +14,7 @@
 #include <QTableWidget>
 #include <QTextStream>
 #include <QUrl>
-
-
-//#include <QWidget>
+#include <QLoggingCategory>
 
 #include <QGraphicsSvgItem>
 #include <QGraphicsScene>
@@ -44,6 +24,35 @@
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
 #include <QNetworkRequest>
+
+
+#include "VDV301xmlparser/xmlparser1_0.h"
+//#include "VDV301xmlparser/xmlparser2_2cz1_0.h"
+#include "VDV301xmlparser/xmlparser2_3.h"
+#include "VDV301xmlparser/xmlparser2_3cz1_0.h"
+
+
+#include "VDV301publisher/devicemanagementservice.h"
+#include "VDV301subscriber/cissubscriber.h"
+
+#include "svgvykreslovani.h"
+#include "DisplayLabel/displaylabelled.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0.h"
+#include "DisplayLabel/displaylabellcd2_3cz1_0_jis.h"
+
+#include "GolemioClient/golemiodepartureboardsv4.h"
+#include "barvylinek.h"
+
+#include "mainwindowhelper.h"
+
+#include "LogHandler/loggerrelay.h"
+#include "LogHandler/loghandler.h"
+
+#include "vdv301messagelogger.h"
+
+
+
+
 
 class QByteArray;
 class QNetworkAccessManager;
@@ -62,202 +71,95 @@ public:
     ~MainWindow();
 
 private:
-
-    QCommandLineParser qCommandLineParser;
-
-    //instance trid
-    XmlParser xmlParser;
-    VehicleState vehicleState;
-    LabelVykreslovani labelVykreslovani;
-
-    CisSubscriber cisSubscriber;
-    SvgVykreslovani svgVykreslovani;
-    DeviceManagementService deviceManagementService;
+    //QCommandLineParser qCommandLineParser;
     QSettings settings;
 
+    // complex class instances
+    XmlParser1_0 xmlParser1_0;
+    XmlParser2_3 xmlParser2_3;
+    XmlParser2_3CZ1_0 xmlParser2_3CZ1_0;
 
-    //datoveStruktury jizda
-    QVector<StopPointDestination> currentDestinationPointList;
-    QVector<Vdv301StopPoint> currenVdv301StopPointList;
-    QVector<StopPointDestination> nextDestinationPointList;
+    DisplayLabelLcd2_3CZ1_0 displayLabelLcd;
+    DisplayLabelLcd2_3CZ1_0_Jis displayLabelLcdJis;
 
+    DisplayLabelLed displayLabelLed;
 
-    //QVector<Prestup> prestupy;
-    // QString nazevLinky="";
-    QString nazevCile="";
-    QString additionalTextMessageType="";
-    QString additionalTextMessageHeadline="";
-    QString additionalTextMessageText="";
-    QVector<FareZone> fareZoneChangeFrom;
-    QVector<FareZone> fareZoneChangeTo;
+    SvgVykreslovani svgVykreslovani;
+
+    CisSubscriber cisSubscriber;
+    DeviceManagementService deviceManagementService;
+
+    GolemioDepartureBoardsV4 golemio;
+
+    LoggerRelay relay;
+    LogHandler logHandler;
+
+    Vdv301MessageLogger vdv301MessageLogHandler;
+    //complex variables
+
+    QVector<Vdv301StopPoint> currentVdv301StopPointList;
+
+    Vdv301AllData vdv301AllData;
+    Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0;
+    Vdv301AllData2_3CZ1_0 vdv301AllData2_3CZ1_0_previous;
+
+    int previousAnnouncementCount=0;
+
+    Vdv301CurrentDisplayContent vdv301currentDisplayContent;
+    Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent2_3CZ1_0;
 
     BarvyLinek barvyLinek;
 
-    //stavove promenne
-    bool isFareZone=false;
-    int stopIndex=0;
+    MainWindowHelper mainWindowHelper;
 
-    int currentPageIndexLed=0;
-    int currentPageIndex =0;
+    //stavove promenne
+
+
+    int lcdLabelCurrentPageIndex =0;
+    int lcdLabelCurrentPageIndexJis =0;
+
     bool showTimeColon=0;
 
-    //konstanty
-    int posunRotovani=0;
-    // int pocetVykreslovanychZastavek=5;
-
-    QString oldViapointString="";
-
-
-
-    const int intervalSideDisplay=2000;
-    const int intervalScrollingText=20;
-    const int intervalSwitchPages=10000;
-    const int intervalOpozdeniStartu=500;
-
-    //velikosti fontu v bodech
-    //const int velikostFontLinka=200;
-    const int sizeFontDestination=100;
-    const int sizeFontViaPoints=72;
-    const int sizeFontFollowing=100;
-
-    const int sizeFontTransferLine=48;
-    const int sizeFontTransferDestination=36;
-
-    const int sizeIconConnection=65;
-    int sizeIconConnectionDynamic=20;
-    const int velikostPrestupRamecekSirka=95;
-    const int velikostPrestupRamecekVyska=65;
-
-    //velikosti oken
-
-    float ratioPixelPoint=1080.0/1050.0;
-
-    float ratioPixelLed=4.105;
+    int receivedMessagesCounter=0;
+    //constants
+    const int intervalSideDisplay=2000; //miliseconds
+    const int intervalDelayedStart=500; //miliseconds
+    int intervalLcdPageSwitchSeconds=10; //seconds
 
 
-    //ostatni promenne
+    bool useJis=false;
+
+    bool blockBonjour=false;
+
+    bool connectionsStandalone=false; //true = ignore connections from VDV301, download connections from Golemio directly
+
+    bool logOnStartup=true;
+
+    bool logVdv301Messages=false;
+    bool logVdv301MessagesDeleteDbOnStartup=false;
+    QString loggingRules="";
 
 
-    //Fonty
-
-    //QFontDatabase fdb;
-
-    //_LED fonty
-    QFont fontLed1;
-    QFont fontLed3;
-    QFont fontLed3v;
-    QFont fontLed5;
-    QFont fontLed8;
-    QFont fontLed10;
-
-
-    //_LCD fonty
-
-    QFont fontLabelFareZoneLarge;
-    QFont fontLabelFareZoneSmall;
-
-    //casovace
-    QTimer *timerLedSideCycleViaPoints = new QTimer(this);
-    QTimer *timerScrollingText = new QTimer(this);
-    QTimer *timerUpdateSeconds = new QTimer(this);
-    QTimer *timerLabelPageSwitch = new QTimer(this);
-    QTimer *timerDelayedStart = new QTimer(this);
-
-    //funkce spolecne (vsem typum zobrazeni)
-    int doplneniPromennych ();
-    void switchTabs(int tabNumber);
-    int formatZobrazeni();
-
-    QString createProgramVersionString();
-    int showReceivedData();
-    void eraseTable(QTableWidget *tableWidget);
-
-    void serviceListToTable(QVector<QZeroConfService> seznamSluzeb);
-
-    void allConnects();
+    bool golemioUseTestServer=false;
+    QString golemioParametry="";
+    QString golemioAddress="";
+    QString golemioAddressTest="";
+    QString golemioKey="";
+    QString golemioKeyTest="";
+    QString golemioVehicleRef="";
+    QString golemioStopRef="";
+    int golemioVehicleType=3;
+    QVector<ConnectionGolemioV4> golemioConnections;
+    QVector<StopGolemio> golemioStops;
+    QVector<GolemioInfotext> golemioInfotexts;
 
 
-    //funkce pomocne
+    //timers
+    QTimer timerUpdateSeconds;
+    QTimer timerDelayedStart;
+    QTimer timerUpdateGolemio;
 
-    int isInRange(int index, int pocetHodnot); //nepouzito
-
-    //funkce hlavni
-    void hlavniAutoformat();
-    void displayLabelFillArray();
-    void displayLabelLineName(StopPointDestination aktZastavka, QString subMode);
-    void displayLabelViaPoints();
-    void displayLabelDestination(QString alias);
-    void displayLabelConnectionList(QVector<Connection> seznamPrestupu);
-    void displayLabelStopList(QVector<StopPointDestination> zastavky, QVector<StopPointDestination> zastavkyNavazny, int index);
-    void displayLabelStopFareZone(QVector<StopPointDestination> aktZastavky, QVector<StopPointDestination> navazZastavky);
-    void displayLabelEraseInformation();
-    void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
-    void displayLabelShowFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
-    void displayLabelDrawLineNumber(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
-    void displayLabelDrawLineNumber2_4(QString subMode, Line line, QLabel *label, int velikostPiktogramu, bool prestup);
-
-    QVector<QWidget*> pageCycleList;
-
-    //funkce led
-    void ledUpdateDisplayedInformation(QVector<StopPointDestination> zastavky, VehicleState stav);
-    void ledNaplnFront(QString linka, QString horniRadek, QString dolniRadek);
-    void ledNaplnInner(QString linka, QString horniRadek, QString dolniRadek);
-    QVector<QString> ledNaplnNacestyBocniPanel(StopPointDestination aktualniZastavka);
-    QVector<QString> ledNaplnNacestyVnitrniPanel(StopPointDestination aktualniZastavka);
-    void ledInicializujVirtualniPanely();
-    void ledIterujBocniPanel(QVector<QString> texty, int &iteracniIndex);
-    void ledIterujVnitrniPanel(QVector<QString> texty, int &iteracniIndex);
-    void ledIterujVsechnyPanely();
-    void ledNaplnSide(QString linka, QString horniRadek, QString dolniRadek);
-    void ledNaplnRear(QString linka);
-    void ledVymazPanely();
-
-    void ledZmenVelikostPanelu();
-    void ledZarovnejPretecenyRadek(QLabel *label);
-    void ledZapisLinku(QLabel *label, QString text);
-    void ledZmenVelikostOkna(QLabel *okno, int sirkaDot, int vyskaDot, float koeficient);
-
-    void ledUpdateDisplayedInformation2_3(QVector<Vdv301StopPoint> &zastavky, VehicleState stav);
-    void ledLabelInitialize2_3();
-
-    LedLabelDisplay frontDisplay;
-    LedLabelDisplay sideDisplay;
-    LedLabelDisplay rearDisplay;
-
-
-
-    void slotPublisherDoTabulky(QZeroConfService zcs);
-
-    QVector<QString> textyBocniPanelkIteraci;
-    QVector<QString> textyVnitrniPanelkIteraci;
-
-    //funkce SVG
-    bool svgOpenFile(const QString &fileName);
-
-    //obecne Udalosti
-    int isVehicleOnFinalStop(VehicleState stav, QVector<StopPointDestination> zastavky);
-    void displayLabelReturnToStopList();
-
-    void loadConstants();
-    void constantsToSettingsPage();
-    void settingsWindowToSettingsFile();
-    void deviceManagementServiceInternalVariablesToSettingFile();
-
-
-    void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
-
-    void skryjAnnouncement(); //nepouzito
-    void skryjZmenuPasma(); //nepouzito
-
-
-    void eraseDisplayedInformation();
-
-    void displayLabelShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
-    void showPageFareZoneChange(QVector<FareZone> zPasem, QVector<FareZone> naPasma);
-    void displayLabelShowPageFinalStop();
-    void notOnLine();
-
-    //klávesové zkratky
+    //keyboard shortcuts
     QShortcut *keyCtrlF; // Entity of Ctrl + D hotkeys
     QShortcut *keyF1;
     QShortcut *keyF2;
@@ -268,56 +170,126 @@ private:
     QShortcut *keyF7;
     QShortcut *keyF8;
 
-    //polozky potrebne pro vykresleni svg
+    //SVG rendering
     QGraphicsScene scene;
     QGraphicsSvgItem *m_svgItem;
     QGraphicsRectItem *m_outlineItem;
-    bool svgVykresleni();
+    bool svgRender();
 
-    //vektory Labelu Hlavni
-    QVector<QLabel*> labelListStopPointName;
-    QVector<QLabel*> labelListFareZoneUpper;
-    QVector<QLabel*> labelListFareZoneLower;
-
-    QVector<QLabel*> labelListConnectionLine;
-    QVector<QLabel*> labelListConnectionDestination;
-    QVector<QLabel*> labelListConnectionDeparture;
-    QVector<QLabel*> labelListConnectionPlatform;
+    //common functions
 
 
-    void popUpMessage(QString poznamka);
+    //funkce pomocne
+    void popUpMessage(QString messageContent);
+    int isInRange(int index, int limit, QString functionName);
 
+    void allConnects();
 
-    QString nahradIconPiktogramem(QString vstup, int vyskaObrazku, QString slozka);
-    void zastavkaCilDoTabulky(StopPointDestination zastavkaCil, bool navazny);
-    void vsechnyZastavkyDoTabulky(QVector<StopPointDestination> seznamZastavek, bool navazny);
+    bool allDataChanged(Vdv301AllData2_3CZ1_0 oldAllData, Vdv301AllData2_3CZ1_0 newAllData);
+
+    void constantsToSettingsPage();
+    QString createProgramVersionString();
+
+    void deviceManagementServiceInternalVariablesToSettingFile();
+    void debugServiceListToTable(QVector<QZeroConfService> serviceList);
+
+    void debugStopPointListToTable(QVector<Vdv301StopPoint> seznamZastavek, bool navazny);
+    void debugStopPointListToTable(QVector<Vdv301StopPoint2_3CZ1_0> seznamZastavek, bool navazny);
+    
+    void debugStopPointToTable(Vdv301StopPoint selectedStopPointDestination, bool isFollowingTrip);
+    void debugStopPointToTable(Vdv301StopPoint2_3CZ1_0 selectedStopPointDestination, bool isFollowingTrip);
+
+    //functions display LCD with labels
+    void displayLabelFillArray();
+    void displayLabelFillArrayJis();
+    void displayLabelReturnToStopList();
+    void displayLabelShowAnnoucement(QString title, QString type, QString textCz, QString textEn);
+
+    void displayLabelShowFareZoneChange(QVector<Vdv301InternationalText> fromFareZoneList, QVector<Vdv301InternationalText> toFareZoneList);
+    void displayLabelShowAnnoucement(QVector<Vdv301InternationalText> additionalTextMessageList, QVector<Vdv301InternationalText> additionalTextMessage1List, QVector<Vdv301InternationalText> additionalTextMessage2List, QVector<Vdv301InternationalText> additionalTextMessage3List, QVector<Vdv301InternationalText> additionalTextMessage4List);
+    void displayLabelShowPageFinalStop();
+
+    void eraseDisplayedInformation();
+
+    void eventHideAnnouncement(); //nepouzito
+    void eventHideFareZoneChange(); //nepouzito
+
+    void eventDisplayAbnormalStateScreen(QString displayState);
+    void eventEraseDisplayInformation();
+    void eventLcdReturnToStopList();
+    void eventLcdSetMainPage();
+    void eventLcdShowFollowingTripDestination(QString followingTripLine, QString followingTripDestination); //unused
+
+    void eventNotOnLine();
+    void eventShowPageFareZoneChange(QVector<Vdv301InternationalText> fromFareZones, QVector<Vdv301InternationalText> toFareZones); //unused
+    void eventShowPageSpecialAnnouncement(QString title, QString type, QString textCz, QString textEn);
+    void eventShowPageSpecialAnnouncement(QVector<Vdv301InternationalText> additionalTextMessage, QVector<Vdv301InternationalText> additionalTextMessage1, QVector<Vdv301InternationalText> additionalTextMessage2, QVector<Vdv301InternationalText> additionalTextMessage3, QVector<Vdv301InternationalText> additionalTextMessage4);
+
+    void eventStopRequestedActivated();
+    void eventStopRequestedDectivated();
+
+    QString golemioRequestCompose(QString aswId, QString vehicleRef, int vehicleType);
+    void golemioUpdateVariables();
+    
+    void handleDisplayContentInner(QVector<Vdv301DisplayContent2_3CZ1_0> displayContentList, bool following);
+    void handleDisplayContentInner(QVector<Vdv301DisplayContent> displayContentList, bool following);
+    void handleDisplayContentFront(QVector<Vdv301DisplayContent> displayContentList); // unused
+    void handleDisplayContentSide(QVector<Vdv301DisplayContent> displayContentList); // unused
+    void handleDisplayContentRear(QVector<Vdv301DisplayContent> displayContentList); // unused
+
+    //functions initiliaze
     void initilializeFonts();
     void initilializeShortcuts();
-    void displayLabelStopPoint(StopPointDestination aktualniZastavka, bool navazny, QLabel *nazevZastavky, QLabel *dolniPasmo, QLabel *horniPasmo);
-    QVector<StopPointDestination> vektorZastavkaCilZahoditZacatek(QVector<StopPointDestination> vstup, int zacatek);
 
+    void labelLcdUpdateStopBackground(Vdv301Enumerations::LocationStateEnumeration locationState);
+    void labelSetNextStopBackground(QString barvaPisma, QString barvaPozadi);
+    void labelSetNextStopBackgroundJis(QString barvaPisma, QString barvaPozadi);
+    void ledLabelInitialize2_3();
+    void lcdLabelInitialize2_3();
+    void loadConstants();
 
-    void displayAbnormalStateScreen(QString displayState);
-    void displayNormalOnLineState();
+    void manualSubscription();
+
+    void menuSwitchTabs(int tabNumber);
+
+    void messageToTable(Vdv301AllData2_3CZ1_0 input);
+
+    void settingsWindowToSettingsFile();
+    int showReceivedDataLcdVdv301(Vdv301AllData vdv301AllData);
+    void showReceivedDataVdv301(Vdv301AllData vdv301AllData);
+    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList);
+    void showReceivedDataLedVdv301(QVector<Vdv301DisplayContent2_3CZ1_0> stopDisplayContentList, QVector<Vdv301DisplayContent2_3CZ1_0> globalDisplayContentList);
+    void showReceivedDataVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
+    int showReceivedDataLcdVdv301_2_3CZ1_0(Vdv301AllData2_3CZ1_0 vdv301AllData);
+    void showReceivedDataVdv301_2_3CZ1_0(Vdv301CurrentDisplayContent2_3CZ1_0 vdv301currentDisplayContent);
+
+    bool svgOpenFile(const QString &fileName);
+
     void receivedDataVariablesReset();
-    void connectionToTable(Connection connection, QTableWidget *tableWidget);
-    void connectionListToTable(QVector<Connection> connectionList, QTableWidget *tableWidget);
-    void stopRequestedActivated();
-    void stopRequestedDectivated();
-
-    void tickLedPanels2_3();
     void retranslateUi(QString language);
 
-
+    void updateLabelCurrentStopindex(QString currentStopIndex);
+    void updateLabelLocationState(QString locationState);
+    void updateLabelAnnouncement(QString announcementText);
     void updateMainScreenDebugLabels();
-private slots:
 
-    void on_actiontestPolozka_triggered();
-    //tlacitka
+
+private slots:
+    void on_checkBox_debugLogEnable_stateChanged(int arg1);
+    void on_checkBox_logMessages_stateChanged(int arg1);
+    void on_checkBox_logMessagesDeleteDbOnStartup_stateChanged(int arg1);
+
+    void on_checkBox_settings_jisMinutes_stateChanged(int arg1);
+    void on_checkBox_settings_useJis_stateChanged(int arg1);
+    void on_checkBox_settings_useGolemioConnections_stateChanged(int arg1);
+    void on_checkBox_settings_golemioTestServer_stateChanged(int arg1);
+
+    void on_pushButton_debugLogClear_clicked();
+    void on_pushButton_debugConvertInline_clicked();
+    void on_pushButton_debugLogLevel_clicked();
+    void on_pushButton_debugShowHtml_clicked();
 
     void on_pushButton_menu_services_clicked();
-
-
     void on_pushButton_menu_timer_clicked();
     void on_pushButton_menu_quit_clicked();
     void on_pushButton_menu_svg_clicked();
@@ -326,45 +298,61 @@ private slots:
     void on_pushButton_menu_fullscreen_clicked();
     void on_pushButton_menu_refresh_clicked();
 
-
-    //sloty
-    int slotEverySecond();
-    void slotMoveScrollingText();
-    void slotHlavniStridejStranky();
-    void slotToggleFullscreen();
-    void slotXmlDoPromenne(QString vstupniXml);
-    void slotSluzbaDoTabulky(QZeroConfService zcs);
-    void slotDelayedStartup();
-    void slotUpdateServiceTable();
-    void slotSubscriptionLost();
-
-    void slotHeartbeatTimeout();
-    void slotShutdownReady(bool isReady);
-
+    void on_pushButton_messageLogReset_clicked();    
+    void on_pushButton_settings_save_clicked();
     void on_pushButton_unsubscribe_clicked();
 
-    void on_tlacitkoNastavVteriny_clicked();
-
-
-
-
-
+    void on_radioButton_settings_languageCs_clicked();
+    void on_radioButton_settings_languageEn_clicked();
     void on_radioButton_stateDefective_clicked();
     void on_radioButton_stateWarning_clicked();
     void on_radioButton_stateNotAvailable_clicked();
     void on_radioButton_stateRunning_clicked();
     void on_radioButton_stateReadyForShutdown_clicked();
 
-    void on_pushButton_settings_save_clicked();
+    void on_spinBox_frontSignWidth_valueChanged(int arg1);    
+    void on_spinBox_pageSwitchDuration_valueChanged(int arg1);
 
-    void on_radioButton_settings_languageCs_clicked();
-    void on_radioButton_settings_languageEn_clicked();
+    void slotDebugPublisherToTable(PublisherStruct publisher);
+    void slotDebugServiceToTable(QZeroConfService zcs);
+    void slotDelayedStartup();
+    void slotDeviceIpUpdated(QHostAddress input);
+    void slotDeviceParametersToConfigFile();
+    void slotDisplayLcdLabelCyclePages();
+    void slotDisplayLcdLabelCyclePagesJis();
+    bool slotDownloadGolemio();
+    int slotEverySecond();
+    void slotGolemioReady();
+    void slotHeartbeatTimeout();
+    void slotMoveScrollingText();
 
-    void on_spinBox_frontSignWidth_valueChanged(int arg1);
+    void slotShutdownReady(bool isReady);
+
+    void slotStopRefUpdate(QString stopRef);
+    void slotSubscriptionLost();
+    void slotToggleFullscreen();
+    void slotUpdateServiceTable();
+    void slotVehicleRefUpdate(QString vehicleRef);
+
+    void slotXmlToVehicleStateVariables(QString inputXmlString);
+
+    void slotLogWindowAppend(const QString &text);
+    
+    void on_pushButton_subscriptitionManual_clicked();
+
+
+    void on_pushButton_logMessagesClearDB_clicked();
+
+
+
+    void on_pushButton_debugLogSaveToConfig_clicked();
 
 public slots:
+signals:
+    void signalVehicleRefUpdate(QString vehicleRef);
+    void signalStopRefUpdate(QString stopRef);
+    void signalToLog(QString text);
 
-    void slotDeviceParametersToConfigFile();
 };
 
 #endif // MAINWINDOW_H

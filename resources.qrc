@@ -61,4 +61,7 @@
         <file>fonty/Roboto-Light.ttf</file>
         <file>fonty/pid-3v.ttf</file>
     </qresource>
+    <qresource prefix="/">
+        <file alias="settings.ini">copy_to_the_program_directory/settings.ini</file>
+    </qresource>
 </RCC>

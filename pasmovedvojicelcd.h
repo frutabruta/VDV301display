@@ -3,7 +3,7 @@
 #include <QObject>
 
 
-#include "VDV301DataStructures/farezone.h"
+#include "VDV301subscriber/VDV301DataStructures/farezone.h"
 
 
 class PasmoveDvojiceLcd

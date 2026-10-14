@@ -3,9 +3,9 @@
 #include <QWidget>
 #include <QDomDocument>
 
-#include "VDV301DataStructures/stoppoint.h"
-#include "VDV301DataStructures/stoppointdestination.h"
-#include "VDV301DataStructures/vehiclestate.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppoint.h"
+#include "VDV301subscriber/VDV301DataStructures/stoppointdestination.h"
+#include "VDV301subscriber/VDV301DataStructures/vehiclestate.h"
 
 class SvgVykreslovani
 {
@@ -17,7 +17,7 @@ public:
     QVector<StopPointDestination> vytvorNasledujiciZastavky(QVector<StopPointDestination> vsechnyZastavky, int index, int limit);
     QDomDocument vymazZastavky(QDomDocument xmlDocument);
     QDomDocument vykresliZastavky(QDomDocument xmlDocument, QVector<StopPointDestination> nasledujiciZastavky);
-    int aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav);
+ //   int aktualizujVse(QVector<StopPointDestination> zastavky, VehicleState stav);
     int qDomDocumentDoSouboru(QString cestaVystupnihoSouboru, QDomDocument vstupniDom);
    // QVector<StopPointDestination> vytvorNacestneZastavky(QVector<StopPointDestination> vsechnyZastavky, int index);
     static QString pasmaDoStringu(QVector<FareZone> seznamPasem);
@@ -28,6 +28,7 @@ public:
     void obarviPozadiPristi(QString barvaPisma, QString barvaPozadi);
     void vymazObrazovku();
     void zobrazAnnoucement(QString title, QString type, QString textCz, QString textEn);
+    void zobrazZmenuPasma(QVector<Vdv301InternationalText> zPasem, QVector<Vdv301InternationalText> naPasma);
 private:
 
     QDomDocument souborDoQDomDocument(QString cesta);

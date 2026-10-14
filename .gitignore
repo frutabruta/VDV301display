@@ -1,6 +1,9 @@
 release/
 debug/
 ignorovat/
+build/
+
+QZeroConfNsdManager.java
 
 VDV301display.pro.user*
 
@@ -72,4 +75,3 @@ Thumbs.db
 # --------
 *.dll
 *.exe
-
